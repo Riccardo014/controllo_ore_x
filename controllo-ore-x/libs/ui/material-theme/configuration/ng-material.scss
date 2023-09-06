@@ -1,0 +1,28 @@
+@use '@angular/material' as mat;
+@import '../palettes.scss';
+@import './typography.scss';
+
+
+@include mat.core();
+
+// Define the palettes for your theme using http://mcg.mbitson.com/#!?mcgpalette0=%23876bea
+$pal-primary: mat.define-palette($palette-primary);
+$pal-accent: mat.define-palette($palette-accent);
+$pal-error: mat.define-palette($palette-error);
+$pal-warning: mat.define-palette($palette-warning);
+$pal-success: mat.define-palette($palette-success);
+$pal-grey: mat.define-palette($palette-grey);
+$pal-black: mat.define-palette($palette-black);
+
+$my-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $pal-primary,
+      accent: $pal-accent,
+      warn: $pal-error,
+    ),
+    typography: $my-custom-typography-config,
+  )
+);
+
+@include mat.all-component-themes($my-theme);
