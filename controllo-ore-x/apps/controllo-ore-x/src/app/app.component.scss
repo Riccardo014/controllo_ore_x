@@ -1,0 +1,6 @@
+@import 'libs/ui/core/consts.scss';
+@import 'libs/ui/core/mixins.scss';
+
+.icon-primary{
+  color: map-get($palette-primary, 500);
+}
