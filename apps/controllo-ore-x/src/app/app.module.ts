@@ -11,6 +11,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { TeamTableLineComponent } from './modules/auth/modules/team/components/team-table-line/team-table-line.component';
 import { CustomerTableLineComponent } from './modules/auth/modules/customer/components/customer-table-line/customer-table-line.component';
+import { GlobalTopbarComponent } from './_shared/components/global-topbar/global-topbar.component';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,7 @@ import { CustomerTableLineComponent } from './modules/auth/modules/customer/comp
     ProjectsReleaseTableLineComponent,
     TeamTableLineComponent,
     CustomerTableLineComponent,
+    GlobalTopbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,6 +30,7 @@ import { CustomerTableLineComponent } from './modules/auth/modules/customer/comp
     MatChipsModule,
     MatProgressBarModule,
     MatButtonModule,
+    MatMenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

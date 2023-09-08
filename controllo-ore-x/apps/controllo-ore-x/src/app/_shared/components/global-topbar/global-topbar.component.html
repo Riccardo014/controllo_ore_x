@@ -1,0 +1,40 @@
+<div class="-global-topbar">
+
+  <div class="-menu-and-logo-section">
+    <button
+      mat-icon-button
+      color="transparent"
+      class="-menu-btn"
+      (click)="toggleSidebar()"
+      *ngIf="isMenuButtonShown">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+    <h1 class="headline-6">ControllooreX</h1>
+  </div>
+
+  <div class="-option-section">
+    <div>
+      <mat-chip class="-current-time-chip">
+        <span class="material-symbols-outlined">schedule</span>
+        <span class="headline-6">{{ current_time }}</span>
+      </mat-chip>
+    </div>
+    <div>
+      <button mat-flat-button>
+        <span class="material-symbols-outlined">nights_stay</span>
+      </button>
+    </div>
+    <div>
+      <button mat-flat-button>
+        <span class="material-symbols-outlined">alarm_smart_wake</span>
+      </button>
+    </div>
+    <div>
+      <button mat-flat-button>
+        Marco Muià
+        <span class="material-symbols-outlined">arrow_drop_down</span>
+      </button>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,41 @@
+@import 'libs/ui/core.scss';
+@import 'libs/ui/core/consts.scss';
+@import 'libs/ui/core/mixins.scss';
+
+.-global-topbar{
+  background-color: rgba(28, 28, 28, 1);
+  color: rgba(255, 255, 255, 1);
+  height: $desktop-topbar-height;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;    
+  border-bottom: rgba(255, 255, 255, 0.1) 1px solid;
+
+  .-menu-and-logo-section{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+    .-menu-btn{
+      margin: 0px 8px;
+    }
+
+  }
+
+  .-option-section{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    padding-right: 20px;
+  
+    .-current-time-chip{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+}
