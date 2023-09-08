@@ -1,5 +1,6 @@
 @import 'libs/ui/core/consts.scss';
 @import 'libs/ui/core/mixins.scss';
+@import '../../../../../../app.component.scss';
 
 .release-table-line{
   display: flex;
@@ -63,10 +64,6 @@
   justify-content: center;
   align-items: center;
   gap: 5%;
-  
-  .edit-button-icon{
-    color: $general-header-color;
-  }
 
   .report-button{
     background-color: map-get($palette-primary, 50);
