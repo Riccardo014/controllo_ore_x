@@ -55,7 +55,6 @@
 
   }
 
-
 }
 
 .release-table-line-edit-and-report{
@@ -63,7 +62,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 5%;
+  gap: 10%;
 
   .report-button{
     background-color: map-get($palette-primary, 50);
