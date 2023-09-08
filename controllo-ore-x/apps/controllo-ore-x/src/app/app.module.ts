@@ -10,6 +10,7 @@ import { ProjectsReleaseTableLineComponent } from './modules/auth/modules/projec
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { TeamTableLineComponent } from './modules/auth/modules/team/components/team-table-line/team-table-line.component';
+import { CustomerTableLineComponent } from './modules/auth/modules/customer/components/customer-table-line/customer-table-line.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { TeamTableLineComponent } from './modules/auth/modules/team/components/t
     TrackerTableLineComponent,
     ProjectsReleaseTableLineComponent,
     TeamTableLineComponent,
+    CustomerTableLineComponent,
   ],
   imports: [
     BrowserModule,
