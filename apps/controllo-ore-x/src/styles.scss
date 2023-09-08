@@ -34,6 +34,8 @@ $controllo-ore-x-theme: mat.define-light-theme((
 @include mat.all-component-themes($controllo-ore-x-theme);
 
 /* You can add global styles to this file, and also import other style files */
+@import '../../../libs/ui/core.scss';
+@import '../../../libs/ui/material-theme/configuration/ng-material.scss';
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
