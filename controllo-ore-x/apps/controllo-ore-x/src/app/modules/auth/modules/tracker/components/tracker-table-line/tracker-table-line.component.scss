@@ -2,14 +2,14 @@
 @import 'libs/ui/core/mixins.scss';
 @import '../../../../../../app.component.scss';
 
-.tracker-table-line{
+.-tracker-table-line{
   height: 112px;
   border-bottom: 1px solid map-get($palette-grey, 200);
   display: flex;
   flex-direction: row;
   width: 100%;
   
-  .tracker-activity{
+  .-tracker-activity{
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 2fr;
     align-items: center;
@@ -21,7 +21,7 @@
       background-color: map-get($palette-auxiliaries-yellow, 500 );
     }
 
-    .icon-with-text{
+    .-icon-with-text{
       display: flex;
       gap: 5px;
       justify-content: flex-start;
@@ -29,8 +29,7 @@
 
   }
 
-
-  .tracker-hours{
+  .-tracker-hours{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -40,18 +39,12 @@
     border-right: 1px solid map-get($palette-grey, 200);
   }
 
-  .tracker-edit-and-options{
+  .-tracker-edit-and-options{
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
     width: 10%;
   }
-
-
-
-
-
-
 
 }
