@@ -1,0 +1,13 @@
+export interface <%= className %>ReadDto {
+
+}
+
+
+export interface <%= className %>CreateDto {
+
+}
+
+
+export interface <%= className %>UpdateDto {
+
+}
