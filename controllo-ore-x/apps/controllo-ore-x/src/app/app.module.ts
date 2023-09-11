@@ -12,7 +12,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { TeamTableLineComponent } from './modules/auth/modules/team/components/team-table-line/team-table-line.component';
 import { CustomerTableLineComponent } from './modules/auth/modules/customer/components/customer-table-line/customer-table-line.component';
 import { GlobalTopbarComponent } from './_shared/components/global-topbar/global-topbar.component';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
+import { SidenavComponent } from './_shared/components/sidenav/sidenav.component';
+import { PageTitleComponent } from './_shared/components/page-title/page-title.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import {MatMenuModule} from '@angular/material/menu';
     TeamTableLineComponent,
     CustomerTableLineComponent,
     GlobalTopbarComponent,
+    SidenavComponent,
+    PageTitleComponent,
   ],
   imports: [
     BrowserModule,
