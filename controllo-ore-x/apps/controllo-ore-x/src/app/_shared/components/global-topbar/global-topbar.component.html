@@ -1,5 +1,6 @@
 <div class="-global-topbar">
 
+
   <div class="-menu-and-logo-section">
     <button
       mat-icon-button
@@ -11,30 +12,35 @@
     </button>
     <h1 class="headline-6">ControllooreX</h1>
   </div>
-
+ 
+ 
   <div class="-option-section">
-    <div>
+    <div class="-option-section-item">
       <mat-chip class="-current-time-chip">
-        <span class="material-symbols-outlined">schedule</span>
-        <span class="headline-6">{{ current_time }}</span>
+        <div class="-current-time-chip-content">
+          <span class="material-symbols-outlined">schedule</span>
+          <span class="headline-6">{{ current_time }}</span>
+        </div>
       </mat-chip>
     </div>
-    <div>
-      <button mat-flat-button>
+    <div class="-option-section-item">
+      <button mat-flat-button class="-change-theme-button">
         <span class="material-symbols-outlined">nights_stay</span>
       </button>
     </div>
-    <div>
-      <button mat-flat-button>
+    <div class="-option-section-item">
+      <button mat-flat-button class="-alarm-button">
         <span class="material-symbols-outlined">alarm_smart_wake</span>
       </button>
     </div>
-    <div>
-      <button mat-flat-button>
-        Marco Muià
-        <span class="material-symbols-outlined">arrow_drop_down</span>
+    <div class="-option-section-item">
+      <button mat-flat-button class="-user-menu-button">
+        <div class="-user-menu-button-content">
+          Marco Muià
+          <span class="material-symbols-outlined">arrow_drop_down</span>
+        </div>
       </button>
     </div>
 
   </div>
-</div>
+ </div>
