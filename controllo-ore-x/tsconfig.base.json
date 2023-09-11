@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@controllo-ore-x/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@api-interfaces": ["libs/api-interfaces/src/index.ts"],
       "@controllo-ore-x/find-boosted": ["libs/find-boosted/src/index.ts"]
     }
   },
