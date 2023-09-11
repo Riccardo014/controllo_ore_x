@@ -5,7 +5,24 @@
     "module": "commonjs",
     "types": ["node"],
     "emitDecoratorMetadata": true,
-    "target": "es2021"
+    "target": "es2021",
+    "paths": {
+      "@config/*": [
+        "apps/api/src/app/_config/*"
+      ],
+      "@shared/*": [
+        "apps/api/src/app/_shared/*"
+      ],
+      "@modules/*": [
+        "apps/api/src/app/modules/*"
+      ],
+      "@api-interfaces": [
+        "libs/api-interfaces/src/index.ts"
+      ],
+      "@find-boosted": [
+        "libs/find-boosted/src/index.ts"
+      ]
+    }
   },
   "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
   "include": ["src/**/*.ts"]
