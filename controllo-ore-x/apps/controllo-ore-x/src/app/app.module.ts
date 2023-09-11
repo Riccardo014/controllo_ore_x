@@ -15,6 +15,7 @@ import { GlobalTopbarComponent } from './_shared/components/global-topbar/global
 import { MatMenuModule } from '@angular/material/menu';
 import { SidenavComponent } from './_shared/components/sidenav/sidenav.component';
 import { PageTitleComponent } from './_shared/components/page-title/page-title.component';
+import { ProjectsTableHeaderComponent } from './modules/auth/modules/projects/components/projects-table-header/projects-table-header.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { PageTitleComponent } from './_shared/components/page-title/page-title.c
     GlobalTopbarComponent,
     SidenavComponent,
     PageTitleComponent,
+    ProjectsTableHeaderComponent,
   ],
   imports: [
     BrowserModule,
