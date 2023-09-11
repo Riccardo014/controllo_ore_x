@@ -9,7 +9,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;    
+  justify-content: space-between;   
   border-bottom: rgba(255, 255, 255, 0.1) 1px solid;
 
   .-menu-and-logo-section{
@@ -27,15 +27,78 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 20px;
     padding-right: 20px;
-  
-    .-current-time-chip{
+    
+    .-option-section-item{
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0px 20px;
+      height: 80px;
       display: flex;
-      flex-direction: row;
       align-items: center;
       justify-content: center;
+
+      .-current-time-chip{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        border-radius: 60px;
+        padding: 13px 5px;
+        color: #000;
+        background-color: map-get($palette-auxiliaries-yellow, 500);
+
+        .-current-time-chip-content{
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          gap: 10px;
+        }
+
+      }
+
+      .-change-theme-button{
+        width: 50px;
+        height: 50px;
+        max-width: 50px;
+        max-height: 50px;
+        min-width: 50px;
+        min-height: 50px;
+        border-radius: 10px;
+        background-color: map-get($palette-auxiliaries-blue, 500);
+      }
+      
+      .-alarm-button{
+        width: 50px;
+        height: 50px;
+        max-width: 50px;
+        max-height: 50px;
+        min-width: 50px;
+        min-height: 50px;
+        border-radius: 10px;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      .-user-menu-button{
+        background-color: rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 1);
+        height: 50px;
+        padding: 0px;
+
+        .-user-menu-button-content{
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          padding: 10px 20px;
+        }
+      }
+
     }
+
   }
 
 }
