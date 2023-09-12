@@ -27,14 +27,14 @@ export default async function (tree: Tree, schema: SchemaInterface) {
 
   generateFiles(
     tree,
-    'tools/generators/api-module/module-templates',
+    'libs/tools/src/generators/api-module/module-templates',
     `${apiFolder.sourceRoot}/app/modules/${substitutions.moduleName}`,
     substitutions
   );
 
   generateFiles(
     tree,
-    'tools/generators/api-module/dto-templates',
+    'libs/tools/src/generators/api-module/dto-templates',
     `${apiInterfacesFolder.sourceRoot}/dto/${substitutions.moduleName}`,
     substitutions
   );
@@ -97,7 +97,7 @@ export default async function (tree: Tree, schema: SchemaInterface) {
   } else {
     generateFiles(
       tree,
-      'tools/generators/api-module/module-declaration-templates',
+      'libs/tools/src/generators/api-module/module-declaration-templates',
       `${apiFolder.sourceRoot}/app/modules/${substitutions.moduleName}`,
       substitutions
     );
