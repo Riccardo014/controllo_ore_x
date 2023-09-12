@@ -1,5 +1,0 @@
-import { <%= className %>UpdateDto } from '@api-interfaces';
-
-export class <%= className %>UpdateDtoV implements <%= className %>UpdateDto {
-
-}
