@@ -8,6 +8,7 @@ import { HttpLoggerMiddleware } from '@shared/middlewares/http-logger.middleware
 import { typeormOptionsModuleFactory } from '@config/typeorm-options.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { UserModule } from '@modules/user/user.module';
 
 @Module({
   imports: [
@@ -29,6 +30,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         '/api*',
       ],
     }),
+
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

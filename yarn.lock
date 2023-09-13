@@ -383,6 +383,20 @@
   resolved "https://registry.npmjs.org/@assemblyscript/loader/-/loader-0.10.1.tgz"
   integrity sha512-H71nDOOL8Y7kWRLqf6Sums+01Q5msqBW2KhDUTemh1tvY04eSkSXrK0uj/4mmY0Xr16/3zyZmsrxN7CKuRbNRg==
 
+"@augment-vir/common@^13.3.0":
+  version "13.5.0"
+  resolved "https://registry.yarnpkg.com/@augment-vir/common/-/common-13.5.0.tgz#d2a42e606609708f5f96ddacf7ff36b91ccabdfa"
+  integrity sha512-kOnAOShZTaOJ8glYyi2K3hfiYV5zQyjpfc4jmHm5lySAFNMpOjKA7pZxpl8n3RCIHAt+nFP64vuxtSI6jSWOZw==
+  dependencies:
+    type-fest "^3.8.0"
+
+"@augment-vir/common@^15.3.0":
+  version "15.6.1"
+  resolved "https://registry.yarnpkg.com/@augment-vir/common/-/common-15.6.1.tgz#7dbdb0c1f9e67e925d89d8230127c423d1a59846"
+  integrity sha512-c9UaBzB95tHzganl0B3DsONyP6Fk7JXf95rYUf+Wuu6f6unOPZDz1GXMTaRuFiRl2vb5xjBAGz9AYIc1Uin2Fw==
+  dependencies:
+    type-fest "^4.0.0"
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.12.13", "@babel/code-frame@^7.16.7", "@babel/code-frame@^7.22.13", "@babel/code-frame@^7.22.5":
   version "7.22.13"
   resolved "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.22.13.tgz"
@@ -10454,6 +10468,14 @@ prelude-ls@^1.2.1:
   resolved "https://registry.npmjs.org/prelude-ls/-/prelude-ls-1.2.1.tgz"
   integrity sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==
 
+prettier-plugin-multiline-arrays@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-multiline-arrays/-/prettier-plugin-multiline-arrays-2.0.0.tgz#c2f16e49c8316229fe8f0eff2e55bda12015abe2"
+  integrity sha512-EFdtxNqEKSehtSZN2rHUtsA7dqV6fu1iJ4WU8fgR23Scfcf6mcVb3leOWmAkhhHEpwsNKPdSNN9pBX8Xx8AsCg==
+  dependencies:
+    "@augment-vir/common" "^15.3.0"
+    proxy-vir "^0.0.1"
+
 prettier@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.0.3.tgz#432a51f7ba422d1469096c0fdc28e235db8f9643"
@@ -10516,6 +10538,13 @@ proxy-from-env@^1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/proxy-from-env/-/proxy-from-env-1.1.0.tgz"
   integrity sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==
+
+proxy-vir@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/proxy-vir/-/proxy-vir-0.0.1.tgz#81ebaee86b40d3931a1917f6f03ff0754ef0ddb0"
+  integrity sha512-K3sv2I9kigOqt17hMhvWjSiwx90hpxxD3rN+meVQhrGKoxhVbt82ulkm3i1KlenVIMS1KFskt/vltMlGHVQrMw==
+  dependencies:
+    "@augment-vir/common" "^13.3.0"
 
 prr@~1.0.1:
   version "1.0.1"
@@ -11874,6 +11903,16 @@ type-fest@^0.21.3:
   version "0.21.3"
   resolved "https://registry.npmjs.org/type-fest/-/type-fest-0.21.3.tgz"
   integrity sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w==
+
+type-fest@^3.8.0:
+  version "3.13.1"
+  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-3.13.1.tgz#bb744c1f0678bea7543a2d1ec24e83e68e8c8706"
+  integrity sha512-tLq3bSNx+xSpwvAJnzrK0Ep5CLNWjvFTOp71URMaAEWBfRb9nnJiBoUe0tF8bI4ZFO3omgBR6NvnbzVUT3Ly4g==
+
+type-fest@^4.0.0:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-4.3.1.tgz#5cb58cdab5120f7ab0b40cfdc35073fb9adb651d"
+  integrity sha512-pphNW/msgOUSkJbH58x8sqpq8uQj6b0ZKGxEsLKMUnGorRcDjrUaLS+39+/ub41JNTwrrMyJcUB8+YZs3mbwqw==
 
 type-is@^1.6.4, type-is@~1.6.18:
   version "1.6.18"
