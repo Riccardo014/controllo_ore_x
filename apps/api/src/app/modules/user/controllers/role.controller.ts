@@ -3,10 +3,10 @@ import { CastObjectPipe } from '@shared/pipes/cast-object.pipe';
 import { ApiTags } from '@nestjs/swagger';
 import { FindBoostedOptions } from '@api-interfaces';
 import { FindBoostedResult } from '@find-boosted';
-import { RoleService } from '@modules/role/services/role.service';
-import { RoleUpdateDtoV } from '@modules/role/dtov/role-update.dtov';
 import { UpdateResult } from 'typeorm';
 import { Role } from '../entities/role.entity';
+import { RoleUpdateDtoV } from '../dtov/role-update.dtov';
+import { RoleService } from '../services/role.service';
 
 @ApiTags('roles')
 @Controller('roles')
