@@ -16,8 +16,7 @@ import { RoleController } from "./controllers/role.controller";
     TypeOrmModule.forFeature([
       User,
       Role,
-            Role
-        ])
+    ])
   ],
   controllers: [
     UserController,
