@@ -9,10 +9,10 @@ export class Role {
     name!: string;
 
     @Column('simple-json')
-    permissions!: {
+    permissions!: Array<{
         description: string;
         active: boolean;
-    };
+    }>;
 
     @Column({ default: true })
     isModifiable!: boolean;
