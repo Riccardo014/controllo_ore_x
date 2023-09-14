@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Ignore artifacts:
 build
 coverage
@@ -5,4 +6,9 @@ dist
 node_modules
 .idea
 .vscode
+=======
+# Add files here to ignore them from prettier formatting
+/dist
+/coverage
+>>>>>>> 50b942a (changed folder)
 .angular
