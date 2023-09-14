@@ -23,7 +23,7 @@ export abstract class CrudService<T, CreateDto, UpdateDto> {
     if (!element) {
       return this.create(data, TX);
     } else {
-      await this.getRepository(TX).update(findConditions, data);
+      await this.getRepository(TX).update(findConditions, data as any);
     }
     return this.getRepository(TX).findOneBy(findConditions);
   }
@@ -46,7 +46,7 @@ export abstract class CrudService<T, CreateDto, UpdateDto> {
    * @param TX
    */
   update(findConditions: string | FindOptionsWhere<T>, data: UpdateDto, TX?: EntityManager): Promise<UpdateResult> {
-    return this.getRepository(TX).update(findConditions, data);
+    return this.getRepository(TX).update(findConditions, data as any);
   }
 
   /**
