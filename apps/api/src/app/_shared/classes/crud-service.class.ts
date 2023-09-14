@@ -7,9 +7,10 @@ import { FindBoostedOptions } from '@api-interfaces';
 type CbTX<F> = (TX: EntityManager) => Promise<F>;
 
 export abstract class CrudService<T, CreateDto, UpdateDto> {
-  abstract target: EntityTarget<T>;
   @Inject(DataSource) protected _dataSource: DataSource;
   private _findBoosted?: FindBoosted<T>;
+
+  abstract target: EntityTarget<T>;
 
   /**
    * Creates a new value in db if it doesn't exits

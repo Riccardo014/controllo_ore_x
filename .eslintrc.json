@@ -1,47 +1,146 @@
 {
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": [
+      "tsconfig.json"
+    ]
+  },
+  "plugins": [
+    "@typescript-eslint/eslint-plugin"
+  ],
+  "extends": [
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
   "root": true,
-  "ignorePatterns": ["**/*"],
-  "plugins": ["@nx"],
-  "overrides": [
-    {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "rules": {
-        "@nx/enforce-module-boundaries": [
-          "error",
-          {
-            "enforceBuildableLibDependency": true,
-            "allow": [],
-            "depConstraints": [
-              {
-                "sourceTag": "*",
-                "onlyDependOnLibsWithTags": ["*"]
-              }
-            ]
-          }
+  "env": {
+    "node": true,
+    "jest": true
+  },
+  "rules": {
+    "@typescript-eslint/member-ordering": [
+      1
+    ],
+    "@typescript-eslint/no-inferrable-types": [
+      0
+    ],
+    "@typescript-eslint/explicit-function-return-type": [
+      "error"
+    ],
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": [
+          "variable",
+          "classProperty"
+        ],
+        "types": [
+          "boolean"
+        ],
+        "format": [
+          "PascalCase"
+        ],
+        "prefix": [
+          "are",
+          "is",
+          "should",
+          "has",
+          "have",
+          "can",
+          "did",
+          "will"
+        ]
+      },
+      {
+        "selector": [
+          "enum",
+          "enumMember"
+        ],
+        "format": [
+          "UPPER_CASE"
+        ]
+      },
+      {
+        "selector": "class",
+        "format": [
+          "PascalCase"
+        ]
+      },
+      {
+        "selector": "parameter",
+        "format": [
+          "camelCase",
+          "UPPER_CASE"
+        ],
+        "leadingUnderscore": "allow"
+      },
+      // {
+      //   "selector": [
+      //     "variable",
+      //     "classProperty"
+      //   ],
+      //   "format": [
+      //     "camelCase",
+      //     "UPPER_CASE"
+      //   ]
+      // },
+      {
+        "selector": [
+          "memberLike",
+          "property",
+          "classMethod"
+        ],
+        "modifiers": [
+          "private"
+        ],
+        "format": [
+          "camelCase",
+          "UPPER_CASE"
+        ],
+        "leadingUnderscore": "require"
+      },
+      {
+        "selector": "interface",
+        "format": [
+          "PascalCase"
         ]
       }
-    },
-    {
-      "files": ["*.ts", "*.tsx"],
-      "extends": ["plugin:@nx/typescript"],
-      "rules": {}
-    },
-    {
-      "files": ["*.js", "*.jsx"],
-      "extends": ["plugin:@nx/javascript"],
-      "rules": {}
-    },
-    {
-      "files": ["*.spec.ts", "*.spec.tsx", "*.spec.js", "*.spec.jsx"],
-      "env": {
-        "jest": true
-      },
-      "rules": {}
-    },
-    {
-      "files": "*.json",
-      "parser": "jsonc-eslint-parser",
-      "rules": {}
-    }
-  ]
+    ],
+    "@typescript-eslint/explicit-member-accessibility": [
+      "off",
+      {
+        "accessibility": "explicit"
+      }
+    ],
+    "@typescript-eslint/ban-types": [
+      1
+    ],
+    "@typescript-eslint/quotes": [
+      "error",
+      "single"
+    ],
+    "no-underscore-dangle": [
+      0,
+      {
+        "allowAfterThisConstructor": true,
+        "enforceInMethodNames": true,
+        "allowAfterThis": true
+      }
+    ],
+    "arrow-parens": [
+      "off",
+      "always"
+    ],
+    "max-len": [
+      "warn",
+      {
+        "code": 140
+      }
+    ],
+    "import/order": "off",
+    "semi": "off",
+    "@typescript-eslint/semi": [
+      "error"
+    ]
+  }
 }

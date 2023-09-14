@@ -1,7 +1,6 @@
 import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { join } from 'path';
 import { HttpLoggerMiddleware } from '@shared/middlewares/http-logger.middleware';
@@ -33,7 +32,6 @@ import { UserModule } from '@modules/user/user.module';
 
     UserModule,
   ],
-  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {

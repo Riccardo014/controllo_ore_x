@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { CastObjectPipe } from '@shared/pipes/cast-object.pipe';
 import { ApiTags } from '@nestjs/swagger';
 import { FindBoostedOptions } from '@api-interfaces';
@@ -15,7 +15,7 @@ export class RoleController {
   }
 
   @Get()
-  getMany(@Query(CastObjectPipe) query: any): Promise<FindBoostedResult<Role>> {
+  getMany(@Query(CastObjectPipe) query: FindBoostedOptions): Promise<FindBoostedResult<Role>> {
     return this._roleService.getMany(query);
   }
 
