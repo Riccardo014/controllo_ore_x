@@ -16,7 +16,7 @@ export const ROLE_SEED: any = [
     isModifiable: true,
   },
   {
-    name: 'Collaborator',
+    name: 'Collaboratore',
     permissions: {
       description: 'permission1',
       active: false,
