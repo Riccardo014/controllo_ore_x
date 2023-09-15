@@ -10,8 +10,7 @@ export class UserCreateDtoV implements UserCreateDto {
     message: 'New password should contain at least 8 characters, including a number, an uppercase letter and a special character',
   })
   password: string;
-
-  @IsString() 
+ 
   @IsUUID() 
   roleId: string;
 
@@ -20,6 +19,6 @@ export class UserCreateDtoV implements UserCreateDto {
 
   @IsString() 
   surname: string;
-  
+
   //TODO: avatar
 }

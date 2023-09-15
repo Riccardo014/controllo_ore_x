@@ -7,7 +7,6 @@ export class UserUpdateDtoV implements UserUpdateDto {
   email?: string;
 
   @IsOptional() 
-  @IsString() 
   @IsUUID()
   roleId?: string;
 
