@@ -8,7 +8,7 @@ import { Role } from '../entities/role.entity';
 import { RoleUpdateDtoV } from '../dtov/role-update.dtov';
 import { RoleService } from '../services/role.service';
 
-@ApiTags('roles')
+@ApiTags('Roles')
 @Controller('roles')
 export class RoleController {
   constructor(private _roleService: RoleService) {

@@ -9,7 +9,7 @@ import { UserUpdateDtoV } from '@modules/user/dtov/user-update.dtov';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { User } from '@modules/user/entities/user.entity';
 
-@ApiTags('users')
+@ApiTags('Users')
 @Controller('users')
 export class UserController {
   constructor(private _userService: UserService) {
