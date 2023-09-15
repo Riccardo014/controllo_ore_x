@@ -11,5 +11,6 @@ export interface RoleCreateDto {
 }
 
 export interface RoleUpdateDto {
+  name?: string;
   permissions?: string;
 }
