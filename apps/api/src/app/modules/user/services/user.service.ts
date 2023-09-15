@@ -1,4 +1,4 @@
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import { CrudService } from '@shared/classes/crud-service.class';
 import { User } from '@modules/user/entities/user.entity';
 import { UserCreateDtoV } from '@modules/user/dtov/user-create.dtov';
@@ -12,14 +12,14 @@ export class UserService extends CrudService<User, UserCreateDtoV, UserUpdateDto
   target: typeof User = User;
 
   constructor(
-    private _configSvc: ConfigService,
+    private _configService: ConfigService,
   ) {
     super();
   }
   
   create(data: UserCreateDtoV, TX?: EntityManager): Promise<User> {
     const user: User = this.getRepository(TX).create(data);
-    user.password = data.password;
+    user._password = data.password;
     return super.create(user as UserCreateDtoV, TX);
   }
 
@@ -38,6 +38,22 @@ export class UserService extends CrudService<User, UserCreateDtoV, UserUpdateDto
       }
     }
     return super.delete(findConditions, TX);
+  }
+
+  async getUserByEmailAndPassword(email: string, password: string): Promise<User> {
+    const user: User = await this.getRepository().findOne({
+      where: { email },
+      select: [
+        '_id',
+        'email',
+        'password',
+      ],
+    });
+    if (!user || !(await user.checkPassword(password))) {
+      throw new NotFoundException();
+    }
+
+    return this.getOne(user._id);
   }
 
 }

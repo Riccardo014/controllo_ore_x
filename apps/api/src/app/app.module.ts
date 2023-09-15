@@ -8,6 +8,7 @@ import { typeormOptionsModuleFactory } from '@config/typeorm-options.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from '@modules/user/user.module';
+import { AuthModule } from '@modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { UserModule } from '@modules/user/user.module';
     }),
 
     UserModule,
+    AuthModule,
   ],
   providers: [AppService],
 })
