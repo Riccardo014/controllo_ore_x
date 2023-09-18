@@ -4,10 +4,12 @@
  */
 
 import { INestApplication, Logger, NestApplicationOptions } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 
 import { AppModule } from './app/app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { AuthService } from '@modules/auth/auth.service';
+import { UserAuthGuard } from '@shared/guards/user-auth.guard';
 
 async function bootstrap(): Promise<void> {
 
@@ -26,7 +28,12 @@ async function bootstrap(): Promise<void> {
   
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
-  
+
+  // Set authentication guard
+  const reflector: Reflector = app.get(Reflector);
+  const authSvc: AuthService = app.get(AuthService);
+  app.useGlobalGuards(new UserAuthGuard(reflector, authSvc));
+
   const config = new DocumentBuilder()
   .setTitle('API for ControlloOreX')
   .setDescription('API for ControlloOreX')
