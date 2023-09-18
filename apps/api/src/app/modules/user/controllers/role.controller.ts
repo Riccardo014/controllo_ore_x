@@ -38,6 +38,7 @@ export class RoleController {
     return this._roleService.update(id, body);
   }
 
+  //TODO: Remove this endpoint
   @Get('roleId/:name')
   getRoleIdByName(@Param('name') name: string, @AuthUser() user: User): string {
     const permittedRoles = [ROLE.SUPERADMIN, ROLE.ADMIN, ROLE.COLLABORATOR];
