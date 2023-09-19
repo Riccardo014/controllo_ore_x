@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, ForbiddenException, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { CastObjectPipe } from '@shared/pipes/cast-object.pipe';
 import { ApiTags } from '@nestjs/swagger';
-import { FindBoostedOptions, ROLE } from '@api-interfaces';
+import { FindBoostedOptions } from '@api-interfaces';
 import { FindBoostedResult } from '@find-boosted';
 import { UserService } from '@modules/user/services/user.service';
 import { UserCreateDtoV } from '@modules/user/dtov/user-create.dtov';
@@ -35,8 +35,7 @@ export class UserController {
 
   @Post()
   create(@Body() data: UserCreateDtoV, @AuthUser() user: User): Promise<User> {
-    const permittedRoles = [ROLE.SUPERADMIN, ROLE.ADMIN];
-    if(!RoleChecker.checkPermission(user, this._userService, permittedRoles)){
+    if(!RoleChecker.userRoleIsAdminOrHigher(user)){
       throw new ForbiddenException(ApiErrors.UNUTHORIZED_OPERATION);
     }
     return this._userService.create(data);
@@ -46,8 +45,7 @@ export class UserController {
   update(@Param('id') id: string,
          @Body() body: UserUpdateDtoV,
          @AuthUser() user: User): Promise<UpdateResult> {
-    const permittedRoles = [ROLE.SUPERADMIN, ROLE.ADMIN];
-    if(!RoleChecker.checkPermission(user, this._userService, permittedRoles)){
+    if(!RoleChecker.userRoleIsAdminOrHigher(user)){
       throw new ForbiddenException(ApiErrors.UNUTHORIZED_OPERATION);
     }
     return this._userService.update(id, body);
@@ -55,8 +53,7 @@ export class UserController {
 
   @Delete(':id')
   delete(@Param('id') id: string, @AuthUser() user: User): Promise<DeleteResult> {
-    const permittedRoles = [ROLE.SUPERADMIN, ROLE.ADMIN];
-    if(!RoleChecker.checkPermission(user, this._userService, permittedRoles)){
+    if(!RoleChecker.userRoleIsAdminOrHigher(user)){
       throw new ForbiddenException(ApiErrors.UNUTHORIZED_OPERATION);
     }
     return this._userService.delete({ _id: id });
