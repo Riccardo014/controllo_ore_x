@@ -1,6 +1,5 @@
 import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
-
 import { AppService } from './app.service';
 import { join } from 'path';
 import { HttpLoggerMiddleware } from '@shared/middlewares/http-logger.middleware';
@@ -9,6 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from '@modules/user/user.module';
 import { AuthModule } from '@modules/auth/auth.module';
+import { CustomerModule } from '@modules/customer/customer.module';
 
 @Module({
   imports: [
@@ -33,6 +33,7 @@ import { AuthModule } from '@modules/auth/auth.module';
 
     UserModule,
     AuthModule,
+    CustomerModule,
   ],
   providers: [AppService],
 })
