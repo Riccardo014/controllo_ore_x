@@ -6,3 +6,4 @@ export * from './dto/user/user.dto';
 export * from './dto/user/role.dto';
 
 export * from './enums/role.enum';
+export * from './dto/customer/customer.dto';
