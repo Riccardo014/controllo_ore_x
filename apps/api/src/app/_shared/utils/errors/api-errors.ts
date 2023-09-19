@@ -11,5 +11,20 @@ export class ApiErrors {
         scope: 'General',
         message: 'Si è verificato un errore durante il recupero dei deti dell\'utente'
     };
+    static readonly WRONG_PASSWORD: IErrorBody = {
+        code: '003',
+        scope: 'Auth',
+        message: 'La password inserita non è corretta'
+    };
+    static readonly MISSING_TOKEN: IErrorBody = {
+        code: '004',
+        scope: 'Auth',
+        message: 'Non è stato trovato il token di autenticazione'
+    };
+    static readonly EXPIRED_TOKEN: IErrorBody = {
+        code: '005',
+        scope: 'Auth',
+        message: 'Il token di autenticazione è scaduto'
+    };
 }
 
