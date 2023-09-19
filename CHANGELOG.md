@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.3]
+
+- Aggiunto il modulo dei clienti.
+
 ## [0.0.2]
 
 - Aggiunti gli errori personalizzati.
@@ -17,8 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Aggiunti i controlli sui ruoli.
 - Aggiunto il decorator per gli utenti autenticati.
 - Aggiunta la guardia di autenticazione.
-- Aggiunta il modulo degli utenti.
-- Aggiunta il modulo dei ruoli.
+- Aggiunto il modulo degli utenti.
+- Aggiunto il modulo dei ruoli.
 - Aggiunti middlewares.
 - Aggiunto ServeStatic.
 - Aggiunto FindBoosted.
