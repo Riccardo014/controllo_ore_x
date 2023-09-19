@@ -9,15 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.3]
 
+### Aggiunto 
 - Aggiunto il modulo dei clienti.
 
 ## [0.0.2]
 
+### Aggiunto 
 - Aggiunti gli errori personalizzati.
 
 ## [0.0.1]
 
-### Added 
+### Aggiunto 
 - Aggiunti i controlli sui ruoli.
 - Aggiunto il decorator per gli utenti autenticati.
 - Aggiunta la guardia di autenticazione.
