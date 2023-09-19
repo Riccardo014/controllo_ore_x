@@ -8,6 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { AuthToken } from './auth-token.entity';
 import { Repository } from 'typeorm';
 import { addMinutes, isBefore } from 'date-fns';
+import { ApiErrors } from '@shared/utils/errors/api-errors';
 
 @Injectable()
 export class AuthService {
@@ -35,17 +36,17 @@ export class AuthService {
   /**
    * Authenticates a user based on a provided authentication token.
    * @param token The authentication token to be validated.
-   * @returns A Promise that resolves to the authenticated user.
    * @throws NotFoundException if the token is not found.
    * @throws GoneException if token expiration is enabled and the token is expired.
+   * @returns A Promise that resolves to the authenticated user.
    */
   async authenticate(token: string): Promise<User> {
     const loginToken: AuthToken = await this._authTokenRepository.findOne({ where: { token } });
     if (!loginToken) {
-      throw new NotFoundException();
+      throw new NotFoundException(ApiErrors.MISSING_TOKEN);
     }
     if (this._isTokenExpirationEnabled && isBefore(loginToken.validUntil, new Date())) {
-      throw new GoneException();
+      throw new GoneException(ApiErrors.EXPIRED_TOKEN);
     }
 
     loginToken.validUntil = this._getNewTokenValidUntil();
