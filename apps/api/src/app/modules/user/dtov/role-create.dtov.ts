@@ -1,5 +1,5 @@
 import { RoleCreateDto } from '@api-interfaces';
-import { IsOptional, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class RoleCreateDtoV implements RoleCreateDto {
   @IsString() 
