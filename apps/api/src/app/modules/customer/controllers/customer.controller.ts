@@ -2,7 +2,7 @@ import { Body, Controller, Delete, ForbiddenException, Get, Param, Post, Put, Qu
 import { CastObjectPipe } from '@shared/pipes/cast-object.pipe';
 import { AuthUser } from '@shared/decorators/auth-user.decorator';
 import { ApiTags } from '@nestjs/swagger';
-import { FindBoostedOptions, ROLE } from '@api-interfaces';
+import { FindBoostedOptions } from '@api-interfaces';
 import { FindBoostedResult } from '@find-boosted';
 import { CustomerService } from '@modules/customer/services/customer.service';
 import { CustomerCreateDtoV } from '@modules/customer/dtov/customer-create.dtov';
@@ -38,8 +38,7 @@ export class CustomerController {
 
   @Post()
   create(@Body() data: CustomerCreateDtoV, @AuthUser() user: User): Promise<Customer> {
-    const permittedRoles = [ROLE.SUPERADMIN, ROLE.ADMIN];
-    if(!RoleChecker.checkPermission(user, this._userService, permittedRoles)){
+    if(!RoleChecker.userRoleIsAdminOrHigher(user)){
       throw new ForbiddenException(ApiErrors.UNUTHORIZED_OPERATION);
     }
     return this._customerService.create(data);
@@ -49,8 +48,7 @@ export class CustomerController {
   update(@Param('id') id: string,
          @Body() body: CustomerUpdateDtoV,
          @AuthUser() user: User): Promise<UpdateResult> {
-    const permittedRoles = [ROLE.SUPERADMIN, ROLE.ADMIN];
-    if(!RoleChecker.checkPermission(user, this._userService, permittedRoles)){
+    if(!RoleChecker.userRoleIsAdminOrHigher(user)){
       throw new ForbiddenException(ApiErrors.UNUTHORIZED_OPERATION);
     }
     return this._customerService.update(id, body);
@@ -58,8 +56,7 @@ export class CustomerController {
 
   @Delete(':id')
   delete(@Param('id') id: string, @AuthUser() user: User): Promise<DeleteResult> {
-    const permittedRoles = [ROLE.SUPERADMIN, ROLE.ADMIN];
-    if(!RoleChecker.checkPermission(user, this._userService, permittedRoles)){
+    if(!RoleChecker.userRoleIsAdminOrHigher(user)){
       throw new ForbiddenException(ApiErrors.UNUTHORIZED_OPERATION);
     }
     return this._customerService.delete({ _id: id });
