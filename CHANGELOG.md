@@ -7,16 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.0.1] - 2023-09-19
+## [0.0.2]
+
+- Aggiunti gli errori personalizzati.
+
+## [0.0.1]
 
 ### Added 
-- Added RoleChecker
-- Added AuthUser
-- Added UserAuthGuard
-- Added User
-- Added Role
-- Added middlewares
-- Added ServeStatic
-- Added find boosted
-- Added file generator
-- Added UI library
+- Aggiunti i controlli sui ruoli.
+- Aggiunto il decorator per gli utenti autenticati.
+- Aggiunta la guardia di autenticazione.
+- Aggiunta il modulo degli utenti.
+- Aggiunta il modulo dei ruoli.
+- Aggiunti middlewares.
+- Aggiunto ServeStatic.
+- Aggiunto FindBoosted.
+- Aggiunto il generatore RainTonic.
+- Aggiunta la libreria di UI.
