@@ -1,9 +1,10 @@
 import { BeforeInsert, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Role } from './role.entity';
 import { RtHash } from '@shared/classes/rt-hash.class';
+import { TimestampsEntity } from '@shared/classes/timestamps-entity.class';
 
 @Entity()
-export class User {
+export class User extends TimestampsEntity{
   @PrimaryGeneratedColumn('uuid')
   _id: string;
 
