@@ -75,7 +75,7 @@ export class UserService extends CrudService<User, UserCreateDtoV, UserUpdateDto
       throw new BadRequestException(ApiErrors.MISSING_USER_DATA);
     }
     if (!(await user.checkPassword(password))) {
-      throw new NotFoundException(ApiErrors.WRONG_PASSWORD);
+      throw new NotFoundException(ApiErrors.WRONG_CREDENTIALS);
     }
 
     return this.getOne(user._id);

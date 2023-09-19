@@ -11,10 +11,10 @@ export class ApiErrors {
         scope: 'General',
         message: 'Si è verificato un errore durante il recupero dei dati dell\'utente'
     };
-    static readonly WRONG_PASSWORD: IErrorBody = {
+    static readonly WRONG_CREDENTIALS: IErrorBody = {
         code: '003',
         scope: 'Auth',
-        message: 'La password inserita non è corretta'
+        message: 'Le credenziali non sono corrette'
     };
     static readonly MISSING_TOKEN: IErrorBody = {
         code: '004',
