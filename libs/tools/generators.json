@@ -1,0 +1,9 @@
+{
+  "generators": {
+    "api-module": {
+      "factory": "./src/generators/api-module/generator",
+      "schema": "./src/generators/api-module/schema.json",
+      "description": "api-module generator"
+    }
+  }
+}
