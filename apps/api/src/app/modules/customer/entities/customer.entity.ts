@@ -1,16 +1,22 @@
-import { TimestampsEntity } from '@shared/classes/timestamps-entity.class';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { IDefaultEntityColumns } from '@shared/classes/i-default-entity-columns';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
-export class Customer extends TimestampsEntity {
+export class Customer implements IDefaultEntityColumns {
   @PrimaryGeneratedColumn('uuid')
   _id: string;
 
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
   @Column()
-  email!: string;
+  email: string;
 
   @Column({ length: 30 })
-  name!: string;
+  name: string;
 
   //TODO: avatar
 
