@@ -1,13 +1,16 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, ForbiddenException, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { CastObjectPipe } from '@shared/pipes/cast-object.pipe';
 import { ApiTags } from '@nestjs/swagger';
-import { FindBoostedOptions } from '@api-interfaces';
+import { FindBoostedOptions, ROLE } from '@api-interfaces';
 import { FindBoostedResult } from '@find-boosted';
 import { UserService } from '@modules/user/services/user.service';
 import { UserCreateDtoV } from '@modules/user/dtov/user-create.dtov';
 import { UserUpdateDtoV } from '@modules/user/dtov/user-update.dtov';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { User } from '@modules/user/entities/user.entity';
+import { RoleChecker } from '@shared/utils/role-checker';
+import { ApiErrors } from '@shared/utils/errors/api-errors';
+import { AuthUser } from '@shared/decorators/auth-user.decorator';
 
 @ApiTags('Users')
 @Controller('users')
@@ -31,18 +34,31 @@ export class UserController {
   }
 
   @Post()
-  create(@Body() data: UserCreateDtoV): Promise<User> {
+  create(@Body() data: UserCreateDtoV, @AuthUser() user: User): Promise<User> {
+    const permittedRoles = [ROLE.SUPERADMIN, ROLE.ADMIN];
+    if(!RoleChecker.checkPermission(user, this._userService, permittedRoles)){
+      throw new ForbiddenException(ApiErrors.UNUTHORIZED_OPERATION);
+    }
     return this._userService.create(data);
   }
 
   @Put(':id')
   update(@Param('id') id: string,
-         @Body() body: UserUpdateDtoV): Promise<UpdateResult> {
+         @Body() body: UserUpdateDtoV,
+         @AuthUser() user: User): Promise<UpdateResult> {
+    const permittedRoles = [ROLE.SUPERADMIN, ROLE.ADMIN];
+    if(!RoleChecker.checkPermission(user, this._userService, permittedRoles)){
+      throw new ForbiddenException(ApiErrors.UNUTHORIZED_OPERATION);
+    }
     return this._userService.update(id, body);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string): Promise<DeleteResult> {
+  delete(@Param('id') id: string, @AuthUser() user: User): Promise<DeleteResult> {
+    const permittedRoles = [ROLE.SUPERADMIN, ROLE.ADMIN];
+    if(!RoleChecker.checkPermission(user, this._userService, permittedRoles)){
+      throw new ForbiddenException(ApiErrors.UNUTHORIZED_OPERATION);
+    }
     return this._userService.delete({ _id: id });
   }
 }
