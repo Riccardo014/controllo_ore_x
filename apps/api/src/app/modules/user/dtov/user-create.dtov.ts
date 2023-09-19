@@ -1,5 +1,5 @@
 import { UserCreateDto } from '@api-interfaces';
-import { IsEmail, IsOptional, IsString, IsUUID, Matches } from 'class-validator';
+import { IsEmail, IsString, IsUUID, Matches } from 'class-validator';
 
 export class UserCreateDtoV implements UserCreateDto {
   @IsEmail() 
