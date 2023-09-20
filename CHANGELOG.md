@@ -10,12 +10,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.0.4]
 
 ### Aggiunto 
-- Aggiunto il modulo dei progetti.
+- Aggiunto il modulo back-end dei progetti.
+  - dto
+  - controller
+  - dtov
+  - entity
+  - service
 
 ## [0.0.3]
 
 ### Aggiunto 
-- Aggiunto il modulo dei clienti.
+- Aggiunto il modulo back-end dei clienti.
+  - dto
+  - controller
+  - dtov
+  - entity
+  - service
 
 ## [0.0.2]
 
@@ -28,8 +38,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Aggiunti i controlli sui ruoli.
 - Aggiunto il decorator per gli utenti autenticati.
 - Aggiunta la guardia di autenticazione.
-- Aggiunto il modulo degli utenti.
-- Aggiunto il modulo dei ruoli.
+- Aggiunto il modulo back-end degli utenti
+  - dto
+  - controller
+  - dtov
+  - entity
+  - service
+  - seed
+- Aggiunto il modulo back-end dei ruoli
+  - dto
+  - controller
+  - dtov
+  - entity
+  - service
+  - seed
 - Aggiunti middlewares.
 - Aggiunto ServeStatic.
 - Aggiunto FindBoosted.
