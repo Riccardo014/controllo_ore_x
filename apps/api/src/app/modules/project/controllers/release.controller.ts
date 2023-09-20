@@ -14,7 +14,7 @@ import { UserService } from '@modules/user/services/user.service';
 import { ApiErrors } from '@shared/utils/errors/api-errors';
 import { RoleChecker } from '@shared/utils/role-checker';
 
-@ApiTags('releases')
+@ApiTags('Releases')
 @Controller('releases')
 export class ReleaseController {
   constructor(private _releaseService: ReleaseService, private _userService: UserService) {
