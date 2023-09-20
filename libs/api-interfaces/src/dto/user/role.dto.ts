@@ -3,6 +3,9 @@ export interface RoleReadDto {
   name: string;
   permissions: string;
   isModifiable: boolean;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  deletedAt?: Date | string;
 }
 
 export interface RoleCreateDto {

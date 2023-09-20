@@ -5,6 +5,9 @@ export interface ProjectReadDto {
   color: string;
   hoursBudget: number;
   expirationDate: Date;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  deletedAt?: Date | string;
 }
 
 
