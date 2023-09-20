@@ -12,4 +12,8 @@ export class ReleaseExtraHours extends BaseEntityTemplate {
 
   @Column()
   referent: string;
+
+  @Column()
+  releaseId: string;
+
 }
