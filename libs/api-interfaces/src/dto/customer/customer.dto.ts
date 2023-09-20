@@ -2,6 +2,9 @@ export interface CustomerReadDto {
   _id: string;
   email: string;
   name: string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  deletedAt?: Date | string;
   //TODO: avatar
 }
 
