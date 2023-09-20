@@ -1,5 +1,6 @@
 import { BaseEntityTemplate } from '@shared/classes/base-entity-template.class';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Release } from './release.entity';
 
 @Entity()
 export class ReleaseExtraHours extends BaseEntityTemplate {
@@ -13,6 +14,9 @@ export class ReleaseExtraHours extends BaseEntityTemplate {
   @Column()
   referent: string;
 
+  @ManyToOne(() => Release, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'releaseId' })
+  release?: Release;
   @Column()
   releaseId: string;
 
