@@ -1,16 +1,8 @@
-import { IDefaultEntityColumns } from '@shared/classes/i-default-entity-columns';
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntityTemplate } from '@shared/classes/base-entity-template.class';
+import { Column, Entity } from 'typeorm';
 
 @Entity()
-export class Role implements IDefaultEntityColumns{
-    @PrimaryGeneratedColumn('uuid')
-    _id: string;
-
-    @CreateDateColumn()
-    createdAt: Date;
-  
-    @UpdateDateColumn()
-    updatedAt: Date;
+export class Role extends BaseEntityTemplate{
 
     @Column()
     name: string;

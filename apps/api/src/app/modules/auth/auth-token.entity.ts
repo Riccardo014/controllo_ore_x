@@ -1,17 +1,9 @@
-import { IDefaultEntityColumns } from '@shared/classes/i-default-entity-columns';
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { User } from '@modules/user/entities/user.entity';
+import { BaseEntityTemplate } from '@shared/classes/base-entity-template.class';
 
 @Entity()
-export class AuthToken implements IDefaultEntityColumns {
-  @PrimaryGeneratedColumn('uuid')
-  _id: string;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
+export class AuthToken extends BaseEntityTemplate {
 
   @Column()
   token: string;

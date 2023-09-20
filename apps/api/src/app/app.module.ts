@@ -9,6 +9,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from '@modules/user/user.module';
 import { AuthModule } from '@modules/auth/auth.module';
 import { CustomerModule } from '@modules/customer/customer.module';
+import { ProjectModule } from '@modules/project/project.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { CustomerModule } from '@modules/customer/customer.module';
     UserModule,
     AuthModule,
     CustomerModule,
+    ProjectModule,
   ],
   providers: [AppService],
 })
