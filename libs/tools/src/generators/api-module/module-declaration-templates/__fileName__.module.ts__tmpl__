@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { <%= className %> } from '@modules/<%= moduleName %>/entities/<%= fileName %>.entity';
 import { <%= className %>Service } from '@modules/<%= moduleName %>/services/<%= fileName %>.service';

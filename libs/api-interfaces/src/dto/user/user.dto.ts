@@ -4,6 +4,9 @@ export interface UserReadDto {
   name: string;
   surname: string;
   isDeletable: boolean;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  deletedAt?: Date | string;
   //TODO: avatar
 }
 
