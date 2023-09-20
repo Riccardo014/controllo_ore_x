@@ -1,8 +1,9 @@
 import { Customer } from '@modules/customer/entities/customer.entity';
+import { IDefaultEntityColumns } from '@shared/classes/i-default-entity-columns';
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
-export class Project {
+export class Project implements IDefaultEntityColumns{
   @PrimaryGeneratedColumn('uuid')
   _id: string;
 
