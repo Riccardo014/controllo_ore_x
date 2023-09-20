@@ -3,6 +3,9 @@ export interface ReleaseExtraHoursReadDto {
   hours: number;
   notes: string;
   referent: string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  deletedAt?: Date | string;
 }
 
 export interface ReleaseExtraHoursCreateDto {
