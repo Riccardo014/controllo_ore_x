@@ -12,11 +12,12 @@ import { User } from '@modules/user/entities/user.entity';
 import { Project } from '../entities/project.entity';
 import { ApiErrors } from '@shared/utils/errors/api-errors';
 import { RoleChecker } from '@shared/utils/role-checker';
+import { UserService } from '@modules/user/services/user.service';
 
 @ApiTags('Projects')
 @Controller('projects')
 export class ProjectController {
-  constructor(private _projectService: ProjectService) {
+  constructor(private _projectService: ProjectService, private _userService: UserService) {
   }
 
   @Get()
@@ -36,7 +37,7 @@ export class ProjectController {
 
   @Post()
   create(@Body() data: ProjectCreateDtoV, @AuthUser() user: User): Promise<Project> {
-    if(!RoleChecker.userRoleIsAdminOrHigher(user)){
+    if(!RoleChecker.userRoleIsAdminOrHigher(user, this._userService)){
       throw new ForbiddenException(ApiErrors.UNUTHORIZED_OPERATION);
     }
     return this._projectService.create(data);
@@ -46,7 +47,7 @@ export class ProjectController {
   update(@Param('id') id: string,
          @Body() body: ProjectUpdateDtoV,
          @AuthUser() user: User): Promise<UpdateResult> {
-    if(!RoleChecker.userRoleIsAdminOrHigher(user)){
+    if(!RoleChecker.userRoleIsAdminOrHigher(user, this._userService)){
       throw new ForbiddenException(ApiErrors.UNUTHORIZED_OPERATION);
     }
     return this._projectService.update(id, body);
@@ -54,7 +55,7 @@ export class ProjectController {
 
   @Delete(':id')
   delete(@Param('id') id: string, @AuthUser() user: User): Promise<DeleteResult> {
-    if(!RoleChecker.userRoleIsAdminOrHigher(user)){
+    if(!RoleChecker.userRoleIsAdminOrHigher(user, this._userService)){
       throw new ForbiddenException(ApiErrors.UNUTHORIZED_OPERATION);
     }
     return this._projectService.delete({ _id: id });

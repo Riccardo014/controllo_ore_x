@@ -13,14 +13,12 @@ import { Customer } from '../entities/customer.entity';
 import { RoleChecker } from '@shared/utils/role-checker';
 import { UserService } from '@modules/user/services/user.service';
 import { ApiErrors } from '@shared/utils/errors/api-errors';
-import { IsPublic } from '@shared/decorators/is-public.decorator';
 
 @ApiTags('Customers')
 @Controller('customers')
 export class CustomerController {
   constructor(private _customerService: CustomerService, private _userService: UserService) {
   }
-  @IsPublic()
   @Get()
   getMany(@Query(CastObjectPipe) query: any): Promise<FindBoostedResult<Customer>> {
     return this._customerService.getMany(query);
@@ -38,7 +36,7 @@ export class CustomerController {
 
   @Post()
   create(@Body() data: CustomerCreateDtoV, @AuthUser() user: User): Promise<Customer> {
-    if(!RoleChecker.userRoleIsAdminOrHigher(user)){
+    if(!RoleChecker.userRoleIsAdminOrHigher(user, this._userService)){
       throw new ForbiddenException(ApiErrors.UNUTHORIZED_OPERATION);
     }
     return this._customerService.create(data);
@@ -48,7 +46,7 @@ export class CustomerController {
   update(@Param('id') id: string,
          @Body() body: CustomerUpdateDtoV,
          @AuthUser() user: User): Promise<UpdateResult> {
-    if(!RoleChecker.userRoleIsAdminOrHigher(user)){
+    if(!RoleChecker.userRoleIsAdminOrHigher(user, this._userService)){
       throw new ForbiddenException(ApiErrors.UNUTHORIZED_OPERATION);
     }
     return this._customerService.update(id, body);
@@ -56,7 +54,7 @@ export class CustomerController {
 
   @Delete(':id')
   delete(@Param('id') id: string, @AuthUser() user: User): Promise<DeleteResult> {
-    if(!RoleChecker.userRoleIsAdminOrHigher(user)){
+    if(!RoleChecker.userRoleIsAdminOrHigher(user, this._userService)){
       throw new ForbiddenException(ApiErrors.UNUTHORIZED_OPERATION);
     }
     return this._customerService.delete({ _id: id });
