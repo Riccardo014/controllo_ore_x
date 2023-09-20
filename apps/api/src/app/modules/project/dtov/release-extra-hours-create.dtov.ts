@@ -1,7 +1,7 @@
-import { HoursExtraCreateDto } from '@api-interfaces';
+import { ReleaseExtraHoursCreateDto } from '@api-interfaces';
 import { IsNumber, IsString } from 'class-validator';
 
-export class HoursExtraCreateDtoV implements HoursExtraCreateDto {
+export class ReleaseExtraHoursCreateDtoV implements ReleaseExtraHoursCreateDto {
 
   @IsNumber()
   hours: number;

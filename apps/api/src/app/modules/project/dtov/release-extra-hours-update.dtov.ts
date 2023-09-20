@@ -1,7 +1,7 @@
-import { HoursExtraUpdateDto } from '@api-interfaces';
+import { ReleaseExtraHoursUpdateDto } from '@api-interfaces';
 import { IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class HoursExtraUpdateDtoV implements HoursExtraUpdateDto {
+export class ReleaseExtraHoursUpdateDtoV implements ReleaseExtraHoursUpdateDto {
 
   @IsOptional()
   @IsNumber()

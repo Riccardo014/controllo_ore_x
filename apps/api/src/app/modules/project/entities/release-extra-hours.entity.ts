@@ -2,7 +2,7 @@ import { BaseEntityTemplate } from '@shared/classes/base-entity-template.class';
 import { Column, Entity } from 'typeorm';
 
 @Entity()
-export class HoursExtra extends BaseEntityTemplate {
+export class ReleaseExtraHours extends BaseEntityTemplate {
 
   @Column()
   hours: number;

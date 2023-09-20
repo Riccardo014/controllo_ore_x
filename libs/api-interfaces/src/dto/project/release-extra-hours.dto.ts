@@ -1,17 +1,17 @@
-export interface HoursExtraReadDto {
+export interface ReleaseExtraHoursReadDto {
   _id: string;
   hours: number;
   notes: string;
   referent: string;
 }
 
-export interface HoursExtraCreateDto {
+export interface ReleaseExtraHoursCreateDto {
   hours: number;
   notes: string;
   referent: string;
 }
 
-export interface HoursExtraUpdateDto {
+export interface ReleaseExtraHoursUpdateDto {
   hours?: number;
   notes?: string;
   referent?: string;
