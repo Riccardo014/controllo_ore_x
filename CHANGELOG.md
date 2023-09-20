@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.7]
+
+### Aggiunto 
+- Aggiunto il modulo back-end delle ore extra.
 
 ## [0.0.6]
 
@@ -34,8 +38,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Aggiunti i controlli sui ruoli.
 - Aggiunto il decorator per gli utenti autenticati.
 - Aggiunta la guardia di autenticazione.
-- Aggiunto il modulo back-end degli utenti
-- Aggiunto il modulo back-end dei ruoli
+- Aggiunto il modulo back-end degli utenti.
+- Aggiunto il modulo back-end dei ruoli.
 - Aggiunti middlewares.
 - Aggiunto ServeStatic.
 - Aggiunto FindBoosted.
