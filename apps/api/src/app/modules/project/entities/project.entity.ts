@@ -26,8 +26,8 @@ export class Project implements IDefaultEntityColumns{
   color: string;
 
   @Column()
-  hours_budget: number;
+  hoursBudget: number;
 
   @Column()
-  expiration_date: Date;
+  expirationDate: Date;
 }

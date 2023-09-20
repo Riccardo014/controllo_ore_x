@@ -16,10 +16,10 @@ export class ProjectUpdateDtoV implements ProjectUpdateDto {
 
   @IsOptional() 
   @IsNumber() 
-  hours_budget?: number;
+  hoursBudget?: number;
 
   @IsOptional() 
   @IsDate() 
-  expiration_date?: Date;
+  expirationDate?: Date;
 
 }
