@@ -1,17 +1,15 @@
 import { IDefaultEntityColumns } from '@shared/classes/i-default-entity-columns';
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { User } from '@modules/user/entities/user.entity';
+import { TimestampsEntity } from '@shared/classes/timestamps-entity.class';
 
 @Entity()
 export class AuthToken implements IDefaultEntityColumns {
   @PrimaryGeneratedColumn('uuid')
   _id: string;
 
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
+  @Column(() => TimestampsEntity)
+  timeStampEntity: TimestampsEntity;
 
   @Column()
   token: string;
