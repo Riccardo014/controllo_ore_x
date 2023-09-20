@@ -15,4 +15,8 @@ export class ReleaseExtraHoursUpdateDtoV implements ReleaseExtraHoursUpdateDto {
   @IsString()
   referent: string;
   
+  @IsOptional()
+  @IsString()
+  releaseId: string;
+  
 }

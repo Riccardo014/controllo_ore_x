@@ -12,4 +12,7 @@ export class ReleaseExtraHoursCreateDtoV implements ReleaseExtraHoursCreateDto {
   @IsString()
   referent: string;
 
+  @IsString()
+  releaseId: string;
+
 }
