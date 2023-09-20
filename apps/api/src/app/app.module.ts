@@ -10,6 +10,7 @@ import { UserModule } from '@modules/user/user.module';
 import { AuthModule } from '@modules/auth/auth.module';
 import { CustomerModule } from '@modules/customer/customer.module';
 import { ProjectModule } from '@modules/project/project.module';
+import { UserHoursModule } from '@modules/user-hours/user-hours.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { ProjectModule } from '@modules/project/project.module';
     AuthModule,
     CustomerModule,
     ProjectModule,
+    UserHoursModule,
   ],
   providers: [AppService],
 })
