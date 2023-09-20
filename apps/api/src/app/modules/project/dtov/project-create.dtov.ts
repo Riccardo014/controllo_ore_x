@@ -13,8 +13,8 @@ export class ProjectCreateDtoV implements ProjectCreateDto {
   color: string;
 
   @IsNumber()
-  hours_budget: number;
+  hoursBudget: number;
 
   @IsDate()
-  expiration_date: Date;
+  expirationDate: Date;
 }
