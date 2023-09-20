@@ -3,8 +3,8 @@ export interface ProjectReadDto {
   name: string;
   customerId: string;
   color: string;
-  hours_budget: number;
-  expiration_date: Date;
+  hoursBudget: number;
+  expirationDate: Date;
 }
 
 
@@ -12,8 +12,8 @@ export interface ProjectCreateDto {
   name: string;
   customerId: string;
   color?: string;
-  hours_budget: number;
-  expiration_date: Date;
+  hoursBudget: number;
+  expirationDate: Date;
 }
 
 
@@ -21,6 +21,6 @@ export interface ProjectUpdateDto {
   name?: string;
   customerId?: string;
   color?: string;
-  hours_budget?: number;
-  expiration_date?: Date;
+  hoursBudget?: number;
+  expirationDate?: Date;
 }
