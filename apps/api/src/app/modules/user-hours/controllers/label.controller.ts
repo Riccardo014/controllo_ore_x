@@ -14,6 +14,9 @@ import { UserService } from '@modules/user/services/user.service';
 import { ApiErrors } from '@shared/utils/errors/api-errors';
 import { RoleChecker } from '@shared/utils/role-checker';
 
+/**
+ * @description The labels are used to categorize the user hours.
+ */
 @ApiTags('Labels')
 @Controller('labels')
 export class LabelController {
