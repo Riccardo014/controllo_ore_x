@@ -1,5 +1,6 @@
+import { TimestampsEntity } from './timestamps-entity.class';
+
 export interface IDefaultEntityColumns {
   _id: string;
-  createdAt: Date;
-  updatedAt: Date;
+  timeStampEntity: TimestampsEntity;
 }
