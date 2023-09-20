@@ -1,9 +1,9 @@
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 export class TimestampsEntity {
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'createdAt' })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ name: 'updatedAt' })
   updatedAt: Date;
 }

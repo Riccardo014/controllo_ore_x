@@ -8,7 +8,7 @@ export class Project implements IDefaultEntityColumns{
   @PrimaryGeneratedColumn('uuid')
   _id: string;
 
-  @Column(() => TimestampsEntity)
+  @Column(() => TimestampsEntity, { prefix: false })
   timeStampEntity: TimestampsEntity;
 
   @Column()
