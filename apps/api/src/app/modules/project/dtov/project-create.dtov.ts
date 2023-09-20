@@ -12,9 +12,11 @@ export class ProjectCreateDtoV implements ProjectCreateDto {
   @IsString()
   color: string;
 
+  @IsOptional()
   @IsNumber()
   hoursBudget: number;
 
+  @IsOptional()
   @IsDate()
   expirationDate: Date;
 }
