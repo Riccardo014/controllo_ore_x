@@ -1,16 +1,10 @@
-import { BeforeInsert, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BeforeInsert, Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { Role } from './role.entity';
 import { RtHash } from '@shared/classes/rt-hash.class';
-import { IDefaultEntityColumns } from '@shared/classes/i-default-entity-columns';
-import { TimestampsEntity } from '@shared/classes/timestamps-entity.class';
+import { BaseEntityTemplate } from '@shared/classes/base-entity-template.class';
 
 @Entity()
-export class User implements IDefaultEntityColumns{
-  @PrimaryGeneratedColumn('uuid')
-  _id: string;
-
-  @Column(() => TimestampsEntity, { prefix: false })
-  timeStampEntity: TimestampsEntity;
+export class User extends BaseEntityTemplate{
 
   @Column()
   email: string;

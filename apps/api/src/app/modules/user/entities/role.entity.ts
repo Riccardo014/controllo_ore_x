@@ -1,14 +1,8 @@
-import { IDefaultEntityColumns } from '@shared/classes/i-default-entity-columns';
-import { TimestampsEntity } from '@shared/classes/timestamps-entity.class';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntityTemplate } from '@shared/classes/base-entity-template.class';
+import { Column, Entity } from 'typeorm';
 
 @Entity()
-export class Role implements IDefaultEntityColumns{
-    @PrimaryGeneratedColumn('uuid')
-    _id: string;
-
-    @Column(() => TimestampsEntity, { prefix: false })
-    timeStampEntity: TimestampsEntity;
+export class Role extends BaseEntityTemplate{
 
     @Column()
     name: string;

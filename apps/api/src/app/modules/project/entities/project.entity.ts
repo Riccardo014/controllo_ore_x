@@ -1,15 +1,9 @@
 import { Customer } from '@modules/customer/entities/customer.entity';
-import { IDefaultEntityColumns } from '@shared/classes/i-default-entity-columns';
-import { TimestampsEntity } from '@shared/classes/timestamps-entity.class';
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntityTemplate } from '@shared/classes/base-entity-template.class';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 
 @Entity()
-export class Project implements IDefaultEntityColumns{
-  @PrimaryGeneratedColumn('uuid')
-  _id: string;
-
-  @Column(() => TimestampsEntity, { prefix: false })
-  timeStampEntity: TimestampsEntity;
+export class Project extends BaseEntityTemplate{
 
   @Column()
   name: string;

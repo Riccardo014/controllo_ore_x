@@ -1,15 +1,9 @@
-import { IDefaultEntityColumns } from '@shared/classes/i-default-entity-columns';
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { User } from '@modules/user/entities/user.entity';
-import { TimestampsEntity } from '@shared/classes/timestamps-entity.class';
+import { BaseEntityTemplate } from '@shared/classes/base-entity-template.class';
 
 @Entity()
-export class AuthToken implements IDefaultEntityColumns {
-  @PrimaryGeneratedColumn('uuid')
-  _id: string;
-
-  @Column(() => TimestampsEntity, { prefix: false })
-  timeStampEntity: TimestampsEntity;
+export class AuthToken extends BaseEntityTemplate {
 
   @Column()
   token: string;
