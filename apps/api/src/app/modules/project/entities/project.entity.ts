@@ -1,16 +1,9 @@
 import { Customer } from '@modules/customer/entities/customer.entity';
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntityTemplate } from '@shared/classes/base-entity-template.class';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 
 @Entity()
-export class Project {
-  @PrimaryGeneratedColumn('uuid')
-  _id: string;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
+export class Project extends BaseEntityTemplate{
 
   @Column()
   name: string;
@@ -25,8 +18,8 @@ export class Project {
   color: string;
 
   @Column()
-  hours_budget: number;
+  hoursBudget: number;
 
   @Column()
-  expiration_date: Date;
+  expirationDate: Date;
 }
