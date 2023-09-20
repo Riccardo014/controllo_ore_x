@@ -2,6 +2,9 @@ export interface LabelReadDto {
   _id: string;
   name: string;
   iconName: string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  deletedAt?: Date | string;
 }
 
 
