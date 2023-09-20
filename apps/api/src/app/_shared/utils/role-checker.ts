@@ -6,8 +6,6 @@ import { ApiErrors } from './errors/api-errors';
 
 export abstract class RoleChecker {
 
-  static _userService: UserService;
-  
   /**
    * Check if the role of the user is in the permitted roles for the request
    * @param user The user that is making the request
@@ -16,8 +14,8 @@ export abstract class RoleChecker {
    * @throws ForbiddenException if the user role is not in the permitted roles
    * @returns True if the role of the user is in the permitted roles False otherwise
    */
-  static async checkPermission(user: User, roles: ROLE[]): Promise<boolean> {
-    const currentUser = await this._userService.getOne( user._id, [ 'role' ] );
+  static async checkPermission(user: User, roles: ROLE[], _userService: UserService): Promise<boolean> {
+    const currentUser = await _userService.getOne( user._id, [ 'role' ] );
 
     if (!currentUser) {
       throw new BadRequestException(ApiErrors.MISSING_USER_DATA);
@@ -33,8 +31,8 @@ export abstract class RoleChecker {
    * @param user 
    * @returns 
    */
-  static async userRoleIsCollaboratorOrHigher(user: User): Promise<boolean> {
-    return await this.checkPermission(user, [ ROLE.COLLABORATOR, ROLE.ADMIN, ROLE.SUPERADMIN ]);
+  static async userRoleIsCollaboratorOrHigher(user: User, _userService: UserService): Promise<boolean> {
+    return await this.checkPermission(user, [ ROLE.COLLABORATOR, ROLE.ADMIN, ROLE.SUPERADMIN ], _userService);
   }
 
   /**
@@ -42,8 +40,8 @@ export abstract class RoleChecker {
    * @param user 
    * @returns 
    */
-  static async userRoleIsAdminOrHigher(user: User): Promise<boolean> {
-    return await this.checkPermission(user, [ ROLE.ADMIN, ROLE.SUPERADMIN ]);
+  static async userRoleIsAdminOrHigher(user: User, _userService: UserService): Promise<boolean> {
+    return await this.checkPermission(user, [ ROLE.ADMIN, ROLE.SUPERADMIN ], _userService);
   }
 
   /**
@@ -51,8 +49,8 @@ export abstract class RoleChecker {
    * @param user 
    * @returns 
    */
-  static async userRoleIsSuperAdmin(user: User): Promise<boolean> {
-    return await this.checkPermission(user, [ ROLE.SUPERADMIN ]);
+  static async userRoleIsSuperAdmin(user: User, _userService: UserService): Promise<boolean> {
+    return await this.checkPermission(user, [ ROLE.SUPERADMIN ], _userService);
   }
 
 }
