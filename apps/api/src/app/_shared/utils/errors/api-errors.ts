@@ -26,5 +26,11 @@ export class ApiErrors {
         scope: 'Auth',
         message: 'Il token di autenticazione è scaduto'
     };
+    static readonly PROJECT_CREATION_WENT_WRONG: IErrorBody = {
+        code: '006',
+        scope: 'Project',
+        message: 'Si è verificato un errore durante la creazione del progetto'
+    };
+
 }
 
