@@ -7,8 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.0.8]
+## [0.0.9]
 
+### Aggiunto 
+- Aggiunta la creazione automatica di una release di default quando si creea un nuovo progetto.
+
+## [0.0.8]
 ### Aggiunto 
 - Aggiunto il modulo back-end delle release.
 
