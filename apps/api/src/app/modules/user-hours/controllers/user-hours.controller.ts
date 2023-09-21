@@ -1,6 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { CastObjectPipe } from '@shared/pipes/cast-object.pipe';
-import { AuthUser } from '@shared/decorators/auth-user.decorator';
 import { ApiTags } from '@nestjs/swagger';
 import { FindBoostedOptions } from '@api-interfaces';
 import { FindBoostedResult } from '@find-boosted';
@@ -8,7 +7,6 @@ import { UserHoursService } from '@modules/user-hours/services/user-hours.servic
 import { UserHoursCreateDtoV } from '@modules/user-hours/dtov/user-hours-create.dtov';
 import { UserHoursUpdateDtoV } from '@modules/user-hours/dtov/user-hours-update.dtov';
 import { DeleteResult, UpdateResult } from 'typeorm';
-import { User } from '@modules/user/entities/user.entity';
 import { UserHours } from '../entities/user-hours.entity';
 
 @ApiTags('UserHours')
