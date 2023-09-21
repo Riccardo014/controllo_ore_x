@@ -30,7 +30,7 @@ export class ProjectService extends CrudService<Project, ProjectCreateDtoV, Proj
         version: '0.0.1',
         hoursBudget: project.hoursBudget,
         billableHoursBudget: project.hoursBudget,
-        expirationDate: project.expirationDate, };
+        deadline: project.deadline, };
         
         await this._releaseService.create( releaseData, TX );
 

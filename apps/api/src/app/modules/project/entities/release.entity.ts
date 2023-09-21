@@ -22,6 +22,6 @@ export class Release extends BaseEntityTemplate{
   billableHoursBudget: number;
 
   @Column( { nullable: true } )
-  expirationDate: Date;
+  deadline: Date;
 
 }

@@ -18,5 +18,5 @@ export class ProjectCreateDtoV implements ProjectCreateDto {
 
   @IsOptional()
   @IsDate()
-  expirationDate: Date;
+  deadline: Date;
 }

@@ -20,6 +20,6 @@ export class ReleaseUpdateDtoV implements ReleaseUpdateDto {
 
   @IsOptional()
   @IsDate()
-  expirationDate: Date;
+  deadline: Date;
 
 }

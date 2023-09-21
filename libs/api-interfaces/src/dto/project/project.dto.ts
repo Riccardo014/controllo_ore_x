@@ -4,7 +4,7 @@ export interface ProjectReadDto {
   customerId: string;
   color: string;
   hoursBudget: number;
-  expirationDate: Date;
+  deadline: Date;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   deletedAt?: Date | string;
@@ -16,7 +16,7 @@ export interface ProjectCreateDto {
   customerId: string;
   color?: string;
   hoursBudget: number;
-  expirationDate: Date;
+  deadline: Date;
 }
 
 
@@ -25,5 +25,5 @@ export interface ProjectUpdateDto {
   customerId?: string;
   color?: string;
   hoursBudget?: number;
-  expirationDate?: Date;
+  deadline?: Date;
 }
