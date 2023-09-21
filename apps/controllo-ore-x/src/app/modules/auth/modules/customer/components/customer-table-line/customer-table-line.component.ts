@@ -7,8 +7,8 @@ import { Component } from '@angular/core';
 })
 export class CustomerTableLineComponent {
 
-  name= "Addvalue";
-  email= "test@example.com";
-  creation_date= "03 Feb 2019";
+  name= 'Addvalue';
+  email= 'test@example.com';
+  creation_date= '03 Feb 2019';
 
 }

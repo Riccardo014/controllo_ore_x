@@ -1,0 +1,82 @@
+<div class="-login-page">
+
+  <div class="-login-carousel">
+    <!--<svg class="-carousel-bg" xmlns="http://www.w3.org/2000/svg" width="980" height="1195" viewBox="0 0 823 1118" fill="none">
+      <path d="M820.925 1166.97L821.417 1167.74H820.504H653.185H652.906L652.759 1167.5L342.172 664.073H320.534L8.23853 1167.5L8.09186 1167.74H7.81366H-159.504H-160.417L-159.925 1166.97L225.759 564.547L-153.097 -27.6267L-153.589 -28.3961H-152.675H14.6432H14.9217L15.0683 -28.1594L320.534 465.022H342.172L645.93 -28.1583L646.077 -28.3961H646.356H815.381H816.297L815.802 -27.6258L435.24 564.548L820.925 1166.97Z" stroke="white" stroke-opacity="0.6"/>
+    </svg>-->
+
+    <div class="-logo-and-carousel">
+
+      <div class="headline-4 -logo">
+        ControlloreX
+        <span class="material-symbols-outlined -icon">schedule</span>
+      </div>
+
+      <div class="-slide">
+        <div class="headline-4">Tieni traccia del tuo lavoro</div>
+        <div class="body-2">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptate rem hic dignissimos error officiis, quod, illo reprehenderit veritatis iste neque obcaecati et, accusamus animi unde eveniet corporis odit ratione soluta.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="-login-section">
+    <div class="-login-header">
+      <div class="headline-4">Bentornato</div>
+      <div class="body-2" class="-subtitle">Accedi al controllo ore oppure <a href="#">Inizia la prova gratuita</a></div>
+    </div>
+
+    <div class="-login-form">
+      <button mat-flat-button>
+        <div class="-login-google-button">
+          <img src="../../../../../assets/utils/google-logo.png" alt="">
+          <a href="#">Sign In with Google</a>
+        </div>
+      </button>
+      <div class="body-2 -divider">or</div>
+    
+      <form 
+      autocomplete="off"
+      [formGroup]="form"
+      (ngSubmit)="tryLogin()"
+      class="-form">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Enter your email</mat-label>
+          <input  formControlName="email" matInput>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Enter your passsword</mat-label>
+          <input formControlName="password" matInput type="password">
+        </mat-form-field>
+
+        <div
+          class="error-message"
+          *ngIf="hasErrors"
+          >Email e/o Password errati
+        </div>
+
+        <div class="-forgot-password">
+          <a href="#" class="body-2">Forgot Password?</a>
+        </div>
+  
+        <div>
+          <button mat-flat-button class="-sign-in-button" color="primary" [disabled]="isLoading">
+            <div class="-sign-in-button-text">Sign In</div>
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+
+    <div>
+      <ul>
+        <li class="caption"><a href="">&#x2022; Terms of service</a></li>
+        <li class="caption"><a href="">&#x2022; Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+
+</div>
