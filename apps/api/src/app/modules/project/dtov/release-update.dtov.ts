@@ -1,9 +1,9 @@
 import { ReleaseUpdateDto } from '@api-interfaces';
-import { IsDate, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsDate, IsNumber, IsOptional, IsString, IsUUID } from 'class-validator';
 
 export class ReleaseUpdateDtoV implements ReleaseUpdateDto {
   @IsOptional() 
-  @IsString()
+  @IsUUID()
   projectId: string;
   
   @IsOptional() 
