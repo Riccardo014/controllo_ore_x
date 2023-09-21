@@ -1,5 +1,5 @@
 import { ReleaseExtraHoursCreateDto } from '@api-interfaces';
-import { IsNumber, IsString } from 'class-validator';
+import { IsNumber, IsOptional, IsString, IsUUID } from 'class-validator';
 
 export class ReleaseExtraHoursCreateDtoV implements ReleaseExtraHoursCreateDto {
 
@@ -9,7 +9,11 @@ export class ReleaseExtraHoursCreateDtoV implements ReleaseExtraHoursCreateDto {
   @IsString()
   notes: string;
   
+  @IsOptional()
   @IsString()
   referent: string;
+
+  @IsUUID()
+  releaseId: string;
 
 }
