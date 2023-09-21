@@ -28,9 +28,9 @@ export class ProjectService extends CrudService<Project, ProjectCreateDtoV, Proj
       const releaseData = {
         projectId: project._id,
         version: '0.0.1',
-        hoursBudget: null,
-        billableHoursBudget: null,
-        expirationDate: null };
+        hoursBudget: project.hoursBudget,
+        billableHoursBudget: project.hoursBudget,
+        expirationDate: project.expirationDate, };
         
         await this._releaseService.create( releaseData, TX );
 
