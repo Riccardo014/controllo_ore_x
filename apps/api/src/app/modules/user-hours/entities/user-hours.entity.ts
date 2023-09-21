@@ -2,6 +2,7 @@ import { User } from '@modules/user/entities/user.entity';
 import { BaseEntityTemplate } from '@shared/classes/base-entity-template.class';
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { Label } from './label.entity';
+import { Release } from '@modules/project/entities/release.entity';
 
 @Entity()
 export class UserHours extends BaseEntityTemplate {
@@ -11,9 +12,9 @@ export class UserHours extends BaseEntityTemplate {
   @Column()
   userId: string;
 
-  //@ManyToOne(() => Release, { onDelete: 'SET NULL' })
-  //@JoinColumn({ name: 'releaseId' })
-  //release?: Release;
+  @ManyToOne(() => Release, { onDelete: 'SET NULL' })
+  @JoinColumn({ name: 'releaseId' })
+  release?: Release;
   @Column()
   releaseId: string;
 
