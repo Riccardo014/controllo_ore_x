@@ -7,10 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.9]
+
+### Aggiunto 
+- Quando si crea un nuovo progetto, viene creata una release di default automaticamente.
+
 ## [0.0.8]
 
 ### Aggiunto 
 - Aggiunto il modulo back-end delle ore degli utenti.
+
 
 ## [0.0.7]
 

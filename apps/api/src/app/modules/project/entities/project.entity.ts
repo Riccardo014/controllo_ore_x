@@ -21,5 +21,5 @@ export class Project extends BaseEntityTemplate{
   hoursBudget: number;
 
   @Column()
-  expirationDate: Date;
+  deadline: Date;
 }

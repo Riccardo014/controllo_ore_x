@@ -4,7 +4,7 @@ export interface ReleaseReadDto {
   version: string;
   hoursBudget: number;
   billableHoursBudget: number;
-  expirationDate: Date;
+  deadline: Date;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   deletedAt?: Date | string;
@@ -16,7 +16,7 @@ export interface ReleaseCreateDto {
   version: string;
   hoursBudget: number;
   billableHoursBudget: number;
-  expirationDate: Date;
+  deadline: Date;
 }
 
 
@@ -25,5 +25,5 @@ export interface ReleaseUpdateDto {
   version?: string;
   hoursBudget?: number;
   billableHoursBudget?: number;
-  expirationDate?: Date;
+  deadline?: Date;
 }

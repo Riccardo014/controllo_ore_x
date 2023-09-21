@@ -20,6 +20,6 @@ export class ProjectUpdateDtoV implements ProjectUpdateDto {
 
   @IsOptional() 
   @IsDate() 
-  expirationDate?: Date;
+  deadline?: Date;
 
 }

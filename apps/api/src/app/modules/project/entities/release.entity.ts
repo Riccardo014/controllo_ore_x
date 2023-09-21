@@ -15,13 +15,13 @@ export class Release extends BaseEntityTemplate{
   @Column()
   version: string;
 
-  @Column()
+  @Column( { nullable: true } )
   hoursBudget: number;
 
-  @Column()
+  @Column( { nullable: true } )
   billableHoursBudget: number;
 
-  @Column()
-  expirationDate: Date;
+  @Column( { nullable: true } )
+  deadline: Date;
 
 }
