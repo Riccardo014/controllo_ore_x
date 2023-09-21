@@ -14,7 +14,7 @@ export class User extends BaseEntityTemplate{
 
   _password: string | null;
 
-  @ManyToOne(() => Role, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Role, { onDelete: 'SET NULL' })
   @JoinColumn({ name: 'roleId' })
   role?: Role;
   @Column()

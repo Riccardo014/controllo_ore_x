@@ -8,7 +8,7 @@ export class Project extends BaseEntityTemplate{
   @Column()
   name: string;
 
-  @ManyToOne(() => Customer, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Customer, { onDelete: 'SET NULL' })
   @JoinColumn({ name: 'customerId' })
   customer?: Customer;
   @Column()
