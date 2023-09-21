@@ -18,6 +18,6 @@ export class ReleaseCreateDtoV implements ReleaseCreateDto {
 
   @IsOptional()
   @IsDate()
-  expirationDate: Date;
+  deadline: Date;
 
 }
