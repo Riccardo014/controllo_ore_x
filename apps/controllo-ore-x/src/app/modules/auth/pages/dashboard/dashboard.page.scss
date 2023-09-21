@@ -1,0 +1,29 @@
+@import 'libs/ui/core';
+
+.page {
+  background-color: #fff;
+
+  .sidebar-container {
+    width: 256px;
+    float: left;
+    transition: all 0.1s ease-in-out;
+  }
+  
+  .main-container {
+    width: calc(100vw - 256px);
+    float: right;
+    transition: all 0.1s ease-in-out;
+    overflow: hidden;
+  }
+
+  .full-page {
+    width: 100%;
+  }
+
+  .is-close {
+    width: 0%;
+    overflow: hidden;
+    transition: all 0.1s ease-in-out;
+  }
+
+}

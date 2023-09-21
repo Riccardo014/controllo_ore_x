@@ -10,6 +10,6 @@ export * from './dto/user-hours/user-hours.dto';
 export * from './dto/user-hours/label.dto';
 export * from './dto/project/release-extra-hours.dto';
 export * from './dto/project/release.dto';
+export * from './dto/auth/auth.dto';
 
 export * from './enums/role.enum';
-
