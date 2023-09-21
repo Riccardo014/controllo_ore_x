@@ -1,8 +1,8 @@
 import { ReleaseCreateDto } from '@api-interfaces';
-import { IsDate, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsDate, IsNumber, IsOptional, IsString, IsUUID } from 'class-validator';
 
 export class ReleaseCreateDtoV implements ReleaseCreateDto {
-  @IsString()
+  @IsUUID()
   projectId: string;
   
   @IsString()
