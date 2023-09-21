@@ -1,6 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { CastObjectPipe } from '@shared/pipes/cast-object.pipe';
-import { AuthUser } from '@shared/decorators/auth-user.decorator';
 import { ApiTags } from '@nestjs/swagger';
 import { FindBoostedOptions } from '@api-interfaces';
 import { FindBoostedResult } from '@find-boosted';
@@ -8,7 +7,6 @@ import { UserHoursService } from '@modules/user-hours/services/user-hours.servic
 import { UserHoursCreateDtoV } from '@modules/user-hours/dtov/user-hours-create.dtov';
 import { UserHoursUpdateDtoV } from '@modules/user-hours/dtov/user-hours-update.dtov';
 import { DeleteResult, UpdateResult } from 'typeorm';
-import { User } from '@modules/user/entities/user.entity';
 import { UserHours } from '../entities/user-hours.entity';
 
 @ApiTags('UserHours')
@@ -33,19 +31,18 @@ export class UserHoursController {
   }
 
   @Post()
-  create(@Body() data: UserHoursCreateDtoV, @AuthUser() user: User): Promise<UserHours> {
+  create(@Body() data: UserHoursCreateDtoV): Promise<UserHours> {
     return this._userHoursService.create(data);
   }
 
   @Put(':id')
   update(@Param('id') id: string,
-         @Body() body: UserHoursUpdateDtoV,
-         @AuthUser() user: User): Promise<UpdateResult> {
+         @Body() body: UserHoursUpdateDtoV,): Promise<UpdateResult> {
     return this._userHoursService.update(id, body);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string, @AuthUser() user: User): Promise<DeleteResult> {
+  delete(@Param('id') id: string): Promise<DeleteResult> {
     return this._userHoursService.delete({ _id: id });
   }
 }
