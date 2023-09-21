@@ -5,19 +5,19 @@ import { Label } from './label.entity';
 
 @Entity()
 export class UserHours extends BaseEntityTemplate {
-  @ManyToOne(() => User, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, { onDelete: 'SET NULL' })
   @JoinColumn({ name: 'userId' })
   user?: User;
   @Column()
   userId: string;
 
-  //@ManyToOne(() => Release, { onDelete: 'CASCADE' })
+  //@ManyToOne(() => Release, { onDelete: 'SET NULL' })
   //@JoinColumn({ name: 'releaseId' })
   //release?: Release;
   @Column()
   releaseId: string;
 
-  @ManyToOne(() => Label, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Label, { onDelete: 'SET NULL' })
   @JoinColumn({ name: 'labelId' })
   label?: Label;
   @Column()
