@@ -1,5 +1,5 @@
 import { ReleaseExtraHoursUpdateDto } from '@api-interfaces';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsNumber, IsOptional, IsString, IsUUID } from 'class-validator';
 
 export class ReleaseExtraHoursUpdateDtoV implements ReleaseExtraHoursUpdateDto {
 
@@ -14,5 +14,9 @@ export class ReleaseExtraHoursUpdateDtoV implements ReleaseExtraHoursUpdateDto {
   @IsOptional()
   @IsString()
   referent: string;
+  
+  @IsOptional()
+  @IsUUID()
+  releaseId: string;
   
 }
