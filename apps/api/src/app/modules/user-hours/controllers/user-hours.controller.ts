@@ -33,19 +33,18 @@ export class UserHoursController {
   }
 
   @Post()
-  create(@Body() data: UserHoursCreateDtoV, @AuthUser() user: User): Promise<UserHours> {
+  create(@Body() data: UserHoursCreateDtoV): Promise<UserHours> {
     return this._userHoursService.create(data);
   }
 
   @Put(':id')
   update(@Param('id') id: string,
-         @Body() body: UserHoursUpdateDtoV,
-         @AuthUser() user: User): Promise<UpdateResult> {
+         @Body() body: UserHoursUpdateDtoV,): Promise<UpdateResult> {
     return this._userHoursService.update(id, body);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string, @AuthUser() user: User): Promise<DeleteResult> {
+  delete(@Param('id') id: string): Promise<DeleteResult> {
     return this._userHoursService.delete({ _id: id });
   }
 }
