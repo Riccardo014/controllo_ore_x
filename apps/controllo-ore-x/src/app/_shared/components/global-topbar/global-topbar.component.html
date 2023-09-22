@@ -1,19 +1,16 @@
 <div class="-global-topbar">
 
-
   <div class="-menu-and-logo-section">
     <button
       mat-icon-button
       color="transparent"
       class="-menu-btn"
-      (click)="toggleSidebar()"
-      *ngIf="isMenuButtonShown">
+      (click)="toggleSidebar()">
       <span class="material-symbols-outlined">menu</span>
     </button>
     <h1 class="headline-6">ControllooreX</h1>
   </div>
- 
- 
+
   <div class="-option-section">
     <div class="-option-section-item">
       <mat-chip class="-current-time-chip">
@@ -34,13 +31,25 @@
       </button>
     </div>
     <div class="-option-section-item">
-      <button mat-flat-button class="-user-menu-button">
+      <button mat-button [matMenuTriggerFor]="user_menu" class="-user-menu-button">
         <div class="-user-menu-button-content">
           Marco Muià
           <span class="material-symbols-outlined">arrow_drop_down</span>
         </div>
       </button>
+      <mat-menu #user_menu="matMenu">
+        <button mat-menu-item>
+          <span>Item 1</span>
+        </button>
+        <button mat-menu-item>
+          <span>Item 2</span>
+        </button>
+        <button mat-menu-item>
+          <span>Item 3</span>
+        </button>
+      </mat-menu>
     </div>
 
   </div>
  </div>
+ 
