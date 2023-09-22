@@ -1,4 +1,4 @@
-<!--<controllo-ore-x-global-topbar></controllo-ore-x-global-topbar>
+<controllo-ore-x-global-topbar></controllo-ore-x-global-topbar>
 
 <div class="page">
   <div class="sidebar-container"
@@ -6,9 +6,9 @@
     <controllo-ore-x-sidenav></controllo-ore-x-sidenav>
   </div>
 
-
   <div class="main-container" 
   [class.full-page]="!isSidebarOpen">
+  <!---
     <controllo-ore-x-page-title></controllo-ore-x-page-title>
     <controllo-ore-x-projects-table-header></controllo-ore-x-projects-table-header>
     <controllo-ore-x-projects-release-table-line></controllo-ore-x-projects-release-table-line>
@@ -18,10 +18,10 @@
     <controllo-ore-x-report-table-line></controllo-ore-x-report-table-line>
     <controllo-ore-x-calendar-widget></controllo-ore-x-calendar-widget>
   </div>
-
+---->
 </div>
-
+<!--
 <controllo-ore-x-login></controllo-ore-x-login>
 -->
 
-<h1>Dashboard</h1>
+<router-outlet></router-outlet>
