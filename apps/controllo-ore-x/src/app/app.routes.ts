@@ -8,12 +8,12 @@ export const appRoutes: Route[] = [
   {
     path: '',
     loadChildren: (): any => import('./modules/unauth/unauth.module').then((m) => m.UnauthModule),
-    //canActivate: [CoxUnauthGuard],
+    canActivate: [CoxUnauthGuard],
   },
   {
     path: 'auth',
     loadChildren: (): any => import('./modules/auth/auth.module').then((m) => m.AuthModule),
-    //canActivate: [CoxAuthGuard],
+    canActivate: [CoxAuthGuard],
   },
   //TODO:remove this
   {

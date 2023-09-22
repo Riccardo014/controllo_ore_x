@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ApiResponse, LoginResponseDto, UserReadDto } from '@api-interfaces';
+import { LoginResponseDto, UserReadDto } from '@api-interfaces';
 import { environment } from '@env';
 
 @Injectable({
@@ -44,11 +44,11 @@ export class AuthService {
    */
   async login(email: string, password: string): Promise<boolean> {
     return new Promise((resolve) => {
-      this._http.post<ApiResponse<LoginResponseDto>>(this._loginUri, { email, password }).subscribe({
+      this._http.post<LoginResponseDto>(this._loginUri, { email, password }).subscribe({
         next: (loginResponse) => {
           if (loginResponse) {
-            this.currentUser = loginResponse.data.user;
-            this.token = loginResponse.data.token;
+            this.currentUser = loginResponse.user;
+            this.token = loginResponse.token;
             this._saveState();
             return resolve(true);
           }

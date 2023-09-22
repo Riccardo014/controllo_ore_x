@@ -6,7 +6,7 @@ import { IAngularEnvironment } from '@app/_shared/interfaces/i-angular-environme
 
 export const environment: IAngularEnvironment = {
   production: false,
-  apiUri: 'http://localhost:3334/api',
+  apiUri: 'http://localhost:3000/api',
 };
 
 /*

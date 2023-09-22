@@ -8,6 +8,7 @@ const routes: Routes = [
     path: '',
     pathMatch: 'full',
     redirectTo: screenWidth > 768 ? 'accedi' : 'accedi',
+    //TODO: scherata per ipad e cellulare
     //redirectTo: screenWidth > 768 ? 'accedi' : 'benvenuto',
   },
   {
