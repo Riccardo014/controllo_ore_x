@@ -7,10 +7,10 @@ import { Component } from '@angular/core';
 })
 export class TrackerTableLineComponent {
 
-  project_name = "Calzedonia Real Estate";
-  release_name = "Release 0.0.1";
-  label = "Design";
-  description = "Refactor grafica tracker";
-  working_hours = "05:30";
+  project_name = 'Calzedonia Real Estate';
+  release_name = 'Release 0.0.1';
+  label = 'Design';
+  description = 'Refactor grafica tracker';
+  working_hours = '05:30';
 
 }
