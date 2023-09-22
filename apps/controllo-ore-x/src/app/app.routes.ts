@@ -15,11 +15,6 @@ export const appRoutes: Route[] = [
     loadChildren: (): any => import('./modules/auth/auth.module').then((m) => m.AuthModule),
     canActivate: [CoxAuthGuard],
   },
-  //TODO:remove this
-  {
-    path: 'customer-table-line',
-    component: CustomerTableLineComponent,
-  },
   {
     path: '',
     pathMatch: 'full',
