@@ -5,8 +5,11 @@ import { AuthService } from '@core/services/auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class CoxUnauthGuard implements CanActivate {
-  constructor(private _authService: AuthService, private _router: Router) {}
+export class UnauthGuard implements CanActivate {
+  constructor(
+    private _authService: AuthService,
+    private _router: Router,
+  ) {}
 
   canActivate(): boolean {
     if (!this._authService.isAuthenticated()) {
@@ -17,4 +20,3 @@ export class CoxUnauthGuard implements CanActivate {
     }
   }
 }
-

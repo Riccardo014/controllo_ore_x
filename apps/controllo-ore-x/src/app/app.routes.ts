@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { CoxUnauthGuard } from '@core/guards/cox-unauth.guard';
+import { UnauthGuard } from '@app/_core/guards/unauth.guard';
 import { AuthGuard } from '@core/guards/auth.guard';
 
 export const appRoutes: Route[] = [
@@ -7,7 +7,7 @@ export const appRoutes: Route[] = [
     path: '',
     loadChildren: (): any =>
       import('./modules/unauth/unauth.module').then((m) => m.UnauthModule),
-    canActivate: [CoxUnauthGuard],
+    canActivate: [UnauthGuard],
   },
   {
     path: 'auth',
