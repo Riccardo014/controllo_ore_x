@@ -21,7 +21,6 @@ export class AuthService {
 
   /**
    * Checks if the user is authenticated.
-   * @returns 
    */
   isAuthenticated(): boolean {
     return !!this.token;
@@ -38,9 +37,6 @@ export class AuthService {
 
   /**
    * Performs user login with the provided email and password.
-   * @param email 
-   * @param password 
-   * @returns 
    */
   async login(email: string, password: string): Promise<boolean> {
     return new Promise((resolve) => {
