@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SubscribeComponent } from '@cox-interfaces';
+import { SubscriptionsLifecycle } from '@cox-interfaces';
 import { NavMenusVisibilityService } from 'apps/controllo-ore-x/src/app/_shared/components/sidenav/servicies/nav-menus-visibility.service';
 import { Subscription } from 'rxjs';
 
@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
 })
-export class DashboardPage implements OnInit, SubscribeComponent {
+export class DashboardPage implements OnInit, SubscriptionsLifecycle {
   isSidebarOpen: boolean = true;
 
   subscriptionsList: Subscription[] = [];
@@ -36,6 +36,4 @@ export class DashboardPage implements OnInit, SubscribeComponent {
       subscription.unsubscribe();
     }
   }
-
-
 }

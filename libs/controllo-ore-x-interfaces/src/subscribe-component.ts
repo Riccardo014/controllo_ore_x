@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 
-export interface SubscribeComponent{
+export interface SubscriptionsLifecycle {
   subscriptionsList: Subscription[];
 
   ngOnInit(): void;

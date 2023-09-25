@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavMenusVisibilityService } from './servicies/nav-menus-visibility.service';
-import { SubscribeComponent } from '@cox-interfaces';
+import { SubscriptionsLifecycle } from '@cox-interfaces';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -8,11 +8,11 @@ import { Subscription } from 'rxjs';
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss'],
 })
-export class SidenavComponent implements OnInit, SubscribeComponent {
+export class SidenavComponent implements OnInit, SubscriptionsLifecycle {
   isSidenavOpen: boolean = true;
 
   subscriptionsList: Subscription[] = [];
-  
+
   constructor(private _sidenavService: NavMenusVisibilityService) {}
 
   ngOnInit(): void {
@@ -36,5 +36,4 @@ export class SidenavComponent implements OnInit, SubscribeComponent {
       subscription.unsubscribe();
     }
   }
-
 }

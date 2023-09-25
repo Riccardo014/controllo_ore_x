@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavMenusVisibilityService } from '../sidenav/servicies/nav-menus-visibility.service';
-import { SubscribeComponent } from '@cox-interfaces';
+import { SubscriptionsLifecycle } from '@cox-interfaces';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './global-topbar.component.html',
   styleUrls: ['./global-topbar.component.scss'],
 })
-export class GlobalTopbarComponent implements OnInit, SubscribeComponent {
+export class GlobalTopbarComponent implements OnInit, SubscriptionsLifecycle {
   current_time = '11:20';
 
   isSidenavOpen: boolean = true;
