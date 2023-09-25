@@ -16,7 +16,7 @@ export class AuthService {
   private _loginUri: string = environment.apiUri + '/auth/login';
 
   constructor(private _http: HttpClient) {
-    this._reloadState();
+    this._loadState();
   }
 
   /**
@@ -68,12 +68,12 @@ export class AuthService {
   /**
    * Reloads authentication state from local storage.
    */
-  private _reloadState(): void {
-    const currentUserString: string | null = localStorage.getItem(AuthService._CURRENT_USER_LS_KEY);
-    this.loggedInUser = currentUserString ? (JSON.parse(currentUserString) as UserReadDto) : undefined;
+  private _loadState(): void {
+    const storedLoggedInUser: string | null = localStorage.getItem(AuthService._CURRENT_USER_LS_KEY);
+    this.loggedInUser = storedLoggedInUser ? (JSON.parse(storedLoggedInUser) as UserReadDto) : undefined;
 
-    const tokenString: string | null = localStorage.getItem(AuthService._TOKEN_LS_KEY);
-    this.authToken = tokenString || undefined;
+    const storedAuthToken: string | null = localStorage.getItem(AuthService._TOKEN_LS_KEY);
+    this.authToken = storedAuthToken || undefined;
   }
 
 

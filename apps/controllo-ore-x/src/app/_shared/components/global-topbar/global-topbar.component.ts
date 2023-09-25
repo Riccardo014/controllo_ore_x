@@ -6,8 +6,7 @@ import { SidenavService } from '../sidenav/servicies/sidenavservice.service';
   templateUrl: './global-topbar.component.html',
   styleUrls: ['./global-topbar.component.scss'],
 })
-export class GlobalTopbarComponent implements OnInit{
-
+export class GlobalTopbarComponent implements OnInit {
   current_time = '11:20';
 
   isSidenavOpen: boolean = true;
@@ -15,11 +14,12 @@ export class GlobalTopbarComponent implements OnInit{
   constructor(private _sidenavService: SidenavService) {}
 
   ngOnInit(): void {
-    this._sidenavService.currentSidebarStatus.subscribe(isOpen => this.isSidenavOpen = isOpen);
+    this._sidenavService.currentSidebarStatus.subscribe(
+      (isOpen) => (this.isSidenavOpen = isOpen),
+    );
   }
 
-  toggleSidebar(): void {
-    this._sidenavService.toggleSidebar();
+  toggleVisibility(): void {
+    this._sidenavService.toggleVisibility();
   }
-
 }
