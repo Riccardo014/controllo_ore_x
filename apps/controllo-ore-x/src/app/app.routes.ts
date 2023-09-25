@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 import { CoxUnauthGuard } from '@core/guards/cox-unauth.guard';
-import { AuthGuard } from '@core/guards/cox-auth.guard';
+import { AuthGuard } from '@core/guards/auth.guard';
 
 export const appRoutes: Route[] = [
   {
