@@ -5,6 +5,7 @@ import { GlobalTopbarComponent } from './components/global-topbar/global-topbar.
 import { MatChipsModule } from '@angular/material/chips';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { MatMenuModule } from '@angular/material/menu';
     RouterModule,
     MatChipsModule,
     MatMenuModule,
+    MatButtonModule,
   ],
   exports: [
     GlobalTopbarComponent,
