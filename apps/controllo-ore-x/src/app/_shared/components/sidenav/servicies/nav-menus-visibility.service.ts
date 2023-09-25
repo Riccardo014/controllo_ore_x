@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class SidenavService {
+export class NavMenusVisibilityService {
   areMenusVisibile: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     true,
   );

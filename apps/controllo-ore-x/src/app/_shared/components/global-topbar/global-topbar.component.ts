@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SidenavService } from '../sidenav/servicies/sidenavservice.service';
+import { NavMenusVisibilityService } from '../sidenav/servicies/nav-menus-visibility.service';
 
 @Component({
   selector: 'controllo-ore-x-global-topbar',
@@ -11,7 +11,7 @@ export class GlobalTopbarComponent implements OnInit {
 
   isSidenavOpen: boolean = true;
 
-  constructor(private _sidenavService: SidenavService) {}
+  constructor(private _sidenavService: NavMenusVisibilityService) {}
 
   ngOnInit(): void {
     this._sidenavService.visibiliyObservable.subscribe(
