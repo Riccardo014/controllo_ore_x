@@ -6,25 +6,28 @@ import { AuthService } from '@core/services/auth.service';
 @Component({
   selector: 'controllo-ore-x-login',
   templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss']
+  styleUrls: ['./login.page.scss'],
 })
-export class LoginPage{
+export class LoginPage {
   title: string = 'Accedi';
 
   hasErrors: boolean = false;
   isLoading: boolean = false;
 
   form: FormGroup = new FormGroup({
-    email: new FormControl(null, [Validators.required,Validators.email,]),    
+    email: new FormControl(null, [Validators.required, Validators.email]),
     password: new FormControl(null, Validators.required),
   });
 
-  constructor(private _authService: AuthService, private _router: Router) {}
+  constructor(
+    private _authService: AuthService,
+    private _router: Router,
+  ) {}
 
   /**
    * Try to login the user with the provided credentials.
    */
-  async tryLogin():Promise<void> {
+  async tryLogin(): Promise<void> {
     const formValues: any = this.form.getRawValue();
     this.isLoading = true;
     this.hasErrors = false;
@@ -44,10 +47,6 @@ export class LoginPage{
    * Redirects the user to the auth default page.
    */
   private async _redirectToUserAuthenticatedArea(): Promise<void> {
-    await this._router.navigate([
-      '/auth',
-    ]);
+    await this._router.navigate(['/auth']);
   }
-  
 }
-

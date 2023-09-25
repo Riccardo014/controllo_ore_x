@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LoginResponseDto, UserReadDto } from '@api-interfaces';
 import { environment } from '@env';
+import { lastValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -39,29 +40,31 @@ export class AuthService {
    * Performs user login with the provided email and password.
    */
   async login(email: string, password: string): Promise<boolean> {
-    return new Promise((resolve) => {
-      this._http.post<LoginResponseDto>(this._loginUri, { email, password }).subscribe({
-        next: (loginResponse) => {
-          if (loginResponse) {
-            this.loggedInUser = loginResponse.user;
-            this.authToken = loginResponse.token;
-            this._saveState();
-            return resolve(true);
-          }
-          return resolve(false);
-        },
-        error: () => {
-          return resolve(false);
-        },
-      });
-    });
+    try {
+      const loginResponse = await lastValueFrom(
+        this._http.post<LoginResponseDto>(this._loginUri, { email, password }),
+      );
+
+      if (loginResponse) {
+        this.loggedInUser = loginResponse.user;
+        this.authToken = loginResponse.token;
+        this._saveState();
+        return true;
+      }
+      return false;
+    } catch (error) {
+      return false;
+    }
   }
 
   /**
    * Saves the current user and authentication token to local storage.
    */
   private _saveState(): void {
-    localStorage.setItem(AuthService._CURRENT_USER_LS_KEY, JSON.stringify(this.loggedInUser));
+    localStorage.setItem(
+      AuthService._CURRENT_USER_LS_KEY,
+      JSON.stringify(this.loggedInUser),
+    );
     localStorage.setItem(AuthService._TOKEN_LS_KEY, this.authToken!);
   }
 
@@ -69,15 +72,16 @@ export class AuthService {
    * Reloads authentication state from local storage.
    */
   private _loadState(): void {
-    const storedLoggedInUser: string | null = localStorage.getItem(AuthService._CURRENT_USER_LS_KEY);
-    this.loggedInUser = storedLoggedInUser ? (JSON.parse(storedLoggedInUser) as UserReadDto) : undefined;
+    const storedLoggedInUser: string | null = localStorage.getItem(
+      AuthService._CURRENT_USER_LS_KEY,
+    );
+    this.loggedInUser = storedLoggedInUser
+      ? (JSON.parse(storedLoggedInUser) as UserReadDto)
+      : undefined;
 
-    const storedAuthToken: string | null = localStorage.getItem(AuthService._TOKEN_LS_KEY);
+    const storedAuthToken: string | null = localStorage.getItem(
+      AuthService._TOKEN_LS_KEY,
+    );
     this.authToken = storedAuthToken || undefined;
   }
-
-
-
-
-  
 }
