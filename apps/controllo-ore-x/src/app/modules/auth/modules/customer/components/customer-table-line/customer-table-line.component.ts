@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ExampleMockData } from 'apps/controllo-ore-x/src/assets/utils/datas/mock-data';
 
 @Component({
   selector: 'controllo-ore-x-customer-table-line',
@@ -6,9 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./customer-table-line.component.scss'],
 })
 export class CustomerTableLineComponent {
-
-  name= 'Addvalue';
-  email= 'test@example.com';
-  creation_date= '03 Feb 2019';
-
+  
+  exampleMockData = ExampleMockData;
+  name = this.exampleMockData.name;
+  email = this.exampleMockData.email;
+  creation_date = this.exampleMockData.creation_date;
+  
 }

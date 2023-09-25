@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ExampleMockData } from 'apps/controllo-ore-x/src/assets/utils/datas/mock-data';
 
 @Component({
   selector: 'controllo-ore-x-tracker-table-line',
@@ -7,10 +8,11 @@ import { Component } from '@angular/core';
 })
 export class TrackerTableLineComponent {
 
-  project_name = 'Calzedonia Real Estate';
-  release_name = 'Release 0.0.1';
-  label = 'Design';
-  description = 'Refactor grafica tracker';
-  working_hours = '05:30';
-
+  exampleMockData = ExampleMockData;
+  project_name = this.exampleMockData.project_name;
+  release_name = this.exampleMockData.release_name;
+  label = this.exampleMockData.label;
+  description = this.exampleMockData.description;
+  working_hours = this.exampleMockData.working_hours;
+  
 }
