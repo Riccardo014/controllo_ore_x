@@ -10,7 +10,7 @@ export class AuthService {
   private static readonly _CURRENT_USER_LS_KEY: string = 'COX_CURRENTUSER';
   private static readonly _TOKEN_LS_KEY: string = 'COX_TOKEN';
 
-  currentUser?: UserReadDto;
+  loggedInUser?: UserReadDto;
   token?: string;
 
   private _loginUri: string = environment.apiUri + '/auth/login';
@@ -31,7 +31,7 @@ export class AuthService {
    */
   logout(): void {
     localStorage.clear();
-    this.currentUser = undefined;
+    this.loggedInUser = undefined;
     this.token = undefined;
   }
 
@@ -43,7 +43,7 @@ export class AuthService {
       this._http.post<LoginResponseDto>(this._loginUri, { email, password }).subscribe({
         next: (loginResponse) => {
           if (loginResponse) {
-            this.currentUser = loginResponse.user;
+            this.loggedInUser = loginResponse.user;
             this.token = loginResponse.token;
             this._saveState();
             return resolve(true);
@@ -61,7 +61,7 @@ export class AuthService {
    * Saves the current user and authentication token to local storage.
    */
   private _saveState(): void {
-    localStorage.setItem(AuthService._CURRENT_USER_LS_KEY, JSON.stringify(this.currentUser));
+    localStorage.setItem(AuthService._CURRENT_USER_LS_KEY, JSON.stringify(this.loggedInUser));
     localStorage.setItem(AuthService._TOKEN_LS_KEY, this.token!);
   }
 
@@ -70,7 +70,7 @@ export class AuthService {
    */
   private _reloadState(): void {
     const currentUserString: string | null = localStorage.getItem(AuthService._CURRENT_USER_LS_KEY);
-    this.currentUser = currentUserString ? (JSON.parse(currentUserString) as UserReadDto) : undefined;
+    this.loggedInUser = currentUserString ? (JSON.parse(currentUserString) as UserReadDto) : undefined;
 
     const tokenString: string | null = localStorage.getItem(AuthService._TOKEN_LS_KEY);
     this.token = tokenString || undefined;
