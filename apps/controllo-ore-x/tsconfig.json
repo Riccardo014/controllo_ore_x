@@ -12,6 +12,9 @@
       "@api-interfaces": [
         "libs/api-interfaces/src/index.ts"
       ],
+      "@cox-interfaces": [
+        "libs/controllo-ore-x-interfaces/src/index.ts"
+      ],
       "@app/*": [
         "apps/controllo-ore-x/src/app/*"
       ],
