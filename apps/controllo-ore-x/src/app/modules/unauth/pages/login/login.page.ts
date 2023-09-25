@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@core/services/auth.service';
@@ -8,7 +8,7 @@ import { AuthService } from '@core/services/auth.service';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss']
 })
-export class LoginPage implements OnInit{
+export class LoginPage{
   title: string = 'Accedi';
 
   hasErrors: boolean = false;
@@ -20,15 +20,6 @@ export class LoginPage implements OnInit{
   });
 
   constructor(private _authService: AuthService, private _router: Router) {}
-
-  /**
-   * Check if the user is already authenticated when the component initializes
-   */
-  ngOnInit(): void {
-    if (this._authService.isAuthenticated()) {
-      this._redirectToUserAuthenticatedArea();
-    }
-  }
 
   /**
    * Try to login the user with the provided credentials.
