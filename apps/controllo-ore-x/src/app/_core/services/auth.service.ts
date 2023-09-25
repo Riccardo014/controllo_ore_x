@@ -11,7 +11,7 @@ export class AuthService {
   private static readonly _TOKEN_LS_KEY: string = 'COX_TOKEN';
 
   loggedInUser?: UserReadDto;
-  token?: string;
+  authToken?: string;
 
   private _loginUri: string = environment.apiUri + '/auth/login';
 
@@ -23,7 +23,7 @@ export class AuthService {
    * Checks if the user is authenticated.
    */
   isAuthenticated(): boolean {
-    return !!this.token;
+    return !!this.authToken;
   }
 
   /**
@@ -32,7 +32,7 @@ export class AuthService {
   logout(): void {
     localStorage.clear();
     this.loggedInUser = undefined;
-    this.token = undefined;
+    this.authToken = undefined;
   }
 
   /**
@@ -44,7 +44,7 @@ export class AuthService {
         next: (loginResponse) => {
           if (loginResponse) {
             this.loggedInUser = loginResponse.user;
-            this.token = loginResponse.token;
+            this.authToken = loginResponse.token;
             this._saveState();
             return resolve(true);
           }
@@ -62,7 +62,7 @@ export class AuthService {
    */
   private _saveState(): void {
     localStorage.setItem(AuthService._CURRENT_USER_LS_KEY, JSON.stringify(this.loggedInUser));
-    localStorage.setItem(AuthService._TOKEN_LS_KEY, this.token!);
+    localStorage.setItem(AuthService._TOKEN_LS_KEY, this.authToken!);
   }
 
   /**
@@ -73,7 +73,7 @@ export class AuthService {
     this.loggedInUser = currentUserString ? (JSON.parse(currentUserString) as UserReadDto) : undefined;
 
     const tokenString: string | null = localStorage.getItem(AuthService._TOKEN_LS_KEY);
-    this.token = tokenString || undefined;
+    this.authToken = tokenString || undefined;
   }
 
 
