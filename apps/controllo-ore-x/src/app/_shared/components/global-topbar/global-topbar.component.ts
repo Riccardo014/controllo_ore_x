@@ -14,7 +14,7 @@ export class GlobalTopbarComponent implements OnInit {
   constructor(private _sidenavService: SidenavService) {}
 
   ngOnInit(): void {
-    this._sidenavService.currentSidebarStatus.subscribe(
+    this._sidenavService.visibiliyObservable.subscribe(
       (isOpen) => (this.isSidenavOpen = isOpen),
     );
   }

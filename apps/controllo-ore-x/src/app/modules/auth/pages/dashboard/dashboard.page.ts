@@ -4,16 +4,16 @@ import { SidenavService } from 'apps/controllo-ore-x/src/app/_shared/components/
 @Component({
   selector: 'controllo-ore-x-dashboard',
   templateUrl: './dashboard.page.html',
-  styleUrls: ['./dashboard.page.scss']
+  styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit {
-
   isSidebarOpen: boolean = true;
 
-  constructor( private _sidenavService: SidenavService ){}
+  constructor(private _sidenavService: SidenavService) {}
 
   ngOnInit(): void {
-    this._sidenavService.sidebarOpen.subscribe((isOpen) => (this.isSidebarOpen = isOpen));
+    this._sidenavService.areMenusVisibile.subscribe(
+      (isOpen) => (this.isSidebarOpen = isOpen),
+    );
   }
-
 }

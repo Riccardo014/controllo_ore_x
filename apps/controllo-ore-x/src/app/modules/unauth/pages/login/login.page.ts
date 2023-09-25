@@ -26,7 +26,7 @@ export class LoginPage implements OnInit{
    */
   ngOnInit(): void {
     if (this._authService.isAuthenticated()) {
-      this._redirectToAuth();
+      this._redirectToUserAuthenticatedArea();
     }
   }
 
@@ -40,7 +40,7 @@ export class LoginPage implements OnInit{
     this.form.disable();
 
     if (await this._authService.login(formValues.email, formValues.password)) {
-      await this._redirectToAuth();
+      await this._redirectToUserAuthenticatedArea();
     } else {
       this.hasErrors = true;
     }
@@ -52,7 +52,7 @@ export class LoginPage implements OnInit{
   /**
    * Redirects the user to the auth default page.
    */
-  private async _redirectToAuth(): Promise<void> {
+  private async _redirectToUserAuthenticatedArea(): Promise<void> {
     await this._router.navigate([
       '/auth',
     ]);

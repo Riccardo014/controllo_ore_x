@@ -5,10 +5,13 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class SidenavService {
-  sidebarOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-  currentSidebarStatus: Observable<boolean> = this.sidebarOpen.asObservable();
+  areMenusVisibile: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    true,
+  );
+  visibiliyObservable: Observable<boolean> =
+    this.areMenusVisibile.asObservable();
 
   toggleVisibility(): void {
-    this.sidebarOpen.next(!this.sidebarOpen.value);
+    this.areMenusVisibile.next(!this.areMenusVisibile.value);
   }
 }
