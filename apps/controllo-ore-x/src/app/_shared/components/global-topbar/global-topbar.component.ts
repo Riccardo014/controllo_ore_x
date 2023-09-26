@@ -9,13 +9,22 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./global-topbar.component.scss'],
 })
 export class GlobalTopbarComponent implements OnInit, SubscriptionsLifecycle {
-  current_time = '11:20';
+
+  currentTime: string = '';
 
   isSidenavOpen: boolean = true;
 
   subscriptionsList: Subscription[] = [];
 
-  constructor(private _sidenavService: NavMenusVisibilityService) {}
+  constructor(private _sidenavService: NavMenusVisibilityService) {
+    let currentDateTime = new Date();
+    setInterval(() => {
+      currentDateTime = new Date();
+      this.currentTime = 
+        currentDateTime.getHours().toString()+ ':' + 
+        (currentDateTime.getMinutes()<10?'0':'') + currentDateTime.getMinutes().toString();
+    }, 1);
+  }
 
   ngOnInit(): void {
     this._setSubscriptions();
