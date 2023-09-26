@@ -1,1 +1,1 @@
-export * from './subscribe-component';
+export * from './subscriptions-lifecycle';
