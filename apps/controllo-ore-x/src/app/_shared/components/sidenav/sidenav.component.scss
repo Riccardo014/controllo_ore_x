@@ -2,9 +2,10 @@
 @import 'libs/ui/core/mixins.scss';
 
 .-sidebar-wrapper {
-    background-color: map-get($palette-grey, 300 );
-    width: 256px;
-    height: 100%;
+  height: calc(100vh - 81px);
+  background-color: #E9ECF5;
+  box-sizing: border-box;
+  border-right: 1px solid map-get($palette-grey, 300 );
 
     ul{
       margin: 0;
@@ -19,9 +20,15 @@
           justify-content: left;
           gap: 7%;
           padding: 0 24px;
+          white-space: nowrap;
       }
 
-      .-selected{
+      li:hover{
+        color: #000;
+        background-color: map-get($palette-primary , 200 );
+      }
+
+      .-selected, .-selected:hover{
         background-color: map-get($palette-primary , 500 );
         color: #fff;
       }

@@ -8,3 +8,15 @@
 .icon{
   color: $general-header-color;
 }
+
+.error-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: map-get($palette-error, 100 );
+  color: map-get($palette-error, 900 );
+  border-radius: 4px;
+  font-weight: bold;
+  height: 56px;
+  border: 1px solid map-get($palette-error, 900 );
+}

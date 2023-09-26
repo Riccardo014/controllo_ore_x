@@ -7,7 +7,30 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@api-interfaces": [
+        "libs/api-interfaces/src/index.ts"
+      ],
+      "@cox-interfaces": [
+        "libs/controllo-ore-x-interfaces/src/index.ts"
+      ],
+      "@app/*": [
+        "apps/controllo-ore-x/src/app/*"
+      ],
+      "@core/*": [
+        "apps/controllo-ore-x/src/app/_core/*"
+      ],
+      "@shared/*": [
+        "apps/controllo-ore-x/src/app/_shared/*"
+      ],
+      "@modules/*": [
+        "apps/controllo-ore-x/src/app/modules/*"
+      ],
+      "@env": [
+        "apps/controllo-ore-x/src/environments/environment"
+      ],
+    }
   },
   "files": [],
   "include": [],

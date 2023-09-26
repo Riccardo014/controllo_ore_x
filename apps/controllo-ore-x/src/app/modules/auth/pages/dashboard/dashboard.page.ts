@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { NavMenusVisibilityService } from './servicies/nav-menus-visibility.service';
 import { SubscriptionsLifecycle } from '@cox-interfaces';
+import { NavMenusVisibilityService } from 'apps/controllo-ore-x/src/app/_shared/components/sidenav/servicies/nav-menus-visibility.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'controllo-ore-x-sidenav',
-  templateUrl: './sidenav.component.html',
-  styleUrls: ['./sidenav.component.scss'],
+  selector: 'controllo-ore-x-dashboard',
+  templateUrl: './dashboard.page.html',
+  styleUrls: ['./dashboard.page.scss'],
 })
-export class SidenavComponent implements OnInit, SubscriptionsLifecycle {
-  isSidenavOpen: boolean = true;
+export class DashboardPage implements OnInit, SubscriptionsLifecycle {
+  isSidebarOpen: boolean = true;
 
   subscriptionsList: Subscription[] = [];
 
@@ -25,8 +25,8 @@ export class SidenavComponent implements OnInit, SubscriptionsLifecycle {
 
   _setSubscriptions(): void {
     this.subscriptionsList.push(
-      this._sidenavService.visibiliyObservable.subscribe(
-        (isOpen) => (this.isSidenavOpen = isOpen),
+      this._sidenavService.areMenusVisibile.subscribe(
+        (isOpen) => (this.isSidebarOpen = isOpen),
       ),
     );
   }
