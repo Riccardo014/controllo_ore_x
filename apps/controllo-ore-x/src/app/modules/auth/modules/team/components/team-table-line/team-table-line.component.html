@@ -1,16 +1,25 @@
 <div class="-team-table-line">
-    <div class="-space">
-    </div>
-    <img src="../../../../../../../assets/team-avatars/marco_mula.png" alt="Avatar" class="-avatar">
-    <div class="-team-table-line-data-and-edit">
-        <div class="-team-table-line-data">
-        <div class="-team-table-line-single-data body-2">{{ name }}</div>
-        <div class="-team-table-line-single-data body-2">{{ email }}</div>
-        <div class="-team-table-line-single-data body-2">{{ creation_date }}</div>
-        <div class="-team-table-line-single-data caption"><mat-chip class="-role-chip">{{ role }}</mat-chip></div>
-
-        </div>
-        <div><span class="material-symbols-outlined icon">ink_marker</span></div>
-    </div>
-
+  <div class="-space">
   </div>
+  <img [src]= avatarSrc alt="Avatar" class="-avatar">
+  <div class="-team-table-line-data-and-edit">
+    <div class="-team-table-line-data">
+    <div class="-team-table-line-single-data body-2">{{ name }}</div>
+    <div class="-team-table-line-single-data body-2">{{ email }}</div>
+    <div class="-team-table-line-single-data body-2">{{ creationDate }}</div>
+    <div class="-team-table-line-single-data caption">
+      <mat-chip 
+        [ngClass]="{
+        '-role-chip-superadmin' : role == roles[0],
+        '-role-chip-admin' : role == roles[1],
+        '-role-chip-collaborator' : role == roles[2],
+        }">
+        {{ role }}
+      </mat-chip>
+    </div>
+
+    </div>
+    <div><span class="material-symbols-outlined icon">ink_marker</span></div>
+  </div>
+
+</div>
