@@ -2,6 +2,8 @@ export * from './interfaces/base-response.interface';
 export * from './interfaces/find-boosted.interface';
 export * from './interfaces/table-configuration.interface';
 export * from './interfaces/index-configuration.dto';
+export * from './interfaces/i-rt-wrap-base.interface';
+export * from './interfaces/find-boosted-result.interface';
 
 export * from './lib/api-interfaces';
 export * from './dto/user/user.dto';

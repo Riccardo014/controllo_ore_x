@@ -4,4 +4,14 @@
     [buttonIcon]="buttonIcon"
     [buttonText]="buttonText"
   ></controllo-ore-x-page-title>
+
+  <lib-rt-table
+    *ngIf="isFirstLoadDone"
+    [isLoading]="isItLoading"
+    [tableConfiguration]="configuration"
+    [data]="indexTableHandler.data"
+    (statusChange)="indexTableHandler.statusChange($event)"
+    [currentStatus]="indexTableHandler.currentStatus"
+  >
+  </lib-rt-table>
 </div>

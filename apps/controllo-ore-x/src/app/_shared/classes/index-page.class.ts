@@ -5,7 +5,7 @@ import { IndexConfigurationDataService } from '@core/services/index-configuratio
 import { BehaviorSubject } from 'rxjs';
 
 @Directive()
-export abstract class BoIndexPage<T, CreateT, UpdateT> implements OnInit {
+export abstract class IndexPage<T, CreateT, UpdateT> implements OnInit {
   isFirstLoadDone: BehaviorSubject<boolean> = new BehaviorSubject(false);
   isLoading: BehaviorSubject<boolean> = new BehaviorSubject(true);
   abstract title: string;
@@ -21,7 +21,9 @@ export abstract class BoIndexPage<T, CreateT, UpdateT> implements OnInit {
   protected abstract _configurationService: IndexConfigurationDataService;
 
   ngOnInit(): void {
-    this.indexTableHandler = new RtTableApiStatusManager<T, CreateT, UpdateT>(this._dataService);
+    this.indexTableHandler = new RtTableApiStatusManager<T, CreateT, UpdateT>(
+      this._dataService,
+    );
     this._firstLoad();
 
     this.indexTableHandler.isLoading.subscribe((r) => {
@@ -31,11 +33,13 @@ export abstract class BoIndexPage<T, CreateT, UpdateT> implements OnInit {
   }
 
   private _firstLoad(): void {
-    this._configurationService.getConfiguration(this.CONFIGURATION_KEY).subscribe((configuration) => {
-      this.configuration = configuration.data.configuration;
-      this.indexTableHandler.tableConfiguration = this.configuration;
-      this.indexTableHandler.fetchData();
-      this.isFirstLoadDone.next(true);
-    });
+    this._configurationService
+      .getConfiguration(this.CONFIGURATION_KEY)
+      .subscribe((data) => {
+        this.configuration = data.configuration;
+        this.indexTableHandler.tableConfiguration = this.configuration;
+        this.indexTableHandler.fetchData();
+        this.isFirstLoadDone.next(true);
+      });
   }
 }

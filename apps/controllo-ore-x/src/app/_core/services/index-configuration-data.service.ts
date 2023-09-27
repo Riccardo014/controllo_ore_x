@@ -11,8 +11,8 @@ export class IndexConfigurationDataService {
 
   constructor(private _http: HttpClient) {}
 
-  getConfiguration(key: INDEX_CONFIGURATION_KEY): Observable<ApiResponse<IndexConfigurationReadDto>> {
-    return this._http.get<ApiResponse<IndexConfigurationReadDto>>(`${this.currentApiUri}/${key}`);
+  getConfiguration(key: INDEX_CONFIGURATION_KEY): Observable<IndexConfigurationReadDto> {
+    return this._http.get<IndexConfigurationReadDto>(`${this.currentApiUri}/${key}`);
   }
 }
 

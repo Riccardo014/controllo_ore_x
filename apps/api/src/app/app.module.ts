@@ -11,6 +11,7 @@ import { AuthModule } from '@modules/auth/auth.module';
 import { CustomerModule } from '@modules/customer/customer.module';
 import { ProjectModule } from '@modules/project/project.module';
 import { UserHoursModule } from '@modules/user-hours/user-hours.module';
+import { IndexConfigurationModule } from '@modules/index-configuration/index-configuration.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { UserHoursModule } from '@modules/user-hours/user-hours.module';
     CustomerModule,
     ProjectModule,
     UserHoursModule,
+    IndexConfigurationModule,
   ],
   providers: [AppService],
 })
