@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TableConfigurationColumn } from '@api-interfaces';
+import { ROLE, TableConfigurationColumn } from '@api-interfaces';
 import { rtTableColumnValue } from '../../lib/rt-table-column-value';
 
 @Component({
@@ -13,6 +13,8 @@ export class RtTableTdComponent implements OnInit {
 
   valueToPrint: any;
 
+  roles: ROLE[] = [ROLE.SUPERADMIN, ROLE.ADMIN, ROLE.COLLABORATOR];
+
   // PAYMENT_STATUS: typeof PAYMENT_STATUS = PAYMENT_STATUS;
 
   // REQUEST_STATUS: typeof REQUEST_STATUS = REQUEST_STATUS;
@@ -25,4 +27,3 @@ export class RtTableTdComponent implements OnInit {
     return rtTableColumnValue(this.column, this.entity);
   }
 }
-

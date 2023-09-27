@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  TemplateRef,
+} from '@angular/core';
 import { MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { TableConfiguration } from '@api-interfaces';
 import { RtTableStatus } from '../../interfaces/rt-table-status.interface';
@@ -25,7 +31,8 @@ export class RtTableComponent {
   @Input() editFn?: (entity: any) => void | Promise<void>;
   @Input() editIcon?: string;
 
-  @Output() statusChange: EventEmitter<RtTableStatus> = new EventEmitter<RtTableStatus>();
+  @Output() statusChange: EventEmitter<RtTableStatus> =
+    new EventEmitter<RtTableStatus>();
   // @Output() userDetail: EventEmitter<UserReadDto> = new EventEmitter<UserReadDto>();
 
   @Output() openFilter: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -35,6 +42,8 @@ export class RtTableComponent {
   @Input() thSuffixTemplate?: TemplateRef<any>;
   @Input() tdPrefixTemplate?: TemplateRef<any>;
   @Input() tdSuffixTemplate?: TemplateRef<any>;
+
+  @Input() isEditAvailable: boolean = true;
 
   constructor(private _paginator: MatPaginatorIntl) {
     _paginator.itemsPerPageLabel = 'Elementi per pagina';
@@ -91,4 +100,3 @@ export class RtTableComponent {
     }
   }
 }
-

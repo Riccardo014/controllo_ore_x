@@ -33,7 +33,7 @@ export const TEAM_INDEX_CONFIGURATION_SEED: any = {
       },
       {
         title: 'Ruolo',
-        type: 'STRING',
+        type: 'ROLE',
         field: 'role.name',
         sortable: true,
       },

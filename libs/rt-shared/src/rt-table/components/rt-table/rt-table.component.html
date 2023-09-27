@@ -1,5 +1,7 @@
 <div class="-topbar">
-  <lib-rt-table-fulltext-bar (fulltextSearchUpdate)="updateFulltextSearch($event)"></lib-rt-table-fulltext-bar>
+  <lib-rt-table-fulltext-bar
+    (fulltextSearchUpdate)="updateFulltextSearch($event)"
+  ></lib-rt-table-fulltext-bar>
   <ng-content select="[headingActions]"></ng-content>
 </div>
 
@@ -7,9 +9,7 @@
   <table>
     <thead>
       <tr>
-        <th
-          *ngIf="!tdPrefixTemplate"
-          class="-w-60"></th>
+        <th *ngIf="!tdPrefixTemplate" class="-w-60"></th>
         <ng-container *ngIf="thPrefixTemplate">
           <ng-container *ngTemplateOutlet="thPrefixTemplate"></ng-container>
         </ng-container>
@@ -17,7 +17,8 @@
           <lib-rt-table-th
             [column]="column"
             (orderChanged)="updateOrder($event)"
-            [orderBy]="currentStatus.order"></lib-rt-table-th>
+            [orderBy]="currentStatus.order"
+          ></lib-rt-table-th>
         </th>
         <!-- <th class="-b-left" style="width: 60px"></th> -->
         <ng-container *ngIf="thSuffixTemplate">
@@ -28,29 +29,26 @@
     <tbody *ngIf="!isLoading">
       <div *ngIf="data.length; else noData"></div>
       <tr *ngFor="let entity of data">
-        <td
-          class="-text-center -w-60"
-          *ngIf="!tdPrefixTemplate">
+        <td class="-text-center -w-60" *ngIf="!tdPrefixTemplate">
           <ng-container *ngIf="!isFirstColumnHidden">
             <a
               *ngIf="editFn; else editLink"
               (click)="editFn(entity[tableConfiguration.idProperty || '_id'])"
-              mat-icon-button>
-              <mat-icon
-                color="primary"
-                class="-f-icon"
-                >{{ editIcon ?? 'edit' }}</mat-icon
-              >
+              mat-icon-button
+            >
+              <mat-icon color="primary" class="-f-icon">{{
+                editIcon ?? 'edit'
+              }}</mat-icon>
             </a>
             <ng-template #editLink>
               <a
+                *ngIf="isEditAvailable"
                 [routerLink]="entity[tableConfiguration.idProperty || '_id']"
-                mat-icon-button>
-                <mat-icon
-                  color="primary"
-                  class="-f-icon"
-                  >{{ editIcon ?? 'visibility' }}</mat-icon
-                >
+                mat-icon-button
+              >
+                <mat-icon color="primary" class="-f-icon">{{
+                  editIcon ?? 'visibility'
+                }}</mat-icon>
               </a>
             </ng-template>
           </ng-container>
@@ -58,35 +56,33 @@
             <button
               *ngIf="openDialog"
               mat-icon-button
-              (click)="openDialogFn(entity)">
-              <mat-icon
-                color="primary"
-                class="-f-icon"
-                >visibility</mat-icon
-              >
+              (click)="openDialogFn(entity)"
+            >
+              <mat-icon color="primary" class="-f-icon">visibility</mat-icon>
             </button>
           </ng-container>
         </td>
 
         <ng-container *ngIf="tdPrefixTemplate">
-          <ng-container *ngTemplateOutlet="tdPrefixTemplate; context: { entity: entity }"></ng-container>
+          <ng-container
+            *ngTemplateOutlet="tdPrefixTemplate; context: { entity: entity }"
+          ></ng-container>
         </ng-container>
         <td *ngFor="let column of tableConfiguration?.columns">
           <lib-rt-table-td
             [column]="column"
-            [entity]="entity"></lib-rt-table-td>
+            [entity]="entity"
+          ></lib-rt-table-td>
         </td>
         <ng-container *ngIf="tdSuffixTemplate">
-          <ng-container *ngTemplateOutlet="tdSuffixTemplate; context: { entity: entity }"></ng-container>
+          <ng-container
+            *ngTemplateOutlet="tdSuffixTemplate; context: { entity: entity }"
+          ></ng-container>
         </ng-container>
       </tr>
       <ng-template #noData>
         <tr>
-          <td
-            colspan="100"
-            class="-no-datas-td"
-            >Nessun elemento</td
-          >
+          <td colspan="100" class="-no-datas-td">Nessun elemento</td>
         </tr>
         <!-- <div class="-no-datas"> Nessun elemento </div> -->
       </ng-template>
@@ -100,14 +96,19 @@
 <div
   class="-pagination-container"
   *ngIf="
-    tableConfiguration && currentStatus && (!tableConfiguration.pagination?.disabled || !currentStatus.pagination)
-  ">
+    tableConfiguration &&
+    currentStatus &&
+    (!tableConfiguration.pagination?.disabled || !currentStatus.pagination)
+  "
+>
   <mat-paginator
     (page)="updatePagination($event)"
     [length]="currentStatus.pagination.totalItems"
     [pageIndex]="currentStatus.pagination.currentPage - 1"
-    [pageSizeOptions]="tableConfiguration.pagination?.pageSizeOptions || [5, 10, 25, 50, 100]"
-    [pageSize]="currentStatus.pagination.itemsPerPage">
+    [pageSizeOptions]="
+      tableConfiguration.pagination?.pageSizeOptions || [5, 10, 25, 50, 100]
+    "
+    [pageSize]="currentStatus.pagination.itemsPerPage"
+  >
   </mat-paginator>
 </div>
-

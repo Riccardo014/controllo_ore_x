@@ -15,8 +15,8 @@
 
 .-chip {
   background: map-get($palette-accent, 200);
-  border-radius: 16px;
-  padding: 10px 20px;
+  border-radius: 18px;
+  padding: 10px 10px;
   text-align: center;
   width: fit-content;
   margin: 0 auto;
@@ -34,3 +34,14 @@ mat-icon.-check {
   color: map-get($palette-success, 500);
 }
 
+.-role-chip-superadmin{
+  background-color: map-get($palette-auxiliaries-blue, 500 );
+}
+
+.-role-chip-admin{
+  background-color: map-get($palette-auxiliaries-yellow, 500 );
+}
+
+.-role-chip-collaborator{
+  background-color: map-get($palette-auxiliaries-green, 500 );
+}

@@ -1,0 +1,16 @@
+@mixin scrollbar-primary($color, $size, $vertical: true) {
+  // webkit scrollbar
+  &::-webkit-scrollbar {
+    @if $vertical == true {
+      width: $size;
+    } @else {
+      height: $size;
+    }
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $color;
+    //border-radius: 8px;
+  }
+  // webkit scrollbar
+}
