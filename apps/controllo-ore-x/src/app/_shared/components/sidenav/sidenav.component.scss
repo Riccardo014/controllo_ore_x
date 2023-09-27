@@ -2,7 +2,7 @@
 @import 'libs/ui/core/mixins.scss';
 
 .-sidebar-wrapper {
-  height: calc(100vh - 81px);
+  height: 100vh;
   background-color: #E9ECF5;
   box-sizing: border-box;
   border-right: 1px solid map-get($palette-grey, 300 );
@@ -12,7 +12,7 @@
       list-style-type: none;
       padding: 0;
   
-      li{
+      li a{
           color: $general-header-color;
           height: 60px;
           display: flex;
@@ -21,18 +21,19 @@
           gap: 7%;
           padding: 0 24px;
           white-space: nowrap;
+          text-decoration: none;
       }
 
-      li:hover{
+      li a:hover{
         color: #000;
         background-color: map-get($palette-primary , 200 );
       }
 
-      .-selected, .-selected:hover{
+      li .-selected, li .-selected:hover{
         background-color: map-get($palette-primary , 500 );
         color: #fff;
       }
-    
+
     }
 
     .menu-subtitle{

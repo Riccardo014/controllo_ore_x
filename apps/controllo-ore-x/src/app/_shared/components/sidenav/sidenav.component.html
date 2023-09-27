@@ -1,22 +1,39 @@
 <div class="-sidebar-wrapper">
-
   <ul>
-    <li class="body-1 -selected"><span class="material-symbols-outlined">screen_record</span>Tracker</li>
-    <li class="body-1"><span class="material-symbols-outlined">carpenter</span>Ferie e Permessi</li>
+    <li *ngFor="let voice of MAIN_MENU" class="body-1">
+      <a
+        [routerLink]="voice.routerLink"
+        [class.-selected]="setActiveVoice(voice.routerLink)"
+      >
+        <span class="material-symbols-outlined">{{ voice.iconName }}</span
+        >{{ voice.label }}
+      </a>
+    </li>
   </ul>
 
   <p class="menu-subtitle">Amministrazione</p>
   <ul>
-    <li class="body-1"><span class="material-symbols-outlined">chair</span>Report</li>
+    <li *ngFor="let voice of ADMINISTRATION_MENU" class="body-1">
+      <a
+        [routerLink]="voice.routerLink"
+        [class.-selected]="setActiveVoice(voice.routerLink)"
+      >
+        <span class="material-symbols-outlined">{{ voice.iconName }}</span
+        >{{ voice.label }}
+      </a>
+    </li>
   </ul>
 
   <p class="menu-subtitle">Gestione</p>
   <ul>
-    <li class="body-1"><span class="material-symbols-outlined">egg</span>Progetti</li>
-    <li class="body-1"><span class="material-symbols-outlined">bakery_dining</span>Clienti</li>
-    <li class="body-1"><span class="material-symbols-outlined">workspaces</span>Team</li>
-    <li class="body-1"><span class="material-symbols-outlined">sports_tennis</span>Etichette</li>
-    <li class="body-1"><span class="material-symbols-outlined">robot</span>Impostazioni</li>
+    <li *ngFor="let voice of MANAGEMENT_MENU" class="body-1">
+      <a
+        [routerLink]="voice.routerLink"
+        [class.-selected]="setActiveVoice(voice.routerLink)"
+      >
+        <span class="material-symbols-outlined">{{ voice.iconName }}</span
+        >{{ voice.label }}
+      </a>
+    </li>
   </ul>
-
 </div>

@@ -1,7 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { NavMenusVisibilityService } from './servicies/nav-menus-visibility.service';
+import { Router } from '@angular/router';
+import { ADMINISTRATION_MENU } from '@app/_core/config/administration-menu.config';
+import { MAIN_MENU } from '@app/_core/config/main-menu.config';
+import { MANAGEMENT_MENU } from '@app/_core/config/management-menu.config';
+import {
+  SubscriptionsLifecycle,
+  completeSubscriptions,
+} from '@app/utils/subscriptions_lifecycle';
+import { IMainMenuVoice } from '@core/interfaces/i-main-menu-voice.interface';
 import { Subscription } from 'rxjs';
-import { SubscriptionsLifecycle, completeSubscriptions } from '@app/utils/subscriptions_lifecycle';
+import { NavMenusVisibilityService } from './servicies/nav-menus-visibility.service';
 
 @Component({
   selector: 'controllo-ore-x-sidenav',
@@ -9,14 +17,21 @@ import { SubscriptionsLifecycle, completeSubscriptions } from '@app/utils/subscr
   styleUrls: ['./sidenav.component.scss'],
 })
 export class SidenavComponent implements OnInit, SubscriptionsLifecycle {
+  MAIN_MENU: IMainMenuVoice[] = MAIN_MENU;
+  ADMINISTRATION_MENU: IMainMenuVoice[] = ADMINISTRATION_MENU;
+  MANAGEMENT_MENU: IMainMenuVoice[] = MANAGEMENT_MENU;
+
   isSidenavOpen: boolean = true;
 
   subscriptionsList: Subscription[] = [];
 
   _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
-  completeSubscriptions;
+    completeSubscriptions;
 
-  constructor(private _sidenavService: NavMenusVisibilityService) {}
+  constructor(
+    private _router: Router,
+    private _sidenavService: NavMenusVisibilityService,
+  ) {}
 
   ngOnInit(): void {
     this._setSubscriptions();
@@ -34,4 +49,21 @@ export class SidenavComponent implements OnInit, SubscriptionsLifecycle {
     );
   }
 
+  setActiveVoice(routerLink: string | undefined): boolean {
+    if (!routerLink) {
+      return false;
+    }
+
+    const currentUrl: string = this._router.url;
+    if (!currentUrl.includes(routerLink)) {
+      return false;
+    }
+
+    //* this condition is to avoid multiple active voices on sidebar
+    if (routerLink === 'documenti' && currentUrl.includes('i-miei-documenti')) {
+      return false;
+    }
+
+    return true;
+  }
 }
