@@ -1,0 +1,86 @@
+@import "libs/ui/core.scss";
+
+.-filter-component {
+  position: relative;
+  z-index: 1000;
+  text-align: center;
+
+  .-drawer {
+    width: 450px;
+    position: fixed;
+    height: calc(100% - 80px);
+    top: 80px;
+    right: 0;
+    transition: all 0.2s ease-in-out;
+    transform: translateX(500px);
+    background-color: $background-light-color;
+    box-sizing: border-box;
+    border-right: 1px solid map-get($palette-grey, 200);
+    padding: 30px 30px 50px 30px;
+    overflow-y: auto;
+
+    &.is-open {
+      transform: translateX(0);
+    }
+
+    @include mobile {
+      top: 64px;
+      height: calc(100% - 64px);
+    }
+
+    @include scrollbar-primary(#91979d, 6px);
+
+    .-drawer__menu {
+
+      .-drawer__menu__main-menu {
+        width: 100%;
+        height: calc(100% - 72px);
+        padding-bottom: 32px;
+        box-sizing: border-box;
+
+        .-header {
+          text-align: left;
+        }
+
+        .-filters-form {
+
+          .-filter-form-field {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    .-search-icon {
+      padding: 0 10px;
+      line-height: 30px;
+    }
+
+    .-container-btns {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.-and-or-toggle {
+  font-size: 8px;
+  // color: $text-color-secondary;
+  font-weight: bold;
+  //background-color: $background-elevation-1;
+  cursor: pointer;
+  line-height: 14px;
+  border: 0 none;
+  padding: 2px 4px;
+  border-radius: 4px;
+
+  &:disabled {
+    opacity: 0.6;
+  }
+}
+

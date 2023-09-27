@@ -1,0 +1,108 @@
+@import 'libs/ui/core.scss';
+
+:host {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  // padding: 40px;
+
+  @include mobile {
+    padding: 20px;
+  }
+}
+
+.-topbar {
+  display: flex;
+  align-items: center;
+  background: $table-light-background;
+  color: $table-label-search;
+  border-top: 1px solid $table-border-color;
+  border-right: 1px solid $table-border-color;
+  border-left: 1px solid $table-border-color;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  height: 60px;
+  flex-wrap: wrap;
+
+  @include mobile-tablet {
+    height: 100%;
+  }
+
+  .-topbar__filter-container {
+    height: 70%;
+    width: 60px;
+  }
+}
+
+.-table-container {
+  overflow-x: auto;
+
+  @include mobile-tablet {
+    overflow: scroll;
+  }
+
+  table {
+    width: 100%;
+    border: 1px solid $table-border-color;
+    border-collapse: collapse;
+    background: $table-light-background;
+  }
+
+  tbody {
+    background: #ffffff;
+
+    tr {
+      border-bottom: 1px solid #e0e4e8;
+      border-collapse: collapse;
+    }
+
+    .-no-datas-td {
+      padding: 12px 8px;
+    }
+  }
+
+  thead {
+    background: $table-background-even;
+
+    tr {
+      border: 1px solid $table-border-color;
+    }
+  }
+}
+
+.-pagination-container {
+  border-bottom: 1px solid $table-border-color;
+  border-right: 1px solid $table-border-color;
+  border-left: 1px solid $table-border-color;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+
+  mat-paginator {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+  }
+}
+
+.-b-left {
+  border-left: 1px solid $table-border-color;
+}
+
+.-container-btn-actions {
+  display: flex;
+  gap: 20px;
+  border-left: 1px solid map-get($palette-grey, 200);
+  padding: 0 20px;
+}
+
+.-w-60 {
+  width: 60px;
+}
+
+.-f-icon {
+  font-size: 1.25rem;
+}
+
+.-text-center {
+  text-align: center;
+}
+

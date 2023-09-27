@@ -1,0 +1,36 @@
+@import 'libs/ui/core.scss';
+
+:host {
+  display: block;
+  box-sizing: border-box;
+  height: 64px;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  padding: 24px 10px;
+  font-size: $table-font-size-column;
+}
+
+.-chip {
+  background: map-get($palette-accent, 200);
+  border-radius: 16px;
+  padding: 10px 20px;
+  text-align: center;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.-background-completed {
+  background: map-get($palette-success, 100);
+}
+
+.-background-rejected {
+  background: map-get($palette-error, 100);
+}
+
+mat-icon.-check {
+  color: map-get($palette-success, 500);
+}
+
