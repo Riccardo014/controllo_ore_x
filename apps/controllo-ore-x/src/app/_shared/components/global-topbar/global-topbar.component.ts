@@ -21,7 +21,7 @@ export class GlobalTopbarComponent implements OnInit, SubscriptionsLifecycle {
     setInterval(() => {
       currentDateTime = new Date();
       this.currentTime = 
-        currentDateTime.getHours().toString()+ ':' + 
+        (currentDateTime.getHours()<10?'0':'') + currentDateTime.getHours().toString()+ ':' +
         (currentDateTime.getMinutes()<10?'0':'') + currentDateTime.getMinutes().toString();
     }, 1);
   }
