@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { NavMenusVisibilityService } from '../sidenav/servicies/nav-menus-visibility.service';
-import { SubscriptionsLifecycle } from '@cox-interfaces';
+import {
+  SubscriptionsLifecycle,
+  completeSubscriptions,
+} from '@app/utils/subscriptions_lifecycle';
 import { Subscription } from 'rxjs';
+import { NavMenusVisibilityService } from '../sidenav/servicies/nav-menus-visibility.service';
 
 @Component({
   selector: 'controllo-ore-x-global-topbar',
@@ -9,20 +12,25 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./global-topbar.component.scss'],
 })
 export class GlobalTopbarComponent implements OnInit, SubscriptionsLifecycle {
-
   currentTime: string = '';
 
   isSidenavOpen: boolean = true;
 
   subscriptionsList: Subscription[] = [];
 
+  _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
+  completeSubscriptions;
+
   constructor(private _sidenavService: NavMenusVisibilityService) {
     let currentDateTime = new Date();
     setInterval(() => {
       currentDateTime = new Date();
-      this.currentTime = 
-        (currentDateTime.getHours()<10?'0':'') + currentDateTime.getHours().toString()+ ':' +
-        (currentDateTime.getMinutes()<10?'0':'') + currentDateTime.getMinutes().toString();
+      this.currentTime =
+        (currentDateTime.getHours() < 10 ? '0' : '') +
+        currentDateTime.getHours().toString() +
+        ':' +
+        (currentDateTime.getMinutes() < 10 ? '0' : '') +
+        currentDateTime.getMinutes().toString();
     }, 1);
   }
 
@@ -31,7 +39,7 @@ export class GlobalTopbarComponent implements OnInit, SubscriptionsLifecycle {
   }
 
   ngOnDestroy(): void {
-    this._completeSubscriptions();
+    this._completeSubscriptions(this.subscriptionsList);
   }
 
   _setSubscriptions(): void {
@@ -40,12 +48,6 @@ export class GlobalTopbarComponent implements OnInit, SubscriptionsLifecycle {
         (isOpen) => (this.isSidenavOpen = isOpen),
       ),
     );
-  }
-
-  _completeSubscriptions(): void {
-    for (const subscription of this.subscriptionsList) {
-      subscription.unsubscribe();
-    }
   }
 
   toggleVisibility(): void {
