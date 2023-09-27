@@ -30,6 +30,9 @@
       "@env": [
         "apps/controllo-ore-x/src/environments/environment"
       ],
+      "@controllo-ore-x/rt-shared": [
+        "libs/rt-shared/src/index.ts"
+      ],
     }
   },
   "files": [],

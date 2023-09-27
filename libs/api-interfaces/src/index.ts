@@ -1,5 +1,7 @@
 export * from './interfaces/base-response.interface';
 export * from './interfaces/find-boosted.interface';
+export * from './interfaces/table-configuration.interface';
+export * from './interfaces/index-configuration.dto';
 
 export * from './lib/api-interfaces';
 export * from './dto/user/user.dto';
@@ -13,3 +15,5 @@ export * from './dto/user-hours/label.dto';
 export * from './dto/auth/auth.dto';
 
 export * from './enums/role.enum';
+export * from './enums/filter-type.enum';
+export * from './enums/index-configuration-key.enum';
