@@ -41,6 +41,15 @@
       {{ valueToPrint }}
     </mat-chip>
   </ng-container>
+  <ng-container *ngSwitchCase="'EDITABLE'" class="-editable-container">
+    <div class="-editable-container">
+      <button *ngIf="openDialog" mat-icon-button (click)="openDialogFn(entity)">
+        <span class="material-symbols-outlined -edit-button-icon"
+          >ink_marker
+        </span>
+      </button>
+    </div>
+  </ng-container>
   <!-- <ng-container *ngSwitchCase="'PAYMENT_STATUS'">
     <div class="-chip" *ngIf="valueToPrint === PAYMENT_STATUS.NOT_MADE">Non effettuato</div>
     <div class="-chip -background-rejected" *ngIf="valueToPrint === PAYMENT_STATUS.REJECTED">Rifiutato</div>

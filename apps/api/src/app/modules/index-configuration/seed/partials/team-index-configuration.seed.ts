@@ -37,6 +37,11 @@ export const TEAM_INDEX_CONFIGURATION_SEED: any = {
         field: 'role.name',
         sortable: true,
       },
+      {
+        title: '',
+        type: 'EDITABLE',
+        sortable: false,
+      },
     ],
     relations: ['role'],
     fullSearchCols: ['name', 'surname', 'email', 'role.name'],

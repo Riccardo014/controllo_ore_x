@@ -9,7 +9,10 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 
-  padding: 24px 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   font-size: $table-font-size-column;
 }
 
@@ -17,9 +20,7 @@
   background: map-get($palette-accent, 200);
   border-radius: 18px;
   padding: 10px 10px;
-  text-align: center;
   width: fit-content;
-  margin: 0 auto;
 }
 
 .-background-completed {
@@ -44,4 +45,12 @@ mat-icon.-check {
 
 .-role-chip-collaborator{
   background-color: map-get($palette-auxiliaries-green, 500 );
+}
+
+.-editable-container{
+  margin: auto;
+
+  .-edit-button-icon{
+    color: rgba(0, 0, 0, 0.5);
+  }
 }
