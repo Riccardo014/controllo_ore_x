@@ -26,7 +26,7 @@ export class UserInsertUpsertDialog implements SubscriptionsLifecycle {
 
   hasFormErrors: boolean = false;
 
-  roles: RoleReadDto[] = [];
+  userRoles: RoleReadDto[] = [];
 
   newUserFormGroup: FormGroup = new FormGroup({
     name: new FormControl(null, Validators.required),
@@ -55,16 +55,7 @@ export class UserInsertUpsertDialog implements SubscriptionsLifecycle {
   }
 
   _setSubscriptions(): void {
-    this.subscriptionsList.push(
-      this._roleDataService.getManyFb({}).subscribe({
-        next: (res: IRtWrapBase<RoleReadDto[]>) => {
-          this.roles = res.data;
-        },
-        error: () => {
-          this.hasErrors = true;
-        },
-      }),
-    );
+    this.subscriptionsList.push(this._getUsersRoles());
   }
 
   navigateBack(): void {
@@ -78,6 +69,20 @@ export class UserInsertUpsertDialog implements SubscriptionsLifecycle {
     this.hasErrors = false;
 
     this._create();
+  }
+
+  /**
+   * Get users' roles from database.
+   */
+  private _getUsersRoles(): Subscription {
+    return this._roleDataService.getManyFb({}).subscribe({
+      next: (res: IRtWrapBase<RoleReadDto[]>) => {
+        this.userRoles = res.data;
+      },
+      error: () => {
+        this.hasErrors = true;
+      },
+    });
   }
 
   private _create(): void {
