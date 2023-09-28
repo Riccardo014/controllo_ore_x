@@ -1,16 +1,14 @@
 <div class="-page-title">
-  
   <div>
     <p class="headline-6">{{ title }}</p>
   </div>
 
   <div>
-    <button mat-flat-button class="-page-title-button">
+    <button mat-flat-button class="-page-title-button" (click)="openDialog()">
       <div class="-page-title-button-elements">
         <span class="material-symbols-outlined">{{ buttonIcon }}</span>
         <span class="body-2">{{ buttonText }}</span>
       </div>
     </button>
   </div>
-
 </div>

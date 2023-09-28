@@ -1,4 +1,5 @@
 // Modules
+export * from './rt-dialog/rt-dialog.module';
 export * from './rt-table/rt-table.module';
 
 // Classes

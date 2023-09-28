@@ -1,0 +1,42 @@
+@import 'libs/ui/core/consts.scss';
+@import 'libs/ui/core/mixins.scss';
+@import '../../../../../../app.component.scss';
+
+.-title{
+  padding-top: 40px;
+  padding-left: 24px;
+}
+
+.-form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 24px 0px;
+  
+  mat-form-field{
+    width: 100%;
+  }
+
+}
+
+.-button-wrapper{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 15px;
+  padding-bottom: 30px;
+  padding-right: 20px;
+
+  .-cancel-button{
+    background-color: map-get($palette-primary, 50);
+    color: map-get($palette-primary, 500);
+  }
+
+  .-update-button{
+    background-color: map-get($palette-primary, 500);
+    color: #fff;
+  }
+}

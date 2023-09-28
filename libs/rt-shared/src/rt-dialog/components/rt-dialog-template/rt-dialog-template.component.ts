@@ -15,11 +15,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'appe-dialog-template',
+  selector: 'cox-dialog-template',
   templateUrl: './rt-dialog-template.component.html',
-  styleUrls: [
-    './rt-dialog-template.component.scss',
-  ],
+  styleUrls: ['./rt-dialog-template.component.scss'],
 })
 export class RtDialogTemplateComponent {
   @Input() isLoading: boolean = false;
@@ -33,4 +31,3 @@ export class RtDialogTemplateComponent {
 
   @Output() reFetch: EventEmitter<void> = new EventEmitter<void>();
 }
-

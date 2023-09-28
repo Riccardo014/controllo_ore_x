@@ -1,13 +1,14 @@
-<appe-dialog-template
+<cox-dialog-template
   [title]="data.title"
   [subtitle]="data.input"
-  (closeDialog)="cancel()">
+  (closeDialog)="cancel()"
+>
   <div footer>
     <rt-dialog-default-actions
       (cancel)="cancel()"
       (confirm)="confirm()"
-      textConfirm="Conferma">
+      textConfirm="Conferma"
+    >
     </rt-dialog-default-actions>
   </div>
-</appe-dialog-template>
-
+</cox-dialog-template>

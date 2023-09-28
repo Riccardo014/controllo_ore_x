@@ -8,7 +8,10 @@ import {
 import { UserDataService } from '@app/_core/services/user-data.service';
 import { IndexPage } from '@app/_shared/classes/index-page.class';
 import { IndexConfigurationDataService } from '@core/services/index-configuration-data.service';
+import { RT_DIALOG_CLOSE_RESULT } from 'libs/rt-shared/src/rt-dialog/enums/rt-dialog-close-result.enum';
+import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
 import { BehaviorSubject, ReplaySubject, takeUntil } from 'rxjs';
+import { UserInsertUpsertDialog } from '../dialogs/user-insert-upsert/user-insert-upsert.dialog';
 
 @Component({
   selector: 'controllo-ore-x-team-index',
@@ -37,6 +40,7 @@ export class TeamIndexPage
   constructor(
     protected _configurationService: IndexConfigurationDataService,
     protected _dataService: UserDataService,
+    private _rtDialogService: RtDialogService,
   ) {
     super();
 
@@ -53,8 +57,17 @@ export class TeamIndexPage
     this.destroy$.unsubscribe();
   }
 
-  openUpsertDialog(user?: UserReadDto): void {
-    console.log('openUpsertDialog', user);
+  openDialog(): void {
+    this._rtDialogService
+      .open('', UserInsertUpsertDialog, {
+        data: {},
+        width: '500px',
+      })
+      .subscribe((res) => {
+        if (res.result == RT_DIALOG_CLOSE_RESULT.CONFIRM) {
+          this.indexTableHandler.fetchData();
+        }
+      });
   }
 
   openConfirmationDelete(user: UserReadDto): void {
