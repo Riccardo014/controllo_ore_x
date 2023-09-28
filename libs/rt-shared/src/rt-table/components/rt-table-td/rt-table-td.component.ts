@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ROLE, TableConfigurationColumn } from '@api-interfaces';
 import { rtTableColumnValue } from '../../lib/rt-table-column-value';
 
@@ -10,6 +10,8 @@ import { rtTableColumnValue } from '../../lib/rt-table-column-value';
 export class RtTableTdComponent implements OnInit {
   @Input() column!: TableConfigurationColumn;
   @Input() entity: any;
+
+  @Output() openDialog: EventEmitter<any> = new EventEmitter<any>();
 
   valueToPrint: any;
 
@@ -25,5 +27,9 @@ export class RtTableTdComponent implements OnInit {
 
   getColumnData(): any {
     return rtTableColumnValue(this.column, this.entity);
+  }
+
+  openDialogFn(entity: any): void {
+    this.openDialog.emit(entity);
   }
 }

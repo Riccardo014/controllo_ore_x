@@ -1,0 +1,68 @@
+<controllo-ore-x-rt-header>
+  <ng-container title>
+    <div class="headline-6">{{ page.title }}</div>
+  </ng-container>
+
+  <ng-container actions>
+    <button
+      class="hide-desktop me-1"
+      *ngIf="hasMenuOptions"
+      mat-icon-button
+      [matMenuTriggerFor]="menuActions"
+    >
+      <mat-icon class="material-icons-outlined icon-20">more_vert</mat-icon>
+    </button>
+
+    <mat-menu #menuActions="matMenu">
+      <ng-content select="[menuOptions]"></ng-content>
+    </mat-menu>
+
+    <ng-container *ngIf="createFn; else createLink">
+      <button
+        mat-flat-button
+        color="primary"
+        class="hide-mobile"
+        (click)="createFn()"
+      >
+        <mat-icon class="mt-1">add</mat-icon>
+        Nuovo
+      </button>
+      <mat-icon
+        class="mt-1 hide-tablet-desktop"
+        color="primary"
+        (click)="createFn()"
+        >add</mat-icon
+      >
+    </ng-container>
+    <ng-template #createLink>
+      <a routerLink="./create" *ngIf="!shouldHideCreateButton">
+        <button
+          class="hide-mobile -page-title-button"
+          mat-flat-button
+          color="primary"
+        >
+          <div class="-page-title-button-elements">
+            <span class="material-symbols-outlined">{{ buttonIcon }}</span>
+            <span class="body-2">{{ buttonText }}</span>
+          </div>
+        </button>
+
+        <mat-icon class="mt-1 hide-tablet-desktop" color="primary"
+          >add</mat-icon
+        >
+      </a>
+    </ng-template>
+  </ng-container>
+</controllo-ore-x-rt-header>
+
+<div class="-page-content">
+  <lib-rt-table
+    *ngIf="page.isFirstLoadDone"
+    (statusChange)="page.indexTableHandler.statusChange($event)"
+    [tableConfiguration]="page.configuration"
+    [data]="page.indexTableHandler.data"
+    [editFn]="editFn"
+    [currentStatus]="page.indexTableHandler.currentStatus"
+    [isEditAvailable]="isEditAvailable"
+  ></lib-rt-table>
+</div>

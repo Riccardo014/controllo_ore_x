@@ -1,0 +1,27 @@
+@import 'libs/ui/core.scss';
+
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  background-color: map-get($palette-white, 50);
+  box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.1), inset 0px 1px 0px rgba(255, 255, 255, 0.2);
+  border-top: 1px solid var(--border-table);
+  padding: 0 30px;
+  gap: 20px;
+}
+
+.-title,
+.-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 18px;
+
+  @include mobile {
+    gap: 20px;
+    align-items: center;
+  }
+}
+

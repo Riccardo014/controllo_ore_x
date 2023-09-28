@@ -1,0 +1,13 @@
+// MAIN TEMPLATE LIB
+// HEIGHT
+$topbar-height: 81px;
+$header-height: 80px;
+$content-height: calc(100vh - #{$topbar-height} - #{$header-height});
+
+// PADDINGS
+$padding-page: 30px;
+$padding-page-mobile: 15px;
+
+// PADDING CARDS
+$padding-vertical: 40px;
+$padding-horizontal: 24px;

@@ -1,0 +1,13 @@
+// INPUT EXPANDED INTO FLEX
+.-input-wide {
+  flex-grow: 1;
+
+  .mat-form-field-wrapper {
+    width: 100% !important;
+    // min-width: 250px;
+  }
+
+  .mat-form-field {
+    display: block !important;
+  }
+}

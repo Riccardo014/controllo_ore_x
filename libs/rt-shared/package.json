@@ -1,5 +1,8 @@
 {
   "name": "@cox/rt-shared",
   "version": "0.0.1",
-  "type": "commonjs"
+  "type": "commonjs",
+  "devDependencies": {
+    "@types/file-saver-es": "^2.0.1"
+  }
 }

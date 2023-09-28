@@ -1,0 +1,9 @@
+<div class="-container-square-spinner" *ngIf="loadingSvc.isLoadingBlocking$ | async">
+  <div class="square-spinner-loader">
+  </div>
+</div>
+
+<mat-progress-bar class="-loading-progress" *ngIf="loadingSvc.isLoading$ | async" mode="indeterminate">
+</mat-progress-bar>
+
+<div class="-extra-layer" *ngIf="loadingSvc.isLoadingBlocking$ | async"></div>

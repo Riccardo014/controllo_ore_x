@@ -1,0 +1,127 @@
+<controllo-ore-x-rt-header>
+  <ng-container title>
+    <div class="-container-title-info">
+      <button (click)="page.navigateBack()" mat-icon-button>
+        <mat-icon color="primary" class="-icon">arrow_back</mat-icon>
+      </button>
+      <div class="-title">{{ dynamicTitle ? dynamicTitle : page.title }}</div>
+
+      <!-- chip  -->
+      <div *ngIf="chipLabel" class="-chip">
+        {{ chipLabel }}
+      </div>
+
+      <!-- breadcrumb -->
+      <span *ngIf="!isBreadcrumbHidden" class="-breadcrumb">
+        <span class="-breadcrumb__prefix">
+          {{ page.breadcrumbPrefix }}
+        </span>
+        <span> {{ page.breadcrumbSuffix }} </span>
+      </span>
+    </div>
+  </ng-container>
+
+  <ng-container actions>
+    <button
+      *ngIf="!page.isCreating && !isMoreOptionHidden"
+      [matMenuTriggerFor]="optionMenu"
+      mat-icon-button
+    >
+      <mat-icon>more_vert</mat-icon>
+    </button>
+
+    <ng-content select="[buttons]"></ng-content>
+
+    <button
+      (click)="page.toggleEditing()"
+      *ngIf="!page.isCreating && page.isEditEnabled && !page.isEditing"
+      mat-flat-button
+      class="hide-mobile"
+      color="primary"
+    >
+      <mat-icon fontIcon="edit"></mat-icon>
+      Modifica
+    </button>
+    <button
+      (click)="page.toggleEditing()"
+      *ngIf="page.isEditing"
+      class="hide-mobile"
+      mat-stroked-button
+    >
+      Annulla
+    </button>
+    <button
+      (click)="page.onSubmit()"
+      *ngIf="page.isCreating || page.isEditing"
+      [disabled]="page.formHelper.invalid || (page.isLoading | async)"
+      color="primary"
+      class="hide-mobile"
+      mat-flat-button
+    >
+      Salva
+    </button>
+
+    <!-- MOBILE BTNS -->
+    <mat-icon
+      (click)="page.toggleEditing()"
+      *ngIf="!page.isCreating && page.isEditEnabled && !page.isEditing"
+      class="hide-tablet-desktop"
+      color="primary"
+    >
+      edit
+    </mat-icon>
+    <mat-icon
+      (click)="page.toggleEditing()"
+      class="hide-tablet-desktop"
+      *ngIf="page.isEditing"
+    >
+      close
+    </mat-icon>
+    <button
+      (click)="page.onSubmit()"
+      *ngIf="page.isCreating || page.isEditing"
+      [disabled]="page.formHelper.invalid || (page.isLoading | async)"
+      class="hide-tablet-desktop"
+      color="primary"
+      mat-icon-button
+    >
+      <mat-icon>save</mat-icon>
+    </button>
+
+    <mat-menu #optionMenu="matMenu">
+      <ng-content select="[menuOptions]"></ng-content>
+      <button
+        (click)="page.onDelete()"
+        *ngIf="page.isDeleteEnabled"
+        mat-menu-item
+      >
+        <mat-icon>delete</mat-icon>
+        Elimina
+      </button>
+    </mat-menu>
+  </ng-container>
+</controllo-ore-x-rt-header>
+
+<div *ngIf="page.tabs.length" class="tab-menu">
+  <ng-container *ngFor="let tab of page.tabs; let index = index">
+    <div
+      (click)="page.changeTab(index)"
+      *ngIf="!tab.hideOnCreation || !page.isCreating"
+      [class.active]="page.tab === index"
+      class="tab-menu__item"
+    >
+      {{ tab.label }}
+      <mat-icon *ngIf="tab?.tabForm && tab.tabForm?.invalid">warning</mat-icon>
+    </div>
+  </ng-container>
+</div>
+
+<div class="-body">
+  <div *ngIf="isLoading || isError" class="-body__layer-loading">
+    <!-- loading spinner -->
+    <div *ngIf="isLoading" class="square-spinner-loader"></div>
+  </div>
+</div>
+<div class="page-content" *ngIf="!isLoading && !isError">
+  <ng-content select="[body]"></ng-content>
+</div>

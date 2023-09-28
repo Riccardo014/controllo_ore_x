@@ -19,7 +19,7 @@
           "apps/controllo-ore-x/src/favicon.ico",
           "apps/controllo-ore-x/src/assets"
         ],
-        "styles": ["apps/controllo-ore-x/src/styles.scss"],
+        "styles": ["apps/controllo-ore-x/src/styles/styles.scss"],
         "scripts": []
       },
       "configurations": {

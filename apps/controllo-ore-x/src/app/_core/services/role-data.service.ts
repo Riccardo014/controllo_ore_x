@@ -18,7 +18,7 @@ export class RoleDataService {
   urlApi: string = environment.apiUri + '/roles';
 
   constructor(private _http: HttpClient) {}
-  getManyFb(
+  getMany(
     body: FindBoostedOptions,
   ): Observable<FindBoostedResult<RoleReadDto>> {
     return this._http.post<FindBoostedResult<RoleReadDto>>(

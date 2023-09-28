@@ -9,7 +9,7 @@ export abstract class IndexPage<T, CreateT, UpdateT> implements OnInit {
   isFirstLoadDone: BehaviorSubject<boolean> = new BehaviorSubject(false);
   isLoading: BehaviorSubject<boolean> = new BehaviorSubject(true);
   abstract title: string;
-  // abstract titleIcon: string | null;
+  abstract titleIcon: string | null;
   abstract CONFIGURATION_KEY: INDEX_CONFIGURATION_KEY;
 
   configuration!: TableConfiguration;

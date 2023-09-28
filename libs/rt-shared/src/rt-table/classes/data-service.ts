@@ -1,13 +1,20 @@
 import { HttpClient } from '@angular/common/http';
-import { ApiPaginatedResponse, ApiResponse, FindBoostedOptions } from '@api-interfaces';
+import {
+  ApiPaginatedResponse,
+  ApiResponse,
+  FindBoostedOptions,
+} from '@api-interfaces';
 import { Observable } from 'rxjs';
 
 export abstract class DataService<T, CreateT, UpdateT> {
   protected abstract currentApiUri: string;
   protected abstract http: HttpClient;
 
-  getManyFb(params: FindBoostedOptions): Observable<ApiPaginatedResponse<T>> {
-    return this.http.post<ApiPaginatedResponse<T>>(`${this.currentApiUri}/fb`, params);
+  getMany(params: FindBoostedOptions): Observable<ApiPaginatedResponse<T>> {
+    return this.http.post<ApiPaginatedResponse<T>>(
+      `${this.currentApiUri}/fb`,
+      params,
+    );
   }
 
   create(data: CreateT): Observable<ApiResponse<T>> {
@@ -26,4 +33,3 @@ export abstract class DataService<T, CreateT, UpdateT> {
     return this.http.get<ApiResponse<T>>(`${this.currentApiUri}/${id}`);
   }
 }
-

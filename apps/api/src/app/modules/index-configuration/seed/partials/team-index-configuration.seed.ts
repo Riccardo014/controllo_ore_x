@@ -39,6 +39,7 @@ export const TEAM_INDEX_CONFIGURATION_SEED: any = {
       },
       {
         title: '',
+        field: '',
         type: 'EDITABLE',
         sortable: false,
       },

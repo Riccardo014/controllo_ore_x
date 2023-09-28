@@ -9,14 +9,20 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
-import { RtDialogModule, RtTableModule } from '@controllo-ore-x/rt-shared';
+import {
+  AlertModule,
+  RtDialogModule,
+  RtInputModule,
+  RtLoadingModule,
+  RtTableModule,
+} from '@controllo-ore-x/rt-shared';
 import { SharedModule } from '@shared/shared.module';
-import { UserInsertUpsertDialog } from './dialogs/user-insert-upsert/user-insert-upsert.dialog';
+import { UserUpsertPage } from './dialogs/user-upsert/user-upsert.page';
 import { TeamIndexPage } from './pages/team-index.page';
 import { TeamRoutingModule } from './team-routing.module';
 
 @NgModule({
-  declarations: [TeamIndexPage, UserInsertUpsertDialog],
+  declarations: [TeamIndexPage, UserUpsertPage],
   imports: [
     CommonModule,
     TeamRoutingModule,
@@ -32,6 +38,9 @@ import { TeamRoutingModule } from './team-routing.module';
     ReactiveFormsModule,
     MatInputModule,
     MatButtonModule,
+    RtInputModule,
+    RtLoadingModule,
+    AlertModule,
   ],
 })
 export class TeamModule {}

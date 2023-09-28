@@ -1,0 +1,64 @@
+/* SPACING CLASSES */
+.-mt-20 {
+  margin-top: 20px;
+}
+
+.mt-6 {
+  margin-top: 6px;
+}
+
+/* SIZE CLASSES*/
+.icon-20 {
+  font-size: 20px;
+  height: 20px;
+  width: 20px;
+
+  &.mat-icon {
+    height: 20px;
+    width: 20px;
+  }
+}
+
+/* SCROLL CLASSES */
+.no-scroll {
+  overflow-y: hidden;
+}
+
+/* DISPLAY CLASSES */
+.hide-mobile {
+  @include mobile {
+    display: none !important;
+  }
+}
+
+.hide-mobile-tablet {
+  @include mobile-tablet {
+    display: none !important;
+  }
+}
+
+.hide-tablet-desktop {
+  @include tablet-desktop {
+    display: none !important;
+  }
+}
+
+.hide-tablet {
+  @include tablet {
+    display: none !important;
+  }
+}
+
+.hide-desktop {
+  @include desktop {
+    display: none !important;
+  }
+}
+
+.hidden {
+  display: none !important;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

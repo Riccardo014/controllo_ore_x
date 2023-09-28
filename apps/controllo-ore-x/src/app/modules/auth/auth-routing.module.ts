@@ -13,13 +13,11 @@ const routes: Routes = [
           import('./modules/tracker/tracker.module').then(
             (m) => m.TrackerModule,
           ),
-        pathMatch: 'full',
       },
       {
         path: 'team',
         loadChildren: () =>
           import('./modules/team/team.module').then((m) => m.TeamModule),
-        pathMatch: 'full',
       },
     ],
   },

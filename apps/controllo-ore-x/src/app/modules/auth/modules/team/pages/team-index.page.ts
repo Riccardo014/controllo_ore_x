@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   INDEX_CONFIGURATION_KEY,
   UserCreateDto,
@@ -10,19 +10,22 @@ import { IndexPage } from '@app/_shared/classes/index-page.class';
 import { IndexConfigurationDataService } from '@core/services/index-configuration-data.service';
 import { RT_DIALOG_CLOSE_RESULT } from 'libs/rt-shared/src/rt-dialog/enums/rt-dialog-close-result.enum';
 import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
+import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
 import { BehaviorSubject, ReplaySubject, takeUntil } from 'rxjs';
-import { UserInsertUpsertDialog } from '../dialogs/user-insert-upsert/user-insert-upsert.dialog';
+import { UserUpsertPage } from '../dialogs/user-upsert/user-upsert.page';
 
 @Component({
   selector: 'controllo-ore-x-team-index',
   templateUrl: './team-index.page.html',
   styleUrls: ['./team-index.page.scss'],
 })
-export class TeamIndexPage
-  extends IndexPage<UserReadDto, UserCreateDto, UserUpdateDto>
-  implements OnInit, OnDestroy
-{
-  override title: string = 'Team';
+export class TeamIndexPage extends IndexPage<
+  UserReadDto,
+  UserCreateDto,
+  UserUpdateDto
+> {
+  titleIcon: string | null = 'workspaces';
+  title: string = 'Team';
   pageTitle = 'Team';
   buttonIcon = 'bakery_dining';
   buttonText = 'Nuovo Membro';
@@ -40,6 +43,7 @@ export class TeamIndexPage
   constructor(
     protected _configurationService: IndexConfigurationDataService,
     protected _dataService: UserDataService,
+    protected _loadingService: RtLoadingService,
     private _rtDialogService: RtDialogService,
   ) {
     super();
@@ -59,7 +63,7 @@ export class TeamIndexPage
 
   openDialog(): void {
     this._rtDialogService
-      .open('', UserInsertUpsertDialog, {
+      .open('', UserUpsertPage, {
         data: {},
         width: '500px',
       })

@@ -1,5 +1,8 @@
 // Modules
+export * from './alert/alert.module';
 export * from './rt-dialog/rt-dialog.module';
+export * from './rt-input/rt-input.module';
+export * from './rt-loading/rt-loading.module';
 export * from './rt-table/rt-table.module';
 
 // Classes

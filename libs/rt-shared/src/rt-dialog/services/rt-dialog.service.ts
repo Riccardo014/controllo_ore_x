@@ -14,7 +14,11 @@
 
 import { ComponentType } from '@angular/cdk/portal';
 import { Injectable, TemplateRef } from '@angular/core';
-import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogConfig,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { RtDialogConfirmationComponent } from '../components/rt-dialog-confirmation/rt-dialog-confirmation.component';
 import { IRtDialogClose } from '../interfaces/i-rt-dialog-close.interface';
@@ -33,7 +37,7 @@ export class RtDialogService {
   open<TInput = any, TReturn = any>(
     title: string,
     component: ComponentType<any> | TemplateRef<any>,
-    config: MatDialogConfig<TInput> = {}
+    config: MatDialogConfig<TInput> = {},
   ): Observable<IRtDialogClose<TReturn>> {
     // set default width to 450px
     config.width = config?.width ?? '400px';
@@ -48,25 +52,23 @@ export class RtDialogService {
       title,
     };
 
-    const dialogRef: MatDialogRef<ComponentType<any> | TemplateRef<any>> = this._matDialogSvc.open(component, {
-      ...config,
-      data,
-    });
+    const dialogRef: MatDialogRef<ComponentType<any> | TemplateRef<any>> =
+      this._matDialogSvc.open(component, {
+        ...config,
+        data,
+      });
     return dialogRef.afterClosed() as Observable<IRtDialogClose<TReturn>>;
   }
 
-  openConfirmation(title: string, input: string): Observable<IRtDialogClose> {
-    const dialogRef: MatDialogRef<RtDialogConfirmationComponent> = this._matDialogSvc.open(
-      RtDialogConfirmationComponent,
-      {
+  openConfirmation(title: string, input?: string): Observable<IRtDialogClose> {
+    const dialogRef: MatDialogRef<RtDialogConfirmationComponent> =
+      this._matDialogSvc.open(RtDialogConfirmationComponent, {
         data: {
           title,
           input,
         },
         width: '500px',
-      }
-    );
+      });
     return dialogRef.afterClosed() as Observable<IRtDialogClose>;
   }
 }
-

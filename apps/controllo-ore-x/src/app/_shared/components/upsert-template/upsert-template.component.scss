@@ -1,0 +1,93 @@
+@import 'libs/ui/core';
+@import 'libs/ui/loaders/squares-spinner-loader';
+
+.progress-index {
+  position: absolute;
+}
+
+.-container-title-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  .-icon {
+    border-radius: 8px;
+  }
+
+  .-title {
+    font-size: 20px;
+    color: $index-template-color-title;
+    font-weight: 700;
+  }
+
+  .-breadcrumb {
+    font-size: 12px;
+
+    .-breadcrumb__prefix {
+      color: $color-breadcrumb-prefix;
+    }
+  }
+}
+
+.page-content {
+  position: relative;
+  padding-top: 16px;
+  padding-bottom: 40px;
+  background: #f9fafc;
+  overflow-y: scroll;
+  max-height: calc(100vh - 220px); /* limit the height of the section to the viewport height */
+  height: calc(100vh - 220px);
+
+  @include scrollbar-primary(map-get($palette-grey, 400), 6px, true);
+}
+
+.tab-menu {
+  //background-color: $background-elevation-2;
+  height: 48px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  font-size: 0.8rem;
+  background: map-get($palette-white, 50);
+  border-bottom: 1px solid map-get($palette-grey, 200);
+  padding-left: 40px;
+
+  .tab-menu__item {
+    height: inherit;
+    text-align: center;
+    width: 120px;
+    line-height: 50px;
+    cursor: pointer;
+    color: map-get($palette-grey, 900);
+    font-weight: 400;
+
+    mat-icon {
+      height: 20px;
+      font-size: 16px;
+      line-height: 16px;
+      vertical-align: middle;
+    }
+
+    &.active {
+      border-bottom: 2px solid map-get($palette-primary, 500);
+      color: map-get($palette-primary, 500);
+    }
+  }
+}
+
+.-body__layer-loading {
+  min-height: $content-height;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// warehouse upsert chips
+.-chip {
+  padding: 8px 14px;
+  border-radius: 16px;
+  font-size: 14px;
+  background: map-get($palette-accent, 50);
+  color: map-get($palette-accent, 500);
+  margin-right: 20px;
+}

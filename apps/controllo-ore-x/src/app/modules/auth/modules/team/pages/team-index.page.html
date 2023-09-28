@@ -1,19 +1,5 @@
-<div>
-  <controllo-ore-x-page-title
-    [title]="pageTitle"
-    [buttonIcon]="buttonIcon"
-    [buttonText]="buttonText"
-    (buttonOnClickEmit)="openDialog()"
-  ></controllo-ore-x-page-title>
-
-  <lib-rt-table
-    *ngIf="isFirstLoadDone"
-    [isLoading]="isItLoading"
-    [tableConfiguration]="configuration"
-    [data]="indexTableHandler.data"
-    (statusChange)="indexTableHandler.statusChange($event)"
-    [currentStatus]="indexTableHandler.currentStatus"
-    [isEditAvailable]="isEditAvailable"
-  >
-  </lib-rt-table>
-</div>
+<controllo-ore-x-index-template
+  [page]="this"
+  [buttonIcon]="buttonIcon"
+  [buttonText]="buttonText"
+></controllo-ore-x-index-template>
