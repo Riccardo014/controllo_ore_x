@@ -38,14 +38,8 @@
         </div>
       </button>
       <mat-menu #user_menu="matMenu">
-        <button mat-menu-item>
-          <span>Item 1</span>
-        </button>
-        <button mat-menu-item>
-          <span>Item 2</span>
-        </button>
-        <button mat-menu-item>
-          <span>Item 3</span>
+        <button mat-menu-item (click)="logout()">
+          <span>Esci</span>
         </button>
       </mat-menu>
     </div>

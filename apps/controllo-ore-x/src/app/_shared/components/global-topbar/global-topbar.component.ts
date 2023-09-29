@@ -58,4 +58,9 @@ export class GlobalTopbarComponent implements OnInit, SubscriptionsLifecycle {
   toggleVisibility(): void {
     this._sidenavService.toggleVisibility();
   }
+
+  logout(): void {
+    this.logoutEmit.emit();
+    this._router.navigate(['/']);
+  }
 }
