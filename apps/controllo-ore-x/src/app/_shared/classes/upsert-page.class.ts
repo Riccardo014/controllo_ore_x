@@ -103,7 +103,7 @@ export abstract class UpsertPage<T extends { _id: string }, CreateT, UpdateT>
       this.formHelper.enable();
       this._upsertAlertSvc.openError(
         'Errore',
-        "Impossibile creare l'entità",
+        'Impossibile creare l\'entità',
         e,
       );
       this.isLoading.next(false);
@@ -135,7 +135,7 @@ export abstract class UpsertPage<T extends { _id: string }, CreateT, UpdateT>
       this.formHelper.enable();
       this._upsertAlertSvc.openError(
         'Errore',
-        "Impossibile aggiornare l'entità",
+        'Impossibile aggiornare l\'entità',
         e,
       );
     }
@@ -154,8 +154,8 @@ export abstract class UpsertPage<T extends { _id: string }, CreateT, UpdateT>
   async onDelete(): Promise<void> {
     this._upsertDialogSvc
       .openConfirmation(
-        "Procedere con l'eliminazione?",
-        "L'operazione non è reversibile",
+        'Procedere con l\'eliminazione?',
+        'L\'operazione non è reversibile',
       )
       .subscribe(async (r) => {
         if (r?.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {

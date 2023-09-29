@@ -1,5 +1,4 @@
 import { FindBoostedOptions } from '@api-interfaces';
-import { saveAs } from 'file-saver-es';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { rtTableColumnValue } from '../lib/rt-table-column-value';
 import { DataService } from './data-service';
@@ -107,11 +106,6 @@ export class RtTableApiStatusManager<
           }
           results.push(csvRow);
         }
-
-        saveAs(
-          new Blob([results.map((r: any) => r.join(';')).join('\n')]),
-          `${this.tableConfiguration!.collectionId}.csv`,
-        );
       });
   }
 }

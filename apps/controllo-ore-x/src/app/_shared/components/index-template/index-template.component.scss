@@ -35,20 +35,23 @@
   @include scrollbar-primary(map-get($palette-grey, 400), 6px, true);
 }
 
-.-page-title-button{
-  background-color: map-get($palette-primary, 500);
-  color: #fff;
+.-link-button{
+  text-decoration: none;
+  
+  .-page-title-button{
+    background-color: map-get($palette-primary, 500);
+    color: #fff;
 
-  .-page-title-button-elements{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 5%;
+    .-page-title-button-elements{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 5%;
 
-    span{
-      white-space: nowrap
+      span{
+        white-space: nowrap
+      }
     }
-  }
-
+}
 }

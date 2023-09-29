@@ -1,8 +1,9 @@
 <div class="input-wide">
   <mat-form-field
     style="width: 100%"
-    [ngClass]="containerClass">
-    <mat-label *ngIf="label">{{ label }}</mat-label>
+    [ngClass]="containerClass"
+    appearance="outline">
+    <mat-label *ngIf="label" class="-label">{{ label }}</mat-label>
 
     <ng-container *ngIf="control; else onlyValue">
       <input

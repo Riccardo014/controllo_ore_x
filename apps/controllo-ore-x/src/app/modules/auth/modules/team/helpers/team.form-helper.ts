@@ -10,9 +10,10 @@ import {
 import { UserCreateDto, UserReadDto, UserUpdateDto } from '@api-interfaces';
 import { UserDataService } from '@app/_core/services/user-data.service';
 import { UpsertFormHelper } from '@app/_shared/classes/upsert-form-helper.class';
+import { strongPasswordValidator } from '@app/_shared/validators/strong-password.validator';
 
 @Injectable()
-export class UserFormHelper extends UpsertFormHelper<
+export class TeamFormHelper extends UpsertFormHelper<
   UserReadDto,
   UserCreateDto,
   UserUpdateDto
@@ -29,6 +30,7 @@ export class UserFormHelper extends UpsertFormHelper<
       name: [null, Validators.required],
       surname: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
+      password: [null, [Validators.required, strongPasswordValidator]],
       role: [null, Validators.required],
     });
   }
@@ -47,6 +49,7 @@ export class UserFormHelper extends UpsertFormHelper<
 
   get createDto(): UserCreateDto {
     const formValues: any = this.form.getRawValue();
+    console.log(formValues);
 
     return {
       ...formValues,

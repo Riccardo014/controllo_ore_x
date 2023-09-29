@@ -14,15 +14,16 @@ import {
   RtDialogModule,
   RtInputModule,
   RtLoadingModule,
+  RtSelectModule,
   RtTableModule,
 } from '@controllo-ore-x/rt-shared';
 import { SharedModule } from '@shared/shared.module';
-import { UserUpsertPage } from './dialogs/user-upsert/user-upsert.page';
+import { TeamUpsertPage } from './dialogs/team-upsert/team-upsert.page';
 import { TeamIndexPage } from './pages/team-index.page';
 import { TeamRoutingModule } from './team-routing.module';
 
 @NgModule({
-  declarations: [TeamIndexPage, UserUpsertPage],
+  declarations: [TeamIndexPage, TeamUpsertPage],
   imports: [
     CommonModule,
     TeamRoutingModule,
@@ -41,6 +42,7 @@ import { TeamRoutingModule } from './team-routing.module';
     RtInputModule,
     RtLoadingModule,
     AlertModule,
+    RtSelectModule,
   ],
 })
 export class TeamModule {}

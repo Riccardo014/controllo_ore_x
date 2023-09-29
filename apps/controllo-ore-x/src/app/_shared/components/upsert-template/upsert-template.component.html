@@ -53,7 +53,7 @@
     <button
       (click)="page.onSubmit()"
       *ngIf="page.isCreating || page.isEditing"
-      [disabled]="page.formHelper.invalid || (page.isLoading | async)"
+      [disabled]="page.formHelper.invalid"
       color="primary"
       class="hide-mobile"
       mat-flat-button

@@ -12,7 +12,7 @@ import { RT_DIALOG_CLOSE_RESULT } from 'libs/rt-shared/src/rt-dialog/enums/rt-di
 import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
 import { BehaviorSubject, ReplaySubject, takeUntil } from 'rxjs';
-import { UserUpsertPage } from '../dialogs/user-upsert/user-upsert.page';
+import { TeamUpsertPage } from '../dialogs/team-upsert/team-upsert.page';
 
 @Component({
   selector: 'controllo-ore-x-team-index',
@@ -63,7 +63,7 @@ export class TeamIndexPage extends IndexPage<
 
   openDialog(): void {
     this._rtDialogService
-      .open('', UserUpsertPage, {
+      .open('', TeamUpsertPage, {
         data: {},
         width: '500px',
       })
