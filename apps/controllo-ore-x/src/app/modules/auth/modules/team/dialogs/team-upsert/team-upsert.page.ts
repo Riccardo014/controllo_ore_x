@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IRtWrapBase, RoleReadDto, UserCreateDto, UserReadDto, UserUpdateDto } from '@api-interfaces';
-import { UserDataService } from '@app/_core/services/user-data.service';
+import { TeamDataService } from '@app/_core/services/team-data.service';
 import { UpsertPage } from '@app/_shared/classes/upsert-page.class';
 import { AlertService } from 'libs/rt-shared/src/alert/services/alert.service';
 import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
@@ -38,7 +38,7 @@ export class TeamUpsertPage extends UpsertPage<
 
   constructor(
     public override formHelper: TeamFormHelper,
-    private _userDataService: UserDataService,
+    private _userDataService: TeamDataService,
     private _alertService: AlertService,
     private _rtDialogService: RtDialogService,
     private _router: Router,

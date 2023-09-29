@@ -1,23 +1,23 @@
 import { Directive, OnInit } from '@angular/core';
 import { INDEX_CONFIGURATION_KEY, TableConfiguration } from '@api-interfaces';
-import { RtTableApiStatusManager } from '@controllo-ore-x/rt-shared';
+import { DataService, RtTableApiStatusManager } from '@controllo-ore-x/rt-shared';
 import { IndexConfigurationDataService } from '@core/services/index-configuration-data.service';
 import { BehaviorSubject } from 'rxjs';
 
 @Directive()
 export abstract class IndexPage<T, CreateT, UpdateT> implements OnInit {
   isFirstLoadDone: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  isLoading: BehaviorSubject<boolean> = new BehaviorSubject(true);
+  isLoading: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  configuration!: TableConfiguration;
+  indexTableHandler!: RtTableApiStatusManager<T, CreateT, UpdateT>;
   abstract title: string;
   abstract titleIcon: string | null;
   abstract CONFIGURATION_KEY: INDEX_CONFIGURATION_KEY;
 
-  configuration!: TableConfiguration;
 
-  indexTableHandler!: RtTableApiStatusManager<T, CreateT, UpdateT>;
 
   // todo set tipe of data setting (see codi )
-  protected abstract _dataService: any;
+  protected abstract _dataService: DataService<T, CreateT, UpdateT>;
   protected abstract _configurationService: IndexConfigurationDataService;
 
   ngOnInit(): void {
@@ -33,7 +33,7 @@ export abstract class IndexPage<T, CreateT, UpdateT> implements OnInit {
   }
 
   private _firstLoad(): void {
-    this._configurationService
+        this._configurationService
       .getConfiguration(this.CONFIGURATION_KEY)
       .subscribe((data) => {
         this.configuration = data.configuration;

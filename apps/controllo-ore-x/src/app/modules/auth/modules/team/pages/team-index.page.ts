@@ -5,7 +5,7 @@ import {
   UserReadDto,
   UserUpdateDto,
 } from '@api-interfaces';
-import { UserDataService } from '@app/_core/services/user-data.service';
+import { TeamDataService } from '@app/_core/services/team-data.service';
 import { IndexPage } from '@app/_shared/classes/index-page.class';
 import { IndexConfigurationDataService } from '@core/services/index-configuration-data.service';
 import { RT_DIALOG_CLOSE_RESULT } from 'libs/rt-shared/src/rt-dialog/enums/rt-dialog-close-result.enum';
@@ -32,7 +32,7 @@ export class TeamIndexPage extends IndexPage<
 
   CONFIGURATION_KEY: INDEX_CONFIGURATION_KEY = INDEX_CONFIGURATION_KEY.TEAM;
   isItLoading: boolean = false;
-  _isFirstLoadDone: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+_isFirstLoadDone: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false,
   );
   hasErrors: boolean = false;
@@ -42,13 +42,13 @@ export class TeamIndexPage extends IndexPage<
 
   constructor(
     protected _configurationService: IndexConfigurationDataService,
-    protected _dataService: UserDataService,
+    protected _dataService: TeamDataService,
     protected _loadingService: RtLoadingService,
-    private _rtDialogService: RtDialogService,
+private _rtDialogService: RtDialogService,
   ) {
     super();
 
-    this.isLoading.pipe(takeUntil(this.destroy$)).subscribe((r) => {
+   this.isLoading.pipe(takeUntil(this.destroy$)).subscribe((r) => {
       this.isItLoading = false;
     });
     this.isFirstLoadDone.pipe(takeUntil(this.destroy$)).subscribe((r) => {

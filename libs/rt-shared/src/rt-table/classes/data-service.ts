@@ -12,9 +12,9 @@ export abstract class DataService<T, CreateT, UpdateT> {
 
   getMany(params: FindBoostedOptions): Observable<ApiPaginatedResponse<T>> {
     return this.http.post<ApiPaginatedResponse<T>>(
-      `${this.currentApiUri}/fb`,
-      params,
-    );
+      `${this.currentApiUri}/fb`, 
+      params
+      );
   }
 
   create(data: CreateT): Observable<ApiResponse<T>> {

@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { UserCreateDto, UserReadDto, UserUpdateDto } from '@api-interfaces';
-import { UserDataService } from '@app/_core/services/user-data.service';
+import { TeamDataService } from '@app/_core/services/team-data.service';
 import { UpsertFormHelper } from '@app/_shared/classes/upsert-form-helper.class';
 import { strongPasswordValidator } from '@app/_shared/validators/strong-password.validator';
 
@@ -20,7 +20,7 @@ export class TeamFormHelper extends UpsertFormHelper<
 > {
   constructor(
     formBuilder: FormBuilder,
-    private _userDataService: UserDataService,
+    private _userDataService: TeamDataService,
   ) {
     super(formBuilder, _userDataService);
   }

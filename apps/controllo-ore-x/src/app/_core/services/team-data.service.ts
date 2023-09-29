@@ -7,7 +7,7 @@ import { environment } from '@env';
 @Injectable({
   providedIn: 'root',
 })
-export class UserDataService extends DataService<
+export class TeamDataService extends DataService<
   UserReadDto,
   UserCreateDto,
   UserUpdateDto
