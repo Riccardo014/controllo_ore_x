@@ -4,7 +4,7 @@
       <button (click)="page.navigateBack()" mat-icon-button>
         <mat-icon color="primary" class="-icon">arrow_back</mat-icon>
       </button>
-      <div class="-title">{{ dynamicTitle ? dynamicTitle : page.title }}</div>
+      <div class="headline-5">{{ dynamicTitle ? dynamicTitle : page.title }}</div>
 
       <!-- chip  -->
       <div *ngIf="chipLabel" class="-chip">

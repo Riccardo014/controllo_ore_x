@@ -22,7 +22,7 @@ export class TeamUpsertPage extends UpsertPage<
   UserCreateDto,
   UserUpdateDto
 >  implements SubscriptionsLifecycle {
-  override title: string = 'Nuovo membro';
+  override title: string = 'Crea nuovo membro';
 
   isPasswordVisible: boolean = false;
 
