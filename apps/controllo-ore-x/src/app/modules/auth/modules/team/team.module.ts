@@ -21,9 +21,10 @@ import { SharedModule } from '@shared/shared.module';
 import { TeamUpsertPage } from './dialogs/team-upsert/team-upsert.page';
 import { TeamIndexPage } from './pages/team-index.page';
 import { TeamRoutingModule } from './team-routing.module';
+import { TeamEditUpsertPage } from './dialogs/team-edit-upsert/team-edit-upsert.page';
 
 @NgModule({
-  declarations: [TeamIndexPage, TeamUpsertPage],
+  declarations: [TeamIndexPage, TeamUpsertPage, TeamEditUpsertPage,],
   imports: [
     CommonModule,
     TeamRoutingModule,

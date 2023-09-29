@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import {
   INDEX_CONFIGURATION_KEY,
   UserCreateDto,
@@ -13,6 +13,7 @@ import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
 import { BehaviorSubject, ReplaySubject, takeUntil } from 'rxjs';
 import { TeamUpsertPage } from '../dialogs/team-upsert/team-upsert.page';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'controllo-ore-x-team-index',
@@ -40,11 +41,14 @@ _isFirstLoadDone: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
 
   destroy$: ReplaySubject<boolean> = new ReplaySubject(1);
 
+  @Output() openDialog: EventEmitter<any> = new EventEmitter<any>();
+
   constructor(
     protected _configurationService: IndexConfigurationDataService,
     protected _dataService: TeamDataService,
     protected _loadingService: RtLoadingService,
-private _rtDialogService: RtDialogService,
+    private _rtDialogService: RtDialogService,
+    private _router : Router,
   ) {
     super();
 
@@ -61,7 +65,7 @@ private _rtDialogService: RtDialogService,
     this.destroy$.unsubscribe();
   }
 
-  openDialog(): void {
+  /*openDialog(): void {
     this._rtDialogService
       .open('', TeamUpsertPage, {
         data: {},
@@ -72,9 +76,15 @@ private _rtDialogService: RtDialogService,
           this.indexTableHandler.fetchData();
         }
       });
-  }
+  }*/
 
   openConfirmationDelete(user: UserReadDto): void {
     console.log('openConfirmationDelete', user);
   }
+
+  openDialogFn($event: any): void {
+    this.openDialog.emit($event);
+    this._router.navigate([this._router.url+'/'+$event._id]);
+  }
+
 }

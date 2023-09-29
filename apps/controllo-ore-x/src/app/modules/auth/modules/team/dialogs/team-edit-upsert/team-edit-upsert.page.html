@@ -1,0 +1,57 @@
+<controllo-ore-x-upsert-template [page]="this" [isMoreOptionHidden]="false">
+  <div body class="-body">
+    <div class="-wrapper-user-upsert">
+      <form class="container" [formGroup]="formHelper.form">
+        <div class="row mb-2 -user-form">
+          <lib-rt-input
+            class="col"
+            label="Nome"
+            [disabled]="true"
+            inputPlaceholder="Nome"
+            formControlName="name"
+            [errorsToWatch]="[RT_FORM_ERRORS['REQUIRED']]"
+          ></lib-rt-input>
+          <lib-rt-input
+            class="col"
+            label="Cognome"
+            [disabled]="true"
+            inputPlaceholder="Cognome"
+            formControlName="surname"
+            [errorsToWatch]="[RT_FORM_ERRORS['REQUIRED']]"
+          ></lib-rt-input>
+          <lib-rt-input
+            class="col"
+            label="Email"
+            [disabled]="true"
+            inputPlaceholder="Email"
+            formControlName="email"
+            [errorsToWatch]="[RT_FORM_ERRORS['REQUIRED'], RT_FORM_ERRORS['EMAIL']]"
+          ></lib-rt-input>
+          <lib-rt-input
+            class="col"
+            label="Password"
+            [disabled]="true"
+            inputPlaceholder="Password"
+            [inputType]="isPasswordVisible ? 'text' : 'password'"
+            formControlName="password"
+            [errorsToWatch]="[RT_FORM_ERRORS['REQUIRED'], RT_FORM_ERRORS['PASSWORD']]">
+              <mat-icon
+                (click)="togglePwd()"
+                suffix>
+                {{isPasswordVisible ? 'visibility' : 'visibility_off'}}
+              </mat-icon>
+            </lib-rt-input>
+          <lib-rt-select 
+            class="col"
+            label="Ruolo"
+            inputPlaceholder="Ruolo"
+            formControlName="role"
+            [errorsToWatch]="[RT_FORM_ERRORS['REQUIRED']]"
+            [options] = "availableRoles"
+            >
+          </lib-rt-select>
+        </div>
+      </form>
+    </div>
+  </div>
+</controllo-ore-x-upsert-template>

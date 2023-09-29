@@ -146,6 +146,9 @@ export abstract class UpsertPage<T extends { _id: string }, CreateT, UpdateT>
    */
   onSubmit(): void {
     this.isCreating ? this.onCreate() : this.onUpdate();
+    this._upsertRouter.navigate(['../'], {
+      relativeTo: this._upsertActivatedRoute,
+    });
   }
 
   /**

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { IndexPage } from '@app/_shared/classes/index-page.class';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
 import { ReplaySubject, takeUntil } from 'rxjs';
@@ -18,11 +18,13 @@ export class IndexTemplateComponent implements OnInit, OnDestroy {
   @Input() isEditAvailable: boolean = false;
   @Input() buttonIcon: string = 'Icon';
   @Input() buttonText: string = 'Button txt';
+  @Output() openDialog: EventEmitter<any> = new EventEmitter<any>();
+
+  destroy$: ReplaySubject<boolean> = new ReplaySubject(1);
 
   private _isLoading: boolean = true;
   private _isFirstLoadDone: boolean = false;
 
-  destroy$: ReplaySubject<boolean> = new ReplaySubject(1);
 
   constructor(private _loadingService: RtLoadingService) {}
 
@@ -40,6 +42,10 @@ export class IndexTemplateComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
+  }
+
+  openDialogFn(entity: any): void {
+    this.openDialog.emit(entity);
   }
 
   private _setLoadingParameters(): void {
