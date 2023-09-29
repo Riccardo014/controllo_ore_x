@@ -49,7 +49,6 @@ export class TeamFormHelper extends UpsertFormHelper<
 
   get createDto(): UserCreateDto {
     const formValues: any = this.form.getRawValue();
-    console.log(formValues);
 
     return {
       ...formValues,

@@ -19,7 +19,7 @@ export interface TableConfiguration {
 export interface TableConfigurationColumn {
   title: string;
   field: string;
-  type: 'NUMBER' | 'STRING' | 'DATE' | 'TIME_DATE' | 'BOOLEAN' | string;
+  type: 'NUMBER' | 'STRING' | 'DATE' | 'TIME_DATE' | 'BOOLEAN' | 'EDITABLE' | string;
   transformFn?: string;
   sortable: boolean;
 }

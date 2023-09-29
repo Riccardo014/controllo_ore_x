@@ -28,6 +28,9 @@ export class RtTableThComponent {
   }
 
   toggleOrderBy(): void {
+    if(!this.column.sortable){
+      return;
+    }
     const newOrderBy: FindBoostedOrder = { ...this._orderBy };
 
     switch (this.currentOrder) {
