@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CustomerUpsertPage } from './dialogs/customer-upsert/customer-upsert.page';
 import { CustomerIndexPage } from './pages/customer-index.page';
 
 const routes: Routes = [
@@ -7,15 +8,14 @@ const routes: Routes = [
     path: '',
     component: CustomerIndexPage,
   },
-  //TODO: upsert page
-  // {
-  //   path: 'create',
-  //   component: CustomerUpsertPage,
-  // },
-  // {
-  //   path: ':id',
-  //   component: CustomerUpsertPage,
-  // },
+  {
+    path: 'create',
+    component: CustomerUpsertPage,
+  },
+  {
+    path: ':id',
+    component: CustomerUpsertPage,
+  },
 ];
 
 @NgModule({

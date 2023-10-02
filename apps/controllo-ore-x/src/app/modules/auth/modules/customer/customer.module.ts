@@ -19,10 +19,11 @@ import {
   RtTableModule,
 } from '@controllo-ore-x/rt-shared';
 import { CustomerRoutingModule } from './customer-routing.module';
+import { CustomerUpsertPage } from './dialogs/customer-upsert/customer-upsert.page';
 import { CustomerIndexPage } from './pages/customer-index.page';
 
 @NgModule({
-  declarations: [CustomerIndexPage],
+  declarations: [CustomerIndexPage, CustomerUpsertPage],
   imports: [
     CommonModule,
     CustomerRoutingModule,
