@@ -9,7 +9,7 @@ export class RtTableApiStatusManager<
   CreateT,
   UpdateT,
 > extends RtTableStatusHandler<T> {
-  isLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  isLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
   #currentCallSubscription?: Subscription;
 

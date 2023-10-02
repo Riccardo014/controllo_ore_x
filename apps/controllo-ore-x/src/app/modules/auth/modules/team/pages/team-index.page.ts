@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   INDEX_CONFIGURATION_KEY,
   UserCreateDto,
@@ -8,12 +9,9 @@ import {
 import { TeamDataService } from '@app/_core/services/team-data.service';
 import { IndexPage } from '@app/_shared/classes/index-page.class';
 import { IndexConfigurationDataService } from '@core/services/index-configuration-data.service';
-import { RT_DIALOG_CLOSE_RESULT } from 'libs/rt-shared/src/rt-dialog/enums/rt-dialog-close-result.enum';
 import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
 import { BehaviorSubject, ReplaySubject, takeUntil } from 'rxjs';
-import { TeamUpsertPage } from '../dialogs/team-upsert/team-upsert.page';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'controllo-ore-x-team-index',
@@ -33,7 +31,7 @@ export class TeamIndexPage extends IndexPage<
 
   CONFIGURATION_KEY: INDEX_CONFIGURATION_KEY = INDEX_CONFIGURATION_KEY.TEAM;
   isItLoading: boolean = false;
-_isFirstLoadDone: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+  _isFirstLoadDone: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false,
   );
   hasErrors: boolean = false;
@@ -48,11 +46,11 @@ _isFirstLoadDone: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     protected _dataService: TeamDataService,
     protected _loadingService: RtLoadingService,
     private _rtDialogService: RtDialogService,
-    private _router : Router,
+    private _router: Router,
   ) {
     super();
 
-   this.isLoading.pipe(takeUntil(this.destroy$)).subscribe((r) => {
+    this.isLoading.pipe(takeUntil(this.destroy$)).subscribe((r) => {
       this.isItLoading = false;
     });
     this.isFirstLoadDone.pipe(takeUntil(this.destroy$)).subscribe((r) => {
@@ -65,26 +63,12 @@ _isFirstLoadDone: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     this.destroy$.unsubscribe();
   }
 
-  /*openDialog(): void {
-    this._rtDialogService
-      .open('', TeamUpsertPage, {
-        data: {},
-        width: '500px',
-      })
-      .subscribe((res) => {
-        if (res.result == RT_DIALOG_CLOSE_RESULT.CONFIRM) {
-          this.indexTableHandler.fetchData();
-        }
-      });
-  }*/
-
   openConfirmationDelete(user: UserReadDto): void {
     console.log('openConfirmationDelete', user);
   }
 
   openDialogFn($event: any): void {
     this.openDialog.emit($event);
-    this._router.navigate([this._router.url+'/'+$event._id]);
+    this._router.navigate([this._router.url + '/' + $event._id]);
   }
-
 }

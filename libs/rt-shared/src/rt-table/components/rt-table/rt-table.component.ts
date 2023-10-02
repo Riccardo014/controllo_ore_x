@@ -25,7 +25,7 @@ export class RtTableComponent {
   @Input() isFirstColumnHidden: boolean = false;
   @Input() isPrintMode: boolean = false;
 
-  @Input() isLoading: boolean = false;
+  @Input() isLoading: boolean = true;
 
   // Needed to override automatic linking
   @Input() editFn?: (entity: any) => void | Promise<void>;

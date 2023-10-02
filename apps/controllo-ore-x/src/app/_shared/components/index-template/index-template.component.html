@@ -35,7 +35,11 @@
       >
     </ng-container>
     <ng-template #createLink>
-      <a routerLink="./create" *ngIf="!shouldHideCreateButton" class="-link-button">
+      <a
+        routerLink="./create"
+        *ngIf="!shouldHideCreateButton"
+        class="-link-button"
+      >
         <button
           class="hide-mobile -page-title-button"
           mat-flat-button
@@ -58,6 +62,7 @@
 <div class="-page-content">
   <lib-rt-table
     *ngIf="page.isFirstLoadDone"
+    [isLoading]="page.isLoading.getValue()"
     (statusChange)="page.indexTableHandler.statusChange($event)"
     [tableConfiguration]="page.configuration"
     [data]="page.indexTableHandler.data"
