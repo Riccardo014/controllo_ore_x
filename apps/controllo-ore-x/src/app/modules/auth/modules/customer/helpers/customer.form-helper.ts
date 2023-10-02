@@ -28,8 +28,6 @@ export class CustomerFormHelper extends UpsertFormHelper<
     });
   }
 
-  setCreationMode(): void {}
-
   patchForm(value: CustomerReadDto): boolean {
     this.form.patchValue(value);
     return true;
@@ -38,16 +36,12 @@ export class CustomerFormHelper extends UpsertFormHelper<
   get createDto(): CustomerCreateDto {
     const formValues: any = this.form.getRawValue();
 
-    return {
-      ...formValues,
-    };
+    return formValues;
   }
 
   get updateDto(): CustomerUpdateDto {
     const formValues: any = this.form.getRawValue();
 
-    return {
-      ...formValues,
-    };
+    return formValues;
   }
 }
