@@ -20,6 +20,12 @@ export const CUSTOMERS_INDEX_CONFIGURATION_SEED: any = {
         sortable: true,
       },
       {
+        title: 'Creazione',
+        type: 'DATE',
+        field: 'createdAt',
+        sortable: true,
+      },
+      {
         title: '',
         field: '',
         type: 'EDITABLE',
