@@ -1,15 +1,24 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IRtWrapBase, RoleReadDto, UserCreateDto, UserReadDto, UserUpdateDto } from '@api-interfaces';
+import {
+  ApiPaginatedResponse,
+  RoleReadDto,
+  UserCreateDto,
+  UserReadDto,
+  UserUpdateDto,
+} from '@api-interfaces';
+import { RoleDataService } from '@app/_core/services/role-data.service';
 import { TeamDataService } from '@app/_core/services/team-data.service';
 import { UpsertPage } from '@app/_shared/classes/upsert-page.class';
+import {
+  SubscriptionsLifecycle,
+  completeSubscriptions,
+} from '@app/utils/subscriptions_lifecycle';
 import { AlertService } from 'libs/rt-shared/src/alert/services/alert.service';
 import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
 import { RT_FORM_ERRORS, RtFormError } from 'libs/utils';
-import { TeamFormHelper } from '../../helpers/team.form-helper';
-import { SubscriptionsLifecycle, completeSubscriptions } from '@app/utils/subscriptions_lifecycle';
 import { Subscription } from 'rxjs';
-import { RoleDataService } from '@app/_core/services/role-data.service';
+import { TeamFormHelper } from '../../helpers/team.form-helper';
 
 @Component({
   selector: 'controllo-ore-x-team-upsert',
@@ -17,20 +26,19 @@ import { RoleDataService } from '@app/_core/services/role-data.service';
   styleUrls: ['./team-upsert.page.scss'],
   providers: [TeamFormHelper],
 })
-export class TeamUpsertPage extends UpsertPage<
-  UserReadDto,
-  UserCreateDto,
-  UserUpdateDto
->  implements SubscriptionsLifecycle {
+export class TeamUpsertPage
+  extends UpsertPage<UserReadDto, UserCreateDto, UserUpdateDto>
+  implements SubscriptionsLifecycle
+{
   override title: string = 'Crea nuovo membro';
 
   isPasswordVisible: boolean = false;
-
+  userId?: string | number;
+  currentRole?: string;
 
   RT_FORM_ERRORS: { [key: string]: RtFormError } = RT_FORM_ERRORS;
 
   userRoles: RoleReadDto[] = [];
-  availableRoles: string[] = [];
   subscriptionsList: Subscription[] = [];
 
   _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
@@ -58,6 +66,12 @@ export class TeamUpsertPage extends UpsertPage<
     super.ngOnInit();
 
     this._setSubscriptions();
+
+    if (this.isCreating) {
+      this.formHelper.setCreationMode();
+      return;
+    }
+    this.title = 'Modifica membro';
   }
 
   ngOnDestroy(): void {
@@ -66,33 +80,49 @@ export class TeamUpsertPage extends UpsertPage<
 
   _setSubscriptions(): void {
     this.subscriptionsList.push(this._getUsersRoles());
+    if (!this.isCreating) {
+      this.userId = this.formHelper.entityId;
+      this.subscriptionsList.push(this._getUser());
+    }
+  }
+
+  private _getUser(): Subscription {
+    if (!this.userId) {
+      throw new Error("Non è stato possibile recuperare i dati dell'utente");
+    }
+    return this._teamDataService.getOne(this.userId).subscribe((user: any) => {
+      this.formHelper.patchForm({
+        ...user,
+        role: user.roleId,
+      });
+      this.currentRole = user.role.name;
+    });
   }
 
   /**
    * Get users' roles from database.
    */
   private _getUsersRoles(): Subscription {
-    return this._roleDataService.getMany({}).subscribe({
-      next: (res: IRtWrapBase<RoleReadDto[]>) => {
-        this.userRoles = res.data;
-        this.availableRoles = this.userRoles.map((role: RoleReadDto) => role.name);
-      },
-      error: () => {
-        throw new Error('Si è verificato un errore durante l\'ottenimento dei ruoli disponibili.');
-      },
-    });
+    return this._roleDataService
+      .getMany({})
+      .subscribe((roles: ApiPaginatedResponse<RoleReadDto>) => {
+        this.userRoles = roles.data;
+      });
   }
 
   override onSubmit(): void {
-
-    this.formHelper.form.patchValue({role: this.userRoles.find((role: RoleReadDto) => role.name === this.formHelper.form.value.role)});
+    this.formHelper.form.patchValue({
+      role: this.userRoles.find(
+        (role: RoleReadDto) => role.name === this.formHelper.form.value.role,
+      ),
+    });
 
     super.onSubmit();
   }
-  
 
-  togglePwd(): boolean | null {
-    return !this.isLoading.value ? (this.isPasswordVisible = !this.isPasswordVisible) : null;
+  togglePassword(): boolean | null {
+    return !this.isLoading.value
+      ? (this.isPasswordVisible = !this.isPasswordVisible)
+      : null;
   }
-
 }

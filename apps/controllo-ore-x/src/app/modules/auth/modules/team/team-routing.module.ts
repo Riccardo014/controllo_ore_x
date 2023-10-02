@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TeamUpsertPage } from './dialogs/team-upsert/team-upsert.page';
 import { TeamIndexPage } from './pages/team-index.page';
-import { TeamEditUpsertPage } from './dialogs/team-edit-upsert/team-edit-upsert.page';
 
 const routes: Routes = [
   {
@@ -15,7 +14,7 @@ const routes: Routes = [
   },
   {
     path: ':id',
-    component: TeamEditUpsertPage,
+    component: TeamUpsertPage,
   },
 ];
 

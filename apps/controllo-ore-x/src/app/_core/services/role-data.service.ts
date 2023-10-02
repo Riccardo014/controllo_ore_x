@@ -1,43 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  FindBoostedOptions,
-  FindBoostedResult,
-  IRtWrapBase,
-  RoleCreateDto,
-  RoleReadDto,
-  RoleUpdateDto,
-} from '@api-interfaces';
+import { RoleCreateDto, RoleReadDto, RoleUpdateDto } from '@api-interfaces';
+import { DataService } from '@controllo-ore-x/rt-shared';
 import { environment } from '@env';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class RoleDataService {
-  urlApi: string = environment.apiUri + '/roles';
+export class RoleDataService extends DataService<
+  RoleReadDto,
+  RoleCreateDto,
+  RoleUpdateDto
+> {
+  currentApiUri: string = environment.apiUri + '/roles';
 
-  constructor(private _http: HttpClient) {}
-  getMany(
-    body: FindBoostedOptions,
-  ): Observable<FindBoostedResult<RoleReadDto>> {
-    return this._http.post<FindBoostedResult<RoleReadDto>>(
-      `${this.urlApi}/fb`,
-      body,
-    );
-  }
-
-  create(body: RoleCreateDto): Observable<IRtWrapBase<RoleReadDto>> {
-    return this._http.post<IRtWrapBase<RoleReadDto>>(this.urlApi, body);
-  }
-
-  update(
-    id: string,
-    body: RoleUpdateDto,
-  ): Observable<IRtWrapBase<RoleReadDto>> {
-    return this._http.put<IRtWrapBase<RoleReadDto>>(
-      `${this.urlApi}/${id}`,
-      body,
-    );
+  constructor(protected http: HttpClient) {
+    super();
   }
 }

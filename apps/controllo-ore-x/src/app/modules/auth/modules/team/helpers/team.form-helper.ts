@@ -30,15 +30,17 @@ export class TeamFormHelper extends UpsertFormHelper<
       name: [null, Validators.required],
       surname: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required, strongPasswordValidator]],
       role: [null, Validators.required],
     });
   }
 
-  setEditMode(): void {
+  setCreationMode(): void {
     this.form.addControl(
-      'isEnabled',
-      this.formBuilder.control(null, Validators.required),
+      'password',
+      this.formBuilder.control(null, [
+        Validators.required,
+        strongPasswordValidator,
+      ]),
     );
   }
 

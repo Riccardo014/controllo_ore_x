@@ -20,6 +20,12 @@
         display: flex;
         flex-direction: column;
         gap: 14px;
+
+        .-input-with-icon{
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+        }
       }
     }
   }

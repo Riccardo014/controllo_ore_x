@@ -3,53 +3,90 @@
     <div class="-wrapper-user-upsert">
       <form class="container" [formGroup]="formHelper.form">
         <div class="row mb-2 -user-form">
-          <lib-rt-input
-            class="col"
-            label="Nome"
-            [disabled]="true"
-            inputPlaceholder="Nome"
-            formControlName="name"
-            [errorsToWatch]="[RT_FORM_ERRORS['REQUIRED']]"
-          ></lib-rt-input>
-          <lib-rt-input
-            class="col"
-            label="Cognome"
-            [disabled]="true"
-            inputPlaceholder="Cognome"
-            formControlName="surname"
-            [errorsToWatch]="[RT_FORM_ERRORS['REQUIRED']]"
-          ></lib-rt-input>
-          <lib-rt-input
-            class="col"
-            label="Email"
-            [disabled]="true"
-            inputPlaceholder="Email"
-            formControlName="email"
-            [errorsToWatch]="[RT_FORM_ERRORS['REQUIRED'], RT_FORM_ERRORS['EMAIL']]"
-          ></lib-rt-input>
-          <lib-rt-input
-            class="col"
-            label="Password"
-            [disabled]="true"
-            inputPlaceholder="Password"
-            [inputType]="isPasswordVisible ? 'text' : 'password'"
-            formControlName="password"
-            [errorsToWatch]="[RT_FORM_ERRORS['REQUIRED'], RT_FORM_ERRORS['PASSWORD']]">
-              <mat-icon
-                (click)="togglePwd()"
-                suffix>
-                {{isPasswordVisible ? 'visibility' : 'visibility_off'}}
-              </mat-icon>
-            </lib-rt-input>
-          <lib-rt-select 
-            class="col"
-            label="Ruolo"
-            inputPlaceholder="Ruolo"
-            formControlName="role"
-            [errorsToWatch]="[RT_FORM_ERRORS['REQUIRED']]"
-            [options] = "availableRoles"
+          <mat-form-field class="col" appearance="outline">
+            <mat-label>Nome</mat-label>
+            <input matInput placeholder="Nome" formControlName="name" />
+            <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+              <div
+                *ngIf="formHelper.form.controls['name'].hasError(error.name)"
+              >
+                {{ error.message }}
+              </div>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="col" appearance="outline">
+            <mat-label>Cognome</mat-label>
+            <input matInput placeholder="Cognome" formControlName="surname" />
+            <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+              <div
+                *ngIf="formHelper.form.controls['surname'].hasError(error.name)"
+              >
+                {{ error.message }}
+              </div>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="col" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Email" formControlName="email" />
+            <mat-error
+              *ngFor="let error of [RT_FORM_ERRORS['REQUIRED'], RT_FORM_ERRORS['EMAIL']]"
             >
-          </lib-rt-select>
+              <div
+                *ngIf="formHelper.form.controls['email'].hasError(error.name)"
+              >
+                {{ error.message }}
+              </div>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="isCreating" class="col" appearance="outline">
+            <mat-label>Password</mat-label>
+            <div class="-input-with-icon">
+              <input
+                matInput
+                placeholder="Password"
+                formControlName="password"
+                [type]="isPasswordVisible ? 'text' : 'password'"
+              />
+              <mat-icon (click)="togglePassword()" suffix>
+                {{ isPasswordVisible ? 'visibility' : 'visibility_off'
+                }}</mat-icon
+              >
+            </div>
+
+            <mat-error
+              *ngFor="let error of [RT_FORM_ERRORS['REQUIRED'], RT_FORM_ERRORS['PASSWORD']]"
+            >
+              <div
+                *ngIf="formHelper.form.controls['password'].hasError(error.name)"
+              >
+                {{ error.message }}
+              </div>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="col" appearance="outline">
+            <mat-label>Ruolo</mat-label>
+            <mat-select
+              matInput
+              placeholder="Ruolo"
+              formControlName="role"
+              [(value)]="currentRole"
+            >
+              <mat-option *ngFor="let role of userRoles" [value]="role.name">
+                {{ role.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+              <div
+                *ngIf="formHelper.form.controls['role'].hasError(error.name)"
+              >
+                {{ error.message }}
+              </div>
+            </mat-error>
+          </mat-form-field>
         </div>
       </form>
     </div>

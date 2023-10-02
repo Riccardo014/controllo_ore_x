@@ -2,7 +2,8 @@
   <mat-form-field
     style="width: 100%"
     [ngClass]="containerClass"
-    appearance="outline">
+    appearance="outline"
+  >
     <mat-label *ngIf="label" class="-label">{{ label }}</mat-label>
 
     <ng-container *ngIf="control; else onlyValue">
@@ -15,7 +16,8 @@
         [placeholder]="inputPlaceholder"
         [maxlength]="maxlength"
         [type]="inputType"
-        matInput />
+        matInput
+      />
 
       <input
         *ngIf="inputType === 'number'"
@@ -26,7 +28,8 @@
         [placeholder]="inputPlaceholder"
         matInput
         [step]="stepValue"
-        type="number" />
+        type="number"
+      />
     </ng-container>
     <ng-template #onlyValue>
       <input
@@ -35,7 +38,8 @@
         [autocomplete]="autocomplete"
         [placeholder]="inputPlaceholder"
         [disabled]="isDisabled"
-        matInput />
+        matInput
+      />
     </ng-template>
 
     <span matPrefix>
@@ -49,7 +53,9 @@
     <!-- ERROR HANDLER -->
 
     <mat-error *ngFor="let error of errorsToWatch">
-      <ng-container *ngIf="control?.hasError(error.name)">{{ error.message }}</ng-container>
+      <ng-container *ngIf="control?.hasError(error.name)">{{
+        error.message
+      }}</ng-container>
     </mat-error>
     <mat-hint *ngIf="hint">{{ hint }}</mat-hint>
   </mat-form-field>
