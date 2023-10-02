@@ -6,12 +6,12 @@ import {
   CustomerUpdateDto,
   INDEX_CONFIGURATION_KEY,
 } from '@api-interfaces';
-import { CustomerDataService } from '@app/_core/services/customer.data-service';
-import { IndexConfigurationDataService } from '@app/_core/services/index-configuration.data-service';
+import { CustomerDataService } from '@app/_core/services/customer-data.service';
 import { IndexPage } from '@app/_shared/classes/index-page.class';
+import { IndexConfigurationDataService } from '@core/services/index-configuration-data.service';
 import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'controllo-ore-x-customer-index',
@@ -23,7 +23,7 @@ export class CustomerIndexPage extends IndexPage<
   CustomerCreateDto,
   CustomerUpdateDto
 > {
-  titleIcon: string | null = 'bakery_dining';
+  titleIcon: string | null = 'workspaces';
   title: string = 'Clienti';
   pageTitle = 'Clienti';
   buttonIcon = 'bakery_dining';
@@ -37,6 +37,8 @@ export class CustomerIndexPage extends IndexPage<
   hasErrors: boolean = false;
   isEditAvailable: boolean = false;
 
+  destroy$: ReplaySubject<boolean> = new ReplaySubject(1);
+
   @Output() openDialog: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
@@ -47,9 +49,25 @@ export class CustomerIndexPage extends IndexPage<
     private _router: Router,
   ) {
     super();
+
+    this.isLoading.pipe(takeUntil(this.destroy$)).subscribe((r) => {
+      this.isItLoading = false;
+    });
+    this.isFirstLoadDone.pipe(takeUntil(this.destroy$)).subscribe((r) => {
+      this._isFirstLoadDone = new BehaviorSubject<boolean>(false);
+    });
   }
 
-  openDialogFn($event: CustomerReadDto): void {
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
+  }
+
+  openConfirmationDelete(customer: CustomerReadDto): void {
+    console.log('openConfirmationDelete', customer);
+  }
+
+  openDialogFn($event: any): void {
     this.openDialog.emit($event);
     this._router.navigate([this._router.url + '/' + $event._id]);
   }
