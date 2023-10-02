@@ -62,6 +62,7 @@ export abstract class IndexPage<T, CreateT, UpdateT>
     return this._configurationService
       .getConfiguration(this.CONFIGURATION_KEY)
       .subscribe((data) => {
+        console.log(data);
         this.configuration = data.configuration;
         this.indexTableHandler.tableConfiguration = this.configuration;
         this.indexTableHandler.fetchData();
