@@ -41,7 +41,7 @@
       {{ valueToPrint }}
     </mat-chip>
   </ng-container>
-  <ng-container *ngSwitchCase="'EDITABLE'" class="-editable-container">
+  <ng-container *ngSwitchCase="'EDITABLE'">
     <div class="-editable-container">
       <button *ngIf="openDialog" mat-icon-button (click)="openDialogFn(entity)">
         <span class="material-symbols-outlined -edit-button-icon"
