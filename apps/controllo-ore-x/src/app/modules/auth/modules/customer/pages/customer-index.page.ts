@@ -38,7 +38,8 @@ export class CustomerIndexPage extends IndexPage<
   hasErrors: boolean = false;
   isEditAvailable: boolean = false;
 
-  @Output() openDialogEvent: EventEmitter<CustomerReadDto> = new EventEmitter<CustomerReadDto>();
+  @Output() openDialogEvent: EventEmitter<CustomerReadDto> =
+    new EventEmitter<CustomerReadDto>();
 
   constructor(
     protected _configurationService: IndexConfigurationDataService,
