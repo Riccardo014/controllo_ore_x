@@ -26,6 +26,13 @@ const routes: Routes = [
         pathMatch: 'full',
         redirectTo: 'tracker',
       },
+      {
+        path: 'clienti',
+        loadChildren: () =>
+          import('./modules/customer/customer.module').then(
+            (m) => m.CustomerModule,
+          ),
+      },
     ],
   },
 ];
