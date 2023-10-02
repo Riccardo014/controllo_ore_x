@@ -31,8 +31,6 @@ export abstract class RoleChecker {
 
   /**
    * Check if the user role is Collaborator or higher
-   * @param user
-   * @returns
    */
   static async userRoleIsCollaboratorOrHigher(
     user: User,
@@ -47,8 +45,6 @@ export abstract class RoleChecker {
 
   /**
    * Check if the user role is Admin or higher
-   * @param user
-   * @returns
    */
   static async userRoleIsAdminOrHigher(
     user: User,
@@ -63,8 +59,6 @@ export abstract class RoleChecker {
 
   /**
    * Check if the user role is SuperAdmin or higher
-   * @param user
-   * @returns
    */
   static async userRoleIsSuperAdmin(
     user: User,
