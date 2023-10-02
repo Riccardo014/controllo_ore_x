@@ -40,6 +40,8 @@ export class CustomerFormHelper extends UpsertFormHelper<
     });
   }
 
+  setCreationMode(): void {}
+
   patchForm(value: CustomerReadDto): boolean {
     this.form.patchValue(value);
     return true;
