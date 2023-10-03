@@ -58,7 +58,7 @@ export class TeamIndexPage extends IndexPage<
     });
   }
 
-  ngOnDestroy(): void {
+  override ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
   }

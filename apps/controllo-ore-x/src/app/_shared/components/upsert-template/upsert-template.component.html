@@ -4,7 +4,9 @@
       <button (click)="page.navigateBack()" mat-icon-button>
         <mat-icon color="primary" class="-icon">arrow_back</mat-icon>
       </button>
-      <div class="headline-5">{{ dynamicTitle ? dynamicTitle : page.title }}</div>
+      <div class="headline-5">
+        {{ dynamicTitle ? dynamicTitle : page.title }}
+      </div>
 
       <!-- chip  -->
       <div *ngIf="chipLabel" class="-chip">
@@ -51,7 +53,7 @@
       Annulla
     </button>
     <button
-      (click)="page.onSubmit()"
+      (click)="page.handleUserSubmission()"
       *ngIf="page.isCreating || page.isEditing"
       [disabled]="page.formHelper.invalid"
       color="primary"
@@ -78,7 +80,7 @@
       close
     </mat-icon>
     <button
-      (click)="page.onSubmit()"
+      (click)="page.handleUserSubmission()"
       *ngIf="page.isCreating || page.isEditing"
       [disabled]="page.formHelper.invalid || (page.isLoading | async)"
       class="hide-tablet-desktop"
@@ -91,7 +93,7 @@
     <mat-menu #optionMenu="matMenu">
       <ng-content select="[menuOptions]"></ng-content>
       <button
-        (click)="page.onDelete()"
+        (click)="page.deleteEntry()"
         *ngIf="page.isDeleteEnabled"
         mat-menu-item
       >
@@ -105,7 +107,7 @@
 <div *ngIf="page.tabs.length" class="tab-menu">
   <ng-container *ngFor="let tab of page.tabs; let index = index">
     <div
-      (click)="page.changeTab(index)"
+      (click)="page.setTab(index)"
       *ngIf="!tab.hideOnCreation || !page.isCreating"
       [class.active]="page.tab === index"
       class="tab-menu__item"

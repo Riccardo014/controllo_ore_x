@@ -110,14 +110,14 @@ export class TeamUpsertPage
       });
   }
 
-  override onSubmit(): void {
+  override handleUserSubmission(): void {
     this.formHelper.form.patchValue({
       role: this.userRoles.find(
         (role: RoleReadDto) => role.name === this.formHelper.form.value.role,
       ),
     });
 
-    super.onSubmit();
+    super.handleUserSubmission();
   }
 
   togglePassword(): boolean | null {

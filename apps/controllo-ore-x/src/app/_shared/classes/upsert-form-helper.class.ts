@@ -6,10 +6,10 @@ import { FormHelper } from '@shared/classes/form-helper.class';
  * The UpsertFormHelper is used for the creation, update and delete a form; it also handle basic functions.
  */
 export abstract class UpsertFormHelper<
-  T,
+  ReadT,
   CreateT,
   UpdateT,
-> extends FormHelper<T> {
+> extends FormHelper<ReadT> {
   /**
    * ID of the current entity.
    */
@@ -18,11 +18,11 @@ export abstract class UpsertFormHelper<
   /**
    * Value that stores the current entity. It is used to patch the form initially.
    */
-  currentEntity?: T;
+  currentEntity?: ReadT;
 
   protected constructor(
     protected override formBuilder: FormBuilder,
-    private _dataService: BaseDataService<T, CreateT, UpdateT>,
+    private _dataService: BaseDataService<ReadT, CreateT, UpdateT>,
   ) {
     super(formBuilder);
     this.form = this.initForm();
@@ -40,7 +40,7 @@ export abstract class UpsertFormHelper<
   /**
    * It handles the create function using the dataService
    */
-  async create(): Promise<T> {
+  async create(): Promise<ReadT> {
     return new Promise((resolve, reject) => {
       if (this.invalid) {
         return reject();
@@ -60,7 +60,7 @@ export abstract class UpsertFormHelper<
   /**
    * It handles the update function using the dataService
    */
-  update(): Promise<T> {
+  update(): Promise<ReadT> {
     return new Promise((resolve, reject) => {
       if (this.invalid || !this.entityId) {
         return reject();
