@@ -2,7 +2,7 @@ export interface UserHoursReadDto {
   _id: string;
   userId: string;
   releaseId: string;
-  labelId: string;
+  hoursTagId: string;
   date: Date;
   notes: string;
   hours: number;
@@ -14,7 +14,7 @@ export interface UserHoursReadDto {
 export interface UserHoursCreateDto {
   userId: string;
   releaseId: string;
-  labelId: string;
+  hoursTagId: string;
   date: Date;
   notes: string;
   hours: number;
@@ -23,7 +23,7 @@ export interface UserHoursCreateDto {
 export interface UserHoursUpdateDto {
   userId?: string;
   releaseId?: string;
-  labelId?: string;
+  hoursTagId?: string;
   date?: Date;
   notes?: string;
   hours?: number;

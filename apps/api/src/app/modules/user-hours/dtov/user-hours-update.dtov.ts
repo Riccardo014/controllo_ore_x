@@ -1,28 +1,34 @@
 import { UserHoursUpdateDto } from '@api-interfaces';
-import { IsDate, IsNumber, IsOptional, IsString, IsUUID } from 'class-validator';
+import {
+  IsDate,
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 
 export class UserHoursUpdateDtoV implements UserHoursUpdateDto {
-  @IsOptional() 
+  @IsOptional()
   @IsUUID()
   userId?: string;
 
-  @IsOptional() 
+  @IsOptional()
   @IsUUID()
   releaseId?: string;
 
-  @IsOptional() 
+  @IsOptional()
   @IsUUID()
-  labelId?: string;
+  tagId?: string;
 
-  @IsOptional() 
+  @IsOptional()
   @IsDate()
   date?: Date;
 
-  @IsOptional() 
+  @IsOptional()
   @IsString()
   notes?: string;
 
-  @IsOptional() 
+  @IsOptional()
   @IsNumber()
   hours?: number;
 }

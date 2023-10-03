@@ -1,8 +1,8 @@
 import { FindBoostedOptions } from '@api-interfaces';
 import { FindBoostedResult } from '@find-boosted';
-import { LabelCreateDtoV } from '@modules/user-hours/dtov/label-create.dtov';
-import { LabelUpdateDtoV } from '@modules/user-hours/dtov/label-update.dtov';
-import { LabelService } from '@modules/user-hours/services/label.service';
+import { HoursTagCreateDtoV } from '@modules/user-hours/dtov/hours-tag-create.dtov';
+import { HoursTagUpdateDtoV } from '@modules/user-hours/dtov/hours-tag-update.dtov';
+import { HoursTagService } from '@modules/user-hours/services/hours-tag.service';
 import { User } from '@modules/user/entities/user.entity';
 import { UserService } from '@modules/user/services/user.service';
 import {
@@ -22,59 +22,59 @@ import { CastObjectPipe } from '@shared/pipes/cast-object.pipe';
 import { ApiErrors } from '@shared/utils/errors/api-errors';
 import { RoleChecker } from '@shared/utils/role-checker';
 import { DeleteResult, UpdateResult } from 'typeorm';
-import { Label } from '../entities/label.entity';
+import { HoursTag } from '../entities/hours-tag.entity';
 
 /**
- * @description The labels are used to categorize the user hours.
+ * @description Tags are used to categorize the user's working and holidays hours.
  */
-@ApiTags('Labels')
-@Controller('labels')
-export class LabelController {
+@ApiTags('HoursTags')
+@Controller('hours-tags')
+export class HoursTagController {
   constructor(
-    private _labelService: LabelService,
+    private _tagService: HoursTagService,
     private _userService: UserService,
   ) {}
 
   @Get()
   getMany(
     @Query(CastObjectPipe) query: any,
-  ): Promise<FindBoostedResult<Label>> {
-    return this._labelService.getMany(query);
+  ): Promise<FindBoostedResult<HoursTag>> {
+    return this._tagService.getMany(query);
   }
 
   @Post('fb')
   getManyFb(
     @Body() body: FindBoostedOptions,
-  ): Promise<FindBoostedResult<Label>> {
-    return this._labelService.getMany(body);
+  ): Promise<FindBoostedResult<HoursTag>> {
+    return this._tagService.getMany(body);
   }
 
   @Get(':id')
-  getOne(@Param('id') id: string): Promise<Label> {
-    return this._labelService.getOne(id);
+  getOne(@Param('id') id: string): Promise<HoursTag> {
+    return this._tagService.getOne(id);
   }
 
   @Post()
   create(
-    @Body() data: LabelCreateDtoV,
+    @Body() data: HoursTagCreateDtoV,
     @AuthUser() user: User,
-  ): Promise<Label> {
+  ): Promise<HoursTag> {
     if (!RoleChecker.isUserRoleAdminOrHigher(user, this._userService)) {
       throw new ForbiddenException(ApiErrors.UNUTHORIZED_OPERATION);
     }
-    return this._labelService.create(data);
+    return this._tagService.create(data);
   }
 
   @Put(':id')
   update(
     @Param('id') id: string,
-    @Body() body: LabelUpdateDtoV,
+    @Body() body: HoursTagUpdateDtoV,
     @AuthUser() user: User,
   ): Promise<UpdateResult> {
     if (!RoleChecker.isUserRoleAdminOrHigher(user, this._userService)) {
       throw new ForbiddenException(ApiErrors.UNUTHORIZED_OPERATION);
     }
-    return this._labelService.update(id, body);
+    return this._tagService.update(id, body);
   }
 
   @Delete(':id')
@@ -85,6 +85,6 @@ export class LabelController {
     if (!RoleChecker.isUserRoleAdminOrHigher(user, this._userService)) {
       throw new ForbiddenException(ApiErrors.UNUTHORIZED_OPERATION);
     }
-    return this._labelService.delete({ _id: id });
+    return this._tagService.delete({ _id: id });
   }
 }

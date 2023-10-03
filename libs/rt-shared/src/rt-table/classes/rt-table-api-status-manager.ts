@@ -13,7 +13,7 @@ export class RtTableApiStatusManager<
 
   #currentCallSubscription?: Subscription;
 
-  currentError: any;
+  currentError: Error | null = null;
 
   constructor(private _dataService: BaseDataService<T, CreateT, UpdateT>) {
     super();
@@ -33,7 +33,7 @@ export class RtTableApiStatusManager<
           this.data = apiResult.data;
           this.currentStatus.pagination = apiResult.pagination;
         },
-        error: (err) => {
+        error: (err: Error) => {
           this.currentError = err;
         },
         complete: () => {
