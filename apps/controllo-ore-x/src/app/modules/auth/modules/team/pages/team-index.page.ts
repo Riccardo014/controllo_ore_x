@@ -11,7 +11,7 @@ import { IndexPage } from '@app/_shared/classes/index-page.class';
 import { IndexConfigurationDataService } from '@core/services/index-configuration-data.service';
 import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
-import { BehaviorSubject, ReplaySubject, takeUntil } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'controllo-ore-x-team-index',
@@ -37,8 +37,6 @@ export class TeamIndexPage extends IndexPage<
   hasErrors: boolean = false;
   isEditAvailable: boolean = false;
 
-  destroy$: ReplaySubject<boolean> = new ReplaySubject(1);
-
   @Output() openDialog: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
@@ -49,25 +47,9 @@ export class TeamIndexPage extends IndexPage<
     private _router: Router,
   ) {
     super();
-
-    this.isLoading.pipe(takeUntil(this.destroy$)).subscribe((r) => {
-      this.isItLoading = false;
-    });
-    this.isFirstLoadDone.pipe(takeUntil(this.destroy$)).subscribe((r) => {
-      this._isFirstLoadDone = new BehaviorSubject<boolean>(false);
-    });
   }
 
-  override ngOnDestroy(): void {
-    this.destroy$.next(true);
-    this.destroy$.unsubscribe();
-  }
-
-  openConfirmationDelete(user: UserReadDto): void {
-    console.log('openConfirmationDelete', user);
-  }
-
-  openDialogFn($event: any): void {
+  openDialogFn($event: UserReadDto): void {
     this.openDialog.emit($event);
     this._router.navigate([this._router.url + '/' + $event._id]);
   }
