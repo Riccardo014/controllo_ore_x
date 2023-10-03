@@ -1,5 +1,8 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
 
+/**
+ * It's a helper class to manage the form in the upsert pages
+ */
 export abstract class FormHelper<T> {
   form!: FormGroup;
 
