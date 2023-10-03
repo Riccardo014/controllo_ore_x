@@ -6,27 +6,20 @@ import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([
-      IndexConfiguration,
-    ]),
-  ],
-  controllers: [
-    IndexConfigurationController,
-  ],
-  providers: [
-    IndexConfigurationService,
-  ],
+  imports: [TypeOrmModule.forFeature([IndexConfiguration])],
+  controllers: [IndexConfigurationController],
+  providers: [IndexConfigurationService],
 })
 export class IndexConfigurationModule {
-  constructor(private _configService: ConfigService, private _indexConfigSvc: IndexConfigurationService) {
-    if (this._configService.get<'true' | 'false'>('SEED_DATA_ACTIVE', 'false') === 'true') {
-      this.seedData();
+  constructor(
+    private _configService: ConfigService,
+    private _indexConfigSvc: IndexConfigurationService,
+  ) {
+    if (
+      this._configService.get<'true' | 'false'>('SEED_DATA_ACTIVE', 'false') ===
+      'true'
+    ) {
+      this._indexConfigSvc.seed();
     }
   }
-
-  async seedData(): Promise<void> {
-    await this._indexConfigSvc.seed();
-  }
 }
-
