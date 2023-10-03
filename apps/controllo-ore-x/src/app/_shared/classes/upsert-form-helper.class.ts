@@ -3,7 +3,7 @@ import { BaseDataService } from '@controllo-ore-x/rt-shared';
 import { FormHelper } from '@shared/classes/form-helper.class';
 
 /**
- * Class that handles a form and implements create, update, delete and basic get functions
+ * The UpsertFormHelper is used for the creation, update and delete a form; it also handle basic functions.
  */
 export abstract class UpsertFormHelper<
   T,
@@ -11,12 +11,12 @@ export abstract class UpsertFormHelper<
   UpdateT,
 > extends FormHelper<T> {
   /**
-   * ID of the current entity in case of update.
+   * ID of the current entity.
    */
   entityId?: string;
 
   /**
-   * Value that stores the current entity in case of update. It is used to patch the form initially.
+   * Value that stores the current entity. It is used to patch the form initially.
    */
   currentEntity?: T;
 
