@@ -1,4 +1,5 @@
 import { FILTER_TYPE, FULL_SEARCH_COLUMN_TYPE } from '@api-interfaces';
+import { COLUMN_TYPE } from '../enums/column-type.enum';
 
 export interface TableConfiguration {
   collectionId: string;
@@ -13,13 +14,16 @@ export interface TableConfiguration {
     pageSizeOptions?: number[];
   };
   exportEnabled?: boolean;
-  fullSearchCols?: (string | { type: FULL_SEARCH_COLUMN_TYPE; field: string })[];
+  fullSearchCols?: (
+    | string
+    | { type: FULL_SEARCH_COLUMN_TYPE; field: string }
+  )[];
 }
 
 export interface TableConfigurationColumn {
   title: string;
   field: string;
-  type: 'NUMBER' | 'STRING' | 'DATE' | 'TIME_DATE' | 'BOOLEAN' | 'EDITABLE' | string;
+  type: COLUMN_TYPE;
   transformFn?: string;
   sortable: boolean;
 }
