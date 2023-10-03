@@ -34,6 +34,9 @@ export class TeamFormHelper extends UpsertFormHelper<
     });
   }
 
+  /**
+   * Set the form in creation mode, adding the password field.
+   */
   setCreationMode(): void {
     this.form.addControl(
       'password',
@@ -46,7 +49,7 @@ export class TeamFormHelper extends UpsertFormHelper<
 
   patchForm(value: UserReadDto): boolean {
     this.form.patchValue(value);
-    return true;
+    return this.form.valid;
   }
 
   get createDto(): UserCreateDto {
