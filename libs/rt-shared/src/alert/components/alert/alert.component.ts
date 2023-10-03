@@ -31,8 +31,8 @@ export class AlertComponent implements OnInit, SubscriptionsLifecycle {
   _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
 
-  currentTimeout: any;
-  currentInterval: any;
+  private _currentTimeout: any;
+  private _currentInterval: any;
   isPinned: boolean = false;
   shouldShowDetails: boolean = false;
 
@@ -78,15 +78,19 @@ export class AlertComponent implements OnInit, SubscriptionsLifecycle {
    */
   pin(): void {
     this.isPinned = true;
-    clearInterval(this.currentInterval);
-    clearTimeout(this.currentTimeout);
+    clearInterval(this._currentInterval);
+    clearTimeout(this._currentTimeout);
     this._completeSubscriptions(this.subscriptionsList);
   }
 
+  /**
+   * Close the alert
+   */
   close(): void {
-    clearInterval(this.currentInterval);
-    clearTimeout(this.currentTimeout);
-    this._rtAlertSvc.removeValue(this.alert.id);
+    this._completeSubscriptions(this.subscriptionsList);
+    clearInterval(this._currentInterval);
+    clearTimeout(this._currentTimeout);
+    this._rtAlertSvc.removeArticle(this.alert.id);
   }
 
   toggleDetails(): void {
