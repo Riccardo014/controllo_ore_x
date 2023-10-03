@@ -1,7 +1,7 @@
 import { FindBoostedOptions } from '@api-interfaces';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { rtTableColumnValue } from '../lib/rt-table-column-value';
-import { DataService } from './data-service';
+import { BaseDataService } from './data-service';
 import { RtTableStatusHandler } from './rt-table-status-handler';
 
 export class RtTableApiStatusManager<
@@ -15,7 +15,7 @@ export class RtTableApiStatusManager<
 
   currentError: any;
 
-  constructor(private _dataService: DataService<T, CreateT, UpdateT>) {
+  constructor(private _dataService: BaseDataService<T, CreateT, UpdateT>) {
     super();
   }
 

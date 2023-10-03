@@ -1,7 +1,7 @@
 import { Directive, OnInit } from '@angular/core';
 import { INDEX_CONFIGURATION_KEY, TableConfiguration } from '@api-interfaces';
 import {
-  DataService,
+  BaseDataService,
   RtTableApiStatusManager,
 } from '@controllo-ore-x/rt-shared';
 import { IndexConfigurationDataService } from '@core/services/index-configuration-data.service';
@@ -18,7 +18,7 @@ export abstract class IndexPage<T, CreateT, UpdateT> implements OnInit {
   abstract CONFIGURATION_KEY: INDEX_CONFIGURATION_KEY;
 
   // todo set tipe of data setting (see codi )
-  protected abstract _dataService: DataService<T, CreateT, UpdateT>;
+  protected abstract _dataService: BaseDataService<T, CreateT, UpdateT>;
   protected abstract _configurationService: IndexConfigurationDataService;
 
   ngOnInit(): void {

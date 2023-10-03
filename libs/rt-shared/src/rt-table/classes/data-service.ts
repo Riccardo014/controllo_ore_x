@@ -6,15 +6,15 @@ import {
 } from '@api-interfaces';
 import { Observable } from 'rxjs';
 
-export abstract class DataService<T, CreateT, UpdateT> {
+export abstract class BaseDataService<T, CreateT, UpdateT> {
   protected abstract currentApiUri: string;
   protected abstract http: HttpClient;
 
   getMany(params: FindBoostedOptions): Observable<ApiPaginatedResponse<T>> {
     return this.http.post<ApiPaginatedResponse<T>>(
-      `${this.currentApiUri}/fb`, 
-      params
-      );
+      `${this.currentApiUri}/fb`,
+      params,
+    );
   }
 
   create(data: CreateT): Observable<ApiResponse<T>> {

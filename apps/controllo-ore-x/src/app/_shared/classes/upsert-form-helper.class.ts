@@ -1,5 +1,5 @@
 import { FormBuilder } from '@angular/forms';
-import { DataService } from '@controllo-ore-x/rt-shared';
+import { BaseDataService } from '@controllo-ore-x/rt-shared';
 import { FormHelper } from '@shared/classes/form-helper.class';
 
 /**
@@ -22,7 +22,7 @@ export abstract class UpsertFormHelper<
 
   protected constructor(
     protected override formBuilder: FormBuilder,
-    private _dataService: DataService<T, CreateT, UpdateT>,
+    private _dataService: BaseDataService<T, CreateT, UpdateT>,
   ) {
     super(formBuilder);
     this.form = this.initForm();
