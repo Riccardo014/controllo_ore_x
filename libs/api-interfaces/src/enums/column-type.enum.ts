@@ -1,0 +1,8 @@
+export enum COLUMN_TYPE {
+  DATE = 'DATE',
+  NUMBER = 'NUMBER',
+  STRING = 'STRING',
+  TIME_DATE = 'TIME_DATE',
+  BOOLEAN = 'BOOLEAN',
+  EDITABLE = 'EDITABLE',
+}
