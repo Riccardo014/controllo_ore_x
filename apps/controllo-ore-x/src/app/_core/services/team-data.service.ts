@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserCreateDto, UserReadDto, UserUpdateDto } from '@api-interfaces';
-import { DataService } from '@controllo-ore-x/rt-shared';
+import { BaseDataService } from '@controllo-ore-x/rt-shared';
 import { environment } from '@env';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TeamDataService extends DataService<
+export class TeamDataService extends BaseDataService<
   UserReadDto,
   UserCreateDto,
   UserUpdateDto
