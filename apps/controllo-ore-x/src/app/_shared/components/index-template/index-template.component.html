@@ -1,6 +1,6 @@
 <controllo-ore-x-rt-header>
   <ng-container title>
-    <div class="headline-6">{{ page.title }}</div>
+    <h1 class="headline-6">{{ page.title }}</h1>
   </ng-container>
 
   <ng-container actions>
@@ -38,16 +38,18 @@
       <a
         routerLink="./create"
         *ngIf="!shouldHideCreateButton"
-        class="-link-button"
+        class="-page-title-link"
       >
         <button
-          class="hide-mobile -page-title-button"
+          class="hide-mobile -page-title-link-button"
           mat-flat-button
           color="primary"
         >
-          <div class="-page-title-button-elements">
+          <div class="-page-title-link-button-elements">
             <span class="material-symbols-outlined">{{ buttonIcon }}</span>
-            <span class="body-2">{{ buttonText }}</span>
+            <span class="body-2 -page-title-link-button-elements-text">{{
+              buttonText
+            }}</span>
           </div>
         </button>
 

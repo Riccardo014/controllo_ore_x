@@ -1,29 +1,5 @@
 @import 'libs/ui/core';
 
-.-container-title-info {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-
-  button{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .-icon {
-    background: map-get($palette-primary, 50);
-    padding: 10px;
-    border-radius: 8px;
-  }
-
-  .-title {
-    font-size: 20px;
-    color: $index-template-color-title;
-    font-weight: 700;
-  }
-}
-
 .-page-content {
   position: relative;
   padding-bottom: 40px;
@@ -35,23 +11,23 @@
   @include scrollbar-primary(map-get($palette-grey, 400), 6px, true);
 }
 
-.-link-button{
+.-page-title-link{
   text-decoration: none;
-  
-  .-page-title-button{
-    background-color: map-get($palette-primary, 500);
-    color: #fff;
-
-    .-page-title-button-elements{
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      gap: 5%;
-
-      span{
-        white-space: nowrap
-      }
-    }
 }
+
+.-page-title-link-button{
+  background-color: map-get($palette-primary, 500);
+  color: #fff;
+}
+
+.-page-title-link-button-elements{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5%;
+}
+
+.-page-title-link-button-elements-text{
+  white-space: nowrap
 }
