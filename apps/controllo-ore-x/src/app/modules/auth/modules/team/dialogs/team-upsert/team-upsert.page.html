@@ -1,8 +1,8 @@
 <controllo-ore-x-upsert-template [page]="this" [isMoreOptionHidden]="false">
-  <div body class="-body">
+  <div body class="-wrapper">
     <div class="-wrapper-user-upsert">
       <form class="container" [formGroup]="formHelper.form">
-        <div class="row mb-2 -user-form">
+        <div class="row mb-2 -wrapper-user-upsert-form">
           <mat-form-field class="col" appearance="outline">
             <mat-label>Nome</mat-label>
             <input matInput placeholder="Nome" formControlName="name" />
@@ -50,7 +50,7 @@
                 formControlName="password"
                 [type]="isPasswordVisible ? 'text' : 'password'"
               />
-              <mat-icon (click)="togglePassword()" suffix>
+              <mat-icon (click)="togglePasswordVisibility()" suffix>
                 {{ isPasswordVisible ? 'visibility' : 'visibility_off'
                 }}</mat-icon
               >

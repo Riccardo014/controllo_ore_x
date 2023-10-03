@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   ApiPaginatedResponse,
@@ -28,7 +28,7 @@ import { TeamFormHelper } from '../../helpers/team.form-helper';
 })
 export class TeamUpsertPage
   extends UpsertPage<UserReadDto, UserCreateDto, UserUpdateDto>
-  implements SubscriptionsLifecycle
+  implements SubscriptionsLifecycle, OnDestroy, OnInit
 {
   override title: string = 'Crea nuovo membro';
 
@@ -80,12 +80,17 @@ export class TeamUpsertPage
 
   _setSubscriptions(): void {
     this.subscriptionsList.push(this._getUsersRoles());
+
+    // If the user is editing an existing user, get the user's data, otherwhise the entityId field will be empty.
     if (!this.isCreating) {
       this.userId = this.formHelper.entityId;
       this.subscriptionsList.push(this._getUser());
     }
   }
 
+  /**
+   * Get the user's data from the database.
+   */
   private _getUser(): Subscription {
     if (!this.userId) {
       throw new Error("Non è stato possibile recuperare i dati dell'utente");
@@ -100,7 +105,7 @@ export class TeamUpsertPage
   }
 
   /**
-   * Get users' roles from database.
+   * Fetch and set the users' roles from the database.
    */
   private _getUsersRoles(): Subscription {
     return this._roleDataService
@@ -120,9 +125,9 @@ export class TeamUpsertPage
     super.handleUserSubmission();
   }
 
-  togglePassword(): boolean | null {
-    return !this.isLoading.value
-      ? (this.isPasswordVisible = !this.isPasswordVisible)
-      : null;
+  togglePasswordVisibility(): void {
+    if (!this.isLoading.value) {
+      this.isPasswordVisible = !this.isPasswordVisible;
+    }
   }
 }
