@@ -11,13 +11,15 @@ const routes: Routes = [
         path: 'tracker',
         loadChildren: () =>
           import('./modules/tracker/tracker.module').then(
-            (m) => m.TrackerModule,
+            (module) => module.TrackerModule,
           ),
       },
       {
         path: 'team',
         loadChildren: () =>
-          import('./modules/team/team.module').then((m) => m.TeamModule),
+          import('./modules/team/team.module').then(
+            (module) => module.TeamModule,
+          ),
       },
     ],
   },
