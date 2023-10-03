@@ -13,6 +13,9 @@ export interface TabLabel {
   hideOnCreation?: boolean;
 }
 
+/**
+ * It's a helper class to manage the upsert pages.
+ */
 @Directive()
 export abstract class UpsertPage<
   ReadT extends { _id: string },
