@@ -14,8 +14,11 @@ export interface TabLabel {
 }
 
 @Directive()
-export abstract class UpsertPage<T extends { _id: string }, CreateT, UpdateT>
-  implements OnInit
+export abstract class UpsertPage<
+  ReadT extends { _id: string },
+  CreateT,
+  UpdateT,
+> implements OnInit
 {
   title: string = 'Page Title';
   statusChip: string = 'Status Chip';
@@ -35,7 +38,7 @@ export abstract class UpsertPage<T extends { _id: string }, CreateT, UpdateT>
   tab: number = 0;
 
   protected constructor(
-    public formHelper: UpsertFormHelper<T, CreateT, UpdateT>,
+    public formHelper: UpsertFormHelper<ReadT, CreateT, UpdateT>,
     private _upsertAlertSvc: AlertService,
     private _upsertDialogSvc: RtDialogService,
     private _upsertRouter: Router,
@@ -44,77 +47,74 @@ export abstract class UpsertPage<T extends { _id: string }, CreateT, UpdateT>
   ) {}
 
   ngOnInit(): void {
-    if (this.getResourceId()) {
+    if (this.getEntityId()) {
       this.isCreating = false;
       this.formHelper.disable();
     }
-    this.init();
+    this.pageInitialization();
   }
 
-  async init(): Promise<void> {
+  async pageInitialization(): Promise<void> {
     this.isLoading.next(true);
     try {
-      await this.formHelper.init(this.getResourceId());
-    } catch (e) {
+      await this.formHelper.init(this.getEntityId());
+    } catch (err) {
       this._upsertAlertSvc.openError(
         'Errore!',
         'Impossibile recuperare le informazioni',
-        e,
+        err,
       );
     }
     this.isLoading.next(false);
   }
 
   /**
-   * Change the current tab if the page has tabs
-   * @param tab
+   * Update the component's tab to the passed tab number.
    */
-  changeTab(tab: number): void {
+  setTab(tab: number): void {
     this.tab = tab;
   }
 
   /**
-   * Returns the actual resource id
+   * Return the entity's id.
    */
-  getResourceId(): string {
+  getEntityId(): string {
     return this._upsertActivatedRoute.snapshot.params[this._routerPropertyId];
   }
 
   /**
-   * It handles the create function onSubmit
-   * @protected
+   * Create an entity if the form is valid. Set loading to true and disable form while waiting for the operation to complete.
    */
-  protected async onCreate(): Promise<void> {
+  private async _createEntry(): Promise<void> {
     if (this.formHelper.invalid) {
-      return;
+      throw new Error('The form is not valid');
     }
 
     this.isLoading.next(true);
     this.formHelper.disable();
 
     try {
-      const entityCreated: T = await this.formHelper.create();
+      const entityCreated: ReadT = await this.formHelper.create();
       this.isLoading.next(false);
       this._upsertAlertSvc.openSuccess();
       await this._upsertRouter.navigate([`../${entityCreated._id}`], {
         relativeTo: this._upsertActivatedRoute,
       });
-    } catch (error) {
+    } catch (err) {
       this.formHelper.enable();
       this._upsertAlertSvc.openError(
         'Errore',
         "Impossibile creare l'entità",
-        error,
+        err,
       );
       this.isLoading.next(false);
     }
   }
 
   /**
-   * It handles the update function onSubmit
-   * @protected
+   * Update the entity if the form is valid. Set loading to true and disable form while waiting for the operation to complete.
    */
-  protected async onUpdate(): Promise<void> {
+  private async _updateEntry(): Promise<void> {
     if (this.formHelper.invalid) {
       return;
     }
@@ -130,28 +130,28 @@ export abstract class UpsertPage<T extends { _id: string }, CreateT, UpdateT>
 
       this._upsertAlertSvc.openSuccess();
       this.isEditing = false;
-    } catch (e) {
+    } catch (err) {
       this.isLoading.next(false);
       this.formHelper.enable();
       this._upsertAlertSvc.openError(
         'Errore',
         "Impossibile aggiornare l'entità",
-        e,
+        err,
       );
     }
   }
 
   /**
-   * Method to attach on "Save" button
+   * Perform a create or update operation depending on the `isCreating` flag.
    */
-  onSubmit(): void {
-    this.isCreating ? this.onCreate() : this.onUpdate();
+  handleUserSubmission(): void {
+    this.isCreating ? this._createEntry() : this._updateEntry();
   }
 
   /**
-   * Delete method that shows a prompt dialog to confirm the delete
+   * Prompt the user for confirmation on the deletion operation by opening a dialog. Delete entry if the user confirms the operation.
    */
-  async onDelete(): Promise<void> {
+  async deleteEntry(): Promise<void> {
     this._upsertDialogSvc
       .openConfirmation(
         "Procedere con l'eliminazione?",
@@ -165,14 +165,14 @@ export abstract class UpsertPage<T extends { _id: string }, CreateT, UpdateT>
             await this.formHelper.delete();
             this._upsertAlertSvc.openSuccess();
             this.navigateBack();
-          } catch (e) {
+          } catch (err) {
             this.isLoading.next(false);
             this.formHelper.enable();
 
             this._upsertAlertSvc.openError(
               'Errore!',
               'Impossibile terminare la procedura',
-              e,
+              err,
             );
           }
         }
@@ -189,14 +189,14 @@ export abstract class UpsertPage<T extends { _id: string }, CreateT, UpdateT>
   }
 
   /**
-   * Toggle the edit mode of the page and reloads the form data.
+   * Toggle the `isEditing` flag of the page. If stopping to edit; show a dialog asking for confirmation and reload the form data on confirm.
    */
   toggleEditing(): void {
     if (this.isEditing) {
       this._upsertDialogSvc
         .openConfirmation('Annullare le modifiche correnti?')
-        .subscribe(async (r) => {
-          if (r?.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
+        .subscribe(async (res) => {
+          if (res?.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
             await this.formHelper.loadData();
             this.formHelper.disable();
             this.isEditing = false;
