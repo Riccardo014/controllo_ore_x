@@ -8,25 +8,17 @@ export abstract class FormHelper<T> {
   }
 
   /**
-   * Returns the form to be used in _form
+   * Return the form to be used in _form and initialize the FormGroup
    */
   abstract initForm(): FormGroup;
 
   /**
    * Returns boolean value if patch is done successfully
-   * @param value
    */
   abstract patchForm(value: T): boolean;
 
   /**
-   * It gets form valid value
-   */
-  get valid(): boolean {
-    return this.form.valid;
-  }
-
-  /**
-   * It gets form invalid value
+   * Return whether or not the form is not valid
    */
   get invalid(): boolean {
     return this.form.invalid;
