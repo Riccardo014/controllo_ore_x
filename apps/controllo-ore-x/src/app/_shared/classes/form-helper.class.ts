@@ -16,7 +16,7 @@ export abstract class FormHelper<T> {
   abstract initForm(): FormGroup;
 
   /**
-   * Returns boolean value if patch is done successfully
+   * Patch form and return a boolean describing whether the patch was successful or not; it's also used to initialize the form.
    */
   abstract patchForm(value: T): boolean;
 
