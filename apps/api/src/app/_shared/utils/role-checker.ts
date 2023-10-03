@@ -13,7 +13,7 @@ export abstract class RoleChecker {
    * @throws ForbiddenException if the user role is not in the permitted roles
    * @returns True if the role of the user is in the permitted roles False otherwise
    */
-  static async _checkPermission(
+  private static async _checkPermission(
     user: User,
     roles: ROLE[],
     _userService: UserService,
