@@ -3,7 +3,7 @@ import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
-import { Subscription } from 'rxjs';
+import { Subscription, interval } from 'rxjs';
 import { NavMenusVisibilityService } from '../sidenav/servicies/nav-menus-visibility.service';
 
 @Component({
@@ -19,19 +19,23 @@ export class GlobalTopbarComponent implements OnInit, SubscriptionsLifecycle {
   subscriptionsList: Subscription[] = [];
 
   _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
-  completeSubscriptions;
+    completeSubscriptions;
 
-  constructor(private _sidenavService: NavMenusVisibilityService) {
-    let currentDateTime = new Date();
-    setInterval(() => {
-      currentDateTime = new Date();
-      this.currentTime =
-        (currentDateTime.getHours() < 10 ? '0' : '') +
-        currentDateTime.getHours().toString() +
-        ':' +
-        (currentDateTime.getMinutes() < 10 ? '0' : '') +
-        currentDateTime.getMinutes().toString();
-    }, 1);
+  constructor(private _sidenavService: NavMenusVisibilityService) {}
+
+  setAutomaticTimerUpdate(): Subscription {
+    return interval(1000)
+      .pipe()
+      .subscribe((_) => {
+        this.currentTime = this.dateToString(new Date());
+      });
+  }
+
+  dateToString(date: Date): string {
+    const hours: string = date.getHours().toString().padStart(2, '0');
+    const minutes: string = date.getMinutes().toString().padStart(2, '0');
+
+    return hours + ':' + minutes;
   }
 
   ngOnInit(): void {
@@ -47,6 +51,7 @@ export class GlobalTopbarComponent implements OnInit, SubscriptionsLifecycle {
       this._sidenavService.visibiliyObservable.subscribe(
         (isOpen) => (this.isSidenavOpen = isOpen),
       ),
+      this.setAutomaticTimerUpdate(),
     );
   }
 
