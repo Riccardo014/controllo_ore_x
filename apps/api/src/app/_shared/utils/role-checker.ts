@@ -13,7 +13,7 @@ export abstract class RoleChecker {
    * @throws ForbiddenException if the user role is not in the permitted roles
    * @returns True if the role of the user is in the permitted roles False otherwise
    */
-  private async _checkPermission(
+  static async _checkPermission(
     user: User,
     roles: ROLE[],
     _userService: UserService,
@@ -32,11 +32,11 @@ export abstract class RoleChecker {
   /**
    * Check if the user role is Collaborator or higher
    */
-  static async isUserRoleIsCollaboratorOrHigher(
+  static async isUserRoleCollaboratorOrHigher(
     user: User,
     _userService: UserService,
   ): Promise<boolean> {
-    return await this.checkPermission(
+    return await this._checkPermission(
       user,
       [ROLE.COLLABORATOR, ROLE.ADMIN, ROLE.SUPERADMIN],
       _userService,
@@ -46,11 +46,11 @@ export abstract class RoleChecker {
   /**
    * Check if the user role is Admin or higher
    */
-  static async isUserRoleIsAdminOrHigher(
+  static async isUserRoleAdminOrHigher(
     user: User,
     _userService: UserService,
   ): Promise<boolean> {
-    return await this.checkPermission(
+    return await this._checkPermission(
       user,
       [ROLE.ADMIN, ROLE.SUPERADMIN],
       _userService,
@@ -60,10 +60,10 @@ export abstract class RoleChecker {
   /**
    * Check if the user role is SuperAdmin or higher
    */
-  static async isUserRoleIsSuperAdmin(
+  static async isUserRoleSuperAdmin(
     user: User,
     _userService: UserService,
   ): Promise<boolean> {
-    return await this.checkPermission(user, [ROLE.SUPERADMIN], _userService);
+    return await this._checkPermission(user, [ROLE.SUPERADMIN], _userService);
   }
 }

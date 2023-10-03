@@ -46,7 +46,7 @@ export class UserController {
 
   @Post()
   create(@Body() data: UserCreateDtoV, @AuthUser() user: User): Promise<User> {
-    if (!RoleChecker.userRoleIsAdminOrHigher(user, this._userService)) {
+    if (!RoleChecker.isUserRoleAdminOrHigher(user, this._userService)) {
       throw new ForbiddenException(ApiErrors.UNUTHORIZED_OPERATION);
     }
     return this._userService.create(data);
@@ -58,7 +58,7 @@ export class UserController {
     @Body() body: UserUpdateDtoV,
     @AuthUser() user: User,
   ): Promise<UpdateResult> {
-    if (!RoleChecker.userRoleIsAdminOrHigher(user, this._userService)) {
+    if (!RoleChecker.isUserRoleAdminOrHigher(user, this._userService)) {
       throw new ForbiddenException(ApiErrors.UNUTHORIZED_OPERATION);
     }
     return this._userService.update(id, body);
@@ -69,7 +69,7 @@ export class UserController {
     @Param('id') id: string,
     @AuthUser() user: User,
   ): Promise<DeleteResult> {
-    if (!RoleChecker.userRoleIsAdminOrHigher(user, this._userService)) {
+    if (!RoleChecker.isUserRoleAdminOrHigher(user, this._userService)) {
       throw new ForbiddenException(ApiErrors.UNUTHORIZED_OPERATION);
     }
     return this._userService.delete({ _id: id });
