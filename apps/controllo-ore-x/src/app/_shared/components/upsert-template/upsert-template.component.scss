@@ -9,18 +9,18 @@
   display: flex;
   align-items: center;
   gap: 20px;
+}
 
-  .-icon {
-    border-radius: 8px;
-  }
+.-container-title-info-icon {
+  border-radius: 8px;
+}
 
-  .-breadcrumb {
-    font-size: 12px;
+.-container-title-info-breadcrumb {
+  font-size: 12px;
+}
 
-    .-breadcrumb__prefix {
-      color: $color-breadcrumb-prefix;
-    }
-  }
+.-container-title-info-breadcrumb-prefix {
+  color: $color-breadcrumb-prefix;
 }
 
 .page-content {
@@ -36,7 +36,6 @@
 }
 
 .tab-menu {
-  //background-color: $background-elevation-2;
   height: 48px;
   display: flex;
   align-items: flex-end;
@@ -45,28 +44,28 @@
   background: map-get($palette-white, 50);
   border-bottom: 1px solid map-get($palette-grey, 200);
   padding-left: 40px;
+}
 
-  .tab-menu__item {
-    height: inherit;
-    text-align: center;
-    width: 120px;
-    line-height: 50px;
-    cursor: pointer;
-    color: map-get($palette-grey, 900);
-    font-weight: 400;
+.tab-menu-item {
+  height: inherit;
+  text-align: center;
+  width: 120px;
+  line-height: 50px;
+  cursor: pointer;
+  color: map-get($palette-grey, 900);
+  font-weight: 400;
+}
 
-    mat-icon {
-      height: 20px;
-      font-size: 16px;
-      line-height: 16px;
-      vertical-align: middle;
-    }
+.tab-menu-item:active {
+  border-bottom: 2px solid map-get($palette-primary, 500);
+  color: map-get($palette-primary, 500);
+}
 
-    &.active {
-      border-bottom: 2px solid map-get($palette-primary, 500);
-      color: map-get($palette-primary, 500);
-    }
-  }
+.tab-menu-item-icon {
+  height: 20px;
+  font-size: 16px;
+  line-height: 16px;
+  vertical-align: middle;
 }
 
 .-body__layer-loading {
@@ -76,8 +75,7 @@
   justify-content: center;
 }
 
-// warehouse upsert chips
-.-chip {
+.-warehouse-upsert-chip {
   padding: 8px 14px;
   border-radius: 16px;
   font-size: 14px;

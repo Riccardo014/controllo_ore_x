@@ -2,24 +2,26 @@
   <ng-container title>
     <div class="-container-title-info">
       <button (click)="page.navigateBack()" mat-icon-button>
-        <mat-icon color="primary" class="-icon">arrow_back</mat-icon>
+        <mat-icon color="primary" class="-container-title-info-icon"
+          >arrow_back</mat-icon
+        >
       </button>
-      <div class="headline-5">
+      <h1 class="headline-5">
         {{ dynamicTitle ? dynamicTitle : page.title }}
-      </div>
+      </h1>
 
       <!-- chip  -->
-      <div *ngIf="chipLabel" class="-chip">
+      <div *ngIf="chipLabel" class="-warehouse-upsert-chip">
         {{ chipLabel }}
       </div>
 
       <!-- breadcrumb -->
-      <span *ngIf="!isBreadcrumbHidden" class="-breadcrumb">
-        <span class="-breadcrumb__prefix">
+      <div *ngIf="!isBreadcrumbHidden" class="--container-title-infobreadcrumb">
+        <span class="--container-title-infobreadcrumb-prefix">
           {{ page.breadcrumbPrefix }}
         </span>
         <span> {{ page.breadcrumbSuffix }} </span>
-      </span>
+      </div>
     </div>
   </ng-container>
 
@@ -63,33 +65,6 @@
       Salva
     </button>
 
-    <!-- MOBILE BTNS -->
-    <mat-icon
-      (click)="page.toggleEditing()"
-      *ngIf="!page.isCreating && page.isEditEnabled && !page.isEditing"
-      class="hide-tablet-desktop"
-      color="primary"
-    >
-      edit
-    </mat-icon>
-    <mat-icon
-      (click)="page.toggleEditing()"
-      class="hide-tablet-desktop"
-      *ngIf="page.isEditing"
-    >
-      close
-    </mat-icon>
-    <button
-      (click)="page.handleUserSubmission()"
-      *ngIf="page.isCreating || page.isEditing"
-      [disabled]="page.formHelper.invalid || (page.isLoading | async)"
-      class="hide-tablet-desktop"
-      color="primary"
-      mat-icon-button
-    >
-      <mat-icon>save</mat-icon>
-    </button>
-
     <mat-menu #optionMenu="matMenu">
       <ng-content select="[menuOptions]"></ng-content>
       <button
@@ -110,10 +85,14 @@
       (click)="page.setTab(index)"
       *ngIf="!tab.hideOnCreation || !page.isCreating"
       [class.active]="page.tab === index"
-      class="tab-menu__item"
+      class="tab-menu-item"
     >
       {{ tab.label }}
-      <mat-icon *ngIf="tab?.tabForm && tab.tabForm?.invalid">warning</mat-icon>
+      <mat-icon
+        class="tab-menu-item-icon"
+        *ngIf="tab?.tabForm && tab.tabForm?.invalid"
+        >warning</mat-icon
+      >
     </div>
   </ng-container>
 </div>
