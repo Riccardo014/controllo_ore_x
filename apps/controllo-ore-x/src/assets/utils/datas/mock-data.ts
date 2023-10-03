@@ -4,7 +4,7 @@ export const ExampleMockData: any = {
   creation_date: '03 Feb 2019',
   project_name: 'Calzedonia Real Estate',
   release_name: 'Release 0.0.1',
-  label: 'Design',
+  hoursTag: 'Design',
   description: 'Refactor grafica tracker',
   working_hours: '05:30',
 };

@@ -1,4 +1,4 @@
-export interface LabelReadDto {
+export interface HoursTagReadDto {
   _id: string;
   name: string;
   iconName: string;
@@ -7,14 +7,12 @@ export interface LabelReadDto {
   deletedAt?: Date | string;
 }
 
-
-export interface LabelCreateDto {
+export interface HoursTagCreateDto {
   name: string;
   iconName: string;
 }
 
-
-export interface LabelUpdateDto {
+export interface HoursTagUpdateDto {
   name?: string;
   iconName?: string;
 }

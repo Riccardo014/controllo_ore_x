@@ -1,8 +1,8 @@
+import { Release } from '@modules/project/entities/release.entity';
 import { User } from '@modules/user/entities/user.entity';
 import { BaseEntityTemplate } from '@shared/classes/base-entity-template.class';
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
-import { Label } from './label.entity';
-import { Release } from '@modules/project/entities/release.entity';
+import { HoursTag } from './hours-tag.entity';
 
 @Entity()
 export class UserHours extends BaseEntityTemplate {
@@ -18,11 +18,11 @@ export class UserHours extends BaseEntityTemplate {
   @Column()
   releaseId: string;
 
-  @ManyToOne(() => Label, { onDelete: 'SET NULL' })
-  @JoinColumn({ name: 'labelId' })
-  label?: Label;
+  @ManyToOne(() => HoursTag, { onDelete: 'SET NULL' })
+  @JoinColumn({ name: 'hoursHoursTagId' })
+  hoursHoursTag?: HoursTag;
   @Column()
-  labelId: string;
+  hoursHoursTagId: string;
 
   @Column()
   date: Date;
@@ -32,5 +32,4 @@ export class UserHours extends BaseEntityTemplate {
 
   @Column('decimal', { precision: 6, scale: 2 })
   hours: number;
-
 }
