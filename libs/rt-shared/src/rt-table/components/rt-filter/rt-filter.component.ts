@@ -1,6 +1,18 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { FIND_BOOSTED_FN, FindBoostedWhereOption } from '@api-interfaces';
+import {
+  SubscriptionsLifecycle,
+  completeSubscriptions,
+} from 'apps/controllo-ore-x/src/app/utils/subscriptions_lifecycle';
+import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 interface FilterTypeFunction {
@@ -13,31 +25,53 @@ interface FilterTypeFunction {
   templateUrl: './rt-filter.component.html',
   styleUrls: ['./rt-filter.component.scss'],
 })
-export class RtFilterComponent {
+export class RtFilterComponent
+  implements OnInit, OnDestroy, SubscriptionsLifecycle
+{
   areFiltersOpen: boolean = false;
   currentFilters: FormArray;
-  @Output() filtersChanged: EventEmitter<any[]> = new EventEmitter<any[]>();
-  @Input() filterOptions: any[] = [];
+  @Output() filtersChangedEmitter: EventEmitter<FindBoostedWhereOption[]> =
+    new EventEmitter<FindBoostedWhereOption[]>();
+  @Input() filterOptions: FindBoostedWhereOption[] = [];
   FIND_BOOSTED_FN: typeof FIND_BOOSTED_FN = FIND_BOOSTED_FN;
 
-  @Output() openFilter: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() openFilterEmitter: EventEmitter<boolean> =
+    new EventEmitter<boolean>();
 
   mockForm: FormGroup;
 
   currentFilterType: 'AND' | 'OR' = 'AND';
 
+  subscriptionsList: Subscription[] = [];
+
+  _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
+    completeSubscriptions;
+
   constructor(private _fb: FormBuilder) {
     this.currentFilters = this._fb.array([]);
-    this.currentFilters.valueChanges
-      .pipe(debounceTime(1300))
-      .subscribe((filterValues) => {
-        if (this.currentFilters.valid) {
-          this.filtersChanged.emit(this._buildFilters(filterValues));
-        }
-      });
     this.mockForm = this._fb.group({
       searchId: [],
     });
+  }
+
+  ngOnInit(): void {
+    this._setSubscriptions();
+  }
+
+  ngOnDestroy(): void {
+    this._completeSubscriptions(this.subscriptionsList);
+  }
+
+  _setSubscriptions(): void {
+    this.subscriptionsList.push(
+      this.currentFilters.valueChanges
+        .pipe(debounceTime(1300))
+        .subscribe((filterValues) => {
+          if (this.currentFilters.valid) {
+            this.filtersChangedEmitter.emit(this._buildFilters(filterValues));
+          }
+        }),
+    );
   }
 
   get currentFiltersControls(): FormGroup[] {
@@ -45,13 +79,13 @@ export class RtFilterComponent {
   }
 
   toggleFilter(): void {
-    this.openFilter.emit(true);
+    this.openFilterEmitter.emit(true);
     this.areFiltersOpen = !this.areFiltersOpen;
   }
 
   clearFilters(): void {
     this.currentFilters.clear();
-    this.filtersChanged.emit([]);
+    this.filtersChangedEmitter.emit([]);
     this.areFiltersOpen = false;
   }
 
