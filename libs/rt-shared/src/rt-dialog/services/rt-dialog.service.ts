@@ -1,17 +1,3 @@
-/**
- * @version 1.0.0
- *
- * Snippet Name: RT Dialog Service
- * Summary: Wrapper for Mat Dialog service
- * Description: used to handle custom and default dialogs (open/close/return data)
- *
- * File Changelog
- *
- * Author                       | Date            | Changes
- * =====================================================================================================================
- * Luca Bertolini               | 02/04/2021      | Initial Import
- */
-
 import { ComponentType } from '@angular/cdk/portal';
 import { Injectable, TemplateRef } from '@angular/core';
 import {

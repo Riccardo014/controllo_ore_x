@@ -14,7 +14,7 @@ import { RtAlert } from './alert.interface';
 })
 export class AlertComponent implements OnInit, SubscriptionsLifecycle {
   private readonly _ALERT_TIMEOUT: number = 5000;
-  @Input() alert!: RtAlert;
+  @Input() alert?: RtAlert;
 
   /**
    * How much time passed since the alert was created.
@@ -39,6 +39,9 @@ export class AlertComponent implements OnInit, SubscriptionsLifecycle {
   constructor(private _rtAlertSvc: AlertService) {}
 
   ngOnInit(): void {
+    if (!this.alert) {
+      throw new Error('Alert is undefined');
+    }
     this._setSubscriptions();
   }
 
@@ -90,7 +93,7 @@ export class AlertComponent implements OnInit, SubscriptionsLifecycle {
     this._completeSubscriptions(this.subscriptionsList);
     clearInterval(this._currentInterval);
     clearTimeout(this._currentTimeout);
-    this._rtAlertSvc.removeArticle(this.alert.id);
+    this._rtAlertSvc.removeArticle(this.alert!.id);
   }
 
   toggleDetails(): void {

@@ -1,7 +1,7 @@
 <div
-  [class.-alert__error]="alert.type === 'error'"
-  [class.-alert__success]="alert.type === 'success'"
-  [class.warning]="alert.type === 'warning'"
+  [class.-alert__error]="alert!.type === 'error'"
+  [class.-alert__success]="alert!.type === 'success'"
+  [class.warning]="alert!.type === 'warning'"
   class="-alert mat-elevation-z4"
 >
   <mat-progress-bar
@@ -11,16 +11,16 @@
     color="primary"
     mode="determinate"
   ></mat-progress-bar>
-  <div class="-alert__container" [ngSwitch]="alert.type">
+  <div class="-alert__container" [ngSwitch]="alert!.type">
     <mat-icon *ngSwitchCase="'error'">error</mat-icon>
     <mat-icon *ngSwitchCase="'success'">check_circle </mat-icon>
     <mat-icon *ngSwitchCase="'warning'">warning</mat-icon>
     <div>
-      <div class="mat-body-1">{{ alert.title }}</div>
-      <div class="mat-caption">{{ alert.text }}</div>
+      <div class="mat-body-1">{{ alert!.title }}</div>
+      <div class="mat-caption">{{ alert!.text }}</div>
     </div>
     <div class="-alert__buttons">
-      <mat-icon (click)="toggleDetails()" *ngIf="alert.details"
+      <mat-icon (click)="toggleDetails()" *ngIf="alert!.details"
         >help_center</mat-icon
       >
       <mat-icon (click)="pin()" *ngIf="!isPinned">bookmark_border</mat-icon>
@@ -29,6 +29,6 @@
     </div>
   </div>
   <div *ngIf="shouldShowDetails" class="-alert__details">
-    <pre>{{ alert.details | json }}</pre>
+    <pre>{{ alert!.details | json }}</pre>
   </div>
 </div>
