@@ -1,16 +1,15 @@
-// INPUT EXPANDED INTO FLEX
-.-input-wide {
+.__container {
   flex-grow: 1;
 
-  .mat-form-field-wrapper {
+  &__mat-form-field__wrapper {
     width: 100% !important;
-    // min-width: 250px;
   }
 
-  .mat-form-field {
+  &__mat-form-field {
     display: block !important;
   }
 }
-.-label{
+
+.__label{
   padding-left: 10px;
 }
