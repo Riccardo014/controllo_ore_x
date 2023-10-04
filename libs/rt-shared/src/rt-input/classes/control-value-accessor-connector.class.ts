@@ -9,7 +9,7 @@ import {
 @Directive()
 export class ControlValueAccessorConnector implements ControlValueAccessor {
   @ViewChild(FormControlDirective, { static: true })
-  formControlDirective!: FormControlDirective;
+  formControlDirective?: FormControlDirective;
 
   @Input()
   formControl?: FormControl;
@@ -20,7 +20,11 @@ export class ControlValueAccessorConnector implements ControlValueAccessor {
   @Input()
   value?: any;
 
-  constructor(private _injector: Injector) {}
+  constructor(private _injector: Injector) {
+    if (!this.formControlDirective) {
+      throw new Error('FormControlDirective is undefined');
+    }
+  }
 
   get control(): FormControl | null {
     if (!this.formControl && !this.formControlName) {
@@ -38,13 +42,13 @@ export class ControlValueAccessorConnector implements ControlValueAccessor {
 
   bindFunctionToTouchEvent(fn: Function): void {
     this.checkFormControlDirective();
-    this.formControlDirective.valueAccessor!.bindFunctionToTouchEvent(fn);
+    this.formControlDirective!.valueAccessor!.bindFunctionToTouchEvent(fn);
   }
 
   registerOnChange(fn: Function): void {
     this.checkFormControlDirective();
 
-    this.formControlDirective.valueAccessor!.registerOnChange(fn);
+    this.formControlDirective!.valueAccessor!.registerOnChange(fn);
   }
 
   /**
@@ -52,18 +56,18 @@ export class ControlValueAccessorConnector implements ControlValueAccessor {
    */
   writeValue(obj: any): void {
     this.checkFormControlDirective();
-    this.formControlDirective.valueAccessor!.writeValue(obj);
+    this.formControlDirective!.valueAccessor!.writeValue(obj);
   }
 
   setDisabledState(isDisabled: boolean): void {
     this.checkFormControlDirective();
     if (
-      typeof this.formControlDirective.valueAccessor!.setDisabledState !==
+      typeof this.formControlDirective!.valueAccessor!.setDisabledState !==
       'function'
     ) {
       throw new Error('setDisabledState method is undefined');
     }
-    this.formControlDirective.valueAccessor!.setDisabledState(isDisabled);
+    this.formControlDirective!.valueAccessor!.setDisabledState(isDisabled);
   }
 
   checkFormControlDirective(): void {
