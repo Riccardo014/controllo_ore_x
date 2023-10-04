@@ -6,7 +6,7 @@ import {
   TemplateRef,
 } from '@angular/core';
 import { MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
-import { TableConfiguration } from '@api-interfaces';
+import { FindBoostedWhereOption, TableConfiguration } from '@api-interfaces';
 import { RtTableStatus } from '../../interfaces/rt-table-status.interface';
 
 @Component({
@@ -21,7 +21,7 @@ export class RtTableComponent {
   @Input() data!: any[];
 
   @Input() shouldShowFilters: boolean = true;
-  //
+
   @Input() isFirstColumnHidden: boolean = false;
   @Input() isPrintMode: boolean = false;
 
@@ -31,13 +31,12 @@ export class RtTableComponent {
   @Input() editFn?: (entity: any) => void | Promise<void>;
   @Input() editIcon?: string;
 
-  @Output() statusChange: EventEmitter<RtTableStatus> =
+  @Output() statusChangeEmitter: EventEmitter<RtTableStatus> =
     new EventEmitter<RtTableStatus>();
-  // @Output() userDetail: EventEmitter<UserReadDto> = new EventEmitter<UserReadDto>();
 
   @Output() openFilterEmitter: EventEmitter<boolean> =
     new EventEmitter<boolean>();
-  @Output() openDialog: EventEmitter<any> = new EventEmitter<any>();
+  @Output() openDialogEmitter: EventEmitter<any> = new EventEmitter<any>();
 
   @Input() thPrefixTemplate?: TemplateRef<any>;
   @Input() thSuffixTemplate?: TemplateRef<any>;
@@ -55,26 +54,25 @@ export class RtTableComponent {
   }
 
   openDialogFn(entity: any): void {
-    this.openDialog.emit(entity);
+    this.openDialogEmitter.emit(entity);
   }
 
-  updateFilters(filters: any[]): void {
+  updateFilters(filters: FindBoostedWhereOption[]): void {
     this.status.where = filters;
-    this.statusChange.emit(this.status);
+    this.statusChangeEmitter.emit(this.status);
   }
 
   updateFulltextSearch(fulltextSearch: string): void {
     this.status.fulltextSearch = fulltextSearch;
-    this.statusChange.emit(this.status);
+    this.statusChangeEmitter.emit(this.status);
   }
 
   updateOrder(orderBy: any): void {
     this.status.order = orderBy;
-    this.statusChange.emit(this.status);
+    this.statusChangeEmitter.emit(this.status);
   }
 
   updatePagination(pageEvent: PageEvent): void {
-    // skip if no pagination set
     if (!this.status.pagination) {
       return;
     }
@@ -97,7 +95,19 @@ export class RtTableComponent {
 
       this.status.pagination.currentPage = newPage;
       this.status.pagination.itemsPerPage = itemsPerPage;
-      this.statusChange.emit(this.status);
+      this.statusChangeEmitter.emit(this.status);
     }
+  }
+
+  isPaginatorVisible(): boolean {
+    if (this.tableConfiguration && this.status) {
+      if (
+        !this.tableConfiguration.pagination?.disabled ||
+        !this.status.pagination
+      ) {
+        return true;
+      }
+    }
+    return false;
   }
 }
