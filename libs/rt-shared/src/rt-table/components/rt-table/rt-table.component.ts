@@ -15,7 +15,7 @@ import { RtTableStatus } from '../../interfaces/rt-table-status.interface';
   styleUrls: ['./rt-table.component.scss'],
 })
 export class RtTableComponent {
-  @Input() currentStatus!: RtTableStatus;
+  @Input() status!: RtTableStatus;
 
   @Input() tableConfiguration!: TableConfiguration;
   @Input() data!: any[];
@@ -58,30 +58,30 @@ export class RtTableComponent {
   }
 
   updateFilters(filters: any[]): void {
-    this.currentStatus.where = filters;
-    this.statusChange.emit(this.currentStatus);
+    this.status.where = filters;
+    this.statusChange.emit(this.status);
   }
 
   updateFulltextSearch(fulltextSearch: string): void {
-    this.currentStatus.fulltextSearch = fulltextSearch;
-    this.statusChange.emit(this.currentStatus);
+    this.status.fulltextSearch = fulltextSearch;
+    this.statusChange.emit(this.status);
   }
 
   updateOrder(orderBy: any): void {
-    this.currentStatus.order = orderBy;
-    this.statusChange.emit(this.currentStatus);
+    this.status.order = orderBy;
+    this.statusChange.emit(this.status);
   }
 
   updatePagination(pageEvent: PageEvent): void {
     // skip if no pagination set
-    if (!this.currentStatus.pagination) {
+    if (!this.status.pagination) {
       return;
     }
 
-    let newPage: number = this.currentStatus.pagination.currentPage;
-    let itemsPerPage: number = this.currentStatus.pagination.itemsPerPage;
+    let newPage: number = this.status.pagination.currentPage;
+    let itemsPerPage: number = this.status.pagination.itemsPerPage;
 
-    if (this.currentStatus.pagination) {
+    if (this.status.pagination) {
       if (pageEvent.previousPageIndex !== pageEvent.pageIndex) {
         newPage = pageEvent.pageIndex + 1;
       }
@@ -94,9 +94,9 @@ export class RtTableComponent {
         itemsPerPage = pageEvent.pageSize;
       }
 
-      this.currentStatus.pagination.currentPage = newPage;
-      this.currentStatus.pagination.itemsPerPage = itemsPerPage;
-      this.statusChange.emit(this.currentStatus);
+      this.status.pagination.currentPage = newPage;
+      this.status.pagination.itemsPerPage = itemsPerPage;
+      this.statusChange.emit(this.status);
     }
   }
 }

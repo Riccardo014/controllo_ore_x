@@ -17,7 +17,7 @@
           <lib-rt-table-th
             [column]="column"
             (orderChanged)="updateOrder($event)"
-            [orderBy]="currentStatus.order"
+            [orderBy]="status.order"
           ></lib-rt-table-th>
         </th>
         <!-- <th class="-b-left" style="width: 60px"></th> -->
@@ -98,18 +98,18 @@
   class="-pagination-container"
   *ngIf="
     tableConfiguration &&
-    currentStatus &&
-    (!tableConfiguration.pagination?.disabled || !currentStatus.pagination)
+    status &&
+    (!tableConfiguration.pagination?.disabled || !status.pagination)
   "
 >
   <mat-paginator
     (page)="updatePagination($event)"
-    [length]="currentStatus.pagination.totalItems"
-    [pageIndex]="currentStatus.pagination.currentPage - 1"
+    [length]="status.pagination.totalItems"
+    [pageIndex]="status.pagination.currentPage - 1"
     [pageSizeOptions]="
       tableConfiguration.pagination?.pageSizeOptions || [5, 10, 25, 50, 100]
     "
-    [pageSize]="currentStatus.pagination.itemsPerPage"
+    [pageSize]="status.pagination.itemsPerPage"
   >
   </mat-paginator>
 </div>

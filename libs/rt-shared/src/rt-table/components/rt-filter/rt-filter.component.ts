@@ -9,7 +9,6 @@ interface FilterTypeFunction {
 }
 
 @Component({
-  // tslint:disable-next-line:component-selector
   selector: 'lib-rt-filter',
   templateUrl: './rt-filter.component.html',
   styleUrls: ['./rt-filter.component.scss'],
@@ -23,17 +22,19 @@ export class RtFilterComponent {
 
   @Output() openFilter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  mockForm!: FormGroup;
+  mockForm: FormGroup;
 
   currentFilterType: 'AND' | 'OR' = 'AND';
 
   constructor(private _fb: FormBuilder) {
     this.currentFilters = this._fb.array([]);
-    this.currentFilters.valueChanges.pipe(debounceTime(1300)).subscribe((filterValues) => {
-      if (this.currentFilters.valid) {
-        this.filtersChanged.emit(this._buildFilters(filterValues));
-      }
-    });
+    this.currentFilters.valueChanges
+      .pipe(debounceTime(1300))
+      .subscribe((filterValues) => {
+        if (this.currentFilters.valid) {
+          this.filtersChanged.emit(this._buildFilters(filterValues));
+        }
+      });
     this.mockForm = this._fb.group({
       searchId: [],
     });
@@ -61,10 +62,7 @@ export class RtFilterComponent {
         filterValue[filter.filter.field] = {
           _fn: filter.fn,
           args: filter.secondaryValue
-            ? [
-                filter.value,
-                filter.secondaryValue,
-              ]
+            ? [filter.value, filter.secondaryValue]
             : [filter.value],
         };
       }
@@ -76,10 +74,7 @@ export class RtFilterComponent {
         filterToAdd[filter.filter.field] = {
           _fn: filter.fn,
           args: filter.secondaryValue
-            ? [
-                filter.value,
-                filter.secondaryValue,
-              ]
+            ? [filter.value, filter.secondaryValue]
             : [filter.value],
         };
         filterValues.push(filterToAdd);

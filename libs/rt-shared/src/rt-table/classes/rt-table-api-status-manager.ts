@@ -19,6 +19,9 @@ export class RtTableApiStatusManager<
     super();
   }
 
+  /**
+   * Update the data of the table from the API.
+   */
   override fetchData(): void {
     if (this.isLoading.value) {
       this.#fetchDataSubscription?.unsubscribe();
@@ -31,7 +34,7 @@ export class RtTableApiStatusManager<
       .subscribe({
         next: (apiResult) => {
           this.data = apiResult.data;
-          this.currentStatus.pagination = apiResult.pagination;
+          this.status.pagination = apiResult.pagination;
         },
         error: (err: Error) => {
           this.currentError = err;
@@ -52,17 +55,17 @@ export class RtTableApiStatusManager<
       relations: this.tableConfiguration.relations,
       fullSearchCols: this.tableConfiguration.fullSearchCols,
       where: this._buildWhereOption(),
-      pagination: this.currentStatus.pagination,
-      fulltextSearch: this.currentStatus.fulltextSearch,
-      order: this.currentStatus.order,
+      pagination: this.status.pagination,
+      fulltextSearch: this.status.fulltextSearch,
+      order: this.status.order,
     };
   }
 
   //FIXME: refactor to have better readability and review logics
   private _buildWhereOption(): void {
     let where: any;
-    if (Array.isArray(this.currentStatus.where)) {
-      where = this.currentStatus.where;
+    if (Array.isArray(this.status.where)) {
+      where = this.status.where;
       for (let i: number = 0; i < where.length; i++) {
         where[i] = {
           ...where[i],
@@ -79,7 +82,7 @@ export class RtTableApiStatusManager<
       }
     } else {
       where = {
-        ...this.currentStatus.where,
+        ...this.status.where,
         ...(this.tableConfiguration?.hiddenFilters || {}),
       };
     }
