@@ -13,9 +13,7 @@ import {
   SelectControlValueAccessor,
 } from '@angular/forms';
 
-// eslint-disable-next-line @angular-eslint/directive-selector
 @Directive({ selector: '[selectcontrolvalueaccessor]' })
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class SelectControlValueAccessorConnector extends SelectControlValueAccessor {
   @ViewChild(FormControlDirective, { static: true })
   formControlDirective!: FormControlDirective;
@@ -35,47 +33,48 @@ export class SelectControlValueAccessorConnector extends SelectControlValueAcces
   }
 
   get control(): FormControl {
-    return (
+    const control =
       this.formControl ||
-      (this.controlContainer.control?.get(this.formControlName) as FormControl)
-    );
+      (this.controlContainer.control?.get(this.formControlName) as FormControl);
+
+    if (!control) {
+      throw new Error(`FormControl "${this.formControlName}" is undefined.`);
+    }
+
+    return control;
   }
 
   get controlContainer(): ControlContainer {
     return this._injector.get(ControlContainer);
   }
 
+  /**
+   * Compare two elements and return whether or not they are equal.
+   */
   @Input()
-  // tslint:disable-next-line: typedef
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  override get compareWith() {
+  override get compare(): any {
     return this._compareFn;
   }
 
-  override set compareWith(fn: (o1: any, o2: any) => boolean) {
+  /**
+   * Set a compare function that takes two parameters and returns a boolean.
+   */
+  override set compare(fn: (item1: any, item2: any) => boolean) {
+    if (fn.length !== 2) {
+      throw new Error('Compare function must take exactly two parameters.');
+    }
     this._compareFn = fn;
   }
 
-  override registerOnTouched(fn: any): void {
+  override registerOnTouched(fn: Function): void {
     this.formControlDirective.valueAccessor?.bindFunctionToTouchEvent(fn);
-  }
-
-  override registerOnChange(fn: any): void {
-    this.formControlDirective.valueAccessor?.registerOnChange(fn);
-  }
-
-  override writeValue(obj: any): void {
-    this.formControlDirective.valueAccessor?.writeValue(obj);
-  }
-
-  override setDisabledState(isDisabled: boolean): void {
-    if (this.formControlDirective.valueAccessor?.setDisabledState) {
-      this.formControlDirective.valueAccessor.setDisabledState(isDisabled);
-    }
   }
 
   // WARNING: if the function doesnt match, the first option will be selected
   private _compareFn(c1: any, c2: any): boolean {
-    return c1 && c2 ? c1.id === c2.id : c1 === c2;
+    if (c1 && c2) {
+      return c1.id === c2.id;
+    }
+    return c1 === c2;
   }
 }
