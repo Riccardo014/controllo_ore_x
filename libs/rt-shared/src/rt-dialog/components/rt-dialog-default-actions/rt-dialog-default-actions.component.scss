@@ -5,13 +5,13 @@
   width: 100%;
 }
 
-.-box {
+.__box {
   display: flex;
   justify-content: flex-end;
   align-items: center;
 }
 
-.-cancel-btn {
+.__cancel-btn {
   border: 1px solid map-get($palette-primary, 500);
 }
 
