@@ -21,22 +21,8 @@ export abstract class IndexPage<T, CreateT, UpdateT>
   subscriptionsList: Subscription[] = [];
   isFirstLoadDone: BehaviorSubject<boolean> = new BehaviorSubject(false);
   isLoading: BehaviorSubject<boolean> = new BehaviorSubject(true);
-  _configuration?: TableConfiguration;
-  indexTableHandler!: RtTableApiStatusManager<T, CreateT, UpdateT>;
-
-  get configuration(): TableConfiguration {
-    if (!this._configuration) {
-      throw new Error(' No Table configuration found');
-    }
-    return this._configuration;
-  }
-
-  set configuration(config: TableConfiguration) {
-    if (!config) {
-      throw new Error(' No Table configuration set');
-    }
-    this._configuration = config;
-  }
+  configuration?: TableConfiguration;
+  indexTableHandler?: RtTableApiStatusManager<T, CreateT, UpdateT>;
 
   _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
@@ -46,6 +32,15 @@ export abstract class IndexPage<T, CreateT, UpdateT>
   abstract CONFIGURATION_KEY: INDEX_CONFIGURATION_KEY;
   protected abstract _dataService: BaseDataService<T, CreateT, UpdateT>;
   protected abstract _configurationService: IndexConfigurationDataService;
+
+  constructor() {
+    if (!this.configuration) {
+      throw new Error('No Table configuration found');
+    }
+    if (!this.indexTableHandler) {
+      throw new Error('Ititialization of indexTableHandler failed');
+    }
+  }
 
   ngOnInit(): void {
     this.indexTableHandler = new RtTableApiStatusManager<T, CreateT, UpdateT>(
@@ -65,7 +60,7 @@ export abstract class IndexPage<T, CreateT, UpdateT>
   _setSubscriptions(): void {
     this.subscriptionsList.push(
       this._firstLoad(),
-      this.indexTableHandler.isLoading.subscribe((r) => {
+      this.indexTableHandler!.isLoading.subscribe((r) => {
         this.isFirstLoadDone.next(true);
         this.isLoading.next(r);
       }),
@@ -77,8 +72,8 @@ export abstract class IndexPage<T, CreateT, UpdateT>
       .getConfiguration(this.CONFIGURATION_KEY)
       .subscribe((data) => {
         this.configuration = data.configuration;
-        this.indexTableHandler.tableConfiguration = this.configuration;
-        this.indexTableHandler.fetchData();
+        this.indexTableHandler!.tableConfiguration = this.configuration;
+        this.indexTableHandler!.fetchData();
         this.isFirstLoadDone.next(true);
       });
   }
