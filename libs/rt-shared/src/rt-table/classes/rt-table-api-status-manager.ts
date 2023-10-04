@@ -1,7 +1,7 @@
 import { FindBoostedOptions } from '@api-interfaces';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { rtTableColumnValue } from '../lib/rt-table-column-value';
-import { BaseDataService } from './data-service';
+import { BaseDataService } from './base-data-service.class';
 import { RtTableStatusHandler } from './rt-table-status-handler';
 
 export class RtTableApiStatusManager<
@@ -11,7 +11,7 @@ export class RtTableApiStatusManager<
 > extends RtTableStatusHandler<T> {
   isLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
-  #currentCallSubscription?: Subscription;
+  #fetchDataSubscription?: Subscription;
 
   currentError: Error | null = null;
 
@@ -21,12 +21,12 @@ export class RtTableApiStatusManager<
 
   override fetchData(): void {
     if (this.isLoading.value) {
-      this.#currentCallSubscription?.unsubscribe();
+      this.#fetchDataSubscription?.unsubscribe();
     } else {
       this.isLoading.next(true);
     }
 
-    this.#currentCallSubscription = this._dataService
+    this.#fetchDataSubscription = this._dataService
       .getMany(this.apiRequestPayload)
       .subscribe({
         next: (apiResult) => {
@@ -58,6 +58,7 @@ export class RtTableApiStatusManager<
     };
   }
 
+  //FIXME: refactor to have better readability and review logics
   private _buildWhereOption(): void {
     let where: any;
     if (Array.isArray(this.currentStatus.where)) {
@@ -95,12 +96,16 @@ export class RtTableApiStatusManager<
       .subscribe((res) => {
         this.isLoading.next(false);
 
-        const results: any = [];
+        const results: string[][] = [];
+
+        //Build the columns of the csv file.
         results.push(
           this.tableConfiguration!.columns.map((column) => column.title),
         );
         for (const row of res.data) {
-          const csvRow: any = [];
+          const csvRow: string[] = [];
+
+          //Populate the results with data, by building the rows and pushing them to result.
           for (const column of this.tableConfiguration!.columns) {
             csvRow.push(rtTableColumnValue(column, row));
           }
