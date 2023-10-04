@@ -9,14 +9,13 @@
 .-content {
   overflow: auto;
   height: 100%;
-  // min-height: 440px;
 }
 
 .-refetch-data-wrapper {
   padding: 40px 0;
   text-align: center;
 
-  .-text {
+  &__text {
     margin-bottom: 16px;
   }
 }
@@ -30,7 +29,6 @@
 .-footer {
   display: block;
   width: 100%;
-  // padding: 15px 30px;
   background-color: #fff;
 }
 
