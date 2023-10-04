@@ -16,13 +16,13 @@ import {
 @Directive({ selector: '[selectcontrolvalueaccessor]' })
 export class SelectControlValueAccessorConnector extends SelectControlValueAccessor {
   @ViewChild(FormControlDirective, { static: true })
-  formControlDirective!: FormControlDirective;
+  formControlDirective?: FormControlDirective;
 
   @Input()
-  formControl!: FormControl;
+  formControl?: FormControl;
 
   @Input()
-  formControlName!: string;
+  formControlName?: string;
 
   constructor(
     _renderer: Renderer2,
@@ -30,12 +30,23 @@ export class SelectControlValueAccessorConnector extends SelectControlValueAcces
     private _injector: Injector,
   ) {
     super(_renderer, _elementRef);
+    if (!this.formControl) {
+      throw new Error('formControl is undefined');
+    }
+    if (!this.formControlDirective) {
+      throw new Error('formControlDirective is undefined');
+    }
+    if (!this.formControlName) {
+      throw new Error('formControlName is undefined');
+    }
   }
 
   get control(): FormControl {
     const control =
       this.formControl ||
-      (this.controlContainer.control?.get(this.formControlName) as FormControl);
+      (this.controlContainer.control?.get(
+        this.formControlName!,
+      ) as FormControl);
 
     if (!control) {
       throw new Error(`FormControl "${this.formControlName}" is undefined.`);
@@ -67,7 +78,7 @@ export class SelectControlValueAccessorConnector extends SelectControlValueAcces
   }
 
   override registerOnTouched(fn: Function): void {
-    this.formControlDirective.valueAccessor?.bindFunctionToTouchEvent(fn);
+    this.formControlDirective!.valueAccessor?.bindFunctionToTouchEvent(fn);
   }
 
   // WARNING: if the function doesnt match, the first option will be selected
