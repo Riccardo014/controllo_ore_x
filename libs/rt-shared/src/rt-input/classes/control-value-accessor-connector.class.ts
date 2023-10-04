@@ -1,5 +1,10 @@
-import { ControlContainer, ControlValueAccessor, FormControl, FormControlDirective } from '@angular/forms';
 import { Directive, Injector, Input, ViewChild } from '@angular/core';
+import {
+  ControlContainer,
+  ControlValueAccessor,
+  FormControl,
+  FormControlDirective,
+} from '@angular/forms';
 
 @Directive()
 export class ControlValueAccessorConnector implements ControlValueAccessor {
@@ -21,28 +26,53 @@ export class ControlValueAccessorConnector implements ControlValueAccessor {
     if (!this.formControl && !this.formControlName) {
       return null;
     }
-    return this.formControl || (this.controlContainer.control?.get(this.formControlName!) as FormControl);
+    return (
+      this.formControl ||
+      (this.controlContainer.control?.get(this.formControlName!) as FormControl)
+    );
   }
 
   get controlContainer(): ControlContainer {
     return this._injector.get(ControlContainer);
   }
 
-  registerOnTouched(fn: any): void {
-    this.formControlDirective?.valueAccessor?.registerOnTouched(fn);
+  bindFunctionToTouchEvent(fn: Function): void {
+    this.checkFormControlDirective();
+    this.formControlDirective.valueAccessor!.bindFunctionToTouchEvent(fn);
   }
 
-  registerOnChange(fn: any): void {
-    this.formControlDirective?.valueAccessor?.registerOnChange(fn);
+  registerOnChange(fn: Function): void {
+    this.checkFormControlDirective();
+
+    this.formControlDirective.valueAccessor!.registerOnChange(fn);
   }
 
+  /**
+   * Write a value to the element
+   */
   writeValue(obj: any): void {
-    this.formControlDirective?.valueAccessor?.writeValue(obj);
+    this.checkFormControlDirective();
+    this.formControlDirective.valueAccessor!.writeValue(obj);
   }
 
   setDisabledState(isDisabled: boolean): void {
-    if (this.formControlDirective?.valueAccessor?.setDisabledState) {
-      this.formControlDirective?.valueAccessor?.setDisabledState(isDisabled);
+    this.checkFormControlDirective();
+    if (
+      typeof this.formControlDirective.valueAccessor!.setDisabledState !==
+      'function'
+    ) {
+      throw new Error('setDisabledState method is undefined');
+    }
+    this.formControlDirective.valueAccessor!.setDisabledState(isDisabled);
+  }
+
+  checkFormControlDirective(): void {
+    if (!this.formControlDirective) {
+      throw new Error('FormControlDirective is undefined');
+    }
+
+    if (!this.formControlDirective.valueAccessor) {
+      throw new Error('ValueAccessor is undefined');
     }
   }
 }
