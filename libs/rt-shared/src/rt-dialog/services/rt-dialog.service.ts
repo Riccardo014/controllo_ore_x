@@ -23,12 +23,17 @@ import { Observable } from 'rxjs';
 import { RtDialogConfirmationComponent } from '../components/rt-dialog-confirmation/rt-dialog-confirmation.component';
 import { IRtDialogClose } from '../interfaces/i-rt-dialog-close.interface';
 
+/**
+ * Service to handle custom and default dialogs (open/close/return data)
+ */
 @Injectable()
 export class RtDialogService {
+  DEFAULT_WIDTH = '400px';
+  CONFERMATION_WIDTH = '500px';
   constructor(private _matDialogSvc: MatDialog) {}
 
   /**
-   * default width is 400px
+   * Open a dialog. If some of the config properties are left empty, defaults are used.
    *
    * @param title of the dialog
    * @param component that is used to display the dialog
@@ -39,23 +44,19 @@ export class RtDialogService {
     component: ComponentType<any> | TemplateRef<any>,
     config: MatDialogConfig<TInput> = {},
   ): Observable<IRtDialogClose<TReturn>> {
-    // set default width to 450px
-    config.width = config?.width ?? '400px';
+    // Set the dialog's width.
+    config.width = config?.width ?? this.DEFAULT_WIDTH;
 
-    // disable close dialog by click out or clicking esc
+    // Disable closing the dialog by clicking outside of it or by pressing ESC.
     config.disableClose = config?.disableClose ?? true;
-
-    // overwrite/write title inside config.data
-    // put data inside input to be conform with TInput interface
-    const data: { input: TInput | null | undefined; title: string } = {
-      input: config.data,
-      title,
-    };
 
     const dialogRef: MatDialogRef<ComponentType<any> | TemplateRef<any>> =
       this._matDialogSvc.open(component, {
         ...config,
-        data,
+        data: {
+          input: config.data,
+          title,
+        },
       });
     return dialogRef.afterClosed() as Observable<IRtDialogClose<TReturn>>;
   }
@@ -67,7 +68,7 @@ export class RtDialogService {
           title,
           input,
         },
-        width: '500px',
+        width: this.CONFERMATION_WIDTH,
       });
     return dialogRef.afterClosed() as Observable<IRtDialogClose>;
   }
