@@ -1,7 +1,9 @@
+import { FindBoostedWhereOption } from '@api-interfaces';
+
 export interface RtTableStatus {
   fulltextSearch?: string;
 
-  where?: any[] | any;
+  where?: FindBoostedWhereOption[] | any;
   order?: any;
   pagination: {
     totalItems?: number;
