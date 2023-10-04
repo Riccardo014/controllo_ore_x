@@ -65,7 +65,7 @@
   <lib-rt-table
     *ngIf="page.isFirstLoadDone"
     [isLoading]="page.isLoading.getValue()"
-    (statusChange)="page.indexTableHandler.statusChange($event)"
+    (statusChangeEmitter)="page.indexTableHandler.statusChange($event)"
     [tableConfiguration]="page.configuration"
     [data]="page.indexTableHandler.data"
     [editFn]="editFn"

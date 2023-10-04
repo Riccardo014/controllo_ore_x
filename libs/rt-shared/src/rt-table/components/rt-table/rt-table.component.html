@@ -20,7 +20,7 @@
             [orderBy]="status.order"
           ></lib-rt-table-th>
         </th>
-        <!-- <th class="-b-left" style="width: 60px"></th> -->
+
         <ng-container *ngIf="thSuffixTemplate">
           <ng-container *ngTemplateOutlet="thSuffixTemplate"></ng-container>
         </ng-container>
@@ -54,7 +54,7 @@
           </ng-container>
           <ng-container *ngIf="isFirstColumnHidden">
             <button
-              *ngIf="openDialog"
+              *ngIf="openDialogEmitter"
               mat-icon-button
               (click)="openDialogFn(entity)"
             >
@@ -94,14 +94,7 @@
   </div>
 </div>
 
-<div
-  class="-pagination-container"
-  *ngIf="
-    tableConfiguration &&
-    status &&
-    (!tableConfiguration.pagination?.disabled || !status.pagination)
-  "
->
+<div class="-pagination-container" *ngIf="isPaginatorVisible()">
   <mat-paginator
     (page)="updatePagination($event)"
     [length]="status.pagination.totalItems"
