@@ -49,7 +49,10 @@ export class TeamFormHelper extends UpsertFormHelper<
 
   patchForm(value: UserReadDto): boolean {
     this.form.patchValue(value);
-    return this.form.valid;
+    if (!this.form.valid) {
+      throw new Error('Form is not valid');
+    }
+    return true;
   }
 
   get createDto(): UserCreateDto {
