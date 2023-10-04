@@ -5,13 +5,13 @@ import {
   CustomerReadDto,
   CustomerUpdateDto,
 } from '@api-interfaces';
-import { DataService } from '@controllo-ore-x/rt-shared';
+import { BaseDataService } from '@controllo-ore-x/rt-shared';
 import { environment } from '@env';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CustomerDataService extends DataService<
+export class CustomerDataService extends BaseDataService<
   CustomerReadDto,
   CustomerCreateDto,
   CustomerUpdateDto
