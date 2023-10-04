@@ -1,5 +1,6 @@
 import { Directive, OnInit } from '@angular/core';
 import { INDEX_CONFIGURATION_KEY, TableConfiguration } from '@api-interfaces';
+import { IndexConfigurationDataService } from '@app/_core/services/index-configuration.data-service';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
@@ -8,7 +9,6 @@ import {
   BaseDataService,
   RtTableApiStatusManager,
 } from '@controllo-ore-x/rt-shared';
-import { IndexConfigurationDataService } from '@core/services/index-configuration-data.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 
 /**

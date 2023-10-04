@@ -7,8 +7,8 @@ import {
   UserReadDto,
   UserUpdateDto,
 } from '@api-interfaces';
-import { RoleDataService } from '@app/_core/services/role-data.service';
-import { TeamDataService } from '@app/_core/services/team-data.service';
+import { RoleDataService } from '@app/_core/services/role.data-service';
+import { TeamDataService } from '@app/_core/services/team.data-service';
 import { UpsertPage } from '@app/_shared/classes/upsert-page.class';
 import {
   SubscriptionsLifecycle,

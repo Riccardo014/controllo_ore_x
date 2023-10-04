@@ -6,9 +6,9 @@ import {
   UserReadDto,
   UserUpdateDto,
 } from '@api-interfaces';
-import { TeamDataService } from '@app/_core/services/team-data.service';
+import { IndexConfigurationDataService } from '@app/_core/services/index-configuration.data-service';
+import { TeamDataService } from '@app/_core/services/team.data-service';
 import { IndexPage } from '@app/_shared/classes/index-page.class';
-import { IndexConfigurationDataService } from '@core/services/index-configuration-data.service';
 import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
 import { BehaviorSubject } from 'rxjs';

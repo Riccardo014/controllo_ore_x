@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { UserCreateDto, UserReadDto, UserUpdateDto } from '@api-interfaces';
-import { TeamDataService } from '@app/_core/services/team-data.service';
+import { TeamDataService } from '@app/_core/services/team.data-service';
 import { UpsertFormHelper } from '@app/_shared/classes/upsert-form-helper.class';
 import { strongPasswordValidator } from '@app/_shared/validators/strong-password.validator';
 
