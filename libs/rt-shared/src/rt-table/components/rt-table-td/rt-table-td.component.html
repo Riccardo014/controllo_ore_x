@@ -1,4 +1,4 @@
-<ng-container [ngSwitch]="column!.type" class="body-2">
+<ng-container [ngSwitch]="column.type" class="body-2">
   <ng-container *ngSwitchCase="'NUMBER'">
     {{ valueToPrint | number: '1.2-2' }}
   </ng-container>

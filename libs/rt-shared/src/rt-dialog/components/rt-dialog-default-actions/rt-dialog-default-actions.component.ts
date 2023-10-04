@@ -12,6 +12,6 @@ export class RtDialogDefaultActionsComponent {
   @Input() textConfirm: string = 'Ok';
   @Input() textCancel: string = 'Annulla';
 
-  @Output() confirmEmitter: EventEmitter<void> = new EventEmitter<void>();
-  @Output() cancelEmitter: EventEmitter<void> = new EventEmitter<void>();
+  @Output() confirm: EventEmitter<void> = new EventEmitter<void>();
+  @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
 }
