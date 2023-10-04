@@ -5,38 +5,38 @@
   box-sizing: border-box;
   border-left: 1px solid $table-border-color;
   font-size: $table-font-size-column;
+}
 
-  .-cell-sort {
-    display: inline-flex;
-    width: 100%;
-    cursor: pointer;
+.-cell-sort {
+  display: inline-flex;
+  width: 100%;
+  cursor: pointer;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 14px 10px;
+  box-sizing: border-box;
+  height: 46px;
+  gap: 10px;
+  color: rgba(0, 0, 0, 0.5);
+
+  mat-icon {
+    color: rgba(0, 0, 0, 0.7);
+  }
+
+  .-cell-sort__icons {
+    margin-left: 8px;
+    display: flex;
     align-items: center;
-    justify-content: flex-start;
-    padding: 14px 10px;
-    box-sizing: border-box;
-    height: 46px;
-    gap: 10px;
-    color: rgba(0, 0, 0, 0.5);
 
-    mat-icon {
-      color: rgba(0, 0, 0, 0.7);
-    }
-
-    .-cell-sort__icons {
-      margin-left: 8px;
+    .-current-position {
+      margin-right: 6px;
+      font-size: 0.8rem;
       display: flex;
       align-items: center;
-
-      .-current-position {
-        margin-right: 6px;
-        font-size: 0.8rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 20px;
-        height: 20px;
-        border-radius: 4px;
-      }
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
     }
   }
 }

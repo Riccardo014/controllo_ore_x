@@ -7,12 +7,13 @@ import { FindBoostedOrder, TableConfigurationColumn } from '@api-interfaces';
   styleUrls: ['./rt-table-th.component.scss'],
 })
 export class RtTableThComponent {
-  @Output() orderChanged: EventEmitter<FindBoostedOrder> = new EventEmitter<FindBoostedOrder>();
+  @Output() orderChangedEmitter: EventEmitter<FindBoostedOrder> =
+    new EventEmitter<FindBoostedOrder>();
 
   @Input() column!: TableConfigurationColumn;
 
   orderIndex: number = 0;
-  ORDER_BY_TYPE: { ASC: string, DESC: string } = {
+  ORDER_BY_TYPE: { ASC: string; DESC: string } = {
     ASC: 'ASC',
     DESC: 'DESC',
   };
@@ -24,11 +25,13 @@ export class RtTableThComponent {
 
     this.orderIndex = this._getOrderIndex();
     // set initial order for column
-    this.currentOrder = this._orderBy ? this._orderBy[this.column.field] : undefined;
+    this.currentOrder = this._orderBy
+      ? this._orderBy[this.column.field]
+      : undefined;
   }
 
   toggleOrderBy(): void {
-    if(!this.column.sortable){
+    if (!this.column.sortable) {
       return;
     }
     const newOrderBy: FindBoostedOrder = { ...this._orderBy };
@@ -44,7 +47,7 @@ export class RtTableThComponent {
         newOrderBy[this.column.field] = 'ASC';
         break;
     }
-    this.orderChanged.emit(newOrderBy);
+    this.orderChangedEmitter.emit(newOrderBy);
   }
 
   private _getOrderIndex(): number {
@@ -52,13 +55,10 @@ export class RtTableThComponent {
     if (!this._orderBy) {
       return index;
     }
-    const keys: any = Object.keys(this._orderBy);
-    for (const [
-      i,
-      key,
-    ] of Object.entries(keys)) {
+    const keys: string[] = Object.keys(this._orderBy);
+    for (const [indicator, key] of Object.entries(keys)) {
       if (this.column.field === key) {
-        index = Number(i) + 1;
+        index = Number(indicator) + 1;
       }
     }
 

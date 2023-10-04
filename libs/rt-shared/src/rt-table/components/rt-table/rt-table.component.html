@@ -16,7 +16,7 @@
         <th *ngFor="let column of tableConfiguration?.columns">
           <lib-rt-table-th
             [column]="column"
-            (orderChanged)="updateOrder($event)"
+            (orderChangedEmitter)="updateOrder($event)"
             [orderBy]="status.order"
           ></lib-rt-table-th>
         </th>
