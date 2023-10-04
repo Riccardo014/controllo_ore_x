@@ -5,6 +5,6 @@
   <mat-icon *ngIf="currentOrder && currentOrder === ORDER_BY_TYPE.DESC">
     arrow_upward
   </mat-icon>
-  <span>{{ column.title }}</span>
-  <div class="-cell-sort__icons" *ngIf="column.sortable"></div>
+  <span>{{ column!.title }}</span>
+  <div class="-cell-sort__icons" *ngIf="column!.sortable"></div>
 </div>
