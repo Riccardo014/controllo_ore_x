@@ -15,10 +15,10 @@ import { RtTableStatus } from '../../interfaces/rt-table-status.interface';
   styleUrls: ['./rt-table.component.scss'],
 })
 export class RtTableComponent {
-  @Input() status!: RtTableStatus;
+  @Input() status?: RtTableStatus;
 
-  @Input() tableConfiguration!: TableConfiguration;
-  @Input() data!: any[];
+  @Input() tableConfiguration?: TableConfiguration;
+  @Input() data?: any[];
 
   @Input() shouldShowFilters: boolean = true;
 
@@ -46,6 +46,15 @@ export class RtTableComponent {
   @Input() isEditAvailable: boolean = true;
 
   constructor(private _paginator: MatPaginatorIntl) {
+    if (!this.status) {
+      throw new Error('The status of the table is undefined');
+    }
+    if (!this.tableConfiguration) {
+      throw new Error('The tableConfiguration is undefined');
+    }
+    if (!this.data) {
+      throw new Error('There are no data for the table');
+    }
     _paginator.itemsPerPageLabel = 'Elementi per pagina';
   }
 
@@ -58,29 +67,29 @@ export class RtTableComponent {
   }
 
   updateFilters(filters: FindBoostedWhereOption[]): void {
-    this.status.where = filters;
+    this.status!.where = filters;
     this.statusChangeEmitter.emit(this.status);
   }
 
   updateFulltextSearch(fulltextSearch: string): void {
-    this.status.fulltextSearch = fulltextSearch;
+    this.status!.fulltextSearch = fulltextSearch;
     this.statusChangeEmitter.emit(this.status);
   }
 
   updateOrder(orderBy: any): void {
-    this.status.order = orderBy;
+    this.status!.order = orderBy;
     this.statusChangeEmitter.emit(this.status);
   }
 
   updatePagination(pageEvent: PageEvent): void {
-    if (!this.status.pagination) {
+    if (!this.status!.pagination) {
       return;
     }
 
-    let newPage: number = this.status.pagination.currentPage;
-    let itemsPerPage: number = this.status.pagination.itemsPerPage;
+    let newPage: number = this.status!.pagination.currentPage;
+    let itemsPerPage: number = this.status!.pagination.itemsPerPage;
 
-    if (this.status.pagination) {
+    if (this.status!.pagination) {
       if (pageEvent.previousPageIndex !== pageEvent.pageIndex) {
         newPage = pageEvent.pageIndex + 1;
       }
@@ -93,8 +102,8 @@ export class RtTableComponent {
         itemsPerPage = pageEvent.pageSize;
       }
 
-      this.status.pagination.currentPage = newPage;
-      this.status.pagination.itemsPerPage = itemsPerPage;
+      this.status!.pagination.currentPage = newPage;
+      this.status!.pagination.itemsPerPage = itemsPerPage;
       this.statusChangeEmitter.emit(this.status);
     }
   }

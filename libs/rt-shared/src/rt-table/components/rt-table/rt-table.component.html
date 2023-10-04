@@ -17,7 +17,7 @@
           <lib-rt-table-th
             [column]="column"
             (orderChangedEmitter)="updateOrder($event)"
-            [orderBy]="status.order"
+            [orderBy]="status!.order"
           ></lib-rt-table-th>
         </th>
 
@@ -27,13 +27,13 @@
       </tr>
     </thead>
     <tbody *ngIf="!isLoading">
-      <div *ngIf="data.length; else noData"></div>
+      <div *ngIf="data!.length; else noData"></div>
       <tr *ngFor="let entity of data">
         <td class="-text-center -w-60" *ngIf="!tdPrefixTemplate">
           <ng-container *ngIf="!isFirstColumnHidden">
             <a
               *ngIf="editFn; else editLink"
-              (click)="editFn(entity[tableConfiguration.idProperty || '_id'])"
+              (click)="editFn(entity[tableConfiguration!.idProperty || '_id'])"
               mat-icon-button
             >
               <mat-icon color="primary" class="-f-icon">{{
@@ -43,7 +43,7 @@
             <ng-template #editLink>
               <a
                 *ngIf="isEditAvailable"
-                [routerLink]="entity[tableConfiguration.idProperty || '_id']"
+                [routerLink]="entity[tableConfiguration!.idProperty || '_id']"
                 mat-icon-button
               >
                 <mat-icon color="primary" class="-f-icon">{{
@@ -97,12 +97,12 @@
 <div class="-pagination-container" *ngIf="isPaginatorVisible()">
   <mat-paginator
     (page)="updatePagination($event)"
-    [length]="status.pagination.totalItems"
-    [pageIndex]="status.pagination.currentPage - 1"
+    [length]="status!.pagination.totalItems"
+    [pageIndex]="status!.pagination.currentPage - 1"
     [pageSizeOptions]="
-      tableConfiguration.pagination?.pageSizeOptions || [5, 10, 25, 50, 100]
+      tableConfiguration!.pagination?.pageSizeOptions || [5, 10, 25, 50, 100]
     "
-    [pageSize]="status.pagination.itemsPerPage"
+    [pageSize]="status!.pagination.itemsPerPage"
   >
   </mat-paginator>
 </div>
