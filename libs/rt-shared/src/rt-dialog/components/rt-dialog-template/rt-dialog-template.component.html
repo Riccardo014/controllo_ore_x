@@ -1,6 +1,4 @@
-<div
-  class="-header"
-  *ngIf="hasHeader">
+<div class="-header" *ngIf="hasHeader">
   <ng-content select="[header]"></ng-content>
 </div>
 
@@ -10,39 +8,26 @@
 
 <div class="-content">
   <div mat-dialog-content>
-    <div
-      class="-title --fw-600"
-      *ngIf="title">
+    <div class="-title --fw-600" *ngIf="title">
       {{ title }}
     </div>
-    <div
-      class="-subtitle"
-      *ngIf="subtitle">
+    <div class="-subtitle" *ngIf="subtitle">
       {{ subtitle }}
     </div>
 
-    <ng-content
-      select="[body]"
-      *ngIf="!isLoading && !isError">
-    </ng-content>
+    <ng-content select="[body]" *ngIf="!isLoading && !isError"> </ng-content>
 
-    <div
-      *ngIf="isLoading && !isError"
-      class="-spinner-wrapper">
+    <div *ngIf="isLoading && !isError" class="-spinner-wrapper">
       <mat-spinner
         class="-spinner"
         mode="indeterminate"
-        color="primary"></mat-spinner>
+        color="primary"
+      ></mat-spinner>
     </div>
 
-    <div
-      *ngIf="isError"
-      class="-refetch-data-wrapper">
-      <div class="-text headline-6">Ops! Qualcosa è andato storto.</div>
-      <button
-        mat-flat-button
-        color="accent"
-        (click)="reFetch.emit()">
+    <div *ngIf="isError" class="-refetch-data-wrapper">
+      <div class="__text headline-6">Ops! Qualcosa è andato storto.</div>
+      <button mat-flat-button color="accent" (click)="reFetchEmitter.emit()">
         Ricarica la pagina
       </button>
     </div>
@@ -52,7 +37,7 @@
 <div
   mat-dialog-actions
   *ngIf="hasFooter && !isLoading && !isError"
-  class="-footer">
+  class="-footer"
+>
   <ng-content select="[footer]"></ng-content>
 </div>
-
