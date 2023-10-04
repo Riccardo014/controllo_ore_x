@@ -35,7 +35,8 @@ export class RtTableComponent {
     new EventEmitter<RtTableStatus>();
   // @Output() userDetail: EventEmitter<UserReadDto> = new EventEmitter<UserReadDto>();
 
-  @Output() openFilter: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() openFilterEmitter: EventEmitter<boolean> =
+    new EventEmitter<boolean>();
   @Output() openDialog: EventEmitter<any> = new EventEmitter<any>();
 
   @Input() thPrefixTemplate?: TemplateRef<any>;
@@ -50,7 +51,7 @@ export class RtTableComponent {
   }
 
   openFilterFn(): void {
-    this.openFilter.emit(true);
+    this.openFilterEmitter.emit(true);
   }
 
   openDialogFn(entity: any): void {
