@@ -1,12 +1,12 @@
 <cox-dialog-template
   [title]="data.title"
   [subtitle]="data.input"
-  (closeDialog)="cancel()"
+  (closeDialog)="cancelProcess()"
 >
   <div footer>
     <rt-dialog-default-actions
-      (cancel)="cancel()"
-      (confirm)="confirm()"
+      (cancel)="cancelProcess()"
+      (confirm)="confirmProcess()"
       textConfirm="Conferma"
     >
     </rt-dialog-default-actions>
