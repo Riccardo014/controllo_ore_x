@@ -10,16 +10,19 @@ import { debounceTime } from 'rxjs/operators';
 export class RtTableFulltextBarComponent implements OnInit {
   fulltextSearch: FormControl = new FormControl<string>('');
 
-  @Output() fulltextSearchUpdate: EventEmitter<string> = new EventEmitter<string>();
+  @Output() fulltextSearchEmitter: EventEmitter<string> =
+    new EventEmitter<string>();
 
   ngOnInit(): void {
-    this.fulltextSearch.valueChanges.pipe(debounceTime(1300)).subscribe((r) => {
-      this.fulltextSearchUpdate.emit(r as string);
-    });
+    this.fulltextSearch.valueChanges
+      .pipe(debounceTime(1300))
+      .subscribe((text: string) => {
+        this.fulltextSearchEmitter.emit(text);
+      });
   }
 
   @Input()
-  set value(v: string) {
-    this.fulltextSearch.setValue(v);
+  set value(text: string) {
+    this.fulltextSearch.setValue(text);
   }
 }
