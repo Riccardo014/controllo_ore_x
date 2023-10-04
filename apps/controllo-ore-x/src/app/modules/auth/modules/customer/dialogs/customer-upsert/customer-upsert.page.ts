@@ -1,12 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   CustomerCreateDto,
   CustomerReadDto,
   CustomerUpdateDto,
 } from '@api-interfaces';
-import { CustomerDataService } from '@app/_core/services/customer-data.service';
-import { RoleDataService } from '@app/_core/services/role-data.service';
+import { CustomerDataService } from '@app/_core/services/customer.data-service';
 import { UpsertPage } from '@app/_shared/classes/upsert-page.class';
 import {
   SubscriptionsLifecycle,
@@ -26,7 +25,7 @@ import { CustomerFormHelper } from '../../helpers/customer.form-helper';
 })
 export class CustomerUpsertPage
   extends UpsertPage<CustomerReadDto, CustomerCreateDto, CustomerUpdateDto>
-  implements SubscriptionsLifecycle
+  implements SubscriptionsLifecycle, OnDestroy, OnInit
 {
   override title: string = 'Inserisci un nuovo cliente';
 
@@ -48,7 +47,6 @@ export class CustomerUpsertPage
     private _rtDialogService: RtDialogService,
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
-    private _roleDataService: RoleDataService,
   ) {
     super(
       formHelper,
@@ -87,9 +85,7 @@ export class CustomerUpsertPage
     return this._customerDataService
       .getOne(this.customerId)
       .subscribe((customer: any) => {
-        this.formHelper.patchForm({
-          ...customer,
-        });
+        this.formHelper.patchForm(customer);
       });
   }
 }

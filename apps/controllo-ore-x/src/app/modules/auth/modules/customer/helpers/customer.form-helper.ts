@@ -5,7 +5,7 @@ import {
   CustomerReadDto,
   CustomerUpdateDto,
 } from '@api-interfaces';
-import { CustomerDataService } from '@app/_core/services/customer-data.service';
+import { CustomerDataService } from '@app/_core/services/customer.data-service';
 import { UpsertFormHelper } from '@app/_shared/classes/upsert-form-helper.class';
 
 @Injectable()
@@ -21,18 +21,6 @@ export class CustomerFormHelper extends UpsertFormHelper<
     super(formBuilder, _customerDataService);
   }
 
-  initForm(): FormGroup {
-    return this.formBuilder.group({
-      name: [null, Validators.required],
-      email: [null, [Validators.required, Validators.email]],
-    });
-  }
-
-  patchForm(value: CustomerReadDto): boolean {
-    this.form.patchValue(value);
-    return true;
-  }
-
   get createDto(): CustomerCreateDto {
     const formValues: any = this.form.getRawValue();
 
@@ -43,5 +31,17 @@ export class CustomerFormHelper extends UpsertFormHelper<
     const formValues: any = this.form.getRawValue();
 
     return formValues;
+  }
+
+  initForm(): FormGroup {
+    return this.formBuilder.group({
+      name: [null, Validators.required],
+      email: [null, [Validators.required, Validators.email]],
+    });
+  }
+
+  patchForm(value: CustomerReadDto): boolean {
+    this.form.patchValue(value);
+    return true;
   }
 }
