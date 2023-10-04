@@ -1,17 +1,3 @@
-/**
- * @version 1.0.0
- *
- * Snippet Name: RT Dialog Module
- * Summary: Wrapper for Mat Dialog
- * Description: used to handle dialog
- *
- * File Changelog
- *
- * Author                       | Date            | Changes
- * =====================================================================================================================
- * Luca Bertolini               | 02/04/2021      | Initial Import
- */
-
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -25,6 +11,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RtDialogTemplateComponent } from './components/rt-dialog-template/rt-dialog-template.component';
 import { RtDialogService } from './services/rt-dialog.service';
 
+/**
+ *
+ * Module to handle dialog
+ */
 @NgModule({
   declarations: [
     RtDialogTemplateComponent,
@@ -39,9 +29,7 @@ import { RtDialogService } from './services/rt-dialog.service';
     MatIconModule,
     MatProgressSpinnerModule,
   ],
-  providers: [
-    RtDialogService,
-  ],
+  providers: [RtDialogService],
   exports: [
     RtDialogTemplateComponent,
     RtDialogDefaultActionsComponent,
@@ -49,4 +37,3 @@ import { RtDialogService } from './services/rt-dialog.service';
   ],
 })
 export class RtDialogModule {}
-
