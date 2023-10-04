@@ -8,7 +8,7 @@ import { rtTableColumnValue } from '../../lib/rt-table-column-value';
   styleUrls: ['./rt-table-td.component.scss'],
 })
 export class RtTableTdComponent implements OnInit {
-  @Input() column?: TableConfigurationColumn;
+  @Input() column!: TableConfigurationColumn;
   @Input() entity: any;
 
   @Output() openDialog: EventEmitter<any> = new EventEmitter<any>();
@@ -17,18 +17,12 @@ export class RtTableTdComponent implements OnInit {
 
   roles: ROLE[] = [ROLE.SUPERADMIN, ROLE.ADMIN, ROLE.COLLABORATOR];
 
-  constructor() {
-    if (!this.column) {
-      throw new Error('column is undefined');
-    }
-  }
-
   ngOnInit(): void {
     this.valueToPrint = this.getColumnData();
   }
 
   getColumnData(): any {
-    return rtTableColumnValue(this.column!, this.entity);
+    return rtTableColumnValue(this.column, this.entity);
   }
 
   openDialogFn(entity: any): void {

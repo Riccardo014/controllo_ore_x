@@ -49,9 +49,6 @@ export class TeamFormHelper extends UpsertFormHelper<
 
   patchForm(value: UserReadDto): boolean {
     this.form.patchValue(value);
-    if (!this.form.valid) {
-      throw new Error('Form is not valid');
-    }
     return true;
   }
 

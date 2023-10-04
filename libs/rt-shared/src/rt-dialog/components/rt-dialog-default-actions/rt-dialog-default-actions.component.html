@@ -1,7 +1,7 @@
 <div class="__box">
   <button
     mat-stroked-button
-    (click)="cancelEmitter.emit()"
+    (click)="cancel.emit()"
     color="primary"
     class="rt-btn __cancel-btn"
     mat-button
@@ -10,7 +10,7 @@
     {{ textCancel }}
   </button>
   <button
-    (click)="confirmEmitter.emit()"
+    (click)="confirm.emit()"
     class="rt-btn --flat-primary"
     color="primary"
     mat-flat-button

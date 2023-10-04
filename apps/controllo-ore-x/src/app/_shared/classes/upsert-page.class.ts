@@ -49,6 +49,42 @@ export abstract class UpsertPage<
     private _routerPropertyId: string = 'id',
   ) {}
 
+  /**
+   * Prompt the user for confirmation on the deletion operation by opening a dialog. Delete entry if the user confirms the operation.
+   */
+  async deleteEntry(): Promise<void> {
+    this._upsertDialogSvc
+      .openConfirmation(
+        "Procedere con l'eliminazione?",
+        "L'operazione non è reversibile",
+      )
+      .subscribe({
+        next: async (r) => {
+          if (r?.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
+            this.isLoading.next(true);
+            this.formHelper.disable();
+            try {
+              await this.formHelper.delete();
+              this._upsertAlertSvc.openSuccess();
+              this.navigateBack();
+            } catch (err) {
+              this.isLoading.next(false);
+              this.formHelper.enable();
+
+              this._upsertAlertSvc.openError(
+                'Errore!',
+                'Impossibile terminare la procedura',
+                err,
+              );
+            }
+          }
+        },
+        error: (err) => {
+          console.error(err);
+        },
+      });
+  }
+
   ngOnInit(): void {
     if (this.getEntityId()) {
       this.isCreating = false;
@@ -149,37 +185,6 @@ export abstract class UpsertPage<
    */
   handleUserSubmission(): void {
     this.isCreating ? this._createEntry() : this._updateEntry();
-  }
-
-  /**
-   * Prompt the user for confirmation on the deletion operation by opening a dialog. Delete entry if the user confirms the operation.
-   */
-  async deleteEntry(): Promise<void> {
-    this._upsertDialogSvc
-      .openConfirmation(
-        "Procedere con l'eliminazione?",
-        "L'operazione non è reversibile",
-      )
-      .subscribe(async (r) => {
-        if (r?.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
-          this.isLoading.next(true);
-          this.formHelper.disable();
-          try {
-            await this.formHelper.delete();
-            this._upsertAlertSvc.openSuccess();
-            this.navigateBack();
-          } catch (err) {
-            this.isLoading.next(false);
-            this.formHelper.enable();
-
-            this._upsertAlertSvc.openError(
-              'Errore!',
-              'Impossibile terminare la procedura',
-              err,
-            );
-          }
-        }
-      });
   }
 
   /**
