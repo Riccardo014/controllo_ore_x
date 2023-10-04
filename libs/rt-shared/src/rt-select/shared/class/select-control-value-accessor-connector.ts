@@ -1,5 +1,17 @@
-import { ControlContainer, FormControl, FormControlDirective, SelectControlValueAccessor } from '@angular/forms';
-import { Directive, ElementRef, Injector, Input, Renderer2, ViewChild } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  Injector,
+  Input,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
+import {
+  ControlContainer,
+  FormControl,
+  FormControlDirective,
+  SelectControlValueAccessor,
+} from '@angular/forms';
 
 // eslint-disable-next-line @angular-eslint/directive-selector
 @Directive({ selector: '[selectcontrolvalueaccessor]' })
@@ -14,12 +26,19 @@ export class SelectControlValueAccessorConnector extends SelectControlValueAcces
   @Input()
   formControlName!: string;
 
-  constructor(_renderer: Renderer2, _elementRef: ElementRef, private _injector: Injector) {
+  constructor(
+    _renderer: Renderer2,
+    _elementRef: ElementRef,
+    private _injector: Injector,
+  ) {
     super(_renderer, _elementRef);
   }
 
   get control(): FormControl {
-    return this.formControl || (this.controlContainer.control?.get(this.formControlName) as FormControl);
+    return (
+      this.formControl ||
+      (this.controlContainer.control?.get(this.formControlName) as FormControl)
+    );
   }
 
   get controlContainer(): ControlContainer {
@@ -38,7 +57,7 @@ export class SelectControlValueAccessorConnector extends SelectControlValueAcces
   }
 
   override registerOnTouched(fn: any): void {
-    this.formControlDirective.valueAccessor?.registerOnTouched(fn);
+    this.formControlDirective.valueAccessor?.bindFunctionToTouchEvent(fn);
   }
 
   override registerOnChange(fn: any): void {
