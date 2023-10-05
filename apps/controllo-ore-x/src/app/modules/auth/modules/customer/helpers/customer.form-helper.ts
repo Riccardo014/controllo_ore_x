@@ -22,13 +22,13 @@ export class CustomerFormHelper extends UpsertFormHelper<
   }
 
   get createDto(): CustomerCreateDto {
-    const formValues: any = this.form.getRawValue();
+    const formValues: CustomerCreateDto = this.form.getRawValue();
 
     return formValues;
   }
 
   get updateDto(): CustomerUpdateDto {
-    const formValues: any = this.form.getRawValue();
+    const formValues: CustomerCreateDto = this.form.getRawValue();
 
     return formValues;
   }

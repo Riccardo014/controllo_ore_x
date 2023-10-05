@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -22,6 +24,7 @@ import {
 import { SharedModule } from '@shared/shared.module';
 import { ProjectReleaseTableLineComponent } from './components/project-release-table-line/project-release-table-line.component';
 import { ProjectComponent } from './components/project/project.component';
+import { ProjectUpsertPage } from './dialogs/project-upsert/project-upsert.page';
 import { ProjectIndexPage } from './pages/project-index/project-index.page';
 import { ReleaseIndexPage } from './pages/release-index/release-index.page';
 import { ProjectRoutingModule } from './project-routing.module';
@@ -32,6 +35,7 @@ import { ProjectRoutingModule } from './project-routing.module';
     ProjectComponent,
     ReleaseIndexPage,
     ProjectReleaseTableLineComponent,
+    ProjectUpsertPage,
   ],
   imports: [
     CommonModule,
@@ -55,6 +59,8 @@ import { ProjectRoutingModule } from './project-routing.module';
     MatExpansionModule,
     RtTableModule,
     MatProgressBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
 })
 export class ProjectModule {}

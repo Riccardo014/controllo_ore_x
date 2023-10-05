@@ -1,0 +1,82 @@
+<controllo-ore-x-upsert-template [page]="this" [isMoreOptionHidden]="false">
+  <div body class="-wrapper">
+    <div class="-wrapper-user-upsert">
+      <form class="container" [formGroup]="formHelper.form">
+        <div class="row mb-2 -wrapper-user-upsert-form">
+          <mat-form-field class="col" appearance="outline">
+            <mat-label>Nome progetto</mat-label>
+            <input matInput placeholder="Nome" formControlName="name" />
+            <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+              <div
+                *ngIf="formHelper.form.controls['name'].hasError(error.name)"
+              >
+                {{ error.message }}
+              </div>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="col" appearance="outline">
+            <mat-label>Budget ore</mat-label>
+            <input
+              matInput
+              placeholder="Budget ore"
+              formControlName="hoursBudget"
+            />
+            <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+              <div
+                *ngIf="formHelper.form.controls['hoursBudget'].hasError(error.name)"
+              >
+                {{ error.message }}
+              </div>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="col" appearance="outline">
+            <mat-label>Cliente</mat-label>
+            <mat-select
+              matInput
+              placeholder="Cliente"
+              formControlName="customer"
+              [(value)]="currentCustomer"
+            >
+              <mat-option
+                *ngFor="let customer of customers"
+                [value]="customer.name"
+              >
+                {{ customer.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+              <div
+                *ngIf="formHelper.form.controls['customer'].hasError(error.name)"
+              >
+                {{ error.message }}
+              </div>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="col" appearance="outline">
+            <mat-label>Data di scadenza</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              placeholder="Data di scadenza"
+              formControlName="deadline"
+            />
+            <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+              <div
+                *ngIf="formHelper.form.controls['deadline'].hasError(error.name)"
+              >
+                {{ error.message }}
+              </div>
+            </mat-error>
+            <mat-datepicker-toggle matIconSuffix [for]="picker">
+              <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </form>
+    </div>
+  </div>
+</controllo-ore-x-upsert-template>

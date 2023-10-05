@@ -1,0 +1,30 @@
+@import 'libs/ui/core.scss';
+
+  .-wrapper {
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .-wrapper-user-upsert {
+    background: map-get($palette-white, 50);
+    border-radius: 10px;
+    border: 1px solid map-get($palette-grey, 200);
+    padding: 40px 35px 40px 30px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    width: 500px;
+  }
+
+  .-wrapper-user-upsert-form{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .-input-with-icon{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
