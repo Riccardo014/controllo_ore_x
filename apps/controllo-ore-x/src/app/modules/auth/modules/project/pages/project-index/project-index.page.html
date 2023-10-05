@@ -7,9 +7,7 @@
 <lib-rt-table-fulltext-bar class="-search-bar"></lib-rt-table-fulltext-bar>
 <div class="-content">
   <controllo-ore-x-project
-    *ngFor="let projectWithCustomer of projectsWithCustomer"
-    [projectName]="projectWithCustomer.project.name"
-    [color]="projectWithCustomer.project.color"
-    [customerName]="projectWithCustomer.customer.name"
+    *ngFor="let project of projects"
+    [project]="project"
   ></controllo-ore-x-project>
 </div>
