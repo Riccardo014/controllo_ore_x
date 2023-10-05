@@ -67,11 +67,11 @@ export class SidenavComponent
    * Update the active section on route changes.
    */
   updateActiveSectionOnRouterEvent(): Subscription {
-    return this._router.events.pipe(
-      filter((event) => event instanceof NavigationEnd),
-    ).subscribe(() => {
-      this.activeSection = this.getActiveSectionFromUrl(this._router.url);
-    });
+    return this._router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.activeSection = this.getActiveSectionFromUrl(this._router.url);
+      });
   }
 
   /**
