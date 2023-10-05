@@ -28,7 +28,7 @@ import { HoursTag } from '../entities/hours-tag.entity';
  * @description Tags are used to categorize the user's working and holidays hours.
  */
 @ApiTags('HoursTags')
-@Controller('hours-tags')
+@Controller('hoursTags')
 export class HoursTagController {
   constructor(
     private _tagService: HoursTagService,
