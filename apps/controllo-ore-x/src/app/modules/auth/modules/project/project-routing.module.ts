@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ProjectUpsertPage } from './dialogs/project-upsert/project-upsert.page';
 import { ProjectIndexPage } from './pages/project-index/project-index.page';
 
 const routes: Routes = [
