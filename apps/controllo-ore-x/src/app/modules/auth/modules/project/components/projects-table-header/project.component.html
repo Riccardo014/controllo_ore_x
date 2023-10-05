@@ -1,0 +1,43 @@
+<mat-expansion-panel
+  hideToggle
+  (opened)="isPanelOpen = true"
+  (closed)="isPanelOpen = false"
+  class="mat-elevation-z0"
+>
+  <mat-expansion-panel-header
+    class="-projects-table-header"
+    [expandedHeight]="customExpandedHeight"
+  >
+    <mat-panel-title class="-project-data">
+      <div>
+        <span
+          class="material-symbols-outlined"
+          [ngClass]="{
+            '-expand-more-icon': !isPanelOpen,
+            '-expand-more-icon__rotate': isPanelOpen
+          }"
+          >expand_more</span
+        >
+      </div>
+      <div class="-project-data-details">
+        <div class="-project-color" [style.backgroundColor]="this.color"></div>
+        <div class="body-1">{{ projectName }}</div>
+        <div>
+          <mat-chip class="caption">{{ customerName }}</mat-chip>
+        </div>
+      </div>
+    </mat-panel-title>
+    <mat-panel-description class="-project-options">
+      <button mat-flat-button extended class="-new-release-button">
+        <div class="-new-release-elements">
+          <span class="material-symbols-outlined">egg_alt</span>
+          <span>Nuova Release</span>
+        </div>
+      </button>
+      <button mat-icon-button>
+        <mat-icon class="-more-vert-icon">more_vert</mat-icon>
+      </button>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <controllo-ore-x-release-index> </controllo-ore-x-release-index>
+</mat-expansion-panel>
