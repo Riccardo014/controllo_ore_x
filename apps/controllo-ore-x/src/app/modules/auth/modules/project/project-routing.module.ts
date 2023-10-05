@@ -10,7 +10,9 @@ const routes: Routes = [
   {
     path: ':id/release',
     loadChildren: () =>
-      import('./modules/release/release.module').then((module) => module.ReleaseModule),
+      import('./modules/release/release.module').then(
+        (module) => module.ReleaseModule,
+      ),
   },
 ];
 
