@@ -20,10 +20,13 @@
         >
       </div>
       <div class="-project-data-details">
-        <div class="-project-color" [style.backgroundColor]="this.color"></div>
-        <div class="body-1">{{ projectName }}</div>
+        <div
+          class="-project-color"
+          [style.backgroundColor]="this.project.color"
+        ></div>
+        <div class="body-1">{{ project.name }}</div>
         <div>
-          <mat-chip class="caption">{{ customerName }}</mat-chip>
+          <mat-chip class="caption">{{ customer.name }}</mat-chip>
         </div>
       </div>
     </mat-panel-title>
@@ -39,5 +42,6 @@
       </button>
     </mat-panel-description>
   </mat-expansion-panel-header>
-  <controllo-ore-x-release-index> </controllo-ore-x-release-index>
+  <controllo-ore-x-release-index [project]="project">
+  </controllo-ore-x-release-index>
 </mat-expansion-panel>

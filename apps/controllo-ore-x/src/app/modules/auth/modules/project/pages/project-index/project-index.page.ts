@@ -23,7 +23,6 @@ import {
 } from '@app/utils/subscriptions_lifecycle';
 import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
-import { ProjectWithCustomer } from 'libs/utils/controllo-ore-x-interfaces/projectWithCustomer';
 import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
@@ -51,7 +50,6 @@ export class ProjectIndexPage
   override isPageWithTable: boolean = false;
 
   projects: ProjectReadDto[] = [];
-  projectsWithCustomer: ProjectWithCustomer[] = [];
 
   @Output() openDialog: EventEmitter<any> = new EventEmitter<any>();
 
@@ -88,20 +86,6 @@ export class ProjectIndexPage
       .getMany({})
       .subscribe((projects: ApiPaginatedResponse<ProjectReadDto>) => {
         this.projects = projects.data;
-        this.projects.forEach((project) => {
-          this.subscriptionsList.push(this._getProjectWithCustomer(project));
-        });
-      });
-  }
-
-  _getProjectWithCustomer(project: ProjectReadDto): Subscription {
-    return this._customerDataService
-      .getOne(project.customerId)
-      .subscribe((customer: any) => {
-        this.projectsWithCustomer.push({
-          project: project,
-          customer: customer,
-        });
       });
   }
 

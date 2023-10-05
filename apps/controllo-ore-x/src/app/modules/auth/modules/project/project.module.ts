@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 import {
   AlertModule,
@@ -19,13 +20,19 @@ import {
   RtTableModule,
 } from '@controllo-ore-x/rt-shared';
 import { SharedModule } from '@shared/shared.module';
-import { ProjectComponent } from './components/projects-table-header/project.component';
+import { ProjectReleaseTableLineComponent } from './components/project-release-table-line/project-release-table-line.component';
+import { ProjectComponent } from './components/project/project.component';
 import { ProjectIndexPage } from './pages/project-index/project-index.page';
 import { ReleaseIndexPage } from './pages/release-index/release-index.page';
 import { ProjectRoutingModule } from './project-routing.module';
 
 @NgModule({
-  declarations: [ProjectIndexPage, ProjectComponent, ReleaseIndexPage],
+  declarations: [
+    ProjectIndexPage,
+    ProjectComponent,
+    ReleaseIndexPage,
+    ProjectReleaseTableLineComponent,
+  ],
   imports: [
     CommonModule,
     ProjectRoutingModule,
@@ -47,6 +54,7 @@ import { ProjectRoutingModule } from './project-routing.module';
     RtSelectModule,
     MatExpansionModule,
     RtTableModule,
+    MatProgressBarModule,
   ],
 })
 export class ProjectModule {}
