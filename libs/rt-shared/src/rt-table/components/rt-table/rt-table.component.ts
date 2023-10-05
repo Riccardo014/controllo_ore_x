@@ -24,6 +24,8 @@ export class RtTableComponent {
 
   @Input() isFirstColumnHidden: boolean = false;
   @Input() isPrintMode: boolean = false;
+  @Input() isTableTopbarVisible: boolean = true;
+  @Input() isTableHeaderVisible: boolean = true;
 
   @Input() isLoading: boolean = true;
 

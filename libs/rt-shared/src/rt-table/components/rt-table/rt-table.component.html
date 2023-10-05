@@ -1,4 +1,4 @@
-<div class="-topbar">
+<div class="-topbar" *ngIf="isTableTopbarVisible">
   <lib-rt-table-fulltext-bar
     (fulltextSearchEmitter)="updateFulltextSearch($event)"
   ></lib-rt-table-fulltext-bar>
@@ -7,7 +7,7 @@
 
 <div class="-table-container">
   <table>
-    <thead>
+    <thead *ngIf="isTableHeaderVisible">
       <tr>
         <th *ngIf="!tdPrefixTemplate" class="-w-60"></th>
         <ng-container *ngIf="thPrefixTemplate">
