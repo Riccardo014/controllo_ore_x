@@ -48,7 +48,7 @@ export class ProjectController {
 
   @Get(':id')
   getOne(@Param('id') id: string): Promise<Project> {
-    return this._projectService.getOne(id);
+    return this._projectService.getOne(id, ['customer']);
   }
 
   @Post()
