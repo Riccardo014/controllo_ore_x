@@ -28,6 +28,13 @@ const routes: Routes = [
             (module) => module.CustomerModule,
           ),
       },
+      {
+        path: 'progetti',
+        loadChildren: () =>
+          import('./modules/project/project.module').then(
+            (module) => module.ProjectModule,
+          ),
+      },
     ],
   },
 ];
