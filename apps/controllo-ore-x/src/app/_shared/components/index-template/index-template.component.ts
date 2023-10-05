@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { IndexPage } from '@app/_shared/classes/index-page.class';
 import {
   SubscriptionsLifecycle,
@@ -15,7 +22,9 @@ import { Subscription } from 'rxjs';
   templateUrl: './index-template.component.html',
   styleUrls: ['./index-template.component.scss'],
 })
-export class IndexTemplateComponent implements OnInit, SubscriptionsLifecycle {
+export class IndexTemplateComponent
+  implements OnInit, OnDestroy, SubscriptionsLifecycle
+{
   /**
    * Page to be displayed
    */

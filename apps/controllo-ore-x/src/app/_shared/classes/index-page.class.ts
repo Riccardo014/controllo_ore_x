@@ -1,4 +1,4 @@
-import { Directive, OnInit } from '@angular/core';
+import { Directive, OnDestroy, OnInit } from '@angular/core';
 import { INDEX_CONFIGURATION_KEY, TableConfiguration } from '@api-interfaces';
 import { IndexConfigurationDataService } from '@app/_core/services/index-configuration.data-service';
 import {
@@ -16,10 +16,14 @@ import { BehaviorSubject, Subscription } from 'rxjs';
  */
 @Directive()
 export abstract class IndexPage<T, CreateT, UpdateT>
-  implements OnInit, SubscriptionsLifecycle
+  implements OnInit, OnDestroy, SubscriptionsLifecycle
 {
   subscriptionsList: Subscription[] = [];
   isFirstLoadDone: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  isPageWithTable: boolean = true;
+  isTableTopbarVisible: boolean = true;
+  isTableHeaderVisible: boolean = true;
+  isCompletePage: boolean = true;
   isLoading: BehaviorSubject<boolean> = new BehaviorSubject(true);
   configuration!: TableConfiguration;
   indexTableHandler!: RtTableApiStatusManager<T, CreateT, UpdateT>;
