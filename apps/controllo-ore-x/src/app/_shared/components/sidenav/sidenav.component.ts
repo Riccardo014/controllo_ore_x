@@ -1,20 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { NavMenusVisibilityService } from './servicies/nav-menus-visibility.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  SubscriptionsLifecycle,
+  completeSubscriptions,
+} from '@app/utils/subscriptions_lifecycle';
 import { Subscription } from 'rxjs';
-import { SubscriptionsLifecycle, completeSubscriptions } from '@app/utils/subscriptions_lifecycle';
+import { NavMenusVisibilityService } from './servicies/nav-menus-visibility.service';
 
 @Component({
   selector: 'controllo-ore-x-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss'],
 })
-export class SidenavComponent implements OnInit, SubscriptionsLifecycle {
+export class SidenavComponent
+  implements OnInit, OnDestroy, SubscriptionsLifecycle
+{
   isSidenavOpen: boolean = true;
 
   subscriptionsList: Subscription[] = [];
 
   _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
-  completeSubscriptions;
+    completeSubscriptions;
 
   constructor(private _sidenavService: NavMenusVisibilityService) {}
 
@@ -33,5 +38,4 @@ export class SidenavComponent implements OnInit, SubscriptionsLifecycle {
       ),
     );
   }
-
 }

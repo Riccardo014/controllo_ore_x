@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
@@ -15,7 +15,9 @@ import { Subscription } from 'rxjs';
   templateUrl: './upsert-template.component.html',
   styleUrls: ['./upsert-template.component.scss'],
 })
-export class UpsertTemplateComponent implements OnInit, SubscriptionsLifecycle {
+export class UpsertTemplateComponent
+  implements OnInit, OnDestroy, SubscriptionsLifecycle
+{
   /**
    * If true, the page will hide the options section
    */

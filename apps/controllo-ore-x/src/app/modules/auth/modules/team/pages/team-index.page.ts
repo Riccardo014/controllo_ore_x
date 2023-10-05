@@ -26,7 +26,7 @@ export class TeamIndexPage extends IndexPage<
   titleIcon: string | null = 'workspaces';
   title: string = 'Team';
   pageTitle = 'Team';
-  buttonIcon = 'bakery_dining';
+  buttonIcon = 'workspaces';
   buttonText = 'Nuovo Membro';
 
   CONFIGURATION_KEY: INDEX_CONFIGURATION_KEY = INDEX_CONFIGURATION_KEY.TEAM;
