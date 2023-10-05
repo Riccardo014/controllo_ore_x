@@ -39,8 +39,7 @@ import { RtTableComponent } from './components/rt-table/rt-table.component';
     MatSelectModule,
     MatCheckboxModule,
   ],
-  exports: [RtTableComponent],
+  exports: [RtTableComponent, RtTableFulltextBarComponent],
   providers: [],
 })
 export class RtTableModule {}
-
