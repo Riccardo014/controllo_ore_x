@@ -25,6 +25,24 @@ export class TeamFormHelper extends UpsertFormHelper<
     super(formBuilder, _teamDataService);
   }
 
+  get createDto(): UserCreateDto {
+    const formValues: any = this.form.getRawValue();
+
+    return {
+      ...formValues,
+      roleId: formValues.role._id,
+    };
+  }
+
+  get updateDto(): UserUpdateDto {
+    const formValues: any = this.form.getRawValue();
+
+    return {
+      ...formValues,
+      roleId: formValues.role._id,
+    };
+  }
+
   initForm(): FormGroup {
     return this.formBuilder.group({
       name: [null, Validators.required],
@@ -50,24 +68,6 @@ export class TeamFormHelper extends UpsertFormHelper<
   patchForm(value: UserReadDto): boolean {
     this.form.patchValue(value);
     return true;
-  }
-
-  get createDto(): UserCreateDto {
-    const formValues: any = this.form.getRawValue();
-
-    return {
-      ...formValues,
-      roleId: formValues.role._id,
-    };
-  }
-
-  get updateDto(): UserUpdateDto {
-    const formValues: any = this.form.getRawValue();
-
-    return {
-      ...formValues,
-      roleId: formValues.role._id,
-    };
   }
 
   matchValidator(source: string, target: string): ValidatorFn {
