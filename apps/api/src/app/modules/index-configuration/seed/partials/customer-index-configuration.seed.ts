@@ -1,6 +1,6 @@
 import { INDEX_CONFIGURATION_KEY } from '@api-interfaces';
 
-export const CUSTOMERS_INDEX_CONFIGURATION_SEED: any = {
+export const CUSTOMER_INDEX_CONFIGURATION_SEED: any = {
   key: INDEX_CONFIGURATION_KEY.CUSTOMER,
   configuration: {
     collectionId: 'customer-index',
