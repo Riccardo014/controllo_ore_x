@@ -23,10 +23,7 @@
               formControlName="customer"
               [(value)]="currentCustomer"
             >
-              <mat-option
-                *ngFor="let customer of customers"
-                [value]="customer"
-              >
+              <mat-option *ngFor="let customer of customers" [value]="customer">
                 {{ customer.name }}
               </mat-option>
             </mat-select>
@@ -39,30 +36,34 @@
             </mat-error>
           </mat-form-field>
 
-          <button 
-            mat-flat-button 
-            *ngIf="isCreating" 
+          <button
+            mat-flat-button
+            *ngIf="isCreating"
             class="button -creation-button"
-            (click)="openCreateCustomer()">
+            (click)="openCreateCustomer()"
+          >
             Crea nuovo cliente
           </button>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Colore</mat-label>
+          <mat-form-field appearance="outline">
+            <mat-label>Colore</mat-label>
             <mat-select
               matInput
               placeholder="Colore"
               formControlName="color"
               [(value)]="currentColor"
             >
-            <mat-select-trigger>
-              <div class="-color-square" [style.backgroundColor]="currentColor"></div>
-            </mat-select-trigger>
-              <mat-option
-                *ngFor="let color of colors"
-                [value]="color"
-              >
-              <div class="-color-square" [style.backgroundColor]="color"></div>
+              <mat-select-trigger>
+                <div
+                  class="-color-square"
+                  [style.backgroundColor]="currentColor"
+                ></div>
+              </mat-select-trigger>
+              <mat-option *ngFor="let color of colors" [value]="color">
+                <div
+                  class="-color-square"
+                  [style.backgroundColor]="color"
+                ></div>
               </mat-option>
             </mat-select>
             <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
@@ -77,7 +78,7 @@
           <mat-form-field class="col" appearance="outline">
             <mat-label>Budget ore</mat-label>
             <input
-            type="number"
+              type="number"
               matInput
               placeholder="Budget ore"
               formControlName="hoursBudget"

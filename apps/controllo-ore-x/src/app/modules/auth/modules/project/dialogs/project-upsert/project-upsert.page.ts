@@ -14,12 +14,12 @@ import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
+import { ProjectColor } from 'apps/controllo-ore-x/src/assets/utils/datas/project-color';
 import { AlertService } from 'libs/rt-shared/src/alert/services/alert.service';
 import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
 import { RT_FORM_ERRORS, RtFormError } from 'libs/utils';
 import { Subscription } from 'rxjs';
 import { ProjectFormHelper } from '../../helpers/project.form-helper';
-import { ProjectColor } from 'apps/controllo-ore-x/src/assets/utils/datas/project-color';
 
 @Component({
   selector: 'controllo-ore-x-project-upsert',
@@ -36,15 +36,15 @@ export class ProjectUpsertPage
   projectId?: string | number;
   currentCustomer?: CustomerReadDto;
   currentColor?: string;
-  colors : string[] = [
-    ProjectColor.orange, 
-    ProjectColor.purple, 
-    ProjectColor.blue, 
-    ProjectColor.yellow, 
-    ProjectColor.green, 
-    ProjectColor.red
+  colors: string[] = [
+    ProjectColor.orange,
+    ProjectColor.purple,
+    ProjectColor.blue,
+    ProjectColor.yellow,
+    ProjectColor.green,
+    ProjectColor.red,
   ];
-  
+
   RT_FORM_ERRORS: { [key: string]: RtFormError } = RT_FORM_ERRORS;
 
   customers: CustomerReadDto[] = [];
@@ -89,13 +89,12 @@ export class ProjectUpsertPage
     if (!this.isCreating) {
       this.projectId = this.formHelper.entityId;
       this.subscriptionsList.push(this._getProject());
-    }
-    else{
+    } else {
       this.subscriptionsList.push(this._getProjectsCustomers());
     }
   }
 
-  openCreateCustomer(): void{
+  openCreateCustomer(): void {
     this._router.navigate(['/auth/clienti', 'create']);
   }
 
@@ -125,9 +124,10 @@ export class ProjectUpsertPage
         this.customers = customers.data;
         if (this.formHelper.form.value.customer) {
           this.currentCustomer = this.customers.find(
-            (customer: CustomerReadDto) => customer._id === this.formHelper.form.value.customer._id);
+            (customer: CustomerReadDto) =>
+              customer._id === this.formHelper.form.value.customer._id,
+          );
         }
       });
   }
-
 }

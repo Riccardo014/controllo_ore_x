@@ -26,8 +26,8 @@ import { ProjectReleaseTableLineComponent } from './components/project-release-t
 import { ProjectComponent } from './components/project/project.component';
 import { ProjectUpsertPage } from './dialogs/project-upsert/project-upsert.page';
 import { ProjectIndexPage } from './pages/project-index/project-index.page';
-import { ProjectRoutingModule } from './project-routing.module';
 import { ProjectReleaseIndexPage } from './pages/project-release-index.page/project-release-index.page';
+import { ProjectRoutingModule } from './project-routing.module';
 
 @NgModule({
   declarations: [
@@ -62,9 +62,6 @@ import { ProjectReleaseIndexPage } from './pages/project-release-index.page/proj
     MatDatepickerModule,
     MatNativeDateModule,
   ],
-  providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'it-IT' }
-  ],
-
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'it-IT' }],
 })
 export class ProjectModule {}

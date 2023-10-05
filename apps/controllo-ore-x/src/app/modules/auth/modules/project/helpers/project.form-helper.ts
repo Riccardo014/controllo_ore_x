@@ -53,5 +53,4 @@ export class ProjectFormHelper extends UpsertFormHelper<
     this.form.patchValue(value);
     return true;
   }
-
 }
