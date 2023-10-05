@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserReadDto } from '@api-interfaces';
 import { AuthService } from '@app/_core/services/auth.service';
 import {
@@ -13,7 +13,9 @@ import { NavMenusVisibilityService } from '../sidenav/servicies/nav-menus-visibi
   templateUrl: './global-topbar.component.html',
   styleUrls: ['./global-topbar.component.scss'],
 })
-export class GlobalTopbarComponent implements OnInit, SubscriptionsLifecycle {
+export class GlobalTopbarComponent
+  implements OnInit, OnDestroy, SubscriptionsLifecycle
+{
   currentTime: string = '';
 
   user?: UserReadDto;

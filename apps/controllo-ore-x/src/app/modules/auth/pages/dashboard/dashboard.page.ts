@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserReadDto } from '@api-interfaces';
 import { AuthService } from '@app/_core/services/auth.service';
 import {
@@ -13,7 +13,9 @@ import { Subscription } from 'rxjs';
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
 })
-export class DashboardPage implements OnInit, SubscriptionsLifecycle {
+export class DashboardPage
+  implements OnInit, OnDestroy, SubscriptionsLifecycle
+{
   isSidebarOpen: boolean = true;
 
   subscriptionsList: Subscription[] = [];

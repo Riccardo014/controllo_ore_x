@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription, interval, timeout } from 'rxjs';
 import {
   SubscriptionsLifecycle,
@@ -12,7 +12,9 @@ import { RtAlert } from './alert.interface';
   templateUrl: './alert.component.html',
   styleUrls: ['./alert.component.scss'],
 })
-export class AlertComponent implements OnInit, SubscriptionsLifecycle {
+export class AlertComponent
+  implements OnInit, OnDestroy, SubscriptionsLifecycle
+{
   private readonly _ALERT_TIMEOUT: number = 5000;
   @Input() alert?: RtAlert;
 
