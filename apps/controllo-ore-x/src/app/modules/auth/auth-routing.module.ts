@@ -25,7 +25,7 @@ const routes: Routes = [
         path: 'clienti',
         loadChildren: () =>
           import('./modules/customer/customer.module').then(
-            (m) => m.CustomerModule,
+            (module) => module.CustomerModule,
           ),
       },
     ],
