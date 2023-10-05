@@ -18,11 +18,12 @@ export class DashboardPage
 {
   isSidebarOpen: boolean = true;
 
+  user?: UserReadDto;
+
   subscriptionsList: Subscription[] = [];
 
   completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
-  user?: UserReadDto;
 
   constructor(
     private _sidenavService: NavMenusVisibilityService,
