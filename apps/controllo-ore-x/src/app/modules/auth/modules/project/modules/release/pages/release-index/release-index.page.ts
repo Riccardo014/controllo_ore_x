@@ -28,7 +28,7 @@ export class ReleaseIndexPage
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
     private _projectDataService: ProjectDataService,
-    ) {}
+  ) {}
 
   ngOnInit(): void {
     this.projectId = this.getProjectId();
@@ -38,7 +38,7 @@ export class ReleaseIndexPage
   ngOnDestroy(): void {
     this._completeSubscriptions(this.subscriptionsList);
   }
-  
+
   navigateBack(): void {
     this._router.navigate(['../../'], {
       relativeTo: this._activatedRoute,
@@ -46,22 +46,22 @@ export class ReleaseIndexPage
   }
 
   _setSubscriptions(): void {
-    this.subscriptionsList.push(
-      this._getProject(),
-    );
+    this.subscriptionsList.push(this._getProject());
   }
 
   /**
-  * Return the project's id.
-  */
+   * Return the project's id.
+   */
   getProjectId(): string {
     return this._activatedRoute.snapshot.params['projectId'];
   }
 
   _getProject(): Subscription {
-    return this._projectDataService.getOne(this.projectId).subscribe((project) => {
-      this.project = project;
-    });
+    return this._projectDataService
+      .getOne(this.projectId)
+      .subscribe((project) => {
+        this.project = project;
+      });
   }
 
   openCreateReleaseDialog(): void {
@@ -73,5 +73,4 @@ export class ReleaseIndexPage
       relativeTo: this._activatedRoute,
     });
   }
-
 }

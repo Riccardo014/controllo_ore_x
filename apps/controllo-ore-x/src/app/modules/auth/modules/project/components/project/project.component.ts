@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { CustomerReadDto, ProjectReadDto } from '@api-interfaces';
 
 @Component({
   selector: 'controllo-ore-x-project',
@@ -13,18 +12,27 @@ export class ProjectComponent {
   isPanelOpen: boolean = false;
   customExpandedHeight: string = '90px';
 
-  constructor( private _router: Router ) {}
+  constructor(private _router: Router) {}
 
   openDialogFn(): void {
-    this._router.navigate([this._router.url + '/' + this.projectWithCustomer._id]);
+    this._router.navigate([
+      this._router.url + '/' + this.projectWithCustomer._id,
+    ]);
   }
 
   openCreateReleaseDialog(): void {
-  this._router.navigate([this._router.url + '/' + this.projectWithCustomer._id + '/release/' + '/create']);
+    this._router.navigate([
+      this._router.url +
+        '/' +
+        this.projectWithCustomer._id +
+        '/release/' +
+        '/create',
+    ]);
   }
 
   openReleaseIndexPage(): void {
-    this._router.navigate([this._router.url + '/' + this.projectWithCustomer._id + '/release']);
+    this._router.navigate([
+      this._router.url + '/' + this.projectWithCustomer._id + '/release',
+    ]);
   }
-
 }

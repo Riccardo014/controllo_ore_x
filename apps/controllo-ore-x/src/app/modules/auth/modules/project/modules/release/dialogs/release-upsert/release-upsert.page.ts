@@ -5,6 +5,7 @@ import {
   ReleaseReadDto,
   ReleaseUpdateDto,
 } from '@api-interfaces';
+import { ReleaseDataService } from '@app/_core/services/release.data-service';
 import { UpsertPage } from '@app/_shared/classes/upsert-page.class';
 import {
   SubscriptionsLifecycle,
@@ -14,7 +15,6 @@ import { AlertService } from 'libs/rt-shared/src/alert/services/alert.service';
 import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
 import { RT_FORM_ERRORS, RtFormError } from 'libs/utils';
 import { Subscription } from 'rxjs';
-import { ReleaseDataService } from '@app/_core/services/release.data-service';
 import { ReleaseFormHelper } from '../../helpers/release.form-helper';
 
 @Component({
@@ -30,7 +30,7 @@ export class ReleaseUpsertPage
   override title: string = 'Crea nuova release';
 
   releaseId?: string;
-  
+
   RT_FORM_ERRORS: { [key: string]: RtFormError } = RT_FORM_ERRORS;
 
   subscriptionsList: Subscription[] = [];
@@ -80,16 +80,16 @@ export class ReleaseUpsertPage
     this.formHelper.form.patchValue({
       project: this.getProjectId(),
     });
-    
+
     super.handleUserSubmission();
   }
 
   /**
    * Return the project's id.
    */
-    getProjectId(): string {
-      return this._activatedRoute.snapshot.params['projectId'];
-    }
+  getProjectId(): string {
+    return this._activatedRoute.snapshot.params['projectId'];
+  }
 
   /**
    * Get the release's data from the database.
@@ -107,5 +107,4 @@ export class ReleaseUpsertPage
         });
       });
   }
-
 }
