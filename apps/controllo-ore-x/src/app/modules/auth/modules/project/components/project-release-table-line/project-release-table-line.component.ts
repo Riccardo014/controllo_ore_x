@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ReleaseReadDto } from '@api-interfaces';
 import { UserHoursDataService } from '@app/_core/services/user-hour.data-service';
 import {
@@ -25,7 +26,9 @@ export class ProjectReleaseTableLineComponent
   _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
 
-  constructor(private _userHoursDataService: UserHoursDataService) {}
+  constructor(
+    private _userHoursDataService: UserHoursDataService,
+    private _router: Router) {}
 
   ngOnInit(): void {
     this.formatDeadline(this.release.deadline);
@@ -54,4 +57,9 @@ export class ProjectReleaseTableLineComponent
   formatDeadline(deadline: Date): void {
     this.deadline = new Date(deadline).toLocaleDateString();
   }
+
+  openEditReleaseDialog(): void{
+    this._router.navigate([this._router.url + '/' + this.release.projectId + '/release/' + this.release._id]);
+  }
+
 }

@@ -16,6 +16,11 @@ const routes: Routes = [
     path: ':id',
     component: ProjectUpsertPage,
   },
+  {
+    path: ':id/release',
+    loadChildren: () =>
+      import('./modules/release/release.module').then((module) => module.ReleaseModule),
+  },
 ];
 
 @NgModule({

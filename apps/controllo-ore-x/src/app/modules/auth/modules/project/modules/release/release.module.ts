@@ -22,24 +22,19 @@ import {
   RtTableModule,
 } from '@controllo-ore-x/rt-shared';
 import { SharedModule } from '@shared/shared.module';
-import { ProjectReleaseTableLineComponent } from './components/project-release-table-line/project-release-table-line.component';
-import { ProjectComponent } from './components/project/project.component';
-import { ProjectUpsertPage } from './dialogs/project-upsert/project-upsert.page';
-import { ProjectIndexPage } from './pages/project-index/project-index.page';
-import { ProjectRoutingModule } from './project-routing.module';
-import { ProjectReleaseIndexPage } from './pages/project-release-index.page/project-release-index.page';
+import { ReleaseIndexPage } from './pages/release-index/release-index.page';
+import { ReleaseUpsertPage } from './dialogs/release-upsert/release-upsert.page';
+import { ReleaseRoutingModule } from './release-routing.module';
+
 
 @NgModule({
   declarations: [
-    ProjectIndexPage,
-    ProjectReleaseIndexPage,
-    ProjectComponent,
-    ProjectReleaseTableLineComponent,
-    ProjectUpsertPage,
+    ReleaseIndexPage,
+    ReleaseUpsertPage,
   ],
   imports: [
     CommonModule,
-    ProjectRoutingModule,
+    ReleaseRoutingModule,
     MatChipsModule,
     SharedModule,
     MatIconModule,
@@ -67,4 +62,4 @@ import { ProjectReleaseIndexPage } from './pages/project-release-index.page/proj
   ],
 
 })
-export class ProjectModule {}
+export class ReleaseModule {}

@@ -52,4 +52,9 @@ export class ProjectComponent
   openDialogFn(): void {
     this._router.navigate([this._router.url + '/' + this.project._id]);
   }
+
+  openCreateReleaseDialog(): void {
+  this._router.navigate([this._router.url + '/' + this.project._id + '/release/' + '/create']);
+  }
+
 }

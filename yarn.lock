@@ -216,13 +216,6 @@
     "@angular-eslint/bundled-angular-compiler" "16.0.3"
     "@typescript-eslint/utils" "5.59.7"
 
-"@angular-material-components/color-picker@^16.0.1":
-  version "16.0.1"
-  resolved "https://registry.yarnpkg.com/@angular-material-components/color-picker/-/color-picker-16.0.1.tgz#f17875c6f219c12b3eba76637b8f7d050a836a95"
-  integrity sha512-tWIbFzOIEzOhOnz1cwTLsmF2iZzKiuZMCGPXX9vjEe4n0YJD7VR7jJ2lAaMfSyScdEFyNiPlEtFsuQYYmCKK1A==
-  dependencies:
-    tslib "^2.3.0"
-
 "@angular/animations@~16.2.0":
   version "16.2.4"
   resolved "https://registry.npmjs.org/@angular/animations/-/animations-16.2.4.tgz"

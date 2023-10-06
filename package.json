@@ -5,7 +5,6 @@
   "scripts": {},
   "private": true,
   "dependencies": {
-    "@angular-material-components/color-picker": "^16.0.1",
     "@angular/animations": "~16.2.0",
     "@angular/cdk": "~16.2.2",
     "@angular/common": "~16.2.0",
