@@ -29,7 +29,6 @@ export class ProjectComponent
   constructor(private _customerDataService: CustomerDataService) {}
 
   ngOnInit(): void {
-    this.project.color = this.formatColor();
     this._setSubscriptions();
   }
 
@@ -45,9 +44,5 @@ export class ProjectComponent
         },
       }),
     );
-  }
-
-  formatColor(): string {
-    return `#${this.project.color}`;
   }
 }
