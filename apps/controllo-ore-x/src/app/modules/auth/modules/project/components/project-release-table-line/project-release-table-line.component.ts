@@ -109,4 +109,5 @@ export class ProjectReleaseTableLineComponent
       new Date(deadline),
     );
   }
+
 }
