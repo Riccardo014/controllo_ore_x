@@ -122,6 +122,13 @@ export abstract class UpsertPage<
   }
 
   /**
+   * Perform a create or update operation depending on the `isCreating` flag.
+   */
+  handleUserSubmission(): void {
+    this.isCreating ? this._createEntry() : this._updateEntry();
+  }
+
+  /**
    * Create an entity if the form is valid. Set loading to true and disable form while waiting for the operation to complete.
    */
   private async _createEntry(): Promise<void> {
@@ -178,13 +185,6 @@ export abstract class UpsertPage<
         err,
       );
     }
-  }
-
-  /**
-   * Perform a create or update operation depending on the `isCreating` flag.
-   */
-  handleUserSubmission(): void {
-    this.isCreating ? this._createEntry() : this._updateEntry();
   }
 
   /**

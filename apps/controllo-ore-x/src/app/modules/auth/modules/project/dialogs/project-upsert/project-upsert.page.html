@@ -39,6 +39,14 @@
             </mat-error>
           </mat-form-field>
 
+          <button 
+            mat-flat-button 
+            *ngIf="isCreating" 
+            class="button -creation-button"
+            (click)="openCreateCustomer()">
+            Crea nuovo cliente
+          </button>
+
           <mat-form-field appearance="outline">
             <mat-label>Colore </mat-label>
             <input
@@ -53,7 +61,7 @@
             <ngx-mat-color-picker
               #colorPicker
               [touchUi]="false"
-              [color]="selectedColor"
+              [color]="selectedColorPalette"
             ></ngx-mat-color-picker>
             <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
               <div
