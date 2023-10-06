@@ -21,11 +21,13 @@
     white-space: nowrap;
 
     .-expand-more-icon{
-      transform: rotate(0deg);
+      transform: rotate(-90deg);
+      transition: transform 225ms ease;
     }
     
     .-expand-more-icon__rotate{
-      transform: rotate(180deg);
+      transform: rotate(0deg);
+      transition: transform 225ms ease;
     }
 
     .-project-data-details{
