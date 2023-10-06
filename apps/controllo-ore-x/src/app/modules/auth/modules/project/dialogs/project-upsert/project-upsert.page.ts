@@ -19,6 +19,7 @@ import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog
 import { RT_FORM_ERRORS, RtFormError } from 'libs/utils';
 import { Subscription } from 'rxjs';
 import { ProjectFormHelper } from '../../helpers/project.form-helper';
+import { ThemePalette } from '@angular/material/core';
 
 @Component({
   selector: 'controllo-ore-x-project-upsert',
@@ -35,7 +36,12 @@ export class ProjectUpsertPage
   isPasswordVisible: boolean = false;
   projectId?: string | number;
   currentCustomer?: string;
-
+  // defaultColor: string = '#E54927';
+  // colors: string[] = ['#E54927', '#D3C1FC', '#C9D8F9', '#FFF2DF', '#D5F4EA', '#ECCAC2'];
+  
+  user = { color: '#234532' };
+  selectedColor: ThemePalette = 'primary';
+  
   RT_FORM_ERRORS: { [key: string]: RtFormError } = RT_FORM_ERRORS;
 
   customers: CustomerReadDto[] = [];
@@ -84,6 +90,19 @@ export class ProjectUpsertPage
     }
   }
 
+  override handleUserSubmission(): void {
+    this.formHelper.form.patchValue({
+      customer: this.customers.find(
+        (customer: CustomerReadDto) => customer.name === this.formHelper.form.value.customer,
+      ),
+    });
+    this.formHelper.form.patchValue({
+      color: this.formHelper.form.value.color.hex,
+    });
+
+    super.handleUserSubmission();
+  }
+
   /**
    * Get the project's data from the database.
    */
@@ -104,14 +123,9 @@ export class ProjectUpsertPage
   private _getProjectsCustomers(): Subscription {
     return this._customerDataService
       .getMany({})
-      .subscribe((roles: ApiPaginatedResponse<CustomerReadDto>) => {
-        this.customers = roles.data;
+      .subscribe((customers: ApiPaginatedResponse<CustomerReadDto>) => {
+        this.customers = customers.data;
       });
   }
 
-  override handleUserSubmission(): void {
-    console.log(this.formHelper.form);
-
-    super.handleUserSubmission();
-  }
 }
