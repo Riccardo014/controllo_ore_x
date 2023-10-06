@@ -16,6 +16,7 @@ export class ProjectReleaseTableLineComponent
   implements OnInit, OnDestroy, SubscriptionsLifecycle
 {
   hoursExecuted: number = 0;
+  deadline: string = '';
 
   @Input() release!: ReleaseReadDto;
 
@@ -27,6 +28,8 @@ export class ProjectReleaseTableLineComponent
   constructor(private _userHoursDataService: UserHoursDataService) {}
 
   ngOnInit(): void {
+    this.formatDeadline(this.release.deadline);
+
     this._setSubscriptions();
   }
 
@@ -46,5 +49,9 @@ export class ProjectReleaseTableLineComponent
           });
         }),
     );
+  }
+
+  formatDeadline(deadline: Date): void {
+    this.deadline = new Date(deadline).toLocaleDateString();
   }
 }
