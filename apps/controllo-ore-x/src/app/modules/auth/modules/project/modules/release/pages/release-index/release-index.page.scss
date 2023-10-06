@@ -18,14 +18,14 @@
   gap: 20px;
 }
 
-.-project-data-details{
+.-project-data-details {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
   gap: 10px;
 
-  .-project-color{
+  .-project-color {
     width: 21px;
     height: 21px;
     border-radius: 6px;
@@ -33,30 +33,29 @@
   }
 }
 
-.-new-release-button{
+.-new-release-button {
   background-color: map-get($palette-primary, 50);
   color: map-get($palette-primary, 500);
   padding: 20px;
   border-radius: 10px;
 
-  .-new-release-elements{
+  .-new-release-elements {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 5%;
 
-    span{
-      white-space: nowrap
+    span {
+      white-space: nowrap;
     }
-
   }
 }
 
-.-page-header-options{
+.-page-header-options {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
-  gap: 5%; 
+  gap: 5%;
 }
