@@ -28,7 +28,8 @@ export class ProjectReleaseTableLineComponent
 
   constructor(
     private _userHoursDataService: UserHoursDataService,
-    private _router: Router) {}
+    private _router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.formatDeadline(this.release.deadline);
@@ -58,8 +59,14 @@ export class ProjectReleaseTableLineComponent
     this.deadline = new Date(deadline).toLocaleDateString();
   }
 
-  openEditReleaseDialog(): void{
-    this._router.navigate([this._router.url + '/' + this.release.projectId + '/release/' + this.release._id]);
+  openEditReleaseDialog(): void {
+    this._router.navigate([
+      this._router.url +
+        '/' +
+        this.release.projectId +
+        '/release/' +
+        this.release._id,
+    ]);
   }
 
   convertNumberToHours(number: number): string {
@@ -67,5 +74,4 @@ export class ProjectReleaseTableLineComponent
     const minutes = Math.round((number - hours) * 60).toString();
     return hours.toString().padStart(2, '0') + ':' + minutes.padStart(2, '0');
   }
-
 }

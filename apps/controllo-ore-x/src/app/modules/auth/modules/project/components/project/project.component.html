@@ -19,24 +19,26 @@
           >expand_more</span
         >
       </div>
-      <div class="-project-data-details"
-      (click)="openReleaseIndexPage()">
+      <div class="-project-data-details" (click)="openReleaseIndexPage()">
         <div
           class="-project-color"
           [style.backgroundColor]="this.projectWithCustomer.color"
         ></div>
         <div class="body-1">{{ projectWithCustomer.name }}</div>
         <div>
-          <mat-chip class="caption">{{ projectWithCustomer.customer.name }}</mat-chip>
+          <mat-chip class="caption">{{
+            projectWithCustomer.customer.name
+          }}</mat-chip>
         </div>
       </div>
     </mat-panel-title>
     <mat-panel-description class="-project-options">
-      <button 
-        mat-flat-button 
-        extended 
+      <button
+        mat-flat-button
+        extended
         class="-new-release-button"
-        (click)="openCreateReleaseDialog()">
+        (click)="openCreateReleaseDialog()"
+      >
         <div class="-new-release-elements">
           <span class="material-symbols-outlined">egg_alt</span>
           <span>Nuova Release</span>

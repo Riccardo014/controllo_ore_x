@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTabsModule } from '@angular/material/tabs';
 import {
   AlertModule,
   RtDialogModule,
@@ -22,15 +23,14 @@ import {
   RtTableModule,
 } from '@controllo-ore-x/rt-shared';
 import { SharedModule } from '@shared/shared.module';
-import { ReleaseIndexPage } from './pages/release-index/release-index.page';
-import { ReleaseUpsertPage } from './dialogs/release-upsert/release-upsert.page';
-import { ReleaseRoutingModule } from './release-routing.module';
-import { MatTabsModule } from '@angular/material/tabs';
-import { ReleaseTableComponent } from './components/release-table/release-table.component';
 import { ProjectReleaseStatusComponent } from './components/project-release-status/project-release-status.component';
-import { ReleaseTableLineComponent } from './components/release-table-line/release-table-line.component';
 import { ReleaseTableHeaderComponent } from './components/release-table-header/release-table-header.component';
+import { ReleaseTableLineComponent } from './components/release-table-line/release-table-line.component';
+import { ReleaseTableComponent } from './components/release-table/release-table.component';
+import { ReleaseUpsertPage } from './dialogs/release-upsert/release-upsert.page';
+import { ReleaseIndexPage } from './pages/release-index/release-index.page';
 import { ReportIndexPage } from './pages/report-index/report-index.page';
+import { ReleaseRoutingModule } from './release-routing.module';
 
 @NgModule({
   declarations: [
