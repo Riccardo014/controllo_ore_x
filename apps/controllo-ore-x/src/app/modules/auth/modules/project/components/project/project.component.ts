@@ -108,5 +108,4 @@ export class ProjectComponent
   openDuplicateDialog(): void {
     this.duplicateEntityEvent.emit(this.project);
   }
-
 }

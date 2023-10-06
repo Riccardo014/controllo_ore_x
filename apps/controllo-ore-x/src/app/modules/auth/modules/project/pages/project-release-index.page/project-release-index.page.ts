@@ -19,7 +19,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 export class ProjectReleaseIndexPage
   implements OnInit, OnDestroy, SubscriptionsLifecycle
 {
-  @Input() project!: ProjectReadDto;
+  @Input() release!: ReleaseReadDto;
 
   @Input() isNewReleaseCreated: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
