@@ -86,9 +86,9 @@ export class ReleaseUpsertPage
     return this._releaseDataService
       .getOne(this.releaseId)
       .subscribe((release: any) => {
-        this.formHelper.patchForm(release);
-        this.formHelper.form.patchValue({
-          projectId: release.projectId,
+        this.formHelper.patchForm({
+          ...release,
+          project: release.projectId,
         });
       });
   }
