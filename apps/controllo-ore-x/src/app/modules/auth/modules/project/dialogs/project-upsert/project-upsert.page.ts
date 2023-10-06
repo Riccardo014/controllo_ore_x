@@ -19,7 +19,7 @@ import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog
 import { RT_FORM_ERRORS, RtFormError } from 'libs/utils';
 import { Subscription } from 'rxjs';
 import { ProjectFormHelper } from '../../helpers/project.form-helper';
-import { ThemePalette } from '@angular/material/core';
+import { ProjectColor } from 'apps/controllo-ore-x/src/assets/utils/datas/project-color';
 
 @Component({
   selector: 'controllo-ore-x-project-upsert',
@@ -33,12 +33,17 @@ export class ProjectUpsertPage
 {
   override title: string = 'Crea nuovo progetto';
 
-  isPasswordVisible: boolean = false;
   projectId?: string | number;
   currentCustomer?: string;
-  projectColor = { color: '#234532' };
-
-  selectedColorPalette: ThemePalette = 'primary';
+  currentColor?: string;
+  colors : string[] = [
+    ProjectColor.orange, 
+    ProjectColor.purple, 
+    ProjectColor.blue, 
+    ProjectColor.yellow, 
+    ProjectColor.green, 
+    ProjectColor.red
+  ];
   
   RT_FORM_ERRORS: { [key: string]: RtFormError } = RT_FORM_ERRORS;
 
@@ -94,9 +99,6 @@ export class ProjectUpsertPage
         (customer: CustomerReadDto) => customer.name === this.formHelper.form.value.customer,
       ),
     });
-    this.formHelper.form.patchValue({
-      color: this.formHelper.form.value.color.rgba,
-    });
     
     super.handleUserSubmission();
   }
@@ -117,6 +119,7 @@ export class ProjectUpsertPage
       .subscribe((project: any) => {
         this.formHelper.patchForm(project);
         this.currentCustomer = project.customer.name;
+        this.currentColor = project.color;
       });
   }
 
