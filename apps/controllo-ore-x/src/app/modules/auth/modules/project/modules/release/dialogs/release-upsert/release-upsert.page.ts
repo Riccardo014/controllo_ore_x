@@ -76,6 +76,21 @@ export class ReleaseUpsertPage
     }
   }
 
+  override handleUserSubmission(): void {
+    this.formHelper.form.patchValue({
+      project: this.getProjectId(),
+    });
+    
+    super.handleUserSubmission();
+  }
+
+  /**
+   * Return the project's id.
+   */
+    getProjectId(): string {
+      return this._activatedRoute.snapshot.params['projectId'];
+    }
+
   /**
    * Get the release's data from the database.
    */

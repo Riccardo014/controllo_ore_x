@@ -17,7 +17,7 @@ const routes: Routes = [
     component: ProjectUpsertPage,
   },
   {
-    path: ':id/release',
+    path: ':projectId/release',
     loadChildren: () =>
       import('./modules/release/release.module').then((module) => module.ReleaseModule),
   },
