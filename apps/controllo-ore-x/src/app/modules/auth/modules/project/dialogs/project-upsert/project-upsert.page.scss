@@ -28,3 +28,11 @@
     flex-direction: row;
     align-items: center;
   }
+
+  .-creation-button{
+    background-color: map-get($palette-primary , 50 );
+    color: map-get($palette-primary , 500 );
+    height: 44px;
+    width: 35%;
+    border-radius: 10px;
+  }

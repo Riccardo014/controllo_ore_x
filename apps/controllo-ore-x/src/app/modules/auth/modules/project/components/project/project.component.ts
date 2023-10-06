@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CustomerReadDto, ProjectReadDto } from '@api-interfaces';
 import { CustomerDataService } from '@app/_core/services/customer.data-service';
 import {
@@ -26,7 +27,9 @@ export class ProjectComponent
   _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
 
-  constructor(private _customerDataService: CustomerDataService) {}
+  constructor(
+    private _customerDataService: CustomerDataService, 
+    private _router: Router) {}
 
   ngOnInit(): void {
     this._setSubscriptions();
@@ -44,5 +47,9 @@ export class ProjectComponent
         },
       }),
     );
+  }
+
+  openDialogFn(): void {
+    this._router.navigate([this._router.url + '/' + this.project._id]);
   }
 }

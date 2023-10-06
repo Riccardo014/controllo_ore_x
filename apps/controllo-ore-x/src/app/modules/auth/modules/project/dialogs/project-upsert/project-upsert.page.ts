@@ -36,11 +36,9 @@ export class ProjectUpsertPage
   isPasswordVisible: boolean = false;
   projectId?: string | number;
   currentCustomer?: string;
-  // defaultColor: string = '#E54927';
-  // colors: string[] = ['#E54927', '#D3C1FC', '#C9D8F9', '#FFF2DF', '#D5F4EA', '#ECCAC2'];
-  
-  user = { color: '#234532' };
-  selectedColor: ThemePalette = 'primary';
+  projectColor = { color: '#234532' };
+
+  selectedColorPalette: ThemePalette = 'primary';
   
   RT_FORM_ERRORS: { [key: string]: RtFormError } = RT_FORM_ERRORS;
 
@@ -99,8 +97,12 @@ export class ProjectUpsertPage
     this.formHelper.form.patchValue({
       color: this.formHelper.form.value.color.rgba,
     });
-
+    
     super.handleUserSubmission();
+  }
+
+  openCreateCustomer(): void{
+    this._router.navigate(['/auth/clienti', 'create']);
   }
 
   /**
@@ -114,6 +116,7 @@ export class ProjectUpsertPage
       .getOne(this.projectId)
       .subscribe((project: any) => {
         this.formHelper.patchForm(project);
+        this.currentCustomer = project.customer.name;
       });
   }
 

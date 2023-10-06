@@ -107,9 +107,9 @@ export abstract class UpsertFormHelper<
       }
 
       this._dataService.getOne(this.entityId).subscribe({
-        next: (res) => {
-          this.patchForm(res?.data);
-          this.currentEntity = res?.data;
+        next: (res: any) => {
+          this.patchForm(res);
+          this.currentEntity = res;
           return resolve();
         },
         error: (err) => {

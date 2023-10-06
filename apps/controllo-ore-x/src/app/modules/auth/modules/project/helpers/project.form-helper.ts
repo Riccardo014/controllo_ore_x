@@ -50,7 +50,22 @@ export class ProjectFormHelper extends UpsertFormHelper<
   }
 
   patchForm(value: ProjectReadDto): boolean {
-    this.form.patchValue(value);
-    return true;
+    if(value){
+      this.form.patchValue(value);
+      this.form.patchValue({
+        color: this.rgbaToHex(this.form.value.color),
+      });
+      return true;
+    }
+    throw new Error('Value is undefined');
+  }
+
+  rgbaToHex(rgbaColor: string): string {
+    const rgb: any = rgbaColor.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+    const hex = (rgb && rgb.length === 4) ? ('#' +
+    ('0' + parseInt(rgb[1],10).toString(16)).slice(-2) +
+    ('0' + parseInt(rgb[2],10).toString(16)).slice(-2) +
+    ('0' + parseInt(rgb[3],10).toString(16)).slice(-2)) : '';
+    return hex;
   }
 }
