@@ -16,22 +16,6 @@
           </mat-form-field>
 
           <mat-form-field class="col" appearance="outline">
-            <mat-label>Budget ore</mat-label>
-            <input
-              matInput
-              placeholder="Budget ore"
-              formControlName="hoursBudget"
-            />
-            <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
-              <div
-                *ngIf="formHelper.form.controls['hoursBudget'].hasError(error.name)"
-              >
-                {{ error.message }}
-              </div>
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field class="col" appearance="outline">
             <mat-label>Cliente</mat-label>
             <mat-select
               matInput
@@ -49,6 +33,48 @@
             <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
               <div
                 *ngIf="formHelper.form.controls['customer'].hasError(error.name)"
+              >
+                {{ error.message }}
+              </div>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Colore </mat-label>
+            <input
+              matInput
+              [ngxMatColorPicker]="colorPicker"
+              name="color"
+              colorCtrl="ngmodel"
+              placeholder="Colore"
+              formControlName="color"
+              />
+            <ngx-mat-color-toggle matSuffix [for]="colorPicker"></ngx-mat-color-toggle>
+            <ngx-mat-color-picker
+              #colorPicker
+              [touchUi]="false"
+              [color]="selectedColor"
+            ></ngx-mat-color-picker>
+            <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+              <div
+                *ngIf="formHelper.form.controls['color'].hasError(error.name)"
+              >
+                {{ error.message }}
+              </div>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="col" appearance="outline">
+            <mat-label>Budget ore</mat-label>
+            <input
+            type="number"
+              matInput
+              placeholder="Budget ore"
+              formControlName="hoursBudget"
+            />
+            <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+              <div
+                *ngIf="formHelper.form.controls['hoursBudget'].hasError(error.name)"
               >
                 {{ error.message }}
               </div>

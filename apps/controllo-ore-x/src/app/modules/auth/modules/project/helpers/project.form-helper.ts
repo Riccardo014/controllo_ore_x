@@ -22,22 +22,28 @@ export class ProjectFormHelper extends UpsertFormHelper<
   }
 
   get createDto(): ProjectCreateDto {
-    const formValues: ProjectCreateDto = this.form.getRawValue();
+    const formValues: any = this.form.getRawValue();
 
-    return formValues;
+    return {
+      ...formValues,
+      customerId: formValues.customer._id,
+    };
   }
 
   get updateDto(): ProjectUpdateDto {
-    const formValues: ProjectUpdateDto = this.form.getRawValue();
+    const formValues: any = this.form.getRawValue();
 
-    return formValues;
+    return {
+      ...formValues,
+      customerId: formValues.customer._id,
+    };
   }
 
   initForm(): FormGroup {
     return this.formBuilder.group({
       name: [null, Validators.required],
       customer: [null, Validators.required],
-      color: [null],
+      color: [null, Validators.required],
       hoursBudget: [null, [Validators.required]],
       deadline: [null, Validators.required],
     });
