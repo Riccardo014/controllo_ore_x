@@ -108,4 +108,9 @@ export class ProjectComponent
   openDuplicateDialog(): void {
     this.duplicateEntityEvent.emit(this.project);
   }
+
+  openCreateReleaseDialog(): void {
+  this._router.navigate([this._router.url + '/' + this.project._id + '/release/' + '/create']);
+  }
+
 }
