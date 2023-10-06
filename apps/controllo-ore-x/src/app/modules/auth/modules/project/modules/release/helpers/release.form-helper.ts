@@ -26,7 +26,7 @@ export class ReleaseFormHelper extends UpsertFormHelper<
 
     return {
       ...formValues,
-      project: formValues.projectId,
+      projectId: formValues.project,
     };
   }
 
@@ -35,7 +35,7 @@ export class ReleaseFormHelper extends UpsertFormHelper<
 
     return {
       ...formValues,
-      project: formValues.projectId,
+      projectId: formValues.project,
     };
   }
 
