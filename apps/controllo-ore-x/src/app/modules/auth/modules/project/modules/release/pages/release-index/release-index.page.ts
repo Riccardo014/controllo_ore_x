@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ApiResponse, ProjectReadDto } from '@api-interfaces';
 import { ProjectDataService } from '@app/_core/services/project.data-service';
 import {
   SubscriptionsLifecycle,
@@ -12,7 +13,6 @@ import {
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ProjectDialog } from '../../../../dialogs/project-dialog/project.dialog';
 import { ReleaseDialog } from '../../dialogs/release-dialog/release.dialog';
-import { ApiResponse, ProjectReadDto } from '@api-interfaces';
 
 @Component({
   selector: 'controllo-ore-x-release-index',

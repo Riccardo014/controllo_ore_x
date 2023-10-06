@@ -29,9 +29,11 @@ export class ProjectComponent
 {
   @Input() project!: ProjectReadDto;
 
-  @Output() openDialogEvent: EventEmitter<ProjectReadDto> = new EventEmitter<ProjectReadDto>();
+  @Output() openDialogEvent: EventEmitter<ProjectReadDto> =
+    new EventEmitter<ProjectReadDto>();
 
-  @Output() duplicateEntityEvent: EventEmitter<ProjectReadDto> = new EventEmitter<ProjectReadDto>();
+  @Output() duplicateEntityEvent: EventEmitter<ProjectReadDto> =
+    new EventEmitter<ProjectReadDto>();
 
   isNewReleaseCreated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false,
@@ -108,5 +110,4 @@ export class ProjectComponent
   openDuplicateDialog(): void {
     this.duplicateEntityEvent.emit(this.project);
   }
-
 }
