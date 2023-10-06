@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ProjectReadDto, ReleaseReadDto } from '@api-interfaces';
+import { ReleaseReadDto } from '@api-interfaces';
 import { ReleaseDataService } from '@app/_core/services/release.data-service';
 import {
   SubscriptionsLifecycle,
@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
 export class ReleaseIndexPage
   implements OnInit, OnDestroy, SubscriptionsLifecycle
 {
-  @Input() project!: ProjectReadDto;
+  @Input() release!: ReleaseReadDto;
 
   releases: ReleaseReadDto[] = [];
 
@@ -38,7 +38,7 @@ export class ReleaseIndexPage
     this.subscriptionsList.push(
       this._releaseDataService
         .getMany({
-          where: { projectId: this.project._id },
+          where: { releaseId: this.release._id },
         })
         .subscribe((releases: any) => {
           this.releases = releases.data;

@@ -1,11 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
-  CustomerCreateDto,
-  CustomerReadDto,
-  CustomerUpdateDto,
+  ReleaseCreateDto,
+  ReleaseReadDto,
+  ReleaseUpdateDto,
 } from '@api-interfaces';
-import { CustomerDataService } from '@app/_core/services/customer.data-service';
 import { UpsertPage } from '@app/_shared/classes/upsert-page.class';
 import {
   SubscriptionsLifecycle,
@@ -15,22 +14,23 @@ import { AlertService } from 'libs/rt-shared/src/alert/services/alert.service';
 import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
 import { RT_FORM_ERRORS, RtFormError } from 'libs/utils';
 import { Subscription } from 'rxjs';
-import { CustomerFormHelper } from '../../helpers/customer.form-helper';
+import { ReleaseDataService } from '@app/_core/services/release.data-service';
+import { ReleaseFormHelper } from '../../helpers/release.form-helper';
 
 @Component({
-  selector: 'controllo-ore-x-customer-upsert',
-  templateUrl: './customer-upsert.page.html',
-  styleUrls: ['./customer-upsert.page.scss'],
-  providers: [CustomerFormHelper],
+  selector: 'controllo-ore-x-release-upsert',
+  templateUrl: './release-upsert.page.html',
+  styleUrls: ['./release-upsert.page.scss'],
+  providers: [ReleaseFormHelper],
 })
-export class CustomerUpsertPage
-  extends UpsertPage<CustomerReadDto, CustomerCreateDto, CustomerUpdateDto>
+export class ReleaseUpsertPage
+  extends UpsertPage<ReleaseReadDto, ReleaseCreateDto, ReleaseUpdateDto>
   implements SubscriptionsLifecycle, OnDestroy, OnInit
 {
-  override title: string = 'Inserisci un nuovo cliente';
+  override title: string = 'Crea nuova release';
 
-  customerId?: string | number;
-
+  releaseId?: string | number;
+  
   RT_FORM_ERRORS: { [key: string]: RtFormError } = RT_FORM_ERRORS;
 
   subscriptionsList: Subscription[] = [];
@@ -39,8 +39,8 @@ export class CustomerUpsertPage
     completeSubscriptions;
 
   constructor(
-    public override formHelper: CustomerFormHelper,
-    private _customerDataService: CustomerDataService,
+    public override formHelper: ReleaseFormHelper,
+    private _releaseDataService: ReleaseDataService,
     private _alertService: AlertService,
     private _rtDialogService: RtDialogService,
     private _router: Router,
@@ -61,7 +61,7 @@ export class CustomerUpsertPage
     this._setSubscriptions();
 
     if (!this.isCreating) {
-      this.title = 'Modifica cliente';
+      this.title = 'Modifica release';
     }
   }
 
@@ -71,19 +71,26 @@ export class CustomerUpsertPage
 
   _setSubscriptions(): void {
     if (!this.isCreating) {
-      this.customerId = this.formHelper.entityId;
-      this.subscriptionsList.push(this._getCustomer());
+      this.releaseId = this.formHelper.entityId;
+      this.subscriptionsList.push(this._getRelease());
     }
   }
 
-  private _getCustomer(): Subscription {
-    if (!this.customerId) {
-      throw new Error('Non è stato possibile recuperare i dati del cliente');
+  /**
+   * Get the release's data from the database.
+   */
+  private _getRelease(): Subscription {
+    if (!this.releaseId) {
+      throw new Error('Non è stato possibile recuperare i dati della release.');
     }
-    return this._customerDataService
-      .getOne(this.customerId)
-      .subscribe((customer: any) => {
-        this.formHelper.patchForm(customer);
+    return this._releaseDataService
+      .getOne(this.releaseId)
+      .subscribe((release: any) => {
+        this.formHelper.patchForm(release);
+        this.formHelper.form.patchValue({
+          projectId: release.projectId,
+        });
       });
   }
+
 }

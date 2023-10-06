@@ -31,7 +31,11 @@
       </div>
     </mat-panel-title>
     <mat-panel-description class="-project-options">
-      <button mat-flat-button extended class="-new-release-button">
+      <button 
+        mat-flat-button 
+        extended 
+        class="-new-release-button"
+        (click)="openCreateReleaseDialog()">
         <div class="-new-release-elements">
           <span class="material-symbols-outlined">egg_alt</span>
           <span>Nuova Release</span>
@@ -42,6 +46,6 @@
       </button>
     </mat-panel-description>
   </mat-expansion-panel-header>
-  <controllo-ore-x-release-index [project]="project">
-  </controllo-ore-x-release-index>
+  <controllo-ore-x-project-release-index [project]="project">
+  </controllo-ore-x-project-release-index>
 </mat-expansion-panel>
