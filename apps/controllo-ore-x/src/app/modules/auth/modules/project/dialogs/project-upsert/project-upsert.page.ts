@@ -97,7 +97,7 @@ export class ProjectUpsertPage
       ),
     });
     this.formHelper.form.patchValue({
-      color: this.formHelper.form.value.color.hex,
+      color: this.formHelper.form.value.color.rgba,
     });
 
     super.handleUserSubmission();
