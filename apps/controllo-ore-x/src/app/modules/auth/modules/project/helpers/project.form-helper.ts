@@ -44,28 +44,14 @@ export class ProjectFormHelper extends UpsertFormHelper<
       name: [null, Validators.required],
       customer: [null, Validators.required],
       color: [null, Validators.required],
-      hoursBudget: [null, [Validators.required]],
+      hoursBudget: [null, Validators.required],
       deadline: [null, Validators.required],
     });
   }
 
   patchForm(value: ProjectReadDto): boolean {
-    if(value){
-      this.form.patchValue(value);
-      this.form.patchValue({
-        color: this.rgbaToHex(this.form.value.color),
-      });
-      return true;
-    }
-    throw new Error('Value is undefined');
+    this.form.patchValue(value);
+    return true;
   }
 
-  rgbaToHex(rgbaColor: string): string {
-    const rgb: any = rgbaColor.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
-    const hex = (rgb && rgb.length === 4) ? ('#' +
-    ('0' + parseInt(rgb[1],10).toString(16)).slice(-2) +
-    ('0' + parseInt(rgb[2],10).toString(16)).slice(-2) +
-    ('0' + parseInt(rgb[3],10).toString(16)).slice(-2)) : '';
-    return hex;
-  }
 }

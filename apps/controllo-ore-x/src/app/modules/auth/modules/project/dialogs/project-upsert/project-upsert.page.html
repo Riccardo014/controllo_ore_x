@@ -47,22 +47,24 @@
             Crea nuovo cliente
           </button>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Colore </mat-label>
-            <input
+        <mat-form-field appearance="outline">
+          <mat-label>Colore</mat-label>
+            <mat-select
               matInput
-              [ngxMatColorPicker]="colorPicker"
-              name="color"
-              colorCtrl="ngmodel"
               placeholder="Colore"
               formControlName="color"
-              />
-            <ngx-mat-color-toggle matSuffix [for]="colorPicker"></ngx-mat-color-toggle>
-            <ngx-mat-color-picker
-              #colorPicker
-              [touchUi]="false"
-              [color]="selectedColorPalette"
-            ></ngx-mat-color-picker>
+              [(value)]="currentColor"
+            >
+            <mat-select-trigger>
+              <div class="-color-square" [style.backgroundColor]="currentColor"></div>
+            </mat-select-trigger>
+              <mat-option
+                *ngFor="let color of colors"
+                [value]="color"
+              >
+              <div class="-color-square" [style.backgroundColor]="color"></div>
+              </mat-option>
+            </mat-select>
             <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
               <div
                 *ngIf="formHelper.form.controls['color'].hasError(error.name)"
