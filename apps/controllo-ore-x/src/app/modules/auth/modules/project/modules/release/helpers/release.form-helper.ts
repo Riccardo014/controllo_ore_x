@@ -26,7 +26,7 @@ export class ReleaseFormHelper extends UpsertFormHelper<
 
     return {
       ...formValues,
-      projectId: formValues.projectId,
+      project: formValues.projectId,
     };
   }
 
@@ -35,13 +35,13 @@ export class ReleaseFormHelper extends UpsertFormHelper<
 
     return {
       ...formValues,
-      projectId: formValues.projectId,
+      project: formValues.projectId,
     };
   }
 
   initForm(): FormGroup {
     return this.formBuilder.group({
-      projectId: [null],
+      project: [null],
       version: [null, Validators.required],
       hoursBudget: [null, Validators.required],
       billableHoursBudget: [null, Validators.required],
