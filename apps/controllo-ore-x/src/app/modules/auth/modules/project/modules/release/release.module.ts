@@ -25,7 +25,7 @@ import { SharedModule } from '@shared/shared.module';
 import { ReleaseIndexPage } from './pages/release-index/release-index.page';
 import { ReleaseUpsertPage } from './dialogs/release-upsert/release-upsert.page';
 import { ReleaseRoutingModule } from './release-routing.module';
-
+import {MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -56,6 +56,7 @@ import { ReleaseRoutingModule } from './release-routing.module';
     MatProgressBarModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatTabsModule,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'it-IT' }

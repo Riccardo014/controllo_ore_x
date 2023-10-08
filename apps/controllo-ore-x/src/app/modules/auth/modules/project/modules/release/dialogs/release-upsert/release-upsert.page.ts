@@ -29,7 +29,7 @@ export class ReleaseUpsertPage
 {
   override title: string = 'Crea nuova release';
 
-  releaseId?: string | number;
+  releaseId?: string;
   
   RT_FORM_ERRORS: { [key: string]: RtFormError } = RT_FORM_ERRORS;
 
