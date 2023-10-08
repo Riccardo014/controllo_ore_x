@@ -19,14 +19,15 @@
           >expand_more</span
         >
       </div>
-      <div class="-project-data-details">
+      <div class="-project-data-details"
+      (click)="openReleaseIndexPage()">
         <div
           class="-project-color"
-          [style.backgroundColor]="this.project.color"
+          [style.backgroundColor]="this.projectWithCustomer.color"
         ></div>
-        <div class="body-1">{{ project.name }}</div>
+        <div class="body-1">{{ projectWithCustomer.name }}</div>
         <div>
-          <mat-chip class="caption">{{ customer.name }}</mat-chip>
+          <mat-chip class="caption">{{ projectWithCustomer.customer.name }}</mat-chip>
         </div>
       </div>
     </mat-panel-title>
@@ -46,6 +47,6 @@
       </button>
     </mat-panel-description>
   </mat-expansion-panel-header>
-  <controllo-ore-x-project-release-index [project]="project">
+  <controllo-ore-x-project-release-index [project]="projectWithCustomer">
   </controllo-ore-x-project-release-index>
 </mat-expansion-panel>

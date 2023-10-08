@@ -50,6 +50,7 @@ export class ProjectIndexPage
   override isPageWithTable: boolean = false;
 
   projects: ProjectReadDto[] = [];
+  showedProjects: ProjectReadDto[] = [];
 
   @Output() openDialog: EventEmitter<any> = new EventEmitter<any>();
 
@@ -64,7 +65,6 @@ export class ProjectIndexPage
     protected _loadingService: RtLoadingService,
     private _rtDialogService: RtDialogService,
     private _router: Router,
-    private _customerDataService: CustomerDataService,
   ) {
     super();
   }
@@ -83,9 +83,12 @@ export class ProjectIndexPage
 
   _getProjects(): Subscription {
     return this._dataService
-      .getMany({})
+      .getMany({
+        relations: ['customer']
+      })
       .subscribe((projects: ApiPaginatedResponse<ProjectReadDto>) => {
         this.projects = projects.data;
+        this.showedProjects = projects.data;
       });
   }
 
@@ -93,4 +96,14 @@ export class ProjectIndexPage
     this.openDialog.emit($event);
     this._router.navigate([this._router.url + '/' + $event._id]);
   }
+
+  updateFulltextSearch(fulltextSearch: string): void {
+    this.showedProjects = this.projects.filter((project: any) => {
+      return (
+        project.name.includes(fulltextSearch) || 
+        project.customer.name.includes(fulltextSearch)
+      );
+    });
+  }
+
 }

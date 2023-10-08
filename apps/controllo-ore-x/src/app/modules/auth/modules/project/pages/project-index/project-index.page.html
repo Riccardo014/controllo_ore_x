@@ -4,10 +4,13 @@
   [buttonText]="buttonText"
   (openDialog)="openDialogFn($event)"
 ></controllo-ore-x-index-template>
-<lib-rt-table-fulltext-bar class="-search-bar"></lib-rt-table-fulltext-bar>
+<lib-rt-table-fulltext-bar 
+  class="-search-bar"
+  (fulltextSearchEmitter)="updateFulltextSearch($event)">
+</lib-rt-table-fulltext-bar>
 <div class="-content">
   <controllo-ore-x-project
-    *ngFor="let project of projects"
-    [project]="project"
+    *ngFor="let project of showedProjects"
+    [projectWithCustomer]="project"
   ></controllo-ore-x-project>
 </div>

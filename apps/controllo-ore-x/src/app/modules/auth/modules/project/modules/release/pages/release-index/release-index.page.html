@@ -1,5 +1,59 @@
-<!-- <controllo-ore-x-project-release-table-line
-  *ngFor="let release of releases"
-  [release]="release"
-></controllo-ore-x-project-release-table-line> -->
-<h1>ReleaseIndexPage</h1>
+<div class="-page-header">
+  <div class="-page-header-title">
+    <button (click)="navigateBack()" mat-icon-button>
+      <mat-icon color="primary"
+        >arrow_back</mat-icon
+      >
+    </button>
+    <div class="-project-data-details">
+      <div
+        class="-project-color"
+        [style.backgroundColor]="this.project.color"
+      ></div>
+      <h1 class="body-1">{{ project.name }}</h1>
+      <div>
+        <mat-chip class="caption">{{ project.customer.name }}</mat-chip>
+      </div>
+    </div>
+  </div>
+  <div class="-page-header-options">
+    <button 
+      mat-flat-button 
+      extended 
+      class="-new-release-button"
+      (click)="openCreateReleaseDialog()">
+      <div class="-new-release-elements">
+        <span class="material-symbols-outlined">egg_alt</span>
+        <span>Nuova Release</span>
+      </div>
+    </button>
+    <button 
+      mat-flat-button 
+      extended 
+      class="-new-release-button"
+      (click)="openEditProjectDialog()">
+      <div class="-new-release-elements">
+        <span class="material-symbols-outlined">ink_marker</span>
+        <span>Modifica</span>
+      </div>
+    </button>
+  </div>
+</div>
+
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+  <mat-tab label="Release"> 
+    <div class="-tab-content">
+      Content 1
+    </div> 
+  </mat-tab>
+  <mat-tab label="Stato"> 
+    <div class="-tab-content">
+    Content 2
+    </div> 
+  </mat-tab>
+  <mat-tab label="Info"> 
+    <div class="-tab-content">
+      Content 3
+    </div> 
+  </mat-tab>
+</mat-tab-group>
