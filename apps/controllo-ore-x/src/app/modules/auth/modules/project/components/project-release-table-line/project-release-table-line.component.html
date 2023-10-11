@@ -9,8 +9,8 @@
         value="{{ (100 * hoursExecuted) / release.hoursBudget }}"
       ></mat-progress-bar>
       <div class="body-1 -hours-details">
-        <div class="-hours-executed">{{ hoursExecuted }}&nbsp;/&nbsp;</div>
-        <div class="-hours-planned">{{ release.hoursBudget }}</div>
+        <div class="-hours-executed">{{ convertNumberToHours(hoursExecuted) }}&nbsp;/&nbsp;</div>
+        <div class="-hours-planned">{{ convertNumberToHours(release.hoursBudget) }}</div>
       </div>
     </div>
   </div>
