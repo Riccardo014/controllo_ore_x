@@ -1,6 +1,8 @@
 <div class="-release-table-line">
   <div class="-release-table-line-data">
-    <div class="body-1 -line-element">Release&nbsp;{{ release.version }}</div>
+    <div 
+      class="body-1 -line-element"
+      [ngClass]="{'-crossed-out' : release.isCompleted }">Release&nbsp;{{ release.version }}</div>
     <div class="body-1 -expiration-date -line-element">{{ deadline }}</div>
     <div class="-release-progress-bar-section -line-element">
       <mat-progress-bar
