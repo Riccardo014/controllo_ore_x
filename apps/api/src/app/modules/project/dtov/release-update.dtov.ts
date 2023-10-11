@@ -1,5 +1,5 @@
 import { ReleaseUpdateDto } from '@api-interfaces';
-import { IsDate, IsNumber, IsOptional, IsString, IsUUID } from 'class-validator';
+import { IsBoolean, IsDate, IsNumber, IsOptional, IsString, IsUUID } from 'class-validator';
 
 export class ReleaseUpdateDtoV implements ReleaseUpdateDto {
   @IsOptional() 
@@ -9,6 +9,10 @@ export class ReleaseUpdateDtoV implements ReleaseUpdateDto {
   @IsOptional() 
   @IsString()
   version: string;
+
+  @IsOptional()
+  @IsBoolean()
+  isCompleted: boolean;
 
   @IsOptional()
   @IsNumber()
