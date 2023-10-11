@@ -91,3 +91,23 @@
 .-value__highlighted{
   color: map-get($palette-primary, 500 );
 }
+
+.-release-action-button{
+  background-color: map-get($palette-primary, 50);
+  color: map-get($palette-primary, 500);
+  padding: 20px;
+  border-radius: 10px;
+
+  .-release-action-button-elements{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5%;
+
+    span{
+      white-space: nowrap
+    }
+
+  }
+}
