@@ -1,0 +1,40 @@
+
+<div class="-release-status-container">
+
+  <div class="-release-status-single-data">
+    <h2 class="subtitle-1">Release totali</h2>
+    <div class="headline-4">
+      {{ totalReleases }}
+    </div>
+  </div>
+
+  <div class="-release-status-single-data -release-status-single-data-with-borders">
+    <h2 class="subtitle-1">Release in corso</h2>
+    <div class="-release-number-and-bar">
+      <div class="headline-4">
+        {{ inProgressReleases }}
+      </div>
+      <mat-progress-bar
+        class="-progress-bar"
+        mode="determinate"
+        value="60"
+        color="primary">
+      </mat-progress-bar>
+    </div>
+  </div>
+
+  <div class="-release-status-single-data">
+    <h2 class="subtitle-1">Release completate</h2>
+    <div class="-release-number-and-bar">
+      <div class="headline-4">
+        {{ doneReleases }}
+      </div>
+      <mat-progress-bar
+        class="-progress-bar"
+        mode="determinate"
+        value="100"
+        color="primary">
+      </mat-progress-bar>
+    </div>
+  </div>
+</div>
