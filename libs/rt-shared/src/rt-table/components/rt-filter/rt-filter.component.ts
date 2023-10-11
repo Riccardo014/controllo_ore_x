@@ -65,7 +65,7 @@ export class RtFilterComponent
   _setSubscriptions(): void {
     this.subscriptionsList.push(
       this.currentFilters.valueChanges
-        .pipe(debounceTime(1300))
+        .pipe(debounceTime(800))
         .subscribe((filterValues) => {
           if (this.currentFilters.valid) {
             this.filtersChangedEmitter.emit(this._buildFilters(filterValues));
