@@ -30,6 +30,7 @@ import { ReleaseTableComponent } from './components/release-table/release-table.
 import { ProjectReleaseStatusComponent } from './components/project-release-status/project-release-status.component';
 import { ReleaseTableLineComponent } from './components/release-table-line/release-table-line.component';
 import { ReleaseTableHeaderComponent } from './components/release-table-header/release-table-header.component';
+import { ReportIndexPage } from './pages/report-index/report-index.page';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { ReleaseTableHeaderComponent } from './components/release-table-header/r
     ProjectReleaseStatusComponent,
     ReleaseTableLineComponent,
     ReleaseTableHeaderComponent,
+    ReportIndexPage,
   ],
   imports: [
     CommonModule,

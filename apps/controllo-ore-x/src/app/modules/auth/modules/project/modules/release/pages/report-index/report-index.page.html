@@ -1,0 +1,76 @@
+<div class="-page-header">
+  <div class="-page-header-title">
+    <button (click)="navigateBack()" mat-icon-button>
+      <mat-icon color="primary"
+        >arrow_back</mat-icon
+      >
+    </button>
+    <div 
+      class="headline-5"
+      *ngIf="release"
+      class="-release-data-details">
+      <h1 class="headline-5">Release {{ release.version }}</h1>
+      <span class="material-symbols-outlined -title-icon">egg_alt</span>
+    </div>
+  </div>
+  <div class="-page-header-options">
+    <!-- TODO: add export functionality -->
+    <button mat-flat-button extended class="-export-button">
+      <div class="-export-button-elements">
+        <span class="material-symbols-outlined">blender</span>
+        <div class="body-2">Export</div>
+      </div>
+    </button>
+  </div>
+</div>
+
+<div 
+  *ngIf="release"
+  class="-release-report-container">
+  <div class="-report-element -report-element__var">
+    <div class="body-1 -element-title -element-title__var">
+      Budget ore
+    </div>
+    <div class="subtitle-1 -value__var">
+      {{ convertNumberToHours(release.hoursBudget) }}
+    </div>
+  </div>
+  
+  <div class="-report-element">
+    <div class="body-1 -element-title">
+      Scadenza
+    </div>
+    <div class="subtitle-1">
+      {{ deadline }}
+    </div>
+  </div>
+   
+  <div class="-report-element">
+    <div class="body-1 -element-title">
+      Ore utilizzate
+    </div>
+    <div class="subtitle-1">
+      {{ convertNumberToHours(hoursExecuted) }}
+    </div>
+  </div>
+  
+  <div class="-report-element">
+    <div class="body-1 -element-title">
+      Ore fuori budget
+    </div>
+    <div class="subtitle-1"
+    [ngClass]="{'-value__highlighted' : calculatedHoursOutOfBudget() != '00:00' }">
+      {{ calculatedHoursOutOfBudget() }}
+    </div>
+  </div>
+  
+  <div class="-report-element">
+    <div class="body-1 -element-title">
+      Ore fatturabili
+    </div>
+    <div class="subtitle-1">
+      {{ convertNumberToHours(release.billableHoursBudget) }}
+    </div>
+  </div>
+  
+</div>
