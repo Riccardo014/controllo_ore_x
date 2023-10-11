@@ -64,6 +64,8 @@
     .-report-button{
       background-color: map-get($palette-primary, 50);
       color: map-get($palette-primary, 500);
+      padding: 20px;
+      border-radius: 10px;
   
       .-report-button-elements{
         display: flex;

@@ -56,8 +56,18 @@ implements OnInit, OnDestroy, SubscriptionsLifecycle
     this.deadline = new Date(deadline).toLocaleDateString();
   }
 
-  openDialogFn($event: ReleaseReadDto): void {
+  openEditRelease($event: ReleaseReadDto): void {
     this._router.navigate([this._router.url + '/' + $event._id]);
+  }
+
+  openReport($event: ReleaseReadDto): void {
+    this._router.navigate([this._router.url + '/report/' + $event._id]);
+  }
+
+  convertNumberToHours(number: number): string {
+    const hours = Math.floor(number);
+    const minutes = Math.round((number - hours) * 60).toString();
+    return hours.toString().padStart(2, '0') + ':' + minutes.padStart(2, '0');
   }
 
 }
