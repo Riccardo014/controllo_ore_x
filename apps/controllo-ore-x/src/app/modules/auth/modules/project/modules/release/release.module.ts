@@ -25,12 +25,20 @@ import { SharedModule } from '@shared/shared.module';
 import { ReleaseIndexPage } from './pages/release-index/release-index.page';
 import { ReleaseUpsertPage } from './dialogs/release-upsert/release-upsert.page';
 import { ReleaseRoutingModule } from './release-routing.module';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
+import { ReleaseTableComponent } from './components/release-table/release-table.component';
+import { ProjectReleaseStatusComponent } from './components/project-release-status/project-release-status.component';
+import { ReleaseTableLineComponent } from './components/release-table-line/release-table-line.component';
+import { ReleaseTableHeaderComponent } from './components/release-table-header/release-table-header.component';
 
 @NgModule({
   declarations: [
     ReleaseIndexPage,
     ReleaseUpsertPage,
+    ReleaseTableComponent,
+    ProjectReleaseStatusComponent,
+    ReleaseTableLineComponent,
+    ReleaseTableHeaderComponent,
   ],
   imports: [
     CommonModule,
@@ -58,9 +66,6 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatNativeDateModule,
     MatTabsModule,
   ],
-  providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'it-IT' }
-  ],
-
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'it-IT' }],
 })
 export class ReleaseModule {}
