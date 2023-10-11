@@ -13,7 +13,6 @@ import {
   ProjectReadDto,
   ProjectUpdateDto,
 } from '@api-interfaces';
-import { CustomerDataService } from '@app/_core/services/customer.data-service';
 import { IndexConfigurationDataService } from '@app/_core/services/index-configuration.data-service';
 import { ProjectDataService } from '@app/_core/services/project.data-service';
 import { IndexPage } from '@app/_shared/classes/index-page.class';
@@ -34,7 +33,7 @@ export class ProjectIndexPage
   extends IndexPage<ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>
   implements OnInit, OnDestroy, SubscriptionsLifecycle
 {
-  titleIcon: string | null = 'workspaces';
+  titleIcon: string | null = 'egg';
   title: string = 'Progetti';
   pageTitle = 'Progetti';
   buttonIcon = 'egg';

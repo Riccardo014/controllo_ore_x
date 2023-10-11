@@ -1,8 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ReleaseReadDto } from '@api-interfaces';
 import { ProjectDataService } from '@app/_core/services/project.data-service';
-import { ReleaseDataService } from '@app/_core/services/release.data-service';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
@@ -20,7 +18,6 @@ export class ReleaseIndexPage
   projectId!: string;
 
   project: any;
-  releases: ReleaseReadDto[] = [];
 
   subscriptionsList: Subscription[] = [];
 
@@ -28,7 +25,6 @@ export class ReleaseIndexPage
     completeSubscriptions;
 
   constructor(
-    private _releaseDataService: ReleaseDataService,
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
     private _projectDataService: ProjectDataService,
@@ -36,7 +32,6 @@ export class ReleaseIndexPage
 
   ngOnInit(): void {
     this.projectId = this.getProjectId();
-    console.log(this.projectId);
     this._setSubscriptions();
   }
 
@@ -53,13 +48,6 @@ export class ReleaseIndexPage
   _setSubscriptions(): void {
     this.subscriptionsList.push(
       this._getProject(),
-      this._releaseDataService
-        .getMany({
-          where: { projectId: this.projectId },
-        })
-        .subscribe((releases: any) => {
-          this.releases = releases.data;
-        }),
     );
   }
 

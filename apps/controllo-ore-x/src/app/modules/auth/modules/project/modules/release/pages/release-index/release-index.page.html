@@ -5,7 +5,9 @@
         >arrow_back</mat-icon
       >
     </button>
-    <div class="-project-data-details">
+    <div 
+      *ngIf="this.project"
+      class="-project-data-details">
       <div
         class="-project-color"
         [style.backgroundColor]="this.project.color"
@@ -42,18 +44,23 @@
 
 <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
   <mat-tab label="Release"> 
-    <div class="-tab-content">
-      Content 1
+    <div>
+      <controllo-ore-x-release-table
+      [projectId]="projectId">
+      </controllo-ore-x-release-table>
     </div> 
   </mat-tab>
   <mat-tab label="Stato"> 
-    <div class="-tab-content">
-    Content 2
+    <div>
+      <controllo-ore-x-project-release-status
+      [projectId]="projectId">
+      </controllo-ore-x-project-release-status>
     </div> 
   </mat-tab>
+  <!-- TODO: add info tab
   <mat-tab label="Info"> 
-    <div class="-tab-content">
+    <div>
       Content 3
     </div> 
-  </mat-tab>
+  </mat-tab> -->  
 </mat-tab-group>
