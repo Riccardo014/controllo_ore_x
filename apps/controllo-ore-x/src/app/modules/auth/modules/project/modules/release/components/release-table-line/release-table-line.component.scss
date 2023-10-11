@@ -1,0 +1,88 @@
+@import 'libs/ui/core/consts.scss';
+@import 'libs/ui/core/mixins.scss';
+@import '../../../../../../../../app.component.scss';
+
+.-release-table-line{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid map-get($palette-grey, 300);
+  padding: 0px 40px;
+  height: 80px;
+
+  .-release-table-line-data{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    align-items: center;
+    width: 100%;
+  
+    .-release-table-line-data > div {
+      padding: 0px 10px;
+    }
+  
+    .-expiration-date{
+      color: rgba(0, 0, 0, 0.25);
+    }
+
+    .-release-progress-bar-section{
+      display: flex;
+      flex-direction: row;
+      justify-content: left;
+      align-items: center;
+      padding: 0px 10px;
+      column-gap: 10%;
+    
+      .-release-progress-bar{
+        max-width: 100px;
+      }
+    
+      .-hours-details{
+        display: flex;
+        flex-direction: row;
+    
+        .-hours-executed{
+          color: map-get($palette-primary, 500);
+        }
+    
+        .-hours-planned{
+          color: $general-header-color;
+        }
+    
+      }
+    
+    }
+  }
+
+  .-release-table-line-edit-and-report{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  
+    .-report-button{
+      background-color: map-get($palette-primary, 50);
+      color: map-get($palette-primary, 500);
+  
+      .-report-button-elements{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 5%;
+      }
+  
+    }
+  }
+
+  .-line-element{
+    min-width: 110px;
+    padding: 0px 10px;
+  }
+
+}
+
+.-edit-button-icon{
+  color: rgba(0, 0, 0, 0.5);
+}
