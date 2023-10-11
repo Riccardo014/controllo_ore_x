@@ -62,4 +62,10 @@ export class ProjectReleaseTableLineComponent
     this._router.navigate([this._router.url + '/' + this.release.projectId + '/release/' + this.release._id]);
   }
 
+  convertNumberToHours(number: number): string {
+    const hours = Math.floor(number);
+    const minutes = Math.round((number - hours) * 60).toString();
+    return hours.toString().padStart(2, '0') + ':' + minutes.padStart(2, '0');
+  }
+
 }
