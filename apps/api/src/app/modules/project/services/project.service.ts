@@ -28,6 +28,7 @@ export class ProjectService extends CrudService<Project, ProjectCreateDtoV, Proj
       const releaseData = {
         projectId: project._id,
         version: '0.0.1',
+        isCompleted: false,
         hoursBudget: project.hoursBudget,
         billableHoursBudget: project.hoursBudget,
         deadline: project.deadline, };

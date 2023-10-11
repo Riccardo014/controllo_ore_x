@@ -15,6 +15,9 @@ export class Release extends BaseEntityTemplate{
   @Column()
   version: string;
 
+  @Column()
+  isCompleted: boolean;
+
   @Column( { nullable: true } )
   hoursBudget: number;
 

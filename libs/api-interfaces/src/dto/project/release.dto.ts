@@ -2,6 +2,7 @@ export interface ReleaseReadDto {
   _id: string;
   projectId: string;
   version: string;
+  isCompleted: boolean;
   hoursBudget: number;
   billableHoursBudget: number;
   deadline: Date;
@@ -14,6 +15,7 @@ export interface ReleaseReadDto {
 export interface ReleaseCreateDto {
   projectId: string;
   version: string;
+  isCompleted: boolean;
   hoursBudget: number;
   billableHoursBudget: number;
   deadline: Date;
@@ -23,6 +25,7 @@ export interface ReleaseCreateDto {
 export interface ReleaseUpdateDto {
   projectId?: string;
   version?: string;
+  isCompleted?: boolean;
   hoursBudget?: number;
   billableHoursBudget?: number;
   deadline?: Date;
