@@ -14,9 +14,9 @@ export const RELEASE_INDEX_CONFIGURATION_SEED: any = {
         sortable: true,
       },
       {
-        title: 'Creazione',
+        title: 'Scadenza',
         type: 'DATE',
-        field: 'createdAt',
+        field: 'deadline',
         sortable: true,
       },
       {
