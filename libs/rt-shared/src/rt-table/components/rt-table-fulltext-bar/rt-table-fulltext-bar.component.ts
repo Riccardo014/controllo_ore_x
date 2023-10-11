@@ -15,7 +15,7 @@ export class RtTableFulltextBarComponent implements OnInit {
 
   ngOnInit(): void {
     this.fulltextSearch.valueChanges
-      .pipe(debounceTime(1300))
+      .pipe(debounceTime(800))
       .subscribe((text: string) => {
         this.fulltextSearchEmitter.emit(text);
       });
