@@ -3,4 +3,5 @@ export enum INDEX_CONFIGURATION_KEY {
   CUSTOMER = 'customers',
   PROJECT = 'projects',
   RELEASE = 'releases',
+  TRACKER = 'userHours',
 }
