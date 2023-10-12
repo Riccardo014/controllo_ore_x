@@ -55,7 +55,6 @@ import { ProjectRoutingModule } from './project-routing.module';
     RtLoadingModule,
     RtSelectModule,
     MatExpansionModule,
-    RtTableModule,
     MatProgressBarModule,
     MatDatepickerModule,
     MatNativeDateModule,

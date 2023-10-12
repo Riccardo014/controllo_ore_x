@@ -62,7 +62,6 @@ import { ReleaseRoutingModule } from './release-routing.module';
     RtLoadingModule,
     RtSelectModule,
     MatExpansionModule,
-    RtTableModule,
     MatProgressBarModule,
     MatDatepickerModule,
     MatNativeDateModule,
