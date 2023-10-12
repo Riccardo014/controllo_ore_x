@@ -1,0 +1,34 @@
+<controllo-ore-x-index-template
+  [page]="this"
+  [buttonIcon]="buttonIcon"
+  [buttonText]="buttonText"
+  (openDialog)="openDialogFn($event)"
+></controllo-ore-x-index-template>
+
+<div class="-subtitle">
+  <div class="-subtitle-text">
+    <h2 class="body-1">Quanto hai lavorato oggi</h2>
+    <span class="headline-5">{{ convertNumberToHours(workedHours) }}</span>
+  </div>
+  <div>
+    <button
+    class="-subtitle-button"
+    mat-flat-button
+    color="primary"
+    >
+      <div class="-subtitle-button-elements">
+        <span class="material-symbols-outlined">{{ buttonIcon }}</span>
+        <span class="body-2 -subtitle-button-elements-text">{{
+          buttonText
+        }}</span>
+      </div>
+    </button>
+  </div>
+</div>
+
+<div class="-content">
+  <controllo-ore-x-tracker-table-line
+    *ngFor="let userHour of userHours"
+    [userHour]="userHour"
+  ></controllo-ore-x-tracker-table-line>
+</div>
