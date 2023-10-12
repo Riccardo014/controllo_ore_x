@@ -100,4 +100,13 @@ export class ReportIndexPage
     return hours.toString().padStart(2, '0') + ':' + minutes.padStart(2, '0');
   }
 
+  toggleCompletion(): void {
+    this._releaseDataService
+      .update(this.releaseId, {
+        isCompleted: !this.release.isCompleted,
+      }).subscribe(()=> {
+        this._getRelease();
+      });
+  }
+
 }
