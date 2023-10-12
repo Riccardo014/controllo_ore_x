@@ -19,6 +19,7 @@
   background-color: map-get($palette-primary, 500);
   color: #fff;
   padding: 20px;
+  border-radius: 10px;
 }
 
 .-page-title-link-button-elements{
@@ -30,5 +31,5 @@
 }
 
 .-page-title-link-button-elements-text{
-  white-space: nowrap
+  white-space: nowrap;
 }

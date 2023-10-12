@@ -62,7 +62,6 @@ import { ReportIndexPage } from './pages/report-index/report-index.page';
     AlertModule,
     RtSelectModule,
     MatExpansionModule,
-    RtTableModule,
     MatProgressBarModule,
     MatDatepickerModule,
     MatNativeDateModule,

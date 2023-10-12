@@ -57,7 +57,6 @@ import { ProjectReleaseIndexPage } from './pages/project-release-index.page/proj
     AlertModule,
     RtSelectModule,
     MatExpansionModule,
-    RtTableModule,
     MatProgressBarModule,
     MatDatepickerModule,
     MatNativeDateModule,
