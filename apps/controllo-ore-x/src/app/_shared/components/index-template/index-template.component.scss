@@ -1,4 +1,5 @@
 @import 'libs/ui/core';
+@import '../../../../styles/styles.scss';
 
 .-page-content {
   position: relative;
@@ -27,3 +28,24 @@
     }
   }
 }
+
+.-calendar-widget{
+  display: flex;
+  align-items: center;
+  background-color: map-get($palette-accent, 200 );
+  border-radius: 10px;
+}
+
+.mat-mdc-form-field{
+  @extend .subtitle-1 !optional;
+}
+
+.-calendar-icon{
+  color: #000;
+}
+
+// hide the bottom line of the input in case of appareance="fill"
+// ::ng-deep .mdc-line-ripple {
+//   display: none
+// }
+
