@@ -100,8 +100,13 @@
 
           <!-- <mat-form-field class="col" appearance="outline"> -->
           <mat-radio-group required formControlName="hoursTag">
-            <mat-radio-button color="primary" *ngFor="let hoursTag of hoursTags" [value]="hoursTag">
-              {{ hoursTag.name }}
+            <mat-radio-button 
+              color="primary" 
+              *ngFor="let hoursTag of hoursTags" 
+              [value]="hoursTag"
+              [checked]="hoursTag.checked"
+              >
+              {{ hoursTag.hoursTag.name }}
             </mat-radio-button>
           </mat-radio-group>
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]" class="-radio-error">
