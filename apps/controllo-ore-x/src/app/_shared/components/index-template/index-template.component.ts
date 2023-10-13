@@ -63,6 +63,11 @@ export class IndexTemplateComponent
   @Input() hasMenuOptions: boolean = false;
 
   /**
+   * If true, the page will have a calendar
+   */
+    @Input() hasCalendar: boolean = false;
+
+  /**
    * If true, the page will have a button to export the data in csv format
    */
   @Input() hasExportCsv: boolean = true;

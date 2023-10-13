@@ -3,6 +3,7 @@
   [buttonIcon]="buttonIcon"
   [buttonText]="buttonText"
   [shouldHideCreateButton]="true"
+  [hasCalendar]="true"
   (openDialog)="openDialogFn($event)"
 ></controllo-ore-x-index-template>
 
@@ -16,6 +17,7 @@
     class="-subtitle-button"
     mat-flat-button
     color="primary"
+    (click)="openCreateDialog()"
     >
       <div class="-subtitle-button-elements">
         <span class="material-symbols-outlined">{{ buttonIcon }}</span>
