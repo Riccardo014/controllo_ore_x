@@ -34,7 +34,7 @@ export class TeamUpsertPage
 
   isPasswordVisible: boolean = false;
   userId?: string | number;
-  currentRole?: string;
+  currentRole?: RoleReadDto;
 
   RT_FORM_ERRORS: { [key: string]: RtFormError } = RT_FORM_ERRORS;
 
@@ -79,40 +79,14 @@ export class TeamUpsertPage
   }
 
   _setSubscriptions(): void {
-    this.subscriptionsList.push(this._getUsersRoles());
-
     // If the user is editing an existing user, get the user's data, otherwhise the entityId field will be empty.
     if (!this.isCreating) {
       this.userId = this.formHelper.entityId;
       this.subscriptionsList.push(this._getUser());
     }
-  }
-
-  /**
-   * Get the user's data from the database.
-   */
-  private _getUser(): Subscription {
-    if (!this.userId) {
-      throw new Error("Non è stato possibile recuperare i dati dell'utente");
+    else{
+      this.subscriptionsList.push(this._getUsersRoles());
     }
-    return this._teamDataService.getOne(this.userId).subscribe((user: any) => {
-      this.formHelper.patchForm({
-        ...user,
-        role: user.roleId,
-      });
-      this.currentRole = user.role.name;
-    });
-  }
-
-  /**
-   * Fetch and set the users' roles from the database.
-   */
-  private _getUsersRoles(): Subscription {
-    return this._roleDataService
-      .getMany({})
-      .subscribe((roles: ApiPaginatedResponse<RoleReadDto>) => {
-        this.userRoles = roles.data;
-      });
   }
 
   override handleUserSubmission(): void {
@@ -129,5 +103,33 @@ export class TeamUpsertPage
     if (!this.isLoading.value) {
       this.isPasswordVisible = !this.isPasswordVisible;
     }
+  }
+
+  /**
+   * Get the user's data from the database.
+   */
+  private _getUser(): Subscription {
+    if (!this.userId) {
+      throw new Error("Non è stato possibile recuperare i dati dell'utente");
+    }
+    return this._teamDataService.getOne(this.userId).subscribe((user: any) => {
+      this.formHelper.patchForm(user);
+      this._getUsersRoles();
+    });
+  }
+
+  /**
+   * Fetch and set the users' roles from the database.
+   */
+  private _getUsersRoles(): Subscription {
+    return this._roleDataService
+      .getMany({})
+      .subscribe((roles: ApiPaginatedResponse<RoleReadDto>) => {
+        this.userRoles = roles.data;
+        if (this.formHelper.form.value.role) {
+          this.currentRole = this.userRoles.find(
+            (role: RoleReadDto) => role._id === this.formHelper.form.value.role._id);
+        }
+      });
   }
 }

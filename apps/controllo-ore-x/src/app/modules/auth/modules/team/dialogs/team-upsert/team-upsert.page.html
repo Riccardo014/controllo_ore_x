@@ -75,7 +75,7 @@
               formControlName="role"
               [(value)]="currentRole"
             >
-              <mat-option *ngFor="let role of userRoles" [value]="role.name">
+              <mat-option *ngFor="let role of userRoles" [value]="role">
                 {{ role.name }}
               </mat-option>
             </mat-select>
