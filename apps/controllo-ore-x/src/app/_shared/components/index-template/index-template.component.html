@@ -35,16 +35,37 @@
       >
     </ng-container>
 
-    <mat-form-field *ngIf="hasCalendar" class="subtitle-1 -calendar-widget" appearance="outline">
-      <input matInput [matDatepicker]="picker" [formControl]="date" (dateChange)="dateChange()">
-      <mat-datepicker-toggle matIconPrefix [for]="picker" class="-calendar-icon">
-        <mat-icon matDatepickerToggleIcon><span class="material-symbols-outlined">calendar_month</span></mat-icon>
+    <mat-form-field
+      *ngIf="hasCalendar"
+      class="subtitle-1 -calendar-widget"
+      appearance="outline"
+    >
+      <input
+        matInput
+        [matDatepicker]="picker"
+        [formControl]="date"
+        (dateChange)="dateChange()"
+      />
+      <mat-datepicker-toggle
+        matIconPrefix
+        [for]="picker"
+        class="-calendar-icon"
+      >
+        <mat-icon matDatepickerToggleIcon
+          ><span class="material-symbols-outlined"
+            >calendar_month</span
+          ></mat-icon
+        >
       </mat-datepicker-toggle>
       <mat-datepicker-toggle matIconSuffix (click)="previousDay()">
-        <mat-icon matDatepickerToggleIcon class="-calendar-icon">arrow_left</mat-icon>
+        <mat-icon matDatepickerToggleIcon class="-calendar-icon"
+          >arrow_left</mat-icon
+        >
       </mat-datepicker-toggle>
       <mat-datepicker-toggle matIconSuffix (click)="nextDay()">
-        <mat-icon matDatepickerToggleIcon class="-calendar-icon">arrow_right</mat-icon>
+        <mat-icon matDatepickerToggleIcon class="-calendar-icon"
+          >arrow_right</mat-icon
+        >
       </mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
