@@ -10,7 +10,14 @@ import {
   UserHoursReadDto,
   UserHoursUpdateDto,
 } from '@api-interfaces';
+import { AuthService } from '@app/_core/services/auth.service';
+import { CustomerDataService } from '@app/_core/services/customer.data-service';
+import { HoursTagDataService } from '@app/_core/services/hours-tag.data-service';
+import { ProjectDataService } from '@app/_core/services/project.data-service';
+import { ReleaseDataService } from '@app/_core/services/release.data-service';
+import { TrackerDataService } from '@app/_core/services/tracker.data-service';
 import { UpsertPage } from '@app/_shared/classes/upsert-page.class';
+import { CalendarDateService } from '@app/_shared/components/index-template/servicies/calendar-date.service';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
@@ -19,14 +26,7 @@ import { AlertService } from 'libs/rt-shared/src/alert/services/alert.service';
 import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
 import { RT_FORM_ERRORS, RtFormError } from 'libs/utils';
 import { Subscription } from 'rxjs';
-import { TrackerDataService } from '@app/_core/services/tracker.data-service';
 import { TrackerFormHelper } from '../../helpers/tracker.form-helper';
-import { HoursTagDataService } from '@app/_core/services/hours-tag.data-service';
-import { ReleaseDataService } from '@app/_core/services/release.data-service';
-import { CustomerDataService } from '@app/_core/services/customer.data-service';
-import { ProjectDataService } from '@app/_core/services/project.data-service';
-import { CalendarDateService } from '@app/_shared/components/index-template/servicies/calendar-date.service';
-import { AuthService } from '@app/_core/services/auth.service';
 
 @Component({
   selector: 'controllo-ore-x-tracker-upsert',
@@ -36,14 +36,15 @@ import { AuthService } from '@app/_core/services/auth.service';
 })
 export class TrackerUpsertPage
   extends UpsertPage<UserHoursReadDto, UserHoursCreateDto, UserHoursUpdateDto>
-  implements SubscriptionsLifecycle, OnDestroy, OnInit {
+  implements SubscriptionsLifecycle, OnDestroy, OnInit
+{
   override title: string = 'Inserimento ore';
 
   userHourId?: string | number;
 
   hoursTags: {
-    hoursTag: HoursTagReadDto,
-    checked: boolean
+    hoursTag: HoursTagReadDto;
+    checked: boolean;
   }[] = [];
 
   currentCustomer?: CustomerReadDto;
@@ -106,7 +107,6 @@ export class TrackerUpsertPage
     this._completeSubscriptions(this.subscriptionsList);
   }
 
-
   _setSubscriptions(): void {
     this.subscriptionsList.push(
       this._getSelectedDate(),
@@ -115,8 +115,7 @@ export class TrackerUpsertPage
     );
     if (!this.isCreating) {
       this.userHourId = this.formHelper.entityId;
-      this.subscriptionsList.push(
-        this._getUserHours());
+      this.subscriptionsList.push(this._getUserHours());
     }
   }
 
@@ -149,12 +148,13 @@ export class TrackerUpsertPage
   }
 
   private _getSelectedDate(): Subscription {
-    return this._calendarDateService.currentDateObservable
-      .subscribe((selectedDate: Date) => {
+    return this._calendarDateService.currentDateObservable.subscribe(
+      (selectedDate: Date) => {
         this.formHelper.form.patchValue({
           date: selectedDate,
         });
-      });
+      },
+    );
   }
 
   /**
@@ -162,9 +162,12 @@ export class TrackerUpsertPage
    */
   private _getUserHours(): Subscription {
     if (!this.userHourId) {
-      throw new Error('Non è stato possibile recuperare i dati delle ore dell\'utente');
+      throw new Error(
+        "Non è stato possibile recuperare i dati delle ore dell'utente",
+      );
     }
-    return this._trackerDataService.getOne(this.userHourId)
+    return this._trackerDataService
+      .getOne(this.userHourId)
       .subscribe((userHour: any) => {
         this.formHelper.patchForm(userHour);
         this.subscriptionsList.push(this._getProject());
@@ -197,11 +200,11 @@ export class TrackerUpsertPage
         });
         if (this.formHelper.form.value.customer) {
           this.currentCustomer = this.customers.find(
-            (customer: CustomerReadDto) => customer._id === this.formHelper.form.value.customer._id);
+            (customer: CustomerReadDto) =>
+              customer._id === this.formHelper.form.value.customer._id,
+          );
         }
-        this.subscriptionsList.push(
-          this._getProjects(),
-          this._getReleases());
+        this.subscriptionsList.push(this._getProjects(), this._getReleases());
       });
   }
 
@@ -247,7 +250,10 @@ export class TrackerUpsertPage
       .subscribe((projects: ApiPaginatedResponse<ProjectReadDto>) => {
         this.projects = projects.data;
         if (this.formHelper.form.value.project) {
-          this.currentProject = this.projects.find((project: ProjectReadDto) => project._id === this.formHelper.form.value.project._id);
+          this.currentProject = this.projects.find(
+            (project: ProjectReadDto) =>
+              project._id === this.formHelper.form.value.project._id,
+          );
         }
       });
   }
@@ -265,7 +271,10 @@ export class TrackerUpsertPage
       .subscribe((releases: ApiPaginatedResponse<ReleaseReadDto>) => {
         this.releases = releases.data;
         if (this.formHelper.form.value.release) {
-          this.currentRelease = this.releases.find((release: ReleaseReadDto) => release._id === this.formHelper.form.value.release._id);
+          this.currentRelease = this.releases.find(
+            (release: ReleaseReadDto) =>
+              release._id === this.formHelper.form.value.release._id,
+          );
         }
       });
   }
