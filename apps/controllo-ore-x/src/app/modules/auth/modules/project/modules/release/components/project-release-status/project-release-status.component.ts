@@ -1,9 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import {
-  ApiPaginatedResponse,
-  ReleaseReadDto,
-  UserHoursReadDto,
-} from '@api-interfaces';
+import { ApiPaginatedResponse, ReleaseReadDto } from '@api-interfaces';
 import { ReleaseDataService } from '@app/_core/services/release.data-service';
 import {
   SubscriptionsLifecycle,
