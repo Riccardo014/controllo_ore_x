@@ -27,7 +27,7 @@ export class UserHoursController {
 
   @Get(':id')
   getOne(@Param('id') id: string): Promise<UserHours> {
-    return this._userHoursService.getOne(id);
+    return this._userHoursService.getOne(id, ['release', 'user', 'hoursTag']);
   }
 
   @Post()

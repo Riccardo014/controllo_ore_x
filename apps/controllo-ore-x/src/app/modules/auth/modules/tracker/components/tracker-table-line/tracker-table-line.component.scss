@@ -5,14 +5,16 @@
 .-tracker-table-line{
   height: 112px;
   border-bottom: 1px solid map-get($palette-grey, 200);
-  display: flex;
-  flex-direction: row;
+  // display: flex;
+  // flex-direction: row;
+  display: grid;
+  grid-template-columns: 12fr 2fr 1fr;
   
   .-tracker-activity{
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 2fr;
     align-items: center;
-    width: 75%;
+    // width: 75%;
     padding: 0px 40px;
     border-right: 1px solid map-get($palette-grey, 200);
     
@@ -35,7 +37,7 @@
     align-items: center;
     justify-content: center;
     gap: 5%;
-    width: 15%;
+    // width: 15%;
     border-right: 1px solid map-get($palette-grey, 200);
   }
 
@@ -44,7 +46,11 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
-    width: 10%;
+    // width: 10%;
   }
 
+}
+
+.-edit-button-icon{
+  color: rgba(0, 0, 0, 0.5);
 }

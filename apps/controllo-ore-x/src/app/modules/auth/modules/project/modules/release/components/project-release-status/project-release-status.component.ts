@@ -46,7 +46,6 @@ implements OnInit, OnDestroy, SubscriptionsLifecycle{
     return this._releaseDataService.getMany({
       where: { projectId: this.projectId }
     }).subscribe((releases) => {
-      console.log(releases);
       this.totalReleases = releases.data.length;
       releases.data.forEach(release => {
         if (release.isCompleted) {
