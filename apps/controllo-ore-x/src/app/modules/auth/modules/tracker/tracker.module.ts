@@ -18,11 +18,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { TrackerUpsertPage } from './dialogs/tracker-upsert/tracker-upsert.page';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
     TrackerIndexPage,
     TrackerTableLineComponent,
+    TrackerUpsertPage,
   ],
   imports: [
     CommonModule,
@@ -47,6 +50,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatProgressBarModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatRadioModule,
   ],
 })
 export class TrackerModule {}
