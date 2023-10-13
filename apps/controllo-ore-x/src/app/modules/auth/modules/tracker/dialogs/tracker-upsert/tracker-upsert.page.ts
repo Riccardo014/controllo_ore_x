@@ -41,15 +41,18 @@ export class TrackerUpsertPage
 
   userHourId?: string | number;
 
-  hoursTags: HoursTagReadDto[] = [];
+  hoursTags: {
+    hoursTag: HoursTagReadDto,
+    checked: boolean
+  }[] = [];
 
-  currentCustomer?: string;
+  currentCustomer?: CustomerReadDto;
   customers: CustomerReadDto[] = [];
 
-  currentProject?: string;
+  currentProject?: ProjectReadDto;
   projects: ProjectReadDto[] = [];
 
-  currentRelease?: string;
+  currentRelease?: ReleaseReadDto;
   releases: ReleaseReadDto[] = [];
 
   RT_FORM_ERRORS: { [key: string]: RtFormError } = RT_FORM_ERRORS;
@@ -89,7 +92,7 @@ export class TrackerUpsertPage
       throw new Error('User not logged in');
     }
     this.formHelper.form.patchValue({
-      user: this._authService.loggedInUser._id,
+      user: this._authService.loggedInUser,
     });
 
     this._setSubscriptions();
@@ -111,20 +114,16 @@ export class TrackerUpsertPage
       this._getCustomers(),
     );
     if (!this.isCreating) {
-        //TODO
       this.userHourId = this.formHelper.entityId;
-      this.subscriptionsList.push(this._getUserHours());
+      this.subscriptionsList.push(
+        this._getUserHours());
     }
   }
 
-  //TODO
   override handleUserSubmission(): void {
-    // this.formHelper.form.patchValue({
-    //   customer: this.formHelper.form.value.customer._id,
-    //   project: this.formHelper.form.value.project._id,
-    //   release: this.formHelper.form.value.release._id,
-    //   hoursTag: this.formHelper.form.value.hoursTag._id,
-    // });
+    this.formHelper.form.patchValue({
+      hoursTag: this.formHelper.form.value.hoursTag.hoursTag,
+    });
 
     super.handleUserSubmission();
   }
@@ -155,23 +154,55 @@ export class TrackerUpsertPage
         this.formHelper.form.patchValue({
           date: selectedDate,
         });
-      }
-    );
+      });
   }
 
   /**
    * Get the user hours' data from the database.
    */
-  //TODO
   private _getUserHours(): Subscription {
     if (!this.userHourId) {
       throw new Error('Non è stato possibile recuperare i dati delle ore dell\'utente');
     }
-    return this._trackerDataService.getOne(this.userHourId).subscribe((userHour: any) => {
-      console.log(userHour);
-      this.formHelper.patchForm(userHour);
-      this.currentRelease = userHour.release.version;
-    });
+    return this._trackerDataService.getOne(this.userHourId)
+      .subscribe((userHour: any) => {
+        this.formHelper.patchForm(userHour);
+        this.subscriptionsList.push(this._getProject());
+        this.formHelper.form.patchValue({
+          release: userHour.release,
+        });
+
+        //TODO: chiedere se c'è un modo migliore per fare questo
+        this.hoursTags.forEach((hoursTag: any) => {
+          if (hoursTag.hoursTag._id === userHour.hoursTagId) {
+            hoursTag.checked = true;
+          }
+        });
+      });
+  }
+
+  /**
+   * Get the project's data from the database.
+   */
+  private _getProject(): Subscription {
+    if (!this.formHelper.form.value.release.projectId) {
+      throw new Error('Non è stato possibile recuperare i dati del progetto.');
+    }
+    return this._projectDataService
+      .getOne(this.formHelper.form.value.release.projectId)
+      .subscribe((project: any) => {
+        this.formHelper.form.patchValue({
+          customer: project.customer,
+          project: project,
+        });
+        if (this.formHelper.form.value.customer) {
+          this.currentCustomer = this.customers.find(
+            (customer: CustomerReadDto) => customer._id === this.formHelper.form.value.customer._id);
+        }
+        this.subscriptionsList.push(
+          this._getProjects(),
+          this._getReleases());
+      });
   }
 
   /**
@@ -181,7 +212,12 @@ export class TrackerUpsertPage
     return this._hoursTagDataService
       .getMany({})
       .subscribe((hoursTag: ApiPaginatedResponse<HoursTagReadDto>) => {
-        this.hoursTags = hoursTag.data;
+        hoursTag.data.forEach((hoursTag: HoursTagReadDto) => {
+          this.hoursTags.push({
+            hoursTag: hoursTag,
+            checked: false,
+          });
+        });
       });
   }
 
@@ -210,6 +246,9 @@ export class TrackerUpsertPage
       })
       .subscribe((projects: ApiPaginatedResponse<ProjectReadDto>) => {
         this.projects = projects.data;
+        if (this.formHelper.form.value.project) {
+          this.currentProject = this.projects.find((project: ProjectReadDto) => project._id === this.formHelper.form.value.project._id);
+        }
       });
   }
 
@@ -225,6 +264,9 @@ export class TrackerUpsertPage
       })
       .subscribe((releases: ApiPaginatedResponse<ReleaseReadDto>) => {
         this.releases = releases.data;
+        if (this.formHelper.form.value.release) {
+          this.currentRelease = this.releases.find((release: ReleaseReadDto) => release._id === this.formHelper.form.value.release._id);
+        }
       });
   }
 }

@@ -48,7 +48,7 @@ export class ReleaseController {
 
   @Get(':id')
   getOne(@Param('id') id: string): Promise<Release> {
-    return this._releaseService.getOne(id);
+    return this._releaseService.getOne(id, ['project']);
   }
 
   @Post()
