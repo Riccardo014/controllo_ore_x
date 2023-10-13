@@ -27,6 +27,7 @@ export class ReleaseFormHelper extends UpsertFormHelper<
     return {
       ...formValues,
       projectId: formValues.project,
+      isCompleted: false,
     };
   }
 
@@ -46,6 +47,7 @@ export class ReleaseFormHelper extends UpsertFormHelper<
       hoursBudget: [null, Validators.required],
       billableHoursBudget: [null, Validators.required],
       deadline: [null, Validators.required],
+      isCompleted: [null],
     });
   }
 
