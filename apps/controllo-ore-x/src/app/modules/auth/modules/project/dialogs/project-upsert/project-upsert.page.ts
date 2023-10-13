@@ -86,10 +86,12 @@ export class ProjectUpsertPage
   }
 
   _setSubscriptions(): void {
-    this.subscriptionsList.push(this._getProjectsCustomers());
     if (!this.isCreating) {
       this.projectId = this.formHelper.entityId;
       this.subscriptionsList.push(this._getProject());
+    }
+    else{
+      this.subscriptionsList.push(this._getProjectsCustomers());
     }
   }
 
