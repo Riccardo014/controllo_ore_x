@@ -34,7 +34,7 @@ export class ProjectUpsertPage
   override title: string = 'Crea nuovo progetto';
 
   projectId?: string | number;
-  currentCustomer?: string;
+  currentCustomer?: CustomerReadDto;
   currentColor?: string;
   colors : string[] = [
     ProjectColor.orange, 
@@ -93,16 +93,6 @@ export class ProjectUpsertPage
     }
   }
 
-  override handleUserSubmission(): void {
-    this.formHelper.form.patchValue({
-      customer: this.customers.find(
-        (customer: CustomerReadDto) => customer.name === this.formHelper.form.value.customer,
-      ),
-    });
-    
-    super.handleUserSubmission();
-  }
-
   openCreateCustomer(): void{
     this._router.navigate(['/auth/clienti', 'create']);
   }
@@ -118,7 +108,7 @@ export class ProjectUpsertPage
       .getOne(this.projectId)
       .subscribe((project: any) => {
         this.formHelper.patchForm(project);
-        this.currentCustomer = project.customer.name;
+        this.subscriptionsList.push(this._getProjectsCustomers());
         this.currentColor = project.color;
       });
   }
@@ -131,6 +121,10 @@ export class ProjectUpsertPage
       .getMany({})
       .subscribe((customers: ApiPaginatedResponse<CustomerReadDto>) => {
         this.customers = customers.data;
+        if (this.formHelper.form.value.customer) {
+          this.currentCustomer = this.customers.find(
+            (customer: CustomerReadDto) => customer._id === this.formHelper.form.value.customer._id);
+        }
       });
   }
 
