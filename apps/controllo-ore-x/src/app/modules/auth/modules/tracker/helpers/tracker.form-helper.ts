@@ -21,27 +21,27 @@ export class TrackerFormHelper extends UpsertFormHelper<
     super(formBuilder, _trackerDataService);
   }
 
-  //TODO
   get createDto(): UserHoursCreateDto {
     const formValues: any = this.form.getRawValue();
 
     return {
       ...formValues,
-      userId: formValues.user,
-      customerId: formValues.customer._id,
-      projectId: formValues.project._id,
+      userId: formValues.user._id,
       releaseId: formValues.release._id,
       hoursTagId: formValues.hoursTag._id,
     };
   }
 
-  //TODO
   get updateDto(): UserHoursUpdateDto {
     const formValues: any = this.form.getRawValue();
 
     return {
-      ...formValues,
-      customerId: formValues.customer._id,
+      userId: formValues.user._id,
+      releaseId: formValues.release._id,
+      hoursTagId: formValues.hoursTag._id,
+      date: formValues.date,
+      notes: formValues.notes,
+      hours: formValues.hours,
     };
   }
 
@@ -58,7 +58,6 @@ export class TrackerFormHelper extends UpsertFormHelper<
     });
   }
 
-  //TODO
   patchForm(value: UserHoursReadDto): boolean {
     this.form.patchValue(value);
     return true;
