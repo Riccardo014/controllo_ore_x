@@ -6,6 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { IndexPage } from '@app/_shared/classes/index-page.class';
 import {
   SubscriptionsLifecycle,
@@ -22,10 +23,18 @@ import { CalendarDateService } from './servicies/calendar-date.service';
   selector: 'controllo-ore-x-index-template',
   templateUrl: './index-template.component.html',
   styleUrls: ['./index-template.component.scss'],
+  providers: [
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
+    { provide: MAT_DATE_LOCALE, useValue: 'it-IT' },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+  ],
 })
 export class IndexTemplateComponent
-  implements OnInit, OnDestroy, SubscriptionsLifecycle
-{
+  implements OnInit, OnDestroy, SubscriptionsLifecycle {
   /**
    * Page to be displayed
    */
@@ -92,7 +101,9 @@ export class IndexTemplateComponent
   private _isLoading: boolean = true;
   private _isFirstLoadDone: boolean = false;
 
-  constructor(private _loadingService: RtLoadingService) {}
+  constructor(
+    private _loadingService: RtLoadingService,
+    private _calendarDateService: CalendarDateService) { }
 
   ngOnInit(): void {
     this.setSubscriptions();
@@ -112,6 +123,9 @@ export class IndexTemplateComponent
         this._isFirstLoadDone = isFirstLoadDone;
         this._setLoadingParameters();
       }),
+      this._calendarDateService.currentDateObservable.subscribe(
+        (date) => (this.date.setValue(moment(date))),
+      ),
     );
   }
 
@@ -121,6 +135,37 @@ export class IndexTemplateComponent
 
   openCreateDialogFn(): void {
     this.openCreateDialogEvent.emit(true);
+  }
+
+  date = new FormControl(moment());
+  date1: Date = new Date();
+
+  dateChange(): void {
+    if (!this.date.value) {
+      throw new Error('Date is null');
+    }
+    this._calendarDateService.changeDate(this.date.value.toDate());
+  }
+
+  nextDay(): void {
+    this.date.value?.add(1, 'days');
+    this.dateChange();
+  }
+
+  previousDay(): void {
+    this.date.value?.add(-1, 'days');
+    this.dateChange();
+  }
+
+  getDateToDisplay(date: Date): string {
+    let dayOfWeek: string = date.toLocaleDateString('it-IT', { weekday: 'long' });
+    const dateNumber: number = date.getDay();
+    let month: string = date.toLocaleDateString('it-IT', { month: 'long' });
+
+    dayOfWeek = dayOfWeek.charAt(0).toUpperCase() + dayOfWeek.slice(1);
+    month = month.charAt(0).toUpperCase() + month.slice(1);
+
+    return dayOfWeek + ', ' + dateNumber + ' ' + month;
   }
 
   private _setLoadingParameters(): void {
