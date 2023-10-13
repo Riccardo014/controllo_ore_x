@@ -123,6 +123,10 @@ export class TrackerIndexPage
     this._router.navigate([this._router.url + '/' + $event._id]);
   }
 
+  openCreateDialog(): void {
+    this._router.navigate([this._router.url + '/create']);
+  }
+
   convertNumberToHours(number: number): string {
     const hours = Math.floor(number);
     const minutes = Math.round((number - hours) * 60).toString();

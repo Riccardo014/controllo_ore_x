@@ -35,7 +35,7 @@
       >
     </ng-container>
 
-    <mat-form-field class="subtitle-1 -calendar-widget" appearance="outline">
+    <mat-form-field *ngIf="hasCalendar" class="subtitle-1 -calendar-widget" appearance="outline">
       <input matInput [matDatepicker]="picker" [formControl]="date" (dateChange)="dateChange()">
       <mat-datepicker-toggle matIconPrefix [for]="picker" class="-calendar-icon">
         <mat-icon matDatepickerToggleIcon><span class="material-symbols-outlined">calendar_month</span></mat-icon>
