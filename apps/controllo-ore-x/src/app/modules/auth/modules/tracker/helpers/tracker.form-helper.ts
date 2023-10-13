@@ -62,5 +62,4 @@ export class TrackerFormHelper extends UpsertFormHelper<
     this.form.patchValue(value);
     return true;
   }
-
 }
