@@ -4,6 +4,6 @@
   border-bottom: 1px solid map-get($palette-grey, 200);
 }
 .-content{
-  overflow-y: scroll;
+  overflow-y: auto;
   height: calc(100vh - 81px - 80px - 48px - 40px);
 }

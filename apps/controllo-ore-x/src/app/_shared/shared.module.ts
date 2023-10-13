@@ -14,6 +14,7 @@ import { PageTitleComponent } from './components/page-title/page-title.component
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { UpsertTemplateComponent } from './components/upsert-template/upsert-template.component';
 import { RtHeaderModule } from './modules/rt-header/rt-header.module';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { RtHeaderModule } from './modules/rt-header/rt-header.module';
     MatIconModule,
     RtHeaderModule,
     RtTableModule,
+    MatDatepickerModule,
   ],
   exports: [
     GlobalTopbarComponent,
