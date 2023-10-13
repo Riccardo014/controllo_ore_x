@@ -18,6 +18,7 @@ import { AuthService } from '@app/_core/services/auth.service';
 import { IndexConfigurationDataService } from '@app/_core/services/index-configuration.data-service';
 import { TrackerDataService } from '@app/_core/services/tracker.data-service';
 import { IndexPage } from '@app/_shared/classes/index-page.class';
+import { CalendarDateService } from '@app/_shared/components/index-template/servicies/calendar-date.service';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
@@ -42,6 +43,7 @@ export class TrackerIndexPage
   buttonIcon = 'more_time';
   buttonText = 'Inserisci ore';
   workedHours: number = 0;
+  selectedDate: Date = new Date();
 
   CONFIGURATION_KEY: INDEX_CONFIGURATION_KEY = INDEX_CONFIGURATION_KEY.TRACKER;
   isItLoading: boolean = false;
@@ -68,6 +70,7 @@ export class TrackerIndexPage
     private _rtDialogService: RtDialogService,
     private _authService: AuthService,
     private _router: Router,
+    private _calendarDateService: CalendarDateService,
   ) {
     super();
   }
@@ -81,28 +84,34 @@ export class TrackerIndexPage
   }
 
   override _setSubscriptions(): void {
-    this.subscriptionsList.push(this._getUserHours());
+    this.subscriptionsList.push(
+      this._getUserHours(),
+      this._calendarDateService.currentDateObservable
+      .subscribe((date: Date) => {
+        this.selectedDate = date;
+        this._getUserHours();
+      }),
+    );
   }
 
   _getUserHours(): Subscription {
-    const todayDate: Date = new Date();
     if (!this._authService.loggedInUser) {
       throw new Error('User not logged in');
     }
     return this._dataService
       .getMany({
         relations: ['release', 'release.project', 'hoursTag'],
-        logging: true,
         where: {
           userId: this._authService.loggedInUser._id,
           date: {
             _fn: FIND_BOOSTED_FN.DATE_BETWEEN,
-            args: [startOfDay(todayDate).toISOString(), endOfDay(todayDate).toISOString()],
+            args: [startOfDay(this.selectedDate).toISOString(), endOfDay(this.selectedDate).toISOString()],
           },
         },
       })
       .subscribe((userHours: ApiPaginatedResponse<UserHoursReadDto>) => {
         this.userHours = userHours.data;
+        this.workedHours = 0;
         this.userHours.forEach((userHour: UserHoursReadDto) => {
           this.workedHours += Number(userHour.hours);
         });
