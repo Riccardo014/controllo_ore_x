@@ -1,21 +1,18 @@
-<div class="__box">
+<div class="-box">
   <button
-    mat-stroked-button
     (click)="cancel.emit()"
-    color="primary"
-    class="rt-btn __cancel-btn"
+    class="rt-btn"
     mat-button
     type="button"
+    >{{ textCancel }}</button
   >
-    {{ textCancel }}
-  </button>
   <button
     (click)="confirm.emit()"
+    [disabled]="isValid === false"
     class="rt-btn --flat-primary"
     color="primary"
     mat-flat-button
     type="button"
+    >{{ textConfirm }}</button
   >
-    {{ textConfirm }}
-  </button>
 </div>

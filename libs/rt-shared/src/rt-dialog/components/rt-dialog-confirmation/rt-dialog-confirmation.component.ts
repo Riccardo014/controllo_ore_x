@@ -4,11 +4,8 @@ import { RT_DIALOG_CLOSE_RESULT } from '../../enums/rt-dialog-close-result.enum'
 import { IRtDialogClose } from '../../interfaces/i-rt-dialog-close.interface';
 import { IRtDialogInput } from '../../interfaces/i-rt-dialog-input.interface';
 
-/**
- * Fast custom component for RtDialogSvc.open for a chose (confirm/cancel)
- */
 @Component({
-  selector: 'rt-dialog-confirmation',
+  selector: 'lib-rt-dialog-confirmation',
   templateUrl: './rt-dialog-confirmation.component.html',
   styleUrls: ['./rt-dialog-confirmation.component.scss'],
 })

@@ -1,43 +1,29 @@
-<div class="-header" *ngIf="hasHeader">
-  <ng-content select="[header]"></ng-content>
+<mat-progress-bar mode="indeterminate" color="accent" *ngIf="isLoading"></mat-progress-bar>
+
+<div class="-error" *ngIf="isError && !isLoading">{{ errorMsg }}</div>
+
+<div class="-header">
+  <div>
+    <span *ngIf="cTitle" class="-title">{{ cTitle }}</span>
+  </div>
+
+  <button (click)="closeDialog.emit()" mat-icon-button type="button">
+    <mat-icon>close</mat-icon>
+  </button>
 </div>
 
-<div *ngIf="isLoading && !isError">
-  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-</div>
+<main class="-main">
 
-<div class="-content">
-  <div mat-dialog-content>
-    <div class="-title --fw-600" *ngIf="title">
-      {{ title }}
-    </div>
-    <div class="-subtitle" *ngIf="subtitle">
-      {{ subtitle }}
-    </div>
+  <div class="body1 py-3 --fw500" *ngIf="subtitle" [innerHTML]="subtitle">
+  </div>
 
-    <ng-content select="[body]" *ngIf="!isLoading && !isError"> </ng-content>
-
-    <div *ngIf="isLoading && !isError" class="-spinner-wrapper">
-      <mat-spinner
-        class="-spinner"
-        mode="indeterminate"
-        color="primary"
-      ></mat-spinner>
-    </div>
-
-    <div *ngIf="isError" class="-refetch-data-wrapper">
-      <div class="__text headline-6">Ops! Qualcosa è andato storto.</div>
-      <button mat-flat-button color="accent" (click)="reFetchEmitter.emit()">
-        Ricarica la pagina
-      </button>
+  <div [class.-loading-layer]="isLoading" class="-container-body">
+    <div mat-dialog-content>
+      <ng-content select="[body]"></ng-content>
     </div>
   </div>
-</div>
+</main>
 
-<div
-  mat-dialog-actions
-  *ngIf="hasFooter && !isLoading && !isError"
-  class="-footer"
->
+<div mat-dialog-actions class="-footer" *ngIf="isFooterEnabled && !isError">
   <ng-content select="[footer]"></ng-content>
 </div>

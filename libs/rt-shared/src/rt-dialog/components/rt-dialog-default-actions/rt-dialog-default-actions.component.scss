@@ -1,17 +1,9 @@
-@import 'libs/ui/core/consts.scss';
-@import 'libs/ui/core/mixins.scss';
-
 :host {
   width: 100%;
 }
 
-.__box {
+.-box {
   display: flex;
   justify-content: flex-end;
   align-items: center;
 }
-
-.__cancel-btn {
-  border: 1px solid map-get($palette-primary, 500);
-}
-
