@@ -7,6 +7,15 @@ import {
   Output,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import {
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MomentDateAdapter,
+} from '@angular/material-moment-adapter';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+} from '@angular/material/core';
 import { IndexPage } from '@app/_shared/classes/index-page.class';
 import {
   SubscriptionsLifecycle,
@@ -34,7 +43,8 @@ import { CalendarDateService } from './servicies/calendar-date.service';
   ],
 })
 export class IndexTemplateComponent
-  implements OnInit, OnDestroy, SubscriptionsLifecycle {
+  implements OnInit, OnDestroy, SubscriptionsLifecycle
+{
   /**
    * Page to be displayed
    */
@@ -93,6 +103,9 @@ export class IndexTemplateComponent
   @Output() openCreateDialogEvent: EventEmitter<boolean> =
     new EventEmitter<boolean>();
 
+  @Output() openCreateDialog: EventEmitter<boolean> =
+    new EventEmitter<boolean>();
+
   subscriptionsList: Subscription[] = [];
 
   completeSubscriptions: (subscriptionsList: Subscription[]) => void =
@@ -103,7 +116,8 @@ export class IndexTemplateComponent
 
   constructor(
     private _loadingService: RtLoadingService,
-    private _calendarDateService: CalendarDateService) { }
+    private _calendarDateService: CalendarDateService,
+  ) {}
 
   ngOnInit(): void {
     this.setSubscriptions();
@@ -123,8 +137,8 @@ export class IndexTemplateComponent
         this._isFirstLoadDone = isFirstLoadDone;
         this._setLoadingParameters();
       }),
-      this._calendarDateService.currentDateObservable.subscribe(
-        (date) => (this.date.setValue(moment(date))),
+      this._calendarDateService.currentDateObservable.subscribe((date) =>
+        this.date.setValue(moment(date)),
       ),
     );
   }
@@ -158,7 +172,9 @@ export class IndexTemplateComponent
   }
 
   getDateToDisplay(date: Date): string {
-    let dayOfWeek: string = date.toLocaleDateString('it-IT', { weekday: 'long' });
+    let dayOfWeek: string = date.toLocaleDateString('it-IT', {
+      weekday: 'long',
+    });
     const dateNumber: number = date.getDay();
     let month: string = date.toLocaleDateString('it-IT', { month: 'long' });
 
