@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { Router } from '@angular/router';
 import {
   INDEX_CONFIGURATION_KEY,
   UserCreateDto,
@@ -45,17 +44,12 @@ export class TeamIndexPage extends IndexPage<
     protected _dataService: TeamDataService,
     protected _loadingService: RtLoadingService,
     private _rtDialogService: RtDialogService,
-    private _router: Router,
-    private _rtDialogSvc: RtDialogService,
   ) {
     super();
   }
 
   openDialogFn($event: UserReadDto): void {
-    // this.openDialog.emit($event);
-    // this._router.navigate([this._router.url + '/' + $event._id]);
-
-    this._rtDialogSvc
+    this._rtDialogService
       .open(TeamDialog, {
         width: '600px',
         maxWidth: '600px',
@@ -65,7 +59,7 @@ export class TeamIndexPage extends IndexPage<
   }
 
   createFn(): void {
-    this._rtDialogSvc
+    this._rtDialogService
       .open(TeamDialog, {
         width: '600px',
         maxWidth: '600px',
