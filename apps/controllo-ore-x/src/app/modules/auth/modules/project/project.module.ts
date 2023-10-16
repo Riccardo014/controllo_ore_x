@@ -24,7 +24,7 @@ import {
 import { SharedModule } from '@shared/shared.module';
 import { ProjectReleaseTableLineComponent } from './components/project-release-table-line/project-release-table-line.component';
 import { ProjectComponent } from './components/project/project.component';
-import { ProjectUpsertPage } from './dialogs/project-upsert/project-upsert.page';
+import { ProjectDialog } from './dialogs/project-dialog/project.dialog';
 import { ProjectIndexPage } from './pages/project-index/project-index.page';
 import { ProjectReleaseIndexPage } from './pages/project-release-index.page/project-release-index.page';
 import { ProjectRoutingModule } from './project-routing.module';
@@ -35,7 +35,7 @@ import { ProjectRoutingModule } from './project-routing.module';
     ProjectReleaseIndexPage,
     ProjectComponent,
     ProjectReleaseTableLineComponent,
-    ProjectUpsertPage,
+    ProjectDialog,
   ],
   imports: [
     CommonModule,

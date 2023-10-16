@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,15 +9,17 @@ import { Router } from '@angular/router';
 export class ProjectComponent {
   @Input() projectWithCustomer!: any;
 
+  @Output() openDialog: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output() duplicate: EventEmitter<any> = new EventEmitter<any>();
+
   isPanelOpen: boolean = false;
   customExpandedHeight: string = '90px';
 
   constructor(private _router: Router) {}
 
-  openDialogFn(): void {
-    this._router.navigate([
-      this._router.url + '/' + this.projectWithCustomer._id,
-    ]);
+  edit(): void {
+    this.openDialog.emit(this.projectWithCustomer);
   }
 
   openCreateReleaseDialog(): void {
@@ -34,5 +36,14 @@ export class ProjectComponent {
     this._router.navigate([
       this._router.url + '/' + this.projectWithCustomer._id + '/release',
     ]);
+  }
+
+  togglePanel(): void {
+    this.isPanelOpen = !this.isPanelOpen;
+  }
+
+  //TODO: add duplicate functionality
+  duplicateFn(): void {
+    this.duplicate.emit(this.projectWithCustomer);
   }
 }

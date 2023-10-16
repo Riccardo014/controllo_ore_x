@@ -1,5 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import {
   ApiPaginatedResponse,
   CustomerReadDto,
@@ -9,32 +11,35 @@ import {
 } from '@api-interfaces';
 import { CustomerDataService } from '@app/_core/services/customer.data-service';
 import { ProjectDataService } from '@app/_core/services/project.data-service';
-import { UpsertPage } from '@app/_shared/classes/upsert-page.class';
+import { BaseDialog } from '@app/_shared/classes/base-dialog.class';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
+import { IRtDialogInput, RtDialogService } from '@controllo-ore-x/rt-shared';
 import { ProjectColor } from 'apps/controllo-ore-x/src/assets/utils/datas/project-color';
 import { AlertService } from 'libs/rt-shared/src/alert/services/alert.service';
-import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
-import { RT_FORM_ERRORS, RtFormError } from 'libs/utils';
 import { Subscription } from 'rxjs';
+import { CustomerDialog } from '../../../customer/dialogs/customer-dialog/customer.dialog';
 import { ProjectFormHelper } from '../../helpers/project.form-helper';
 
 @Component({
-  selector: 'controllo-ore-x-project-upsert',
-  templateUrl: './project-upsert.page.html',
-  styleUrls: ['./project-upsert.page.scss'],
+  selector: 'controllo-ore-x-project-dialog',
+  templateUrl: './project.dialog.html',
+  styleUrls: ['./project.dialog.scss'],
   providers: [ProjectFormHelper],
 })
-export class ProjectUpsertPage
-  extends UpsertPage<ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>
+export class ProjectDialog
+  extends BaseDialog<ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>
   implements SubscriptionsLifecycle, OnDestroy, OnInit
 {
   override title: string = 'Crea nuovo progetto';
 
-  projectId?: string | number;
+  override isCreating: boolean = true;
+
   currentCustomer?: CustomerReadDto;
+  customers: CustomerReadDto[] = [];
+
   currentColor?: string;
   colors: string[] = [
     ProjectColor.orange,
@@ -45,9 +50,6 @@ export class ProjectUpsertPage
     ProjectColor.red,
   ];
 
-  RT_FORM_ERRORS: { [key: string]: RtFormError } = RT_FORM_ERRORS;
-
-  customers: CustomerReadDto[] = [];
   subscriptionsList: Subscription[] = [];
 
   _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
@@ -55,28 +57,30 @@ export class ProjectUpsertPage
 
   constructor(
     public override formHelper: ProjectFormHelper,
+    protected override _formBuilder: FormBuilder,
+    protected _matDialogRef: MatDialogRef<ProjectDialog>,
     private _projectDataService: ProjectDataService,
-    private _alertService: AlertService,
     private _rtDialogService: RtDialogService,
+    private _alertService: AlertService,
     private _router: Router,
-    private _activatedRoute: ActivatedRoute,
+    @Inject(MAT_DIALOG_DATA) public data: IRtDialogInput<any>,
     private _customerDataService: CustomerDataService,
   ) {
-    super(
-      formHelper,
-      _alertService,
-      _rtDialogService,
-      _router,
-      _activatedRoute,
-    );
+    super(formHelper, _formBuilder, _rtDialogService, _alertService, _router);
   }
 
-  override ngOnInit(): void {
-    super.ngOnInit();
-
+  ngOnInit(): void {
     this._setSubscriptions();
 
-    if (!this.isCreating) {
+    if (this.data.input) {
+      this.formHelper.patchForm(this.data.input);
+      this.currentColor = this.data.input.color;
+      if (this.data.input.isDuplication) {
+        this.title = 'Duplica progetto';
+        return;
+      }
+      this.isCreating = false;
+      this.formHelper.entityId = this.data.input._id;
       this.title = 'Modifica progetto';
     }
   }
@@ -86,32 +90,23 @@ export class ProjectUpsertPage
   }
 
   _setSubscriptions(): void {
-    if (!this.isCreating) {
-      this.projectId = this.formHelper.entityId;
-      this.subscriptionsList.push(this._getProject());
-    } else {
-      this.subscriptionsList.push(this._getProjectsCustomers());
+    this.subscriptionsList.push(this._getProjectsCustomers());
+  }
+
+  override onSubmit(): void {
+    if (this.data.input.isDuplication) {
+      this.isCreating = true;
     }
+    super.onSubmit();
   }
 
   openCreateCustomer(): void {
-    this._router.navigate(['/auth/clienti', 'create']);
-  }
-
-  /**
-   * Get the project's data from the database.
-   */
-  private _getProject(): Subscription {
-    if (!this.projectId) {
-      throw new Error('Non è stato possibile recuperare i dati del progetto.');
-    }
-    return this._projectDataService
-      .getOne(this.projectId)
-      .subscribe((project: any) => {
-        this.formHelper.patchForm(project);
-        this.subscriptionsList.push(this._getProjectsCustomers());
-        this.currentColor = project.color;
-      });
+    this._rtDialogService
+      .open(CustomerDialog, {
+        width: '600px',
+        maxWidth: '600px',
+      })
+      .subscribe();
   }
 
   /**
