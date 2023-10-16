@@ -9,7 +9,12 @@
     <span *ngIf="title" class="headline-5">{{ title }}</span>
   </div>
 
-  <button *ngIf="!isError" (click)="closeDialogEvent.emit()" mat-icon-button type="button">
+  <button
+    *ngIf="!isError"
+    (click)="closeDialogEvent.emit()"
+    mat-icon-button
+    type="button"
+  >
     <mat-icon>close</mat-icon>
   </button>
 </div>
@@ -22,15 +27,16 @@
       <ng-content select="[body]" *ngIf="!isLoading && !isError"></ng-content>
 
       <div *ngIf="isLoading && !isError" class="-container__spinner">
-        <mat-spinner
-          mode="indeterminate"
-          color="primary"
-        ></mat-spinner>
+        <mat-spinner mode="indeterminate" color="primary"></mat-spinner>
       </div>
 
       <div *ngIf="isError" class="-container__refetch">
-        <div class="-container__refetch__text headline-6">Ops! Qualcosa è andato storto.</div>
-        <div class="body-1 -container__refetch__text" *ngIf="errorMessage">{{ errorMessage }}</div>
+        <div class="-container__refetch__text headline-6">
+          Ops! Qualcosa è andato storto.
+        </div>
+        <div class="body-1 -container__refetch__text" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
         <button mat-flat-button color="accent" (click)="reFetchEvent.emit()">
           Ricarica la pagina
         </button>
@@ -39,6 +45,10 @@
   </div>
 </div>
 
-<div mat-dialog-actions class="-footer" *ngIf="isFooterEnabled && !isLoading && !isError">
+<div
+  mat-dialog-actions
+  class="-footer"
+  *ngIf="isFooterEnabled && !isLoading && !isError"
+>
   <ng-content select="[footer]"></ng-content>
 </div>

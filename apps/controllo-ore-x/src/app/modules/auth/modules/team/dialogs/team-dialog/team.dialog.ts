@@ -106,7 +106,7 @@ export class TeamDialog implements SubscriptionsLifecycle, OnDestroy, OnInit {
         },
         error: (error: any) => {
           throw new Error(error);
-        }
+        },
       });
   }
 
@@ -173,7 +173,7 @@ export class TeamDialog implements SubscriptionsLifecycle, OnDestroy, OnInit {
       },
       error: () => {
         this._alertService.openError();
-        this.errorMessage = 'Non è stato possibile creare l\'utente';
+        this.errorMessage = "Non è stato possibile creare l'utente";
         this.hasErrors = true;
       },
       complete: () => {
@@ -202,7 +202,8 @@ export class TeamDialog implements SubscriptionsLifecycle, OnDestroy, OnInit {
       },
       error: () => {
         this._alertService.openError();
-        this.errorMessage = 'Non è stato possibile aggiornare i dati dell\'utente';
+        this.errorMessage =
+          "Non è stato possibile aggiornare i dati dell'utente";
         this.hasErrors = true;
       },
       complete: () => {
@@ -230,7 +231,7 @@ export class TeamDialog implements SubscriptionsLifecycle, OnDestroy, OnInit {
       },
       error: () => {
         this._alertService.openError();
-        this.errorMessage = 'Non è stato possibile eliminare l\'utente';
+        this.errorMessage = "Non è stato possibile eliminare l'utente";
         this.hasErrors = true;
       },
       complete: () => {
