@@ -5,7 +5,9 @@ import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
+import { RtDialogService } from '@controllo-ore-x/rt-shared';
 import { Subscription } from 'rxjs';
+import { ProjectDialog } from '../../../../dialogs/project-dialog/project.dialog';
 
 @Component({
   selector: 'controllo-ore-x-release-index',
@@ -28,6 +30,7 @@ export class ReleaseIndexPage
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
     private _projectDataService: ProjectDataService,
+    private _rtDialogService: RtDialogService,
   ) {}
 
   ngOnInit(): void {
@@ -69,8 +72,12 @@ export class ReleaseIndexPage
   }
 
   openEditProjectDialog(): void {
-    this._router.navigate(['../'], {
-      relativeTo: this._activatedRoute,
-    });
+    this._rtDialogService
+      .open(ProjectDialog, {
+        width: '600px',
+        maxWidth: '600px',
+        data: this.project,
+      })
+      .subscribe();
   }
 }

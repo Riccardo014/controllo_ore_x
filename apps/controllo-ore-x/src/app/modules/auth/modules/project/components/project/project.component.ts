@@ -42,7 +42,6 @@ export class ProjectComponent {
     this.isPanelOpen = !this.isPanelOpen;
   }
 
-  //TODO: add duplicate functionality
   duplicateFn(): void {
     this.duplicate.emit(this.projectWithCustomer);
   }
