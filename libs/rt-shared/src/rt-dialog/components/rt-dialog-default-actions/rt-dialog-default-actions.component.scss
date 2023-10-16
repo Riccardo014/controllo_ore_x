@@ -1,3 +1,5 @@
+@import 'libs/ui/core';
+
 :host {
   width: 100%;
 }
@@ -6,4 +8,14 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
+}
+
+.-button{
+  padding: 20px 40px;
+  border-radius: 10px;
+}
+
+.-button-cancel{
+  color: map-get($palette-primary, 500 );
+  background-color: map-get($palette-primary, 50 );;
 }

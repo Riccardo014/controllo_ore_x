@@ -1,0 +1,34 @@
+@import 'libs/ui/core.scss';
+
+.-form-reset {
+  display: flex;
+  flex-direction: column;
+}
+
+.-container-reset-btns {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+}
+
+.-form-field{
+  width: 100%;
+  padding-bottom: 10px;
+}
+
+.-input-with-icon{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.-button{
+  padding: 20px 40px;
+  border-radius: 10px;
+}
+
+.-button-delete{
+  color: map-get($palette-error, 50 );
+  background-color: map-get($palette-error, 500 );;
+}

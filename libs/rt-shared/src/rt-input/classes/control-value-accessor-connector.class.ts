@@ -9,7 +9,7 @@ import {
 @Directive()
 export class ControlValueAccessorConnector implements ControlValueAccessor {
   @ViewChild(FormControlDirective, { static: true })
-  formControlDirective?: FormControlDirective;
+  formControlDirective!: FormControlDirective;
 
   @Input()
   formControl?: FormControl;
@@ -20,11 +20,7 @@ export class ControlValueAccessorConnector implements ControlValueAccessor {
   @Input()
   value?: any;
 
-  constructor(private _injector: Injector) {
-    if (!this.formControlDirective) {
-      throw new Error('FormControlDirective is undefined');
-    }
-  }
+  constructor(private _injector: Injector) {}
 
   get control(): FormControl | null {
     if (!this.formControl && !this.formControlName) {

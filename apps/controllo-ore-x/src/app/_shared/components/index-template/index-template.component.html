@@ -50,28 +50,27 @@
     </mat-form-field>
 
     <ng-template #createLink>
-      <a
+      <!-- <a
         routerLink="./create"
         *ngIf="!shouldHideCreateButton"
         class="-page-title-link"
+      > -->
+      <button
+        (click)="openCreateDialogFn()"
+        class="hide-mobile -page-title-link-button"
+        mat-flat-button
+        color="primary"
       >
-        <button
-          class="hide-mobile -page-title-link-button"
-          mat-flat-button
-          color="primary"
-        >
-          <div class="-page-title-link-button-elements">
-            <span class="material-symbols-outlined">{{ buttonIcon }}</span>
-            <span class="body-2 -page-title-link-button-elements-text">{{
-              buttonText
-            }}</span>
-          </div>
-        </button>
+        <div class="-page-title-link-button-elements">
+          <span class="material-symbols-outlined">{{ buttonIcon }}</span>
+          <span class="body-2 -page-title-link-button-elements-text">{{
+            buttonText
+          }}</span>
+        </div>
+      </button>
 
-        <mat-icon class="mt-1 hide-tablet-desktop" color="primary"
-          >add</mat-icon
-        >
-      </a>
+      <mat-icon class="mt-1 hide-tablet-desktop" color="primary">add</mat-icon>
+      <!-- </a> -->
     </ng-template>
   </ng-container>
 </controllo-ore-x-rt-header>

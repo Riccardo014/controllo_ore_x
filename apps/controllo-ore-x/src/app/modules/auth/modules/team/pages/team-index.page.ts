@@ -12,6 +12,7 @@ import { IndexPage } from '@app/_shared/classes/index-page.class';
 import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
 import { BehaviorSubject } from 'rxjs';
+import { TeamDialog } from '../dialogs/team-dialog/team.dialog';
 
 @Component({
   selector: 'controllo-ore-x-team-index',
@@ -45,12 +46,30 @@ export class TeamIndexPage extends IndexPage<
     protected _loadingService: RtLoadingService,
     private _rtDialogService: RtDialogService,
     private _router: Router,
+    private _rtDialogSvc: RtDialogService,
   ) {
     super();
   }
 
   openDialogFn($event: UserReadDto): void {
-    this.openDialog.emit($event);
-    this._router.navigate([this._router.url + '/' + $event._id]);
+    // this.openDialog.emit($event);
+    // this._router.navigate([this._router.url + '/' + $event._id]);
+
+    this._rtDialogSvc
+      .open(TeamDialog, {
+        width: '600px',
+        maxWidth: '600px',
+        data: $event,
+      })
+      .subscribe();
+  }
+
+  createFn(): void {
+    this._rtDialogSvc
+      .open(TeamDialog, {
+        width: '600px',
+        maxWidth: '600px',
+      })
+      .subscribe();
   }
 }

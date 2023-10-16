@@ -1,10 +1,14 @@
-<mat-progress-bar mode="indeterminate" color="accent" *ngIf="isLoading"></mat-progress-bar>
+<mat-progress-bar
+  mode="indeterminate"
+  color="primary"
+  *ngIf="isLoading"
+></mat-progress-bar>
 
 <div class="-error" *ngIf="isError && !isLoading">{{ errorMsg }}</div>
 
 <div class="-header">
   <div>
-    <span *ngIf="cTitle" class="-title">{{ cTitle }}</span>
+    <span *ngIf="cTitle" class="headline-5">{{ cTitle }}</span>
   </div>
 
   <button (click)="closeDialog.emit()" mat-icon-button type="button">
@@ -13,9 +17,7 @@
 </div>
 
 <main class="-main">
-
-  <div class="body1 py-3 --fw500" *ngIf="subtitle" [innerHTML]="subtitle">
-  </div>
+  <div class="body1 py-3 --fw500" *ngIf="subtitle" [innerHTML]="subtitle"></div>
 
   <div [class.-loading-layer]="isLoading" class="-container-body">
     <div mat-dialog-content>
