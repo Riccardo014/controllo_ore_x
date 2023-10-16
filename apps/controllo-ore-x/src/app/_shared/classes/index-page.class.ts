@@ -1,5 +1,10 @@
 import { Directive, OnDestroy, OnInit } from '@angular/core';
-import { ApiResponse, INDEX_CONFIGURATION_KEY, IndexConfigurationReadDto, TableConfiguration } from '@api-interfaces';
+import {
+  ApiResponse,
+  INDEX_CONFIGURATION_KEY,
+  IndexConfigurationReadDto,
+  TableConfiguration,
+} from '@api-interfaces';
 import { IndexConfigurationDataService } from '@app/_core/services/index-configuration.data-service';
 import {
   SubscriptionsLifecycle,
