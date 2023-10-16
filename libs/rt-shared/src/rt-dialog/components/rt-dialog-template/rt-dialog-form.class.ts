@@ -6,7 +6,7 @@ import { RtDialog } from './rt-dialog.class';
 @Directive()
 export abstract class RtDialogForm extends RtDialog {
   abstract title: string;
-  protected abstract _fb: FormBuilder;
+  protected abstract _formBuilder: FormBuilder;
 
   RT_FORM_ERRORS: { [key: string]: RtFormError } = RT_FORM_ERRORS;
 }
