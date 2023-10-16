@@ -27,7 +27,7 @@ export class TeamIndexPage extends IndexPage<
   titleIcon: string | null = 'workspaces';
   title: string = 'Team';
   pageTitle = 'Team';
-  buttonIcon = 'bakery_dining';
+  buttonIcon = 'workspaces';
   buttonText = 'Nuovo Membro';
 
   CONFIGURATION_KEY: INDEX_CONFIGURATION_KEY = INDEX_CONFIGURATION_KEY.TEAM;
@@ -52,9 +52,6 @@ export class TeamIndexPage extends IndexPage<
   }
 
   openDialogFn($event: UserReadDto): void {
-    // this.openDialog.emit($event);
-    // this._router.navigate([this._router.url + '/' + $event._id]);
-
     this._rtDialogSvc
       .open(TeamDialog, {
         width: '600px',
