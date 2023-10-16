@@ -7,16 +7,23 @@ import {
   Output,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import {
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MomentDateAdapter,
+} from '@angular/material-moment-adapter';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+} from '@angular/material/core';
 import { IndexPage } from '@app/_shared/classes/index-page.class';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
-import { Subscription } from 'rxjs';
 import * as _moment from 'moment';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { Subscription } from 'rxjs';
 import { CalendarDateService } from './servicies/calendar-date.service';
 
 const moment = _moment;
@@ -51,7 +58,8 @@ export const MY_FORMATS = {
   ],
 })
 export class IndexTemplateComponent
-  implements OnInit, OnDestroy, SubscriptionsLifecycle {
+  implements OnInit, OnDestroy, SubscriptionsLifecycle
+{
   /**
    * Page to be displayed
    */
@@ -65,7 +73,7 @@ export class IndexTemplateComponent
   /**
    * If true, the page will have a calendar
    */
-    @Input() hasCalendar: boolean = false;
+  @Input() hasCalendar: boolean = false;
 
   /**
    * If true, the page will have a button to export the data in csv format
@@ -110,6 +118,9 @@ export class IndexTemplateComponent
   @Output() openCreateDialogEvent: EventEmitter<boolean> =
     new EventEmitter<boolean>();
 
+  @Output() openCreateDialog: EventEmitter<boolean> =
+    new EventEmitter<boolean>();
+
   subscriptionsList: Subscription[] = [];
 
   completeSubscriptions: (subscriptionsList: Subscription[]) => void =
@@ -120,7 +131,8 @@ export class IndexTemplateComponent
 
   constructor(
     private _loadingService: RtLoadingService,
-    private _calendarDateService: CalendarDateService) { }
+    private _calendarDateService: CalendarDateService,
+  ) {}
 
   ngOnInit(): void {
     this.setSubscriptions();
@@ -140,8 +152,8 @@ export class IndexTemplateComponent
         this._isFirstLoadDone = isFirstLoadDone;
         this._setLoadingParameters();
       }),
-      this._calendarDateService.currentDateObservable.subscribe(
-        (date) => (this.date.setValue(moment(date))),
+      this._calendarDateService.currentDateObservable.subscribe((date) =>
+        this.date.setValue(moment(date)),
       ),
     );
   }
@@ -175,7 +187,9 @@ export class IndexTemplateComponent
   }
 
   getDateToDisplay(date: Date): string {
-    let dayOfWeek: string = date.toLocaleDateString('it-IT', { weekday: 'long' });
+    let dayOfWeek: string = date.toLocaleDateString('it-IT', {
+      weekday: 'long',
+    });
     const dateNumber: number = date.getDay();
     let month: string = date.toLocaleDateString('it-IT', { month: 'long' });
 
