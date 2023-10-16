@@ -40,9 +40,9 @@ export class ControlValueAccessorConnector implements ControlValueAccessor {
     return this._injector.get(ControlContainer);
   }
 
-  bindFunctionToTouchEvent(fn: Function): void {
+  registerOnTouched(fn: Function): void {
     this.checkFormControlDirective();
-    this.formControlDirective!.valueAccessor!.bindFunctionToTouchEvent(fn);
+    this.formControlDirective!.valueAccessor!.registerOnTouched(fn);
   }
 
   registerOnChange(fn: Function): void {

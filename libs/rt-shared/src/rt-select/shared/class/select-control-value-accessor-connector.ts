@@ -63,14 +63,14 @@ export class SelectControlValueAccessorConnector extends SelectControlValueAcces
    * Compare two elements and return whether or not they are equal.
    */
   @Input()
-  override get compare(): any {
+  get compare(): any {
     return this._compareFn;
   }
 
   /**
    * Set a compare function that takes two parameters and returns a boolean.
    */
-  override set compare(fn: (item1: any, item2: any) => boolean) {
+  set compare(fn: (item1: any, item2: any) => boolean) {
     if (fn.length !== 2) {
       throw new Error('Compare function must take exactly two parameters.');
     }
@@ -78,7 +78,7 @@ export class SelectControlValueAccessorConnector extends SelectControlValueAcces
   }
 
   override registerOnTouched(fn: Function): void {
-    this.formControlDirective!.valueAccessor?.bindFunctionToTouchEvent(fn);
+    this.formControlDirective!.valueAccessor?.registerOnTouched(fn);
   }
 
   // WARNING: if the function doesnt match, the first option will be selected
