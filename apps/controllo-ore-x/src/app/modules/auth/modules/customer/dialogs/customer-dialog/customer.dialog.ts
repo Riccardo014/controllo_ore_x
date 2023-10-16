@@ -134,7 +134,8 @@ export class CustomerDialog {
       },
       error: () => {
         this._alertService.openError();
-        this.errorMessage = 'Non è stato possibile aggiornare i dati del cliente';
+        this.errorMessage =
+          'Non è stato possibile aggiornare i dati del cliente';
         this.hasErrors = true;
       },
       complete: () => {
