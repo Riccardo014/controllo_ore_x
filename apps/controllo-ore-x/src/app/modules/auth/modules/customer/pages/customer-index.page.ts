@@ -6,12 +6,13 @@ import {
   CustomerUpdateDto,
   INDEX_CONFIGURATION_KEY,
 } from '@api-interfaces';
-import { CustomerDataService } from '@app/_core/services/customer-data.service';
+import { CustomerDataService } from '@app/_core/services/customer.data-service';
+import { IndexConfigurationDataService } from '@app/_core/services/index-configuration.data-service';
 import { IndexPage } from '@app/_shared/classes/index-page.class';
-import { IndexConfigurationDataService } from '@core/services/index-configuration-data.service';
 import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
-import { BehaviorSubject, ReplaySubject, takeUntil } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+import { CustomerDialog } from '../dialogs/customer-dialog/customer.dialog';
 
 @Component({
   selector: 'controllo-ore-x-customer-index',
@@ -23,7 +24,7 @@ export class CustomerIndexPage extends IndexPage<
   CustomerCreateDto,
   CustomerUpdateDto
 > {
-  titleIcon: string | null = 'workspaces';
+  titleIcon: string | null = 'bakery_dining';
   title: string = 'Clienti';
   pageTitle = 'Clienti';
   buttonIcon = 'bakery_dining';
@@ -37,8 +38,6 @@ export class CustomerIndexPage extends IndexPage<
   hasErrors: boolean = false;
   isEditAvailable: boolean = false;
 
-  destroy$: ReplaySubject<boolean> = new ReplaySubject(1);
-
   @Output() openDialog: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
@@ -49,26 +48,24 @@ export class CustomerIndexPage extends IndexPage<
     private _router: Router,
   ) {
     super();
-
-    this.isLoading.pipe(takeUntil(this.destroy$)).subscribe((r) => {
-      this.isItLoading = false;
-    });
-    this.isFirstLoadDone.pipe(takeUntil(this.destroy$)).subscribe((r) => {
-      this._isFirstLoadDone = new BehaviorSubject<boolean>(false);
-    });
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next(true);
-    this.destroy$.unsubscribe();
+  openDialogFn($event: CustomerReadDto): void {
+    this._rtDialogService
+      .open(CustomerDialog, {
+        width: '600px',
+        maxWidth: '600px',
+        data: $event,
+      })
+      .subscribe();
   }
 
-  openConfirmationDelete(customer: CustomerReadDto): void {
-    console.log('openConfirmationDelete', customer);
-  }
-
-  openDialogFn($event: any): void {
-    this.openDialog.emit($event);
-    this._router.navigate([this._router.url + '/' + $event._id]);
+  createFn(): void {
+    this._rtDialogService
+      .open(CustomerDialog, {
+        width: '600px',
+        maxWidth: '600px',
+      })
+      .subscribe();
   }
 }
