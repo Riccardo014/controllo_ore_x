@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
 export class ProjectReleaseIndexPage
   implements OnInit, OnDestroy, SubscriptionsLifecycle
 {
-  @Input() release!: ReleaseReadDto;
+  @Input() project!: ReleaseReadDto;
 
   releases: ReleaseReadDto[] = [];
 
@@ -38,7 +38,7 @@ export class ProjectReleaseIndexPage
     this.subscriptionsList.push(
       this._releaseDataService
         .getMany({
-          where: { releaseId: this.release._id },
+          where: { projectId: this.project._id },
         })
         .subscribe((releases: any) => {
           this.releases = releases.data;

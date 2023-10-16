@@ -23,6 +23,7 @@ import {
 import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
+import { ProjectDialog } from '../../dialogs/project-dialog/project.dialog';
 
 @Component({
   selector: 'controllo-ore-x-project-index',
@@ -83,7 +84,7 @@ export class ProjectIndexPage
   _getProjects(): Subscription {
     return this._dataService
       .getMany({
-        relations: ['customer']
+        relations: ['customer'],
       })
       .subscribe((projects: ApiPaginatedResponse<ProjectReadDto>) => {
         this.projects = projects.data;
@@ -91,18 +92,44 @@ export class ProjectIndexPage
       });
   }
 
-  openDialogFn($event: ProjectReadDto): void {
-    this.openDialog.emit($event);
-    this._router.navigate([this._router.url + '/' + $event._id]);
-  }
-
   updateFulltextSearch(fulltextSearch: string): void {
     this.showedProjects = this.projects.filter((project: any) => {
       return (
-        project.name.includes(fulltextSearch) || 
+        project.name.includes(fulltextSearch) ||
         project.customer.name.includes(fulltextSearch)
       );
     });
   }
 
+  openDialogFn($event: ProjectReadDto): void {
+    this._rtDialogService
+      .open(ProjectDialog, {
+        width: '600px',
+        maxWidth: '600px',
+        data: $event,
+      })
+      .subscribe();
+  }
+
+  duplicateFn($event: ProjectReadDto): void {
+    this._rtDialogService
+      .open(ProjectDialog, {
+        width: '600px',
+        maxWidth: '600px',
+        data: {
+          ...$event,
+          isDuplication: true,
+        },
+      })
+      .subscribe();
+  }
+
+  createFn(): void {
+    this._rtDialogService
+      .open(ProjectDialog, {
+        width: '600px',
+        maxWidth: '600px',
+      })
+      .subscribe();
+  }
 }

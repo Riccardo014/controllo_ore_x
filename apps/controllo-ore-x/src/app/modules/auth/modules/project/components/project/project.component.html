@@ -3,6 +3,7 @@
   (opened)="isPanelOpen = true"
   (closed)="isPanelOpen = false"
   class="mat-elevation-z0"
+  [expanded]="isPanelOpen"
 >
   <mat-expansion-panel-header
     class="-projects-table-header"
@@ -44,9 +45,18 @@
           <span>Nuova Release</span>
         </div>
       </button>
-      <button mat-icon-button (click)="openDialogFn()">
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="optionMenu"
+        (click)="togglePanel()"
+      >
         <mat-icon class="-more-vert-icon">more_vert</mat-icon>
       </button>
+      <mat-menu #optionMenu="matMenu">
+        <ng-content select="[menuOptions]"></ng-content>
+        <button (click)="edit()" mat-menu-item>Modifica</button>
+        <button (click)="duplicateFn()" mat-menu-item>Duplica</button>
+      </mat-menu>
     </mat-panel-description>
   </mat-expansion-panel-header>
   <controllo-ore-x-project-release-index [project]="projectWithCustomer">
