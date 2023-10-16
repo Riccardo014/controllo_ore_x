@@ -18,12 +18,13 @@ import {
   RtTableModule,
 } from '@controllo-ore-x/rt-shared';
 import { SharedModule } from '@shared/shared.module';
+import { TeamDialog } from './dialogs/team-dialog/team.dialog';
 import { TeamUpsertPage } from './dialogs/team-upsert/team-upsert.page';
 import { TeamIndexPage } from './pages/team-index.page';
 import { TeamRoutingModule } from './team-routing.module';
 
 @NgModule({
-  declarations: [TeamIndexPage, TeamUpsertPage],
+  declarations: [TeamIndexPage, TeamUpsertPage, TeamDialog],
   imports: [
     CommonModule,
     TeamRoutingModule,

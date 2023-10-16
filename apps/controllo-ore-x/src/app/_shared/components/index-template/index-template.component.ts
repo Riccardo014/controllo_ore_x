@@ -66,6 +66,9 @@ export class IndexTemplateComponent implements OnInit, SubscriptionsLifecycle {
    */
   @Output() openDialog: EventEmitter<any> = new EventEmitter<any>();
 
+  @Output() openCreateDialog: EventEmitter<boolean> =
+    new EventEmitter<boolean>();
+
   subscriptionsList: Subscription[] = [];
 
   _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
@@ -99,6 +102,10 @@ export class IndexTemplateComponent implements OnInit, SubscriptionsLifecycle {
 
   openDialogFn(entity: any): void {
     this.openDialog.emit(entity);
+  }
+
+  openCreateDialogFn(): void {
+    this.openCreateDialog.emit(true);
   }
 
   private _setLoadingParameters(): void {
