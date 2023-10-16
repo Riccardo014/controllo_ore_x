@@ -1,14 +1,14 @@
-<cox-dialog-template
-  [title]="data.title"
+<lib-dialog-template
+  [cTitle]="data.title"
   [subtitle]="data.input"
   (closeDialog)="cancelProcess()"
 >
   <div footer>
-    <rt-dialog-default-actions
+    <lib-rt-dialog-default-actions
       (cancel)="cancelProcess()"
       (confirm)="confirmProcess()"
       textConfirm="Conferma"
     >
-    </rt-dialog-default-actions>
+    </lib-rt-dialog-default-actions>
   </div>
-</cox-dialog-template>
+</lib-dialog-template>
