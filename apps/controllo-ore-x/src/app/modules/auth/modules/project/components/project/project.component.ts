@@ -37,6 +37,10 @@ export class ProjectComponent
     false,
   );
 
+  @Output() openDialog: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output() duplicate: EventEmitter<any> = new EventEmitter<any>();
+
   isPanelOpen: boolean = false;
   customExpandedHeight: string = '90px';
 
@@ -107,5 +111,14 @@ export class ProjectComponent
    */
   openDuplicateDialog(): void {
     this.duplicateEntityEvent.emit(this.project);
+  }
+
+  togglePanel(): void {
+    this.isPanelOpen = !this.isPanelOpen;
+  }
+
+  //TODO: add duplicate functionality
+  duplicateFn(): void {
+    this.duplicate.emit(this.projectWithCustomer);
   }
 }
