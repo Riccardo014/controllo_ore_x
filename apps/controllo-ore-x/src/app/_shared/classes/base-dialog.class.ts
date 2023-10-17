@@ -36,7 +36,6 @@ export abstract class BaseDialog<
     if (this.formHelper.invalid) {
       return;
     }
-
     this.isLoading = true;
 
     this.formHelper.disable();

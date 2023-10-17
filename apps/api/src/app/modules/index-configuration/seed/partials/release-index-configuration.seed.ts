@@ -26,7 +26,7 @@ export const RELEASE_INDEX_CONFIGURATION_SEED: any = {
         sortable: true,
       },
     ],
-    relations: [],
+    relations: ['project'],
     fullSearchCols: ['version'],
   },
 };

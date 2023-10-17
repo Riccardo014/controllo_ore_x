@@ -2,16 +2,21 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReleaseReadDto } from '@api-interfaces';
 import { UserHoursDataService } from '@app/_core/services/user-hour.data-service';
-import { SubscriptionsLifecycle, completeSubscriptions } from '@app/utils/subscriptions_lifecycle';
+import {
+  SubscriptionsLifecycle,
+  completeSubscriptions,
+} from '@app/utils/subscriptions_lifecycle';
+import { RtDialogService } from '@controllo-ore-x/rt-shared';
 import { Subscription } from 'rxjs';
+import { ReleaseDialog } from '../../dialogs/release-dialog/release.dialog';
 
 @Component({
   selector: 'controllo-ore-x-release-table-line',
   templateUrl: './release-table-line.component.html',
   styleUrls: ['./release-table-line.component.scss'],
 })
-export class ReleaseTableLineComponent 
-implements OnInit, OnDestroy, SubscriptionsLifecycle
+export class ReleaseTableLineComponent
+  implements OnInit, OnDestroy, SubscriptionsLifecycle
 {
   @Input() release!: ReleaseReadDto;
 
@@ -25,7 +30,8 @@ implements OnInit, OnDestroy, SubscriptionsLifecycle
 
   constructor(
     private _userHoursDataService: UserHoursDataService,
-    private _router: Router
+    private _router: Router,
+    private _rtDialogService: RtDialogService,
   ) {}
 
   ngOnInit(): void {
@@ -57,7 +63,13 @@ implements OnInit, OnDestroy, SubscriptionsLifecycle
   }
 
   openEditRelease($event: ReleaseReadDto): void {
-    this._router.navigate([this._router.url + '/' + $event._id]);
+    this._rtDialogService
+      .open(ReleaseDialog, {
+        width: '600px',
+        maxWidth: '600px',
+        data: $event,
+      })
+      .subscribe();
   }
 
   openReport($event: ReleaseReadDto): void {
@@ -69,5 +81,4 @@ implements OnInit, OnDestroy, SubscriptionsLifecycle
     const minutes = Math.round((number - hours) * 60).toString();
     return hours.toString().padStart(2, '0') + ':' + minutes.padStart(2, '0');
   }
-
 }

@@ -27,7 +27,7 @@ import { ProjectReleaseStatusComponent } from './components/project-release-stat
 import { ReleaseTableHeaderComponent } from './components/release-table-header/release-table-header.component';
 import { ReleaseTableLineComponent } from './components/release-table-line/release-table-line.component';
 import { ReleaseTableComponent } from './components/release-table/release-table.component';
-import { ReleaseUpsertPage } from './dialogs/release-upsert/release-upsert.page';
+import { ReleaseDialog } from './dialogs/release-dialog/release.dialog';
 import { ReleaseIndexPage } from './pages/release-index/release-index.page';
 import { ReportIndexPage } from './pages/report-index/report-index.page';
 import { ReleaseRoutingModule } from './release-routing.module';
@@ -35,12 +35,12 @@ import { ReleaseRoutingModule } from './release-routing.module';
 @NgModule({
   declarations: [
     ReleaseIndexPage,
-    ReleaseUpsertPage,
     ReleaseTableComponent,
     ProjectReleaseStatusComponent,
     ReleaseTableLineComponent,
     ReleaseTableHeaderComponent,
     ReportIndexPage,
+    ReleaseDialog,
   ],
   imports: [
     CommonModule,
