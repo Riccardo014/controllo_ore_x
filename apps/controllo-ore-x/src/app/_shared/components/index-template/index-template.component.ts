@@ -166,6 +166,10 @@ export class IndexTemplateComponent
     this.openCreateDialogEvent.emit(true);
   }
 
+  openCreateDialogFn(): void {
+    this.openCreateDialog.emit(true);
+  }
+
   date = new FormControl(moment());
   date1: Date = new Date();
 

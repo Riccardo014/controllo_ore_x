@@ -72,6 +72,7 @@
 
     <ng-template #createLink>
       <button
+        *ngIf="!shouldHideCreateButton"
         (click)="openCreateDialogFn()"
         class="hide-mobile -button"
         mat-flat-button
