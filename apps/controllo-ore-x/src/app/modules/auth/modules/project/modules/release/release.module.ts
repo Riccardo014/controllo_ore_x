@@ -23,6 +23,7 @@ import {
   RtTableModule,
 } from '@controllo-ore-x/rt-shared';
 import { SharedModule } from '@shared/shared.module';
+import { ProjectActivityCardComponent } from './components/project-activity-card/project-activity-card.component';
 import { ProjectReleaseStatusComponent } from './components/project-release-status/project-release-status.component';
 import { ReleaseTableHeaderComponent } from './components/release-table-header/release-table-header.component';
 import { ReleaseTableLineComponent } from './components/release-table-line/release-table-line.component';
@@ -41,6 +42,7 @@ import { ReleaseRoutingModule } from './release-routing.module';
     ReleaseTableHeaderComponent,
     ReportIndexPage,
     ReleaseDialog,
+    ProjectActivityCardComponent,
   ],
   imports: [
     CommonModule,
