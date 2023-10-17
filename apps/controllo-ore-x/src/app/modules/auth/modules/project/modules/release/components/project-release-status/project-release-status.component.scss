@@ -39,3 +39,16 @@ h2{
 .-release-status-single-data-icon{
   color: map-get($palette-primary, 500 );
 }
+
+.-cards-container{
+  border-bottom: 1px solid map-get($palette-grey, 200 );
+}
+
+.-cards{
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}

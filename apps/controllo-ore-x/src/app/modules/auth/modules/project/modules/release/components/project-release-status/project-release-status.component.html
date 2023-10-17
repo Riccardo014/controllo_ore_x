@@ -36,5 +36,12 @@
     </div>
   </div>
 </div>
-
-<controllo-ore-x-project-activity-card> </controllo-ore-x-project-activity-card>
+<div class="-cards-container">
+  <div class="-cards">
+    <controllo-ore-x-project-activity-card
+      *ngFor="let tag of tags"
+      [tagWithHours]="tag"
+    >
+    </controllo-ore-x-project-activity-card>
+  </div>
+</div>

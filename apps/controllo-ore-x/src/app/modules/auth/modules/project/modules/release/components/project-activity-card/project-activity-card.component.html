@@ -1,9 +1,9 @@
-<div class="-card">
+<div class="-card" *ngIf="tagWithHours && tag">
   <div class="-card-content">
     <span class="material-symbols-outlined -card-content-icon">{{
-      tagIcon
+      tag.iconName
     }}</span>
-    <span class="body-1 -card-content-tag">{{ tagName }}</span>
-    <div class="headline-4">{{ numberOfHours }} ore</div>
+    <span class="body-1 -card-content-tag">{{ tag.name }}</span>
+    <div class="headline-4">{{ tagWithHours.hours }} ore</div>
   </div>
 </div>
