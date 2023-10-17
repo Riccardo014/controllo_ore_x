@@ -77,6 +77,7 @@
         class="-page-title-link"
       > -->
       <button
+        *ngIf="!shouldHideCreateButton"
         (click)="openCreateDialogFn()"
         class="hide-mobile -page-title-link-button"
         mat-flat-button
