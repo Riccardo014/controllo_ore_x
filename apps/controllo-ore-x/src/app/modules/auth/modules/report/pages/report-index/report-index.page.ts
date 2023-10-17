@@ -1,8 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   INDEX_CONFIGURATION_KEY,
@@ -24,8 +20,11 @@ import { BehaviorSubject } from 'rxjs';
   templateUrl: './report-index.page.html',
   styleUrls: ['./report-index.page.scss'],
 })
-export class ReportIndexPage
-  extends IndexPage<UserHoursReadDto, UserHoursCreateDto, UserHoursUpdateDto> {
+export class ReportIndexPage extends IndexPage<
+  UserHoursReadDto,
+  UserHoursCreateDto,
+  UserHoursUpdateDto
+> {
   titleIcon: string | null = 'chair';
   title: string = 'Report';
   pageTitle = 'Report';
@@ -40,7 +39,7 @@ export class ReportIndexPage
   );
   hasErrors: boolean = false;
   isEditAvailable: boolean = false;
-  override isPageWithTable: boolean = true;
+  override isPageWithTable: boolean = false;
 
   @Output() openDialog: EventEmitter<any> = new EventEmitter<any>();
 
@@ -64,5 +63,4 @@ export class ReportIndexPage
   openCreateDialog(): void {
     this._router.navigate([this._router.url + '/create']);
   }
-
 }

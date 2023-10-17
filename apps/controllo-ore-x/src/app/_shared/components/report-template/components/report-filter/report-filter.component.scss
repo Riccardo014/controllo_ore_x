@@ -1,0 +1,41 @@
+@import 'libs/ui/core/consts.scss';
+@import 'libs/ui/core/mixins.scss';
+
+.-report-table-filter{
+  border-bottom: 1px solid map-get($palette-grey, 300 );
+  height: 66px;
+  padding: 0px 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  .-filters-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .-filter-options{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+
+    .-reset-button{
+      color: rgba(0, 0, 0, 0.5);
+    }
+  }
+}
+
+.-filter-list{
+  min-height: 46px;
+  border-bottom: 1px solid map-get($palette-grey, 300 );
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}

@@ -1,0 +1,7 @@
+@import 'libs/ui/core';
+
+.-search-bar{
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid map-get($palette-grey, 200);
+}
