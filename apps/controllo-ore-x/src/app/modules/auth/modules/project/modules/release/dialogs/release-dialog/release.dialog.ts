@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ReleaseReadDto } from '@api-interfaces';
+import { ReleaseDataService } from '@app/_core/services/release.data-service';
 import {
   IRtDialogClose,
   IRtDialogInput,
@@ -10,7 +11,6 @@ import {
 } from '@controllo-ore-x/rt-shared';
 import { AlertService } from 'libs/rt-shared/src/alert/services/alert.service';
 import { RT_FORM_ERRORS, RtFormError } from 'libs/utils';
-import { ReleaseDataService } from '@app/_core/services/release.data-service';
 
 @Component({
   selector: 'controllo-ore-x-release-dialog',
