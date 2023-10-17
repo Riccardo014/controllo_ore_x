@@ -1,5 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import {
   ApiPaginatedResponse,
   CustomerReadDto,
@@ -16,29 +18,30 @@ import { HoursTagDataService } from '@app/_core/services/hours-tag.data-service'
 import { ProjectDataService } from '@app/_core/services/project.data-service';
 import { ReleaseDataService } from '@app/_core/services/release.data-service';
 import { TrackerDataService } from '@app/_core/services/tracker.data-service';
-import { UpsertPage } from '@app/_shared/classes/upsert-page.class';
+import { BaseDialog } from '@app/_shared/classes/base-dialog.class';
 import { CalendarDateService } from '@app/_shared/components/index-template/servicies/calendar-date.service';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
+import { IRtDialogInput, RtDialogService } from '@controllo-ore-x/rt-shared';
 import { AlertService } from 'libs/rt-shared/src/alert/services/alert.service';
-import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
-import { RT_FORM_ERRORS, RtFormError } from 'libs/utils';
 import { Subscription } from 'rxjs';
 import { TrackerFormHelper } from '../../helpers/tracker.form-helper';
 
 @Component({
-  selector: 'controllo-ore-x-tracker-upsert',
-  templateUrl: './tracker-upsert.page.html',
-  styleUrls: ['./tracker-upsert.page.scss'],
+  selector: 'controllo-ore-x-tracker-dialog',
+  templateUrl: './tracker.dialog.html',
+  styleUrls: ['./tracker.dialog.scss'],
   providers: [TrackerFormHelper],
 })
-export class TrackerUpsertPage
-  extends UpsertPage<UserHoursReadDto, UserHoursCreateDto, UserHoursUpdateDto>
+export class TrackerDialog
+  extends BaseDialog<UserHoursReadDto, UserHoursCreateDto, UserHoursUpdateDto>
   implements SubscriptionsLifecycle, OnDestroy, OnInit
 {
   override title: string = 'Inserimento ore';
+
+  override isCreating: boolean = true;
 
   userHourId?: string | number;
 
@@ -56,8 +59,6 @@ export class TrackerUpsertPage
   currentRelease?: ReleaseReadDto;
   releases: ReleaseReadDto[] = [];
 
-  RT_FORM_ERRORS: { [key: string]: RtFormError } = RT_FORM_ERRORS;
-
   subscriptionsList: Subscription[] = [];
 
   _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
@@ -65,30 +66,24 @@ export class TrackerUpsertPage
 
   constructor(
     public override formHelper: TrackerFormHelper,
+    protected override _formBuilder: FormBuilder,
+    protected _matDialogRef: MatDialogRef<TrackerDialog>,
     private _trackerDataService: TrackerDataService,
-    private _alertService: AlertService,
     private _rtDialogService: RtDialogService,
+    private _alertService: AlertService,
     private _router: Router,
-    private _activatedRoute: ActivatedRoute,
     private _authService: AuthService,
+    @Inject(MAT_DIALOG_DATA) public data: IRtDialogInput<any>,
+    private _customerDataService: CustomerDataService,
     private _calendarDateService: CalendarDateService,
     private _hoursTagDataService: HoursTagDataService,
-    private _customerDataService: CustomerDataService,
     private _projectDataService: ProjectDataService,
     private _releaseDataService: ReleaseDataService,
   ) {
-    super(
-      formHelper,
-      _alertService,
-      _rtDialogService,
-      _router,
-      _activatedRoute,
-    );
+    super(formHelper, _formBuilder, _rtDialogService, _alertService, _router);
   }
 
-  override ngOnInit(): void {
-    super.ngOnInit();
-
+  ngOnInit(): void {
     if (!this._authService.loggedInUser) {
       throw new Error('User not logged in');
     }
@@ -98,7 +93,25 @@ export class TrackerUpsertPage
 
     this._setSubscriptions();
 
-    if (!this.isCreating) {
+    if (this.data.input) {
+      this.formHelper.patchForm(this.data.input);
+      if (this.data.input.isDeletion) {
+        this.formHelper.entityId = this.data.input._id;
+        this.cancel();
+        this.deleteEntity();
+        return;
+      }
+
+      this.formHelper.form.controls['project'].enable();
+      this.formHelper.form.controls['release'].enable();
+      this.subscriptionsList.push(this._getProjects(), this._getReleases());
+
+      if (this.data.input.isDuplication) {
+        this.title = 'Duplica ore';
+        return;
+      }
+      this.isCreating = false;
+      this.formHelper.entityId = this.data.input._id;
       this.title = 'Modifica ore';
     }
   }
@@ -113,18 +126,22 @@ export class TrackerUpsertPage
       this._getHoursTags(),
       this._getCustomers(),
     );
-    if (!this.isCreating) {
-      this.userHourId = this.formHelper.entityId;
-      this.subscriptionsList.push(this._getUserHours());
-    }
   }
 
-  override handleUserSubmission(): void {
-    this.formHelper.form.patchValue({
-      hoursTag: this.formHelper.form.value.hoursTag.hoursTag,
+  override onSubmit(): void {
+    this.hoursTags.forEach((hoursTag: any) => {
+      if (hoursTag.checked) {
+        this.formHelper.form.patchValue({
+          hoursTag: hoursTag.hoursTag,
+        });
+        return;
+      }
     });
 
-    super.handleUserSubmission();
+    if (this.data.input && this.data.input.isDuplication) {
+      this.isCreating = true;
+    }
+    super.onSubmit();
   }
 
   onSelectedCustomer(): void {
@@ -158,57 +175,6 @@ export class TrackerUpsertPage
   }
 
   /**
-   * Get the user hours' data from the database.
-   */
-  private _getUserHours(): Subscription {
-    if (!this.userHourId) {
-      throw new Error(
-        "Non è stato possibile recuperare i dati delle ore dell'utente",
-      );
-    }
-    return this._trackerDataService
-      .getOne(this.userHourId)
-      .subscribe((userHour: any) => {
-        this.formHelper.patchForm(userHour);
-        this.subscriptionsList.push(this._getProject());
-        this.formHelper.form.patchValue({
-          release: userHour.release,
-        });
-
-        //TODO: chiedere se c'è un modo migliore per fare questo
-        this.hoursTags.forEach((hoursTag: any) => {
-          if (hoursTag.hoursTag._id === userHour.hoursTagId) {
-            hoursTag.checked = true;
-          }
-        });
-      });
-  }
-
-  /**
-   * Get the project's data from the database.
-   */
-  private _getProject(): Subscription {
-    if (!this.formHelper.form.value.release.projectId) {
-      throw new Error('Non è stato possibile recuperare i dati del progetto.');
-    }
-    return this._projectDataService
-      .getOne(this.formHelper.form.value.release.projectId)
-      .subscribe((project: any) => {
-        this.formHelper.form.patchValue({
-          customer: project.customer,
-          project: project,
-        });
-        if (this.formHelper.form.value.customer) {
-          this.currentCustomer = this.customers.find(
-            (customer: CustomerReadDto) =>
-              customer._id === this.formHelper.form.value.customer._id,
-          );
-        }
-        this.subscriptionsList.push(this._getProjects(), this._getReleases());
-      });
-  }
-
-  /**
    * Fetch and set the userHours' hoursTags from the database.
    */
   private _getHoursTags(): Subscription {
@@ -220,6 +186,15 @@ export class TrackerUpsertPage
             hoursTag: hoursTag,
             checked: false,
           });
+
+          //TODO: chiedere se c'è un modo migliore per fare questo
+          if (this.data.input) {
+            this.hoursTags.forEach((hoursTag: any) => {
+              if (hoursTag.hoursTag._id === this.data.input.hoursTag._id) {
+                hoursTag.checked = true;
+              }
+            });
+          }
         });
       });
   }
@@ -234,6 +209,12 @@ export class TrackerUpsertPage
       .getMany({})
       .subscribe((customers: ApiPaginatedResponse<CustomerReadDto>) => {
         this.customers = customers.data;
+        if (this.formHelper.form.value.customer) {
+          this.currentCustomer = this.customers.find(
+            (customer: CustomerReadDto) =>
+              customer._id === this.formHelper.form.value.customer._id,
+          );
+        }
       });
   }
 
@@ -267,6 +248,7 @@ export class TrackerUpsertPage
         where: {
           projectId: this.formHelper.form.value.project._id,
         },
+        relations: ['project', 'project.customer'],
       })
       .subscribe((releases: ApiPaginatedResponse<ReleaseReadDto>) => {
         this.releases = releases.data;

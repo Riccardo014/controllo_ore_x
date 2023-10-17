@@ -8,7 +8,7 @@
   // display: flex;
   // flex-direction: row;
   display: grid;
-  grid-template-columns: 12fr 2fr 1fr;
+  grid-template-columns: 14fr 3fr 2fr;
   
   .-tracker-activity{
     display: grid;
@@ -51,6 +51,6 @@
 
 }
 
-.-edit-button-icon{
+.-button-icon{
   color: rgba(0, 0, 0, 0.5);
 }
