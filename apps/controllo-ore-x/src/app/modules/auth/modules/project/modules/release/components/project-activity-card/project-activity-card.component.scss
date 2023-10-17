@@ -1,0 +1,24 @@
+@import 'libs/ui/core';
+
+.-card{
+  width: 25%;
+  border-radius: 30px;
+  border: 1px solid map-get($palette-grey, 200 );
+}
+
+.-card-content{
+  padding: 20px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap : 10px;
+}
+
+.-card-content-icon{
+  color: map-get($palette-primary, 500 );
+}
+
+.-card-content-tag{
+  color: rgba(0, 0, 0, 0.5)
+}

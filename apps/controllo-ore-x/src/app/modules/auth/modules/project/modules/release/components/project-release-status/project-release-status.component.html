@@ -1,6 +1,4 @@
-
 <div class="-release-status-container">
-
   <div class="-release-status-single-data">
     <h2 class="subtitle-1">Release totali</h2>
     <div class="headline-4">
@@ -8,7 +6,9 @@
     </div>
   </div>
 
-  <div class="-release-status-single-data -release-status-single-data-with-borders">
+  <div
+    class="-release-status-single-data -release-status-single-data-with-borders"
+  >
     <h2 class="subtitle-1">Release in corso</h2>
     <div class="-release-number-and-bar">
       <div class="headline-4">
@@ -18,7 +18,8 @@
         class="-progress-bar"
         mode="determinate"
         value="60"
-        color="primary">
+        color="primary"
+      >
       </mat-progress-bar>
     </div>
   </div>
@@ -29,12 +30,11 @@
       <div class="headline-4">
         {{ doneReleases }}
       </div>
-      <mat-progress-bar
-        class="-progress-bar"
-        mode="determinate"
-        value="100"
-        color="primary">
-      </mat-progress-bar>
+      <span class="material-symbols-outlined -release-status-single-data-icon"
+        >check</span
+      >
     </div>
   </div>
 </div>
+
+<controllo-ore-x-project-activity-card> </controllo-ore-x-project-activity-card>

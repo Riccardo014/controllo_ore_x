@@ -35,3 +35,7 @@ h2{
 .-progress-bar{
   max-width: 100px;
 }
+
+.-release-status-single-data-icon{
+  color: map-get($palette-primary, 500 );
+}
