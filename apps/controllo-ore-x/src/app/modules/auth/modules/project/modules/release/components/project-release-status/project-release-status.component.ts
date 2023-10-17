@@ -23,6 +23,11 @@ export class ProjectReleaseStatusComponent
   inProgressReleases = 0;
   completedReleases = 0;
 
+  tags: {
+    hoursTagId: string;
+    hours: number;
+  }[] = [];
+
   @Input() projectId!: string;
 
   @Input() whereReleaseModified: BehaviorSubject<boolean> =
