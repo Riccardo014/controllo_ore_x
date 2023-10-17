@@ -1,34 +1,33 @@
 <div class="-page-header" *ngIf="release">
   <div class="-page-header-title">
     <button (click)="navigateBack()" mat-icon-button>
-      <mat-icon color="primary"
-        >arrow_back</mat-icon
-      >
+      <mat-icon color="primary">arrow_back</mat-icon>
     </button>
-    <div 
-      class="headline-5"
-      *ngIf="release"
-      class="-release-data-details">
-      <h1 class="headline-5">Release {{ release.version }}</h1>
+    <div class="headline-5" *ngIf="release" class="-release-data-details">
+      <h1 class="headline-5">{{ release.version }}</h1>
       <span class="material-symbols-outlined -title-icon">egg_alt</span>
     </div>
   </div>
   <div class="-page-header-options">
-    <button 
-      mat-flat-button extended 
+    <button
+      mat-flat-button
+      extended
       class="-release-action-button"
       *ngIf="release.isCompleted"
-      (click)="toggleCompletion()">
+      (click)="toggleCompletion()"
+    >
       <div class="-release-action-button-elements">
         <span class="material-symbols-outlined">close</span>
         <span class="body-2">Segna come non completata</span>
       </div>
     </button>
-    <button 
-      mat-flat-button extended 
+    <button
+      mat-flat-button
+      extended
       class="-release-action-button"
       *ngIf="!release.isCompleted"
-      (click)="toggleCompletion()">
+      (click)="toggleCompletion()"
+    >
       <div class="-release-action-button-elements">
         <span class="material-symbols-outlined">done</span>
         <span class="body-2">Completa Release</span>
@@ -44,53 +43,38 @@
   </div>
 </div>
 
-<div 
-  *ngIf="release"
-  class="-release-report-container">
+<div *ngIf="release" class="-release-report-container">
   <div class="-report-element -report-element__var">
-    <div class="body-1 -element-title -element-title__var">
-      Budget ore
-    </div>
+    <div class="body-1 -element-title -element-title__var">Budget ore</div>
     <div class="subtitle-1 -value__var">
       {{ convertNumberToHours(release.hoursBudget) }}
     </div>
   </div>
-  
+
   <div class="-report-element">
-    <div class="body-1 -element-title">
-      Scadenza
-    </div>
-    <div class="subtitle-1">
-      {{ deadline }}
-    </div>
+    <div class="body-1 -element-title">Scadenza</div>
+    <div class="subtitle-1">{{ deadline }}</div>
   </div>
-   
+
   <div class="-report-element">
-    <div class="body-1 -element-title">
-      Ore utilizzate
-    </div>
-    <div class="subtitle-1">
-      {{ convertNumberToHours(hoursExecuted) }}
-    </div>
+    <div class="body-1 -element-title">Ore utilizzate</div>
+    <div class="subtitle-1">{{ convertNumberToHours(hoursExecuted) }}</div>
   </div>
-  
+
   <div class="-report-element">
-    <div class="body-1 -element-title">
-      Ore fuori budget
-    </div>
-    <div class="subtitle-1"
-    [ngClass]="{'-value__highlighted' : calculatedHoursOutOfBudget() != '00:00' }">
+    <div class="body-1 -element-title">Ore fuori budget</div>
+    <div
+      class="subtitle-1"
+      [ngClass]="{'-value__highlighted' : calculatedHoursOutOfBudget() != '00:00' }"
+    >
       {{ calculatedHoursOutOfBudget() }}
     </div>
   </div>
-  
+
   <div class="-report-element">
-    <div class="body-1 -element-title">
-      Ore fatturabili
-    </div>
+    <div class="body-1 -element-title">Ore fatturabili</div>
     <div class="subtitle-1">
       {{ convertNumberToHours(release.billableHoursBudget) }}
     </div>
   </div>
-  
 </div>

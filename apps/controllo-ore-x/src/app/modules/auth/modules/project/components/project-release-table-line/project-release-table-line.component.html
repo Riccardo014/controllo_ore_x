@@ -1,9 +1,7 @@
 <div class="-project-release-table-line">
   <div class="-release-table-line-data">
-    <div 
-      class="body-1"
-      [ngClass]="{'-crossed-out' : release.isCompleted }">
-        Release {{ release.version }}
+    <div class="body-1" [ngClass]="{ '-crossed-out': release.isCompleted }">
+      {{ release.version }}
     </div>
     <div class="body-1 -expiration-date">{{ deadline }}</div>
     <div class="-release-progress-bar-section">
@@ -13,16 +11,17 @@
         value="{{ (100 * hoursExecuted) / release.hoursBudget }}"
       ></mat-progress-bar>
       <div class="body-1 -hours-details">
-        <div class="-hours-executed">{{ convertNumberToHours(hoursExecuted) }}&nbsp;/&nbsp;</div>
-        <div class="-hours-planned">{{ convertNumberToHours(release.hoursBudget) }}</div>
+        <div class="-hours-executed">
+          {{ convertNumberToHours(hoursExecuted) }}&nbsp;/&nbsp;
+        </div>
+        <div class="-hours-planned">
+          {{ convertNumberToHours(release.hoursBudget) }}
+        </div>
       </div>
     </div>
   </div>
   <div class="-release-table-line-edit-and-report">
-    <button
-      mat-icon-button
-      (click)="openEditReleaseDialog()"
-    >
+    <button mat-icon-button (click)="openEditReleaseDialog()">
       <span class="material-symbols-outlined icon">ink_marker</span>
     </button>
   </div>
