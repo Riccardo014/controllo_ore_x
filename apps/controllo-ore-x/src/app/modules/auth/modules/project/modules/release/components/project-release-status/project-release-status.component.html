@@ -36,7 +36,7 @@
     </div>
   </div>
 </div>
-<div class="-cards-container">
+<div class="-cards-container" *ngIf="tags.length > 0">
   <div class="-cards">
     <controllo-ore-x-project-activity-card
       *ngFor="let tag of tags"
