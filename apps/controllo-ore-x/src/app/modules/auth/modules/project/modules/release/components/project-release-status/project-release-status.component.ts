@@ -19,6 +19,11 @@ export class ProjectReleaseStatusComponent
   inProgressReleases = 0;
   doneReleases = 0;
 
+  tags: {
+    hoursTagId: string;
+    hours: number;
+  }[] = [];
+
   @Input() projectId!: string;
 
   subscriptionsList: Subscription[] = [];
@@ -63,6 +68,21 @@ export class ProjectReleaseStatusComponent
               if (userHours.data.length > 0) {
                 this.inProgressReleases += 1;
               }
+              userHours.data.forEach((userHour: any) => {
+                let isFinded: boolean = false;
+                this.tags.forEach((tag) => {
+                  if (tag.hoursTagId === userHour.hoursTagId) {
+                    tag.hours += Number(userHour.hours);
+                    isFinded = true;
+                  }
+                });
+                if (!isFinded) {
+                  this.tags.push({
+                    hoursTagId: userHour.hoursTagId,
+                    hours: Number(userHour.hours),
+                  });
+                }
+              });
             });
         });
       });
