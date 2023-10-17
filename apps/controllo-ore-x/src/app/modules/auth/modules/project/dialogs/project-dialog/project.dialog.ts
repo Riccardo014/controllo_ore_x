@@ -94,7 +94,7 @@ export class ProjectDialog
   }
 
   override onSubmit(): void {
-    if (this.data.input.isDuplication) {
+    if (this.data.input && this.data.input.isDuplication) {
       this.isCreating = true;
     }
     super.onSubmit();
