@@ -52,11 +52,6 @@
   </div>
 
   <div class="-report-element">
-    <div class="body-1 -element-title">Scadenza</div>
-    <div class="subtitle-1">{{ deadline }}</div>
-  </div>
-
-  <div class="-report-element">
     <div class="body-1 -element-title">Ore utilizzate</div>
     <div class="subtitle-1">{{ convertNumberToHours(hoursExecuted) }}</div>
   </div>
@@ -76,5 +71,10 @@
     <div class="subtitle-1">
       {{ convertNumberToHours(release.billableHoursBudget) }}
     </div>
+  </div>
+
+  <div class="-report-element -report-deadline">
+    <div class="body-1 -element-title">Scadenza</div>
+    <div class="subtitle-1">{{ deadline }}</div>
   </div>
 </div>

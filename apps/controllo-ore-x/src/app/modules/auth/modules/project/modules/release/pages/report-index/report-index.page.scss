@@ -68,7 +68,7 @@
   border-right: 1px solid map-get($palette-grey, 200);
 }
 
-.-report-element:hover{
+.-report-deadline{
   background-color: map-get($palette-grey, 100 );
 }
 
@@ -76,7 +76,7 @@
   color: rgba(0, 0, 0, 0.5);
 }
 
-.-report-element__var, .-report-element__var:hover{
+.-report-element__var{
   background-color: map-get($palette-primary, 500 );
 }
 
