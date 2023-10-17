@@ -1,12 +1,13 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { ReleaseReadDto } from '@api-interfaces';
 import { UserHoursDataService } from '@app/_core/services/user-hour.data-service';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
+import { RtDialogService } from '@controllo-ore-x/rt-shared';
 import { Subscription } from 'rxjs';
+import { ReleaseDialog } from '../../modules/release/dialogs/release-dialog/release.dialog';
 
 @Component({
   selector: 'controllo-ore-x-project-release-table-line',
@@ -28,7 +29,7 @@ export class ProjectReleaseTableLineComponent
 
   constructor(
     private _userHoursDataService: UserHoursDataService,
-    private _router: Router,
+    private _rtDialogService: RtDialogService,
   ) {}
 
   ngOnInit(): void {
@@ -60,13 +61,13 @@ export class ProjectReleaseTableLineComponent
   }
 
   openEditReleaseDialog(): void {
-    this._router.navigate([
-      this._router.url +
-        '/' +
-        this.release.projectId +
-        '/release/' +
-        this.release._id,
-    ]);
+    this._rtDialogService
+      .open(ReleaseDialog, {
+        width: '600px',
+        maxWidth: '600px',
+        data: this.release,
+      })
+      .subscribe();
   }
 
   convertNumberToHours(number: number): string {

@@ -8,6 +8,7 @@ import {
 import { RtDialogService } from '@controllo-ore-x/rt-shared';
 import { Subscription } from 'rxjs';
 import { ProjectDialog } from '../../../../dialogs/project-dialog/project.dialog';
+import { ReleaseDialog } from '../../dialogs/release-dialog/release.dialog';
 
 @Component({
   selector: 'controllo-ore-x-release-index',
@@ -68,7 +69,16 @@ export class ReleaseIndexPage
   }
 
   openCreateReleaseDialog(): void {
-    this._router.navigate([this._router.url + '/create']);
+    this._rtDialogService
+      .open(ReleaseDialog, {
+        width: '600px',
+        maxWidth: '600px',
+        data: {
+          ...this.project,
+          isCreating: true,
+        },
+      })
+      .subscribe();
   }
 
   openEditProjectDialog(): void {

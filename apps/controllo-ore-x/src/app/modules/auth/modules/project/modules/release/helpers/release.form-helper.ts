@@ -24,11 +24,10 @@ export class ReleaseFormHelper extends UpsertFormHelper<
   get createDto(): ReleaseCreateDto {
     const formValues: any = this.form.getRawValue();
 
-    return {
-      ...formValues,
-      projectId: formValues.project,
-      isCompleted: false,
-    };
+    return formValues;
+    // projectId: formValues.project,
+    // isCompleted: false,
+    // };
   }
 
   get updateDto(): ReleaseUpdateDto {
@@ -42,12 +41,12 @@ export class ReleaseFormHelper extends UpsertFormHelper<
 
   initForm(): FormGroup {
     return this.formBuilder.group({
-      project: [null],
+      projectId: [null, Validators.required],
       version: [null, Validators.required],
       hoursBudget: [null, Validators.required],
       billableHoursBudget: [null, Validators.required],
       deadline: [null, Validators.required],
-      isCompleted: [null],
+      isCompleted: [null, Validators.required],
     });
   }
 
