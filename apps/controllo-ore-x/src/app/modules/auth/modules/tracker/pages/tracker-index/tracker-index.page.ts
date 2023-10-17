@@ -27,7 +27,7 @@ import { endOfDay, startOfDay } from 'date-fns';
 import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { Between } from 'typeorm';
+import { TrackerDialog } from '../../dialogs/tracker-dialog/tracker.dialog';
 
 @Component({
   selector: 'controllo-ore-x-tracker-index',
@@ -36,7 +36,8 @@ import { Between } from 'typeorm';
 })
 export class TrackerIndexPage
   extends IndexPage<UserHoursReadDto, UserHoursCreateDto, UserHoursUpdateDto>
-  implements OnInit, OnDestroy, SubscriptionsLifecycle {
+  implements OnInit, OnDestroy, SubscriptionsLifecycle
+{
   titleIcon: string | null = 'screen_record';
   title: string = 'Tracker';
   pageTitle = 'Tracker';
@@ -86,11 +87,12 @@ export class TrackerIndexPage
   override _setSubscriptions(): void {
     this.subscriptionsList.push(
       this._getUserHours(),
-      this._calendarDateService.currentDateObservable
-      .subscribe((date: Date) => {
-        this.selectedDate = date;
-        this._getUserHours();
-      }),
+      this._calendarDateService.currentDateObservable.subscribe(
+        (date: Date) => {
+          this.selectedDate = date;
+          this._getUserHours();
+        },
+      ),
     );
   }
 
@@ -100,12 +102,20 @@ export class TrackerIndexPage
     }
     return this._dataService
       .getMany({
-        relations: ['release', 'release.project', 'hoursTag'],
+        relations: [
+          'release',
+          'release.project',
+          'release.project.customer',
+          'hoursTag',
+        ],
         where: {
           userId: this._authService.loggedInUser._id,
           date: {
             _fn: FIND_BOOSTED_FN.DATE_BETWEEN,
-            args: [startOfDay(this.selectedDate).toISOString(), endOfDay(this.selectedDate).toISOString()],
+            args: [
+              startOfDay(this.selectedDate).toISOString(),
+              endOfDay(this.selectedDate).toISOString(),
+            ],
           },
         },
       })
@@ -123,14 +133,18 @@ export class TrackerIndexPage
     this._router.navigate([this._router.url + '/' + $event._id]);
   }
 
-  openCreateDialog(): void {
-    this._router.navigate([this._router.url + '/create']);
-  }
-
   convertNumberToHours(number: number): string {
     const hours = Math.floor(number);
     const minutes = Math.round((number - hours) * 60).toString();
     return hours.toString().padStart(2, '0') + ':' + minutes.padStart(2, '0');
   }
 
+  createFn(): void {
+    this._rtDialogService
+      .open(TrackerDialog, {
+        width: '600px',
+        maxWidth: '600px',
+      })
+      .subscribe();
+  }
 }

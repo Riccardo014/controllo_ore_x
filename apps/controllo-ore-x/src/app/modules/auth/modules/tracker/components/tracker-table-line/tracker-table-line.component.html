@@ -23,10 +23,15 @@
 
   <div class="-tracker-edit-and-options">
     <button mat-icon-button (click)="openEditUserHourDialog()">
-      <span class="material-symbols-outlined -edit-button-icon"
-        >ink_marker
-      </span>
+      <span class="material-symbols-outlined -button-icon">ink_marker </span>
     </button>
-    <!-- <div><span class="material-symbols-outlined icon">more_vert</span></div> -->
+    <button mat-icon-button [matMenuTriggerFor]="optionMenu">
+      <mat-icon class="-more-vert-icon -button-icon">more_vert</mat-icon>
+    </button>
+    <mat-menu #optionMenu="matMenu">
+      <ng-content select="[menuOptions]"></ng-content>
+      <button (click)="duplicateFn()" mat-menu-item>Duplica</button>
+      <button (click)="deleteFn()" mat-menu-item>Elimina</button>
+    </mat-menu>
   </div>
 </div>

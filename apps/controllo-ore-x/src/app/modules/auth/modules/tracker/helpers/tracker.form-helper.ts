@@ -25,10 +25,12 @@ export class TrackerFormHelper extends UpsertFormHelper<
     const formValues: any = this.form.getRawValue();
 
     return {
-      ...formValues,
       userId: formValues.user._id,
       releaseId: formValues.release._id,
       hoursTagId: formValues.hoursTag._id,
+      date: formValues.date,
+      notes: formValues.notes,
+      hours: formValues.hours,
     };
   }
 
@@ -58,8 +60,16 @@ export class TrackerFormHelper extends UpsertFormHelper<
     });
   }
 
-  patchForm(value: UserHoursReadDto): boolean {
-    this.form.patchValue(value);
+  patchForm(value: any): boolean {
+    this.form.patchValue({
+      customer: value.release.project.customer,
+      project: value.release.project,
+      release: value.release,
+      hoursTag: value.hoursTag,
+      date: value.date,
+      notes: value.notes,
+      hours: value.hours,
+    });
     return true;
   }
 }
