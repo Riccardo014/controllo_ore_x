@@ -1,6 +1,6 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["src/**/*.ts", "src/app/_shared/components/sidenav/servicies/nav-menus-visibility.service.ts"],
+  "include": ["src/**/*.ts", "src/app/_shared/components/sidenav/services/nav-menus-visibility.service.ts"],
   "compilerOptions": {
     "types": ["jest", "node"]
   }

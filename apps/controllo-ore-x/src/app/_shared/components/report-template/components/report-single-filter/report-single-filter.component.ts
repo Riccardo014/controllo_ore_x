@@ -2,12 +2,19 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   forwardRef,
 } from '@angular/core';
 import { FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { COX_FILTER } from '@api-interfaces';
+import {
+  SubscriptionsLifecycle,
+  completeSubscriptions,
+} from '@app/utils/subscriptions_lifecycle';
+import { Subscription } from 'rxjs';
+import { FilterService } from '../../services/filter.service';
 
 @Component({
   selector: 'controllo-ore-x-report-single-filter',
@@ -21,18 +28,60 @@ import { COX_FILTER } from '@api-interfaces';
     },
   ],
 })
-export class ReportSingleFilterComponent implements OnInit {
+export class ReportSingleFilterComponent
+  implements OnInit, OnDestroy, SubscriptionsLifecycle
+{
   @Output() change: EventEmitter<any[]> = new EventEmitter<any[]>();
+  dataForFilter: {
+    list: any[];
+    singleLabel: string;
+    multiLabel: string;
+    fieldName: COX_FILTER;
+    formControl: FormControl;
+  } = {
+    list: [],
+    singleLabel: '',
+    multiLabel: '',
+    fieldName: COX_FILTER.CUSTOMER,
+    formControl: new FormControl(),
+  };
   @Input() singleLabel: string = '';
   @Input() multiLabel: string = '';
   @Input() fieldName!: COX_FILTER;
   @Input() list: any[] = [];
   @Input() formControl = new FormControl();
 
+  subscriptionsList: Subscription[] = [];
+
+  _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
+    completeSubscriptions;
+
+  constructor(private _filterService: FilterService) {}
+
   ngOnInit(): void {
-    this.formControl.valueChanges.subscribe((value) => {
-      this.change.emit(value);
-    });
+    this._setSubscriptions();
+  }
+
+  ngOnDestroy(): void {
+    this._completeSubscriptions(this.subscriptionsList);
+  }
+
+  _setSubscriptions(): void {
+    this.subscriptionsList.push(
+      this.formControl.valueChanges.subscribe((value) => {
+        this._filterService.changeDataForSingleFilter(this.dataForFilter);
+        this.change.emit(value);
+      }),
+      this._filterService.dataForFiltersObservable.subscribe(
+        (dataForFilters: any[]) => {
+          dataForFilters.forEach((dataForFilter) => {
+            if (dataForFilter.fieldName === this.fieldName) {
+              this.dataForFilter = dataForFilter;
+            }
+          });
+        },
+      ),
+    );
   }
 
   getLabel(length: number | undefined): string {

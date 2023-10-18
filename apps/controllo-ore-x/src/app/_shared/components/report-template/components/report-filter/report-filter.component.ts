@@ -1,18 +1,31 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { COX_FILTER } from '@api-interfaces';
+import { COX_FILTER, FindBoostedWhereOption } from '@api-interfaces';
+import {
+  SubscriptionsLifecycle,
+  completeSubscriptions,
+} from '@app/utils/subscriptions_lifecycle';
 import { CoxFilter } from 'libs/utils';
+import { Subscription } from 'rxjs';
+import { FilterService } from '../../services/filter.service';
 @Component({
   selector: 'controllo-ore-x-report-filter',
   templateUrl: './report-filter.component.html',
   styleUrls: ['./report-filter.component.scss'],
 })
-export class ReportFilterComponent implements OnInit {
-  @Output() filtersEmitter: EventEmitter<CoxFilter[]> = new EventEmitter<
-    CoxFilter[]
-  >();
+export class ReportFilterComponent
+  implements OnInit, OnDestroy, SubscriptionsLifecycle
+{
+  @Output() filtersEmitter: EventEmitter<FindBoostedWhereOption[]> =
+    new EventEmitter<FindBoostedWhereOption[]>();
 
-  @Input() dataForFilters: {
+  dataForFilters: {
     list: any[];
     singleLabel: string;
     multiLabel: string;
@@ -37,16 +50,16 @@ export class ReportFilterComponent implements OnInit {
 
   areFiltersActive: boolean = false;
 
+  subscriptionsList: Subscription[] = [];
+
+  _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
+    completeSubscriptions;
+
+  constructor(private _filterService: FilterService) {}
+
   ngOnInit(): void {
-    this.dataForFilters.forEach((dataForFilter) => {
-      this.filters.push({
-        list: dataForFilter.list,
-        singleLabel: dataForFilter.singleLabel,
-        multiLabel: dataForFilter.multiLabel,
-        fieldName: dataForFilter.fieldName,
-        formControl: new FormControl(),
-      });
-    });
+    console.log(this.dataForFilters);
+    this.loadDataForFilters();
 
     this.filters.forEach((filter) => {
       this.activeFilters.push({
@@ -55,6 +68,44 @@ export class ReportFilterComponent implements OnInit {
         multiLabel: filter.multiLabel,
         fieldName: filter.fieldName,
         formControl: filter.formControl,
+      });
+    });
+
+    this._setSubscriptions();
+  }
+
+  ngOnDestroy(): void {
+    this._completeSubscriptions(this.subscriptionsList);
+  }
+
+  _setSubscriptions(): void {
+    this.subscriptionsList.push(
+      this._filterService.dataForFiltersObservable.subscribe(
+        (dataForFilters) => {
+          this.dataForFilters = dataForFilters;
+          this.loadDataForFilters();
+        },
+      ),
+    );
+  }
+
+  loadDataForFilters(): void {
+    this.dataForFilters.forEach((dataForFilter) => {
+      let isPresent: boolean = false;
+      this.filters.forEach((filter) => {
+        if (filter.fieldName == dataForFilter.fieldName) {
+          isPresent = true;
+        }
+      });
+      if (isPresent) {
+        return;
+      }
+      this.filters.push({
+        list: dataForFilter.list,
+        singleLabel: dataForFilter.singleLabel,
+        multiLabel: dataForFilter.multiLabel,
+        fieldName: dataForFilter.fieldName,
+        formControl: new FormControl(),
       });
     });
   }

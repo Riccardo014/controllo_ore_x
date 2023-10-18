@@ -6,7 +6,7 @@ import {
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
 import { Subscription, interval } from 'rxjs';
-import { NavMenusVisibilityService } from '../sidenav/servicies/nav-menus-visibility.service';
+import { NavMenusVisibilityService } from '../sidenav/services/nav-menus-visibility.service';
 
 @Component({
   selector: 'controllo-ore-x-global-topbar',

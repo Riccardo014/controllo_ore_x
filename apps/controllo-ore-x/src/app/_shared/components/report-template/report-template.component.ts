@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import {
   COX_FILTER,
+  CustomerReadDto,
+  FindBoostedWhereOption,
   INDEX_CONFIGURATION_KEY,
   UserHoursCreateDto,
   UserHoursReadDto,
@@ -9,8 +12,9 @@ import {
 import { IndexConfigurationDataService } from '@app/_core/services/index-configuration.data-service';
 import { ReportDataService } from '@app/_core/services/report.data-service';
 import { IndexPage } from '@app/_shared/classes/index-page.class';
-import { CoxFilter } from 'libs/utils';
+import { SubscriptionsLifecycle } from '@app/utils/subscriptions_lifecycle';
 import { Subscription } from 'rxjs';
+import { FilterService } from './services/filter.service';
 
 /**
  * Template of a report page
@@ -19,10 +23,11 @@ import { Subscription } from 'rxjs';
   selector: 'controllo-ore-x-report-template',
   templateUrl: './report-template.component.html',
   styleUrls: ['./report-template.component.scss'],
+  providers: [FilterService],
 })
 export class ReportTemplateComponent
   extends IndexPage<UserHoursReadDto, UserHoursCreateDto, UserHoursUpdateDto>
-  implements OnInit
+  implements OnInit, OnDestroy, SubscriptionsLifecycle
 {
   titleIcon: string | null = 'chair';
   title: string = 'Report';
@@ -35,7 +40,7 @@ export class ReportTemplateComponent
 
   CONFIGURATION_KEY: INDEX_CONFIGURATION_KEY = INDEX_CONFIGURATION_KEY.TRACKER;
 
-  data: any;
+  data: any[] = [];
   showedData: any;
 
   dataForFilters: {
@@ -43,27 +48,32 @@ export class ReportTemplateComponent
     singleLabel: string;
     multiLabel: string;
     fieldName: COX_FILTER;
+    formControl: FormControl;
   }[] = [];
 
   constructor(
     protected _configurationService: IndexConfigurationDataService,
     protected _dataService: ReportDataService,
+    private _filterService: FilterService,
   ) {
     super();
     this.showedData = this.data;
 
     this.dataForFilters.push({
-      list: [
-        'Extra cheese',
-        'Mushroom',
-        'Onion',
-        'Pepperoni',
-        'Sausage',
-        'Tomato',
-      ],
+      list: [],
       singleLabel: 'Cliente',
       multiLabel: 'Clienti',
       fieldName: COX_FILTER.CUSTOMER,
+      formControl: new FormControl(),
+    });
+    const customersList: CustomerReadDto[] = [];
+    this.data.forEach((data: any) => {
+      customersList.push(data.release.project.customer);
+    });
+    this.dataForFilters.map((dataForFilter) => {
+      if (dataForFilter.fieldName == COX_FILTER.CUSTOMER) {
+        dataForFilter.list = customersList;
+      }
     });
     this.dataForFilters.push({
       list: [
@@ -77,13 +87,27 @@ export class ReportTemplateComponent
       singleLabel: 'Progetto',
       multiLabel: 'Progetti',
       fieldName: COX_FILTER.PROJECT,
+      formControl: new FormControl(),
     });
   }
 
   override ngOnInit(): void {
     super.ngOnInit();
-
+    this._setSubscriptions();
     this._load();
+  }
+
+  override _setSubscriptions(): void {
+    this.subscriptionsList.push(
+      this._filterService.dataForFiltersObservable.subscribe(
+        (dataForFilters) => (this.dataForFilters = dataForFilters),
+      ),
+    );
+    super._setSubscriptions();
+  }
+
+  changeDataForFilters(): void {
+    this._filterService.changeDataForFilters(this.dataForFilters);
   }
 
   updateFulltextSearch(fulltextSearch: string): void {
@@ -101,8 +125,9 @@ export class ReportTemplateComponent
     // console.log(this.showedData);
   }
 
-  onFilterEmit(filter: CoxFilter[]): void {
-    console.log(filter);
+  onFilterEmit(filters: FindBoostedWhereOption[]): void {
+    this.indexTableHandler.status.where = filters;
+    this.indexTableHandler.statusChange(this.indexTableHandler.status);
   }
 
   private _load(): Subscription {
@@ -118,7 +143,25 @@ export class ReportTemplateComponent
           .subscribe((apiResult) => {
             this.data = apiResult.data;
             this.showedData = apiResult.data;
-            console.log(this.data);
+            const customersList: CustomerReadDto[] = [];
+            this.data.forEach((data: any) => {
+              customersList.findIndex(
+                (customer) => customer._id == data.release.project.customer._id,
+              ) == -1 && customersList.push(data.release.project.customer);
+            });
+            this.dataForFilters.push({
+              list: [],
+              singleLabel: 'Cliente',
+              multiLabel: 'Clienti',
+              fieldName: COX_FILTER.CUSTOMER,
+              formControl: new FormControl(),
+            });
+            this.dataForFilters.map((dataForFilter) => {
+              if (dataForFilter.fieldName == COX_FILTER.CUSTOMER) {
+                dataForFilter.list = customersList;
+              }
+            });
+            this.changeDataForFilters();
           });
         this.isFirstLoadDone.next(true);
       });

@@ -5,7 +5,7 @@
       {{ getLabel(formControl.value?.length) }}
     </mat-select-trigger>
     <mat-option *ngFor="let element of list" [value]="element">{{
-      element
+      element.name
     }}</mat-option>
   </mat-select>
 </mat-form-field>
