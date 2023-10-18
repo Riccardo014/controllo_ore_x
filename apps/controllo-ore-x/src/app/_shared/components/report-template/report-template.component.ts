@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CoxFilter } from 'libs/utils';
 
 /**
- * Template of a report page with an header and a body
+ * Template of a report page
  */
 @Component({
   selector: 'controllo-ore-x-report-template',
