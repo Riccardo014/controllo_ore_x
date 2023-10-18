@@ -17,6 +17,7 @@ import { FilterService } from './services/filter.service';
   selector: 'controllo-ore-x-report-template',
   templateUrl: './report-template.component.html',
   styleUrls: ['./report-template.component.scss'],
+  providers: [FilterService],
 })
 export class ReportTemplateComponent
   implements OnInit, OnDestroy, SubscriptionsLifecycle
