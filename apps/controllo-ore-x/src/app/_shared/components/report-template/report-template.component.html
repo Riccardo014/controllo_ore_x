@@ -4,5 +4,14 @@
 >
 </lib-rt-table-fulltext-bar>
 <controllo-ore-x-report-filter
+  [dataForFilters]="dataForFilters"
   (filtersEmitter)="onFilterEmit($event)"
 ></controllo-ore-x-report-filter>
+
+<controllo-ore-x-index-template
+  [page]="this"
+  [buttonIcon]="buttonIcon"
+  [buttonText]="buttonText"
+  [shouldHideCreateButton]="true"
+  [hasCalendar]="true"
+></controllo-ore-x-index-template>

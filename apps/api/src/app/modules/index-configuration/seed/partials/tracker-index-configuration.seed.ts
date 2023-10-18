@@ -50,7 +50,21 @@ export const TRACKER_INDEX_CONFIGURATION_SEED: any = {
         sortable: true,
       },
     ],
-    relations: ['release', 'hoursTag', 'user', 'release.project', 'release.project.customer'],
-    fullSearchCols: ['notes', 'hours', 'release.version', 'user.name', 'user.surname'],
+    relations: [
+      'release',
+      'hoursTag',
+      'user',
+      'release.project',
+      'release.project.customer',
+    ],
+    fullSearchCols: [
+      'release.project.customer.name',
+      'release.project.name',
+      'release.version',
+      'notes',
+      'user.name',
+      'user.surname',
+      'hoursTag.name',
+    ],
   },
 };

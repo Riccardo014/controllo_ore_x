@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { COX_FILTER } from '@api-interfaces';
 import { CoxFilter } from 'libs/utils';
@@ -7,10 +7,17 @@ import { CoxFilter } from 'libs/utils';
   templateUrl: './report-filter.component.html',
   styleUrls: ['./report-filter.component.scss'],
 })
-export class ReportFilterComponent {
+export class ReportFilterComponent implements OnInit {
   @Output() filtersEmitter: EventEmitter<CoxFilter[]> = new EventEmitter<
     CoxFilter[]
   >();
+
+  @Input() dataForFilters: {
+    list: any[];
+    singleLabel: string;
+    multiLabel: string;
+    fieldName: COX_FILTER;
+  }[] = [];
 
   filters: {
     list: any[];
@@ -30,35 +37,17 @@ export class ReportFilterComponent {
 
   areFiltersActive: boolean = false;
 
-  constructor() {
-    this.filters.push({
-      list: [
-        'Extra cheese',
-        'Mushroom',
-        'Onion',
-        'Pepperoni',
-        'Sausage',
-        'Tomato',
-      ],
-      singleLabel: 'Cliente',
-      multiLabel: 'Clienti',
-      fieldName: COX_FILTER.CUSTOMER,
-      formControl: new FormControl(),
+  ngOnInit(): void {
+    this.dataForFilters.forEach((dataForFilter) => {
+      this.filters.push({
+        list: dataForFilter.list,
+        singleLabel: dataForFilter.singleLabel,
+        multiLabel: dataForFilter.multiLabel,
+        fieldName: dataForFilter.fieldName,
+        formControl: new FormControl(),
+      });
     });
-    this.filters.push({
-      list: [
-        'Formaggio',
-        'Funghi',
-        'Cipolla',
-        'Peperoni',
-        'Salsiccia',
-        'Pomodoro',
-      ],
-      singleLabel: 'Progetto',
-      multiLabel: 'Progetti',
-      fieldName: COX_FILTER.PROJECT,
-      formControl: new FormControl(),
-    });
+
     this.filters.forEach((filter) => {
       this.activeFilters.push({
         list: [],
@@ -83,7 +72,7 @@ export class ReportFilterComponent {
       }
     });
 
-    //update are areFiltersActive
+    //update areFiltersActive
     this.areFiltersActive = false;
     this.activeFilters.forEach((activeFilter) => {
       this.areFiltersActive =
