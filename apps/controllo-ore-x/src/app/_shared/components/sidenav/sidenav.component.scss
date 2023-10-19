@@ -3,45 +3,46 @@
 
 .-sidebar {
   height: 100vh;
-  background-color: #E9ECF5;
+  background-color: #e9ecf5;
   box-sizing: border-box;
-  border-right: 1px solid map-get($palette-grey, 300 );
+  border-right: 1px solid map-get($palette-grey, 300);
 
-    ul{
-      margin: 0;
-      list-style-type: none;
-      padding: 0;
-  
-      li a{
-          color: $general-header-color;
-          height: 60px;
-          display: flex;
-          align-items: center;
-          justify-content: left;
-          gap: 7%;
-          padding: 0 24px;
-          white-space: nowrap;
-          text-decoration: none;
+  &__menu {
+    margin: 0;
+    list-style-type: none;
+    padding: 0;
+
+    &__section {
+      & a {
+        color: $general-header-color;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        gap: 7%;
+        padding: 0 24px;
+        white-space: nowrap;
+        text-decoration: none;
       }
 
-      li a:hover{
+      &:hover a {
         color: #000;
-        background-color: map-get($palette-primary , 200 );
+        background-color: map-get($palette-primary, 200);
       }
 
-      li .-selected, li .-selected:hover{
-        background-color: map-get($palette-primary , 500 );
+      &--is-selected a,
+      &--is-selected:hover a {
         color: #fff;
+        background-color: map-get($palette-primary, 500);
       }
-
     }
+  }
 
-    & .__menu-subtitle{
-        color: rgba(0, 0, 0, 0.25);
-        padding: 10px 24px;
-        font-size: 12px;
-        height: 17px;
-        margin: 0;
-    }
-
+  &__menu-subtitle {
+    color: rgba(0, 0, 0, 0.25);
+    padding: 10px 24px;
+    font-size: 12px;
+    height: 17px;
+    margin: 0;
+  }
 }

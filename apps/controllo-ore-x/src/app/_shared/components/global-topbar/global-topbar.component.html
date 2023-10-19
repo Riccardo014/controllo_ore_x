@@ -1,11 +1,11 @@
 <div class="-global-topbar">
-
   <div class="-menu-and-logo-section">
     <button
       mat-icon-button
       color="transparent"
       class="-menu-btn"
-      (click)="toggleVisibility()">
+      (click)="toggleVisibility()"
+    >
       <span class="material-symbols-outlined">menu</span>
     </button>
     <h1 class="headline-6">ControllooreX</h1>
@@ -30,10 +30,14 @@
         <span class="material-symbols-outlined">alarm_smart_wake</span>
       </button>
     </div>
-    <div class="-option-section-item">
-      <button mat-button [matMenuTriggerFor]="user_menu" class="-user-menu-button">
+    <div class="-option-section-item" *ngIf="user">
+      <button
+        mat-button
+        [matMenuTriggerFor]="user_menu"
+        class="-user-menu-button"
+      >
         <div class="-user-menu-button-content">
-          {{user?.name}} {{user?.surname}}
+          {{ user.name }} {{ user.surname }}
           <span class="material-symbols-outlined">arrow_drop_down</span>
         </div>
       </button>
@@ -43,6 +47,5 @@
         </button>
       </mat-menu>
     </div>
-
   </div>
- </div>
+</div>

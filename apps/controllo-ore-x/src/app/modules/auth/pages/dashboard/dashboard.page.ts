@@ -44,8 +44,4 @@ export class DashboardPage implements OnInit, SubscriptionsLifecycle {
       ),
     );
   }
-
-  logout(): void {
-    this._authService.logout();
-  }
 }

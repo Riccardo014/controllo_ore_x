@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { UserReadDto } from '@api-interfaces';
+import { AuthService } from '@app/_core/services/auth.service';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
@@ -16,8 +16,7 @@ import { NavMenusVisibilityService } from '../sidenav/servicies/nav-menus-visibi
 export class GlobalTopbarComponent implements OnInit, SubscriptionsLifecycle {
   currentTime: string = '';
 
-  @Input() user?: UserReadDto;
-  @Output() logoutEmit: EventEmitter<void> = new EventEmitter<void>();
+  user?: UserReadDto;
 
   subscriptionsList: Subscription[] = [];
 
@@ -25,9 +24,11 @@ export class GlobalTopbarComponent implements OnInit, SubscriptionsLifecycle {
     completeSubscriptions;
 
   constructor(
-    private _router: Router,
     private _sidenavService: NavMenusVisibilityService,
-  ) {}
+    private _authService: AuthService,
+  ) {
+    this.user = this._authService.loggedInUser;
+  }
 
   setAutomaticTimerUpdate(): Subscription {
     return interval(1000).subscribe((_) => {
@@ -43,6 +44,9 @@ export class GlobalTopbarComponent implements OnInit, SubscriptionsLifecycle {
   }
 
   ngOnInit(): void {
+    if (!this.user) {
+      throw new Error('User is not logged in');
+    }
     this._setSubscriptions();
   }
 
@@ -59,7 +63,6 @@ export class GlobalTopbarComponent implements OnInit, SubscriptionsLifecycle {
   }
 
   logout(): void {
-    this.logoutEmit.emit();
-    this._router.navigate(['/']);
+    this._authService.logout();
   }
 }

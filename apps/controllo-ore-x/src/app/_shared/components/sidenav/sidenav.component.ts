@@ -23,6 +23,8 @@ export class SidenavComponent implements OnInit, SubscriptionsLifecycle {
 
   isSidenavOpen: boolean = true;
 
+  selectedSection: string;
+
   subscriptionsList: Subscription[] = [];
 
   _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
@@ -31,7 +33,10 @@ export class SidenavComponent implements OnInit, SubscriptionsLifecycle {
   constructor(
     private _router: Router,
     private _sidenavService: NavMenusVisibilityService,
-  ) {}
+  ) {
+    this.selectedSection = this._router.url.split('/')[2];
+    console.log(this.selectedSection);
+  }
 
   ngOnInit(): void {
     this._setSubscriptions();

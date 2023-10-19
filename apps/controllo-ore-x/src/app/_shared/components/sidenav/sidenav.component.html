@@ -1,10 +1,13 @@
 <div class="-sidebar">
-  <ul>
-    <li *ngFor="let section of MAIN_MENU_SECTIONS" class="body-1">
-      <a
-        [routerLink]="section.routerLink"
-        [class.-selected]="setActiveSection(section.routerLink)"
-      >
+  <ul class="-sidebar__menu">
+    <li
+      *ngFor="let section of MAIN_MENU_SECTIONS"
+      class="body-1 -sidebar__menu__section"
+      [class.-sidebar__menu__section--is-selected]="
+        setActiveSection(section.routerLink)
+      "
+    >
+      <a [routerLink]="section.routerLink">
         <span class="material-symbols-outlined">{{ section.iconName }}</span
         >{{ section.label }}
       </a>
@@ -12,25 +15,31 @@
   </ul>
 
   <p class="__menu-subtitle">Amministrazione</p>
-  <ul>
-    <li *ngFor="let section of ADMINISTRATION_MENU_SECTIONS" class="body-1">
-      <a
-        [routerLink]="section.routerLink"
-        [class.-selected]="setActiveSection(section.routerLink)"
-      >
+  <ul class="-sidebar__menu">
+    <li
+      *ngFor="let section of ADMINISTRATION_MENU_SECTIONS"
+      class="body-1 -sidebar__menu__section"
+      [class.-sidebar__menu__section--is-selected]="
+        setActiveSection(section.routerLink)
+      "
+    >
+      <a [routerLink]="section.routerLink">
         <span class="material-symbols-outlined">{{ section.iconName }}</span
         >{{ section.label }}
       </a>
     </li>
   </ul>
 
-  <p class="__menu-subtitle">Gestione</p>
-  <ul>
-    <li *ngFor="let section of MANAGEMENT_MENU_SECTIONS" class="body-1">
-      <a
-        [routerLink]="section.routerLink"
-        [class.-selected]="setActiveSection(section.routerLink)"
-      >
+  <p class="-section__menu-subtitle">Gestione</p>
+  <ul class="-sidebar__menu">
+    <li
+      *ngFor="let section of MANAGEMENT_MENU_SECTIONS"
+      class="body-1 -sidebar__menu__section"
+      [class.-sidebar__menu__section--is-selected]="
+        setActiveSection(section.routerLink)
+      "
+    >
+      <a [routerLink]="section.routerLink">
         <span class="material-symbols-outlined">{{ section.iconName }}</span
         >{{ section.label }}
       </a>

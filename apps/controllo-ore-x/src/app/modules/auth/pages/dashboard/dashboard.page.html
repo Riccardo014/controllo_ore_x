@@ -1,17 +1,11 @@
-<controllo-ore-x-global-topbar
-  (logoutEmit)="logout()"
-  [user]="user">
-</controllo-ore-x-global-topbar>
+<controllo-ore-x-global-topbar> </controllo-ore-x-global-topbar>
 
 <div class="page">
-  <div class="sidebar-container"
-  [class.is-close]="!isSidebarOpen">
+  <div class="sidebar-container" [class.is-close]="!isSidebarOpen">
     <controllo-ore-x-sidenav></controllo-ore-x-sidenav>
   </div>
 
-  <div class="main-container" 
-  [class.full-page]="!isSidebarOpen">
-
-  <router-outlet></router-outlet>
-  
+  <div class="main-container" [class.full-page]="!isSidebarOpen">
+    <router-outlet></router-outlet>
+  </div>
 </div>
