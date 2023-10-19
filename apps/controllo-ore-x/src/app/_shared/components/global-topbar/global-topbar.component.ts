@@ -16,8 +16,6 @@ import { NavMenusVisibilityService } from '../sidenav/servicies/nav-menus-visibi
 export class GlobalTopbarComponent implements OnInit, SubscriptionsLifecycle {
   currentTime: string = '';
 
-  isSidenavOpen: boolean = true;
-
   @Input() user?: UserReadDto;
   @Output() logoutEmit: EventEmitter<void> = new EventEmitter<void>();
 
@@ -53,12 +51,7 @@ export class GlobalTopbarComponent implements OnInit, SubscriptionsLifecycle {
   }
 
   _setSubscriptions(): void {
-    this.subscriptionsList.push(
-      this._sidenavService.visibiliyObservable.subscribe(
-        (isOpen) => (this.isSidenavOpen = isOpen),
-      ),
-      this.setAutomaticTimerUpdate(),
-    );
+    this.subscriptionsList.push(this.setAutomaticTimerUpdate());
   }
 
   toggleVisibility(): void {
