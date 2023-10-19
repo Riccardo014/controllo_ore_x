@@ -1,6 +1,6 @@
-import { IMainMenuVoice } from '@core/interfaces/i-main-menu-voice.interface';
+import { IMenuSections } from '@app/_core/interfaces/i-menu-sections.interface';
 
-export const MAIN_MENU: IMainMenuVoice[] = [
+export const MAIN_MENU: IMenuSections[] = [
   {
     label: 'Tracker',
     routerLink: 'tracker',

@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { ADMINISTRATION_MENU } from '@app/_core/config/administration-menu.config';
 import { MAIN_MENU } from '@app/_core/config/main-menu.config';
 import { MANAGEMENT_MENU } from '@app/_core/config/management-menu.config';
+import { IMenuSections } from '@app/_core/interfaces/i-menu-sections.interface';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
-import { IMainMenuVoice } from '@core/interfaces/i-main-menu-voice.interface';
 import { Subscription } from 'rxjs';
 import { NavMenusVisibilityService } from './servicies/nav-menus-visibility.service';
 
@@ -17,9 +17,9 @@ import { NavMenusVisibilityService } from './servicies/nav-menus-visibility.serv
   styleUrls: ['./sidenav.component.scss'],
 })
 export class SidenavComponent implements OnInit, SubscriptionsLifecycle {
-  MAIN_MENU: IMainMenuVoice[] = MAIN_MENU;
-  ADMINISTRATION_MENU: IMainMenuVoice[] = ADMINISTRATION_MENU;
-  MANAGEMENT_MENU: IMainMenuVoice[] = MANAGEMENT_MENU;
+  MAIN_MENU: IMenuSections[] = MAIN_MENU;
+  ADMINISTRATION_MENU: IMenuSections[] = ADMINISTRATION_MENU;
+  MANAGEMENT_MENU: IMenuSections[] = MANAGEMENT_MENU;
 
   isSidenavOpen: boolean = true;
 
