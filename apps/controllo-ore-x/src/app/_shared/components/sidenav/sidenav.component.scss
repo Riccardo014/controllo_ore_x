@@ -1,7 +1,7 @@
 @import 'libs/ui/core/consts.scss';
 @import 'libs/ui/core/mixins.scss';
 
-.-sidebar-wrapper {
+.-sidebar {
   height: 100vh;
   background-color: #E9ECF5;
   box-sizing: border-box;
@@ -36,7 +36,7 @@
 
     }
 
-    .menu-subtitle{
+    & .__menu-subtitle{
         color: rgba(0, 0, 0, 0.25);
         padding: 10px 24px;
         font-size: 12px;
