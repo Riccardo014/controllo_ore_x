@@ -87,9 +87,8 @@ export class TeamDialog
    * Fetch and set the users' roles from the database.
    */
   private _getUsersRoles(): Subscription {
-    return this._roleDataService
-      .getMany({})
-      .subscribe((roles: ApiPaginatedResponse<RoleReadDto>) => {
+    return this._roleDataService.getMany({}).subscribe({
+      next: (roles: ApiPaginatedResponse<RoleReadDto>) => {
         this.userRoles = roles.data;
         if (this.formHelper.form.value.role) {
           this.currentRole = this.userRoles.find(
@@ -97,6 +96,10 @@ export class TeamDialog
               role._id === this.formHelper.form.value.role._id,
           );
         }
-      });
+      },
+      error: (error: any) => {
+        throw new Error(error);
+      },
+    });
   }
 }
