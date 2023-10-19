@@ -1,6 +1,6 @@
 import { IMenuSections } from '@app/_core/interfaces/i-menu-sections.interface';
 
-export const MAIN_MENU: IMenuSections[] = [
+export const MAIN_MENU_SECTIONS: IMenuSections[] = [
   {
     label: 'Tracker',
     routerLink: 'tracker',

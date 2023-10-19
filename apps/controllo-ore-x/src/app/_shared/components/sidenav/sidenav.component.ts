@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ADMINISTRATION_MENU } from '@app/_core/config/administration-menu.config';
-import { MAIN_MENU } from '@app/_core/config/main-menu.config';
-import { MANAGEMENT_MENU } from '@app/_core/config/management-menu.config';
+import { ADMINISTRATION_MENU_SECTIONS } from '@app/_core/config/administration-menu-sections.config';
+import { MAIN_MENU_SECTIONS } from '@app/_core/config/main-menu-sections.config';
+import { MANAGEMENT_MENU_SECTIONS } from '@app/_core/config/management-menu-sections.config';
 import { IMenuSections } from '@app/_core/interfaces/i-menu-sections.interface';
 import {
   SubscriptionsLifecycle,
@@ -17,9 +17,9 @@ import { NavMenusVisibilityService } from './servicies/nav-menus-visibility.serv
   styleUrls: ['./sidenav.component.scss'],
 })
 export class SidenavComponent implements OnInit, SubscriptionsLifecycle {
-  MAIN_MENU: IMenuSections[] = MAIN_MENU;
-  ADMINISTRATION_MENU: IMenuSections[] = ADMINISTRATION_MENU;
-  MANAGEMENT_MENU: IMenuSections[] = MANAGEMENT_MENU;
+  MAIN_MENU_SECTIONS: IMenuSections[] = MAIN_MENU_SECTIONS;
+  ADMINISTRATION_MENU_SECTIONS: IMenuSections[] = ADMINISTRATION_MENU_SECTIONS;
+  MANAGEMENT_MENU_SECTIONS: IMenuSections[] = MANAGEMENT_MENU_SECTIONS;
 
   isSidenavOpen: boolean = true;
 
@@ -49,18 +49,16 @@ export class SidenavComponent implements OnInit, SubscriptionsLifecycle {
     );
   }
 
-  setActiveVoice(routerLink: string | undefined): boolean {
+  /**
+   * Set the active section on the sidenav
+   */
+  setActiveSection(routerLink: string | undefined): boolean {
     if (!routerLink) {
       return false;
     }
 
     const currentUrl: string = this._router.url;
     if (!currentUrl.includes(routerLink)) {
-      return false;
-    }
-
-    //* this condition is to avoid multiple active voices on sidebar
-    if (routerLink === 'documenti' && currentUrl.includes('i-miei-documenti')) {
       return false;
     }
 

@@ -1,38 +1,38 @@
 <div class="-sidebar">
   <ul>
-    <li *ngFor="let voice of MAIN_MENU" class="body-1">
+    <li *ngFor="let section of MAIN_MENU_SECTIONS" class="body-1">
       <a
-        [routerLink]="voice.routerLink"
-        [class.-selected]="setActiveVoice(voice.routerLink)"
+        [routerLink]="section.routerLink"
+        [class.-selected]="setActiveSection(section.routerLink)"
       >
-        <span class="material-symbols-outlined">{{ voice.iconName }}</span
-        >{{ voice.label }}
+        <span class="material-symbols-outlined">{{ section.iconName }}</span
+        >{{ section.label }}
       </a>
     </li>
   </ul>
 
   <p class="__menu-subtitle">Amministrazione</p>
   <ul>
-    <li *ngFor="let voice of ADMINISTRATION_MENU" class="body-1">
+    <li *ngFor="let section of ADMINISTRATION_MENU_SECTIONS" class="body-1">
       <a
-        [routerLink]="voice.routerLink"
-        [class.-selected]="setActiveVoice(voice.routerLink)"
+        [routerLink]="section.routerLink"
+        [class.-selected]="setActiveSection(section.routerLink)"
       >
-        <span class="material-symbols-outlined">{{ voice.iconName }}</span
-        >{{ voice.label }}
+        <span class="material-symbols-outlined">{{ section.iconName }}</span
+        >{{ section.label }}
       </a>
     </li>
   </ul>
 
   <p class="__menu-subtitle">Gestione</p>
   <ul>
-    <li *ngFor="let voice of MANAGEMENT_MENU" class="body-1">
+    <li *ngFor="let section of MANAGEMENT_MENU_SECTIONS" class="body-1">
       <a
-        [routerLink]="voice.routerLink"
-        [class.-selected]="setActiveVoice(voice.routerLink)"
+        [routerLink]="section.routerLink"
+        [class.-selected]="setActiveSection(section.routerLink)"
       >
-        <span class="material-symbols-outlined">{{ voice.iconName }}</span
-        >{{ voice.label }}
+        <span class="material-symbols-outlined">{{ section.iconName }}</span
+        >{{ section.label }}
       </a>
     </li>
   </ul>
