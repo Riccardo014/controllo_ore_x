@@ -9,7 +9,7 @@ export function strongPasswordValidator(
   );
 
   if (!password) {
-    return null;
+    return { strong: true };
   }
 
   const isStrong: boolean = regex.test(password);
