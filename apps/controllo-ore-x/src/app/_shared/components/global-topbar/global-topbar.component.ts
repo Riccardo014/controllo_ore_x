@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserReadDto } from '@api-interfaces';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
@@ -16,19 +18,23 @@ export class GlobalTopbarComponent implements OnInit, SubscriptionsLifecycle {
 
   isSidenavOpen: boolean = true;
 
+  @Input() user?: UserReadDto;
+  @Output() logoutEmit: EventEmitter<void> = new EventEmitter<void>();
+
   subscriptionsList: Subscription[] = [];
 
   _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
 
-  constructor(private _sidenavService: NavMenusVisibilityService) {}
+  constructor(
+    private _router: Router,
+    private _sidenavService: NavMenusVisibilityService,
+  ) {}
 
   setAutomaticTimerUpdate(): Subscription {
-    return interval(1000)
-      .pipe()
-      .subscribe((_) => {
-        this.currentTime = this.dateToString(new Date());
-      });
+    return interval(1000).subscribe((_) => {
+      this.currentTime = this.dateToString(new Date());
+    });
   }
 
   dateToString(date: Date): string {

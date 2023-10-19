@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { UserReadDto } from '@api-interfaces';
 import { AuthService } from '@app/_core/services/auth.service';
-import { SubscriptionsLifecycle, completeSubscriptions } from '@app/utils/subscriptions_lifecycle';
+import {
+  SubscriptionsLifecycle,
+  completeSubscriptions,
+} from '@app/utils/subscriptions_lifecycle';
 import { NavMenusVisibilityService } from 'apps/controllo-ore-x/src/app/_shared/components/sidenav/servicies/nav-menus-visibility.service';
 import { Subscription } from 'rxjs';
 
@@ -16,10 +19,13 @@ export class DashboardPage implements OnInit, SubscriptionsLifecycle {
   subscriptionsList: Subscription[] = [];
 
   _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
-  completeSubscriptions;
+    completeSubscriptions;
   user?: UserReadDto;
-  
-  constructor(private _sidenavService: NavMenusVisibilityService, private _authService: AuthService) {}
+
+  constructor(
+    private _sidenavService: NavMenusVisibilityService,
+    private _authService: AuthService,
+  ) {}
 
   ngOnInit(): void {
     this._setSubscriptions();
@@ -42,5 +48,4 @@ export class DashboardPage implements OnInit, SubscriptionsLifecycle {
   logout(): void {
     this._authService.logout();
   }
-
 }
