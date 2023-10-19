@@ -1,0 +1,64 @@
+<ng-container [ngSwitch]="column.type" class="body-2">
+  <ng-container *ngSwitchCase="'NUMBER'">
+    {{ valueToPrint | number: '1.2-2' }}
+  </ng-container>
+  <ng-container *ngSwitchCase="'STRING'">
+    <div class="body-2">{{ valueToPrint }}</div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'HTML'">
+    <div [innerHTML]="valueToPrint" class="-html-td"></div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'TIME_DATE'">
+    {{ valueToPrint | date: 'd/MM/YY HH:mm' }}
+  </ng-container>
+  <ng-container *ngSwitchCase="'DATE'">
+    <div class="body-2">{{ valueToPrint | date: 'dd/MM/yyyy' }}</div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'PROGRESS'">
+    <mat-progress-bar
+      mode="determinate"
+      value="40"
+      color="accent"
+    ></mat-progress-bar>
+  </ng-container>
+  <ng-container *ngSwitchCase="'BOOLEAN'">
+    <mat-icon *ngIf="valueToPrint; else elseCheck" class="-check"
+      >check</mat-icon
+    >
+    <ng-template #elseCheck>
+      <mat-icon color="warn">close</mat-icon>
+    </ng-template>
+  </ng-container>
+  <ng-container *ngSwitchCase="'ROLE'">
+    <mat-chip
+      class="-chip"
+      [ngClass]="{
+        '-role-chip-superadmin': valueToPrint == roles[0],
+        '-role-chip-admin': valueToPrint == roles[1],
+        '-role-chip-collaborator': valueToPrint == roles[2]
+      }"
+    >
+      {{ valueToPrint }}
+    </mat-chip>
+  </ng-container>
+  <ng-container *ngSwitchCase="'EDITABLE'" class="-editable-container">
+    <div class="-editable-container">
+      <button *ngIf="openDialog" mat-icon-button (click)="openDialogFn(entity)">
+        <span class="material-symbols-outlined -edit-button-icon"
+          >ink_marker
+        </span>
+      </button>
+    </div>
+  </ng-container>
+  <!-- <ng-container *ngSwitchCase="'PAYMENT_STATUS'">
+    <div class="-chip" *ngIf="valueToPrint === PAYMENT_STATUS.NOT_MADE">Non effettuato</div>
+    <div class="-chip -background-rejected" *ngIf="valueToPrint === PAYMENT_STATUS.REJECTED">Rifiutato</div>
+    <div class="-chip -background-completed" *ngIf="valueToPrint === PAYMENT_STATUS.DONE">Effettuato</div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'REQUEST_STATUS'">
+    <div class="-chip" *ngIf="valueToPrint === REQUEST_STATUS.SUSPENDED">Sospesa</div>
+    <div class="-chip" *ngIf="valueToPrint === REQUEST_STATUS.REQUEST_MADE">Richiesta Presentata</div>
+    <div class="-chip" *ngIf="valueToPrint === REQUEST_STATUS.IN_PROGRESS">Presa in carico</div>
+    <div class="-chip -background-completed" *ngIf="valueToPrint === REQUEST_STATUS.SHIPPED">Diploma spedito</div>
+  </ng-container> -->
+</ng-container>

@@ -3,6 +3,7 @@ export interface UserReadDto {
   email: string;
   name: string;
   surname: string;
+  roleId: string;
   isDeletable: boolean;
   createdAt?: Date | string;
   updatedAt?: Date | string;

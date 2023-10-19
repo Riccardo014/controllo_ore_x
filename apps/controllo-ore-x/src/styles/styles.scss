@@ -1,0 +1,6 @@
+@import 'libs/ui/core.scss';
+@import 'libs/ui/material-theme/configuration/ng-material.scss';
+@import 'partials/utils';
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

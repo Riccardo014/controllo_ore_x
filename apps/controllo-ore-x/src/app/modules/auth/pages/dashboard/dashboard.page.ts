@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SubscriptionsLifecycle } from '@cox-interfaces';
+import { SubscriptionsLifecycle, completeSubscriptions } from '@app/utils/subscriptions_lifecycle';
 import { NavMenusVisibilityService } from 'apps/controllo-ore-x/src/app/_shared/components/sidenav/servicies/nav-menus-visibility.service';
 import { Subscription } from 'rxjs';
 
@@ -13,6 +13,9 @@ export class DashboardPage implements OnInit, SubscriptionsLifecycle {
 
   subscriptionsList: Subscription[] = [];
 
+  _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
+  completeSubscriptions;
+  
   constructor(private _sidenavService: NavMenusVisibilityService) {}
 
   ngOnInit(): void {
@@ -20,7 +23,7 @@ export class DashboardPage implements OnInit, SubscriptionsLifecycle {
   }
 
   ngOnDestroy(): void {
-    this._completeSubscriptions();
+    this._completeSubscriptions(this.subscriptionsList);
   }
 
   _setSubscriptions(): void {
@@ -29,11 +32,5 @@ export class DashboardPage implements OnInit, SubscriptionsLifecycle {
         (isOpen) => (this.isSidebarOpen = isOpen),
       ),
     );
-  }
-
-  _completeSubscriptions(): void {
-    for (const subscription of this.subscriptionsList) {
-      subscription.unsubscribe();
-    }
   }
 }

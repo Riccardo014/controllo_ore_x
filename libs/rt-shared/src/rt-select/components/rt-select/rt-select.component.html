@@ -1,0 +1,29 @@
+<div class="__container">
+  <mat-form-field style="width: 100%" appearance="outline">
+    <mat-label *ngIf="label" class="__label">{{ label }}</mat-label>
+
+    <mat-select [compareWith]="compare" [formControl]="control">
+      <mat-option></mat-option>
+      <mat-option *ngFor="let option of options" [value]="option">{{
+        selectOptionLabelFn(option)
+      }}</mat-option>
+    </mat-select>
+
+    <span matPrefix>
+      <ng-content select="[prefix]"></ng-content>
+    </span>
+
+    <span matSuffix>
+      <ng-content select="[suffix]"></ng-content>
+    </span>
+
+    <!-- ERROR HANDLER -->
+
+    <mat-error *ngFor="let error of errorsToWatch">
+      <ng-container *ngIf="control?.hasError(error.name)">{{
+        error.message
+      }}</ng-container>
+    </mat-error>
+    <mat-hint *ngIf="hint">{{ hint }}</mat-hint>
+  </mat-form-field>
+</div>

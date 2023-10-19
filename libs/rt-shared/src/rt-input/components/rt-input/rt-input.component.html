@@ -1,0 +1,62 @@
+<div class="__container">
+  <mat-form-field
+    style="width: 100%"
+    [ngClass]="containerClass"
+    appearance="outline"
+  >
+    <mat-label *ngIf="label" class="__label">{{ label }}</mat-label>
+
+    <ng-container *ngIf="control; else onlyValue">
+      <input
+        *ngIf="inputType !== 'number'"
+        [errorStateMatcher]="matcher"
+        [formControl]="control"
+        [name]="inputName"
+        [autocomplete]="autocomplete"
+        [placeholder]="inputPlaceholder"
+        [maxlength]="maxlength"
+        [type]="inputType"
+        matInput
+      />
+
+      <input
+        *ngIf="inputType === 'number'"
+        [errorStateMatcher]="matcher"
+        [formControl]="control"
+        [name]="inputName"
+        [autocomplete]="autocomplete"
+        [placeholder]="inputPlaceholder"
+        matInput
+        [step]="stepValue"
+        type="number"
+      />
+    </ng-container>
+    <ng-template #onlyValue>
+      <input
+        [errorStateMatcher]="matcher"
+        [value]="value"
+        [autocomplete]="autocomplete"
+        [placeholder]="inputPlaceholder"
+        [disabled]="isDisabled"
+        matInput
+      />
+    </ng-template>
+
+    <span matPrefix>
+      <ng-content select="[prefix]"></ng-content>
+    </span>
+
+    <span matSuffix>
+      <ng-content select="[suffix]"></ng-content>
+    </span>
+
+    <!-- ERROR HANDLER -->
+
+    <mat-error *ngFor="let error of errorsToWatch">
+      <ng-container *ngIf="control?.hasError(error.name)">{{
+        error.message
+      }}</ng-container>
+    </mat-error>
+    <mat-hint *ngIf="hint">{{ hint }}</mat-hint>
+  </mat-form-field>
+</div>

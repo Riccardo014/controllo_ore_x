@@ -1,0 +1,34 @@
+@import 'libs/ui/core.scss';
+
+:host {
+  padding: 0 16px;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  border-right: 1px solid $table-border-color;
+  height: inherit;
+
+  @include mobile-tablet {
+    border-right: none;
+  }
+
+  input {
+    flex-grow: 1;
+    line-height: 48px;
+    background-color: transparent;
+    border: 0 none;
+    margin: 0 12px;
+    padding: 0 16px;
+
+    &::placeholder {
+      color: $table-label-search;
+      font-size: $table-font-size-search-placeholder;
+    }
+
+    &:focus,
+    input:focus {
+      outline: none;
+    }
+  }
+}
+

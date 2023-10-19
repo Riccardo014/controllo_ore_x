@@ -1,0 +1,10 @@
+<div (click)="toggleOrderBy()" class="-cell-sort body-2">
+  <mat-icon *ngIf="currentOrder && currentOrder === ORDER_BY_TYPE.ASC">
+    arrow_downward
+  </mat-icon>
+  <mat-icon *ngIf="currentOrder && currentOrder === ORDER_BY_TYPE.DESC">
+    arrow_upward
+  </mat-icon>
+  <span>{{ column.title }}</span>
+  <div class="-cell-sort__icons" *ngIf="column.sortable"></div>
+</div>

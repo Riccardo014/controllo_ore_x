@@ -7,53 +7,68 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Aggiunto
+
+- Aggiunto modulo di gestione del team lato front-end.
+
 ## [0.0.11]
 
-### Aggiunto 
+### Aggiunto
+
 - Aggiunta funzionalità di login lato front-end.
 
 ## [0.0.10]
 
-### Aggiunto 
+### Aggiunto
+
 - Aggiunto il modulo back-end delle ore degli utenti.
 
 ## [0.0.9]
 
-### Aggiunto 
+### Aggiunto
+
 - Aggiunta la creazione automatica di una release di default quando si creea un nuovo progetto.
 
 ## [0.0.8]
-### Aggiunto 
+
+### Aggiunto
+
 - Aggiunto il modulo back-end delle release.
 
 ## [0.0.7]
 
-### Aggiunto 
+### Aggiunto
+
 - Aggiunto il modulo back-end delle ore extra.
 
 ## [0.0.6]
 
-### Aggiunto 
+### Aggiunto
+
 - Aggiunto il modulo back-end delle etichette.
 
 ## [0.0.5]
 
-### Aggiunto 
+### Aggiunto
+
 - Aggiunto il modulo back-end dei progetti.
 
 ## [0.0.4]
 
-### Aggiunto 
+### Aggiunto
+
 - Aggiunto il modulo back-end dei clienti.
 
 ## [0.0.3]
 
-### Aggiunto 
+### Aggiunto
+
 - Aggiunti gli errori personalizzati.
 
 ## [0.0.2]
 
-### Aggiunto 
+### Aggiunto
+
 - Aggiunti i controlli sui ruoli.
 - Aggiunto il decorator per gli utenti autenticati.
 - Aggiunta la guardia di autenticazione.
@@ -68,4 +83,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.0.1]
 
 ### Aggiunto
-- Create CHANGELOG
+
+- Created CHANGELOG.

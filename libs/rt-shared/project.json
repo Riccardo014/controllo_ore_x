@@ -1,0 +1,27 @@
+{
+  "name": "rt-shared",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/rt-shared/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "rootDir": ".",
+        "outputPath": "dist/libs/rt-shared",
+        "main": "libs/rt-shared/src/index.ts",
+        "tsConfig": "libs/rt-shared/tsconfig.lib.json",
+        "assets": ["libs/rt-shared/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/rt-shared/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}

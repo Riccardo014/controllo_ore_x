@@ -1,0 +1,15 @@
+.__container {
+  flex-grow: 1;
+
+  &__mat-form-field__wrapper {
+    width: 100% !important;
+  }
+
+  &__mat-form-field {
+    display: block !important;
+  }
+}
+
+.__label{
+  padding-left: 10px;
+}

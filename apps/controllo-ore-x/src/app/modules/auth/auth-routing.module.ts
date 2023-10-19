@@ -9,8 +9,17 @@ const routes: Routes = [
     children: [
       {
         path: 'tracker',
-        loadChildren: () => import('./modules/tracker/tracker.module').then((m) => m.TrackerModule),
-        pathMatch: 'full',
+        loadChildren: () =>
+          import('./modules/tracker/tracker.module').then(
+            (module) => module.TrackerModule,
+          ),
+      },
+      {
+        path: 'team',
+        loadChildren: () =>
+          import('./modules/team/team.module').then(
+            (module) => module.TeamModule,
+          ),
       },
     ],
   },
