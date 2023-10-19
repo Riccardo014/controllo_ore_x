@@ -6,12 +6,15 @@ import {
   Output,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { COX_FILTER, FindBoostedWhereOption } from '@api-interfaces';
+import {
+  COX_FILTER,
+  FIND_BOOSTED_FN,
+  FindBoostedWhereOption,
+} from '@api-interfaces';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
-import { CoxFilter } from 'libs/utils';
 import { Subscription } from 'rxjs';
 import { FilterService } from '../../services/filter.service';
 @Component({
@@ -30,21 +33,6 @@ export class ReportFilterComponent
     singleLabel: string;
     multiLabel: string;
     fieldName: COX_FILTER;
-  }[] = [];
-
-  filters: {
-    list: any[];
-    singleLabel: string;
-    multiLabel: string;
-    fieldName: COX_FILTER;
-    formControl: FormControl;
-  }[] = [];
-
-  activeFilters: {
-    list: any[];
-    singleLabel: string;
-    multiLabel: string;
-    fieldName: COX_FILTER;
     formControl: FormControl;
   }[] = [];
 
@@ -58,19 +46,6 @@ export class ReportFilterComponent
   constructor(private _filterService: FilterService) {}
 
   ngOnInit(): void {
-    console.log(this.dataForFilters);
-    this.loadDataForFilters();
-
-    this.filters.forEach((filter) => {
-      this.activeFilters.push({
-        list: [],
-        singleLabel: filter.singleLabel,
-        multiLabel: filter.multiLabel,
-        fieldName: filter.fieldName,
-        formControl: filter.formControl,
-      });
-    });
-
     this._setSubscriptions();
   }
 
@@ -83,86 +58,119 @@ export class ReportFilterComponent
       this._filterService.dataForFiltersObservable.subscribe(
         (dataForFilters) => {
           this.dataForFilters = dataForFilters;
-          this.loadDataForFilters();
+          this.areAnyFiltersActive();
         },
       ),
     );
   }
 
-  loadDataForFilters(): void {
-    this.dataForFilters.forEach((dataForFilter) => {
-      let isPresent: boolean = false;
-      this.filters.forEach((filter) => {
-        if (filter.fieldName == dataForFilter.fieldName) {
-          isPresent = true;
-        }
-      });
-      if (isPresent) {
-        return;
-      }
-      this.filters.push({
-        list: dataForFilter.list,
-        singleLabel: dataForFilter.singleLabel,
-        multiLabel: dataForFilter.multiLabel,
-        fieldName: dataForFilter.fieldName,
-        formControl: new FormControl(),
-      });
-    });
-  }
-
-  formEmitter(filter: any, newValue: any[]): void {
-    const selectedFilter: CoxFilter = {
-      fieldName: filter.fieldName,
-      list: newValue,
-    };
-
-    //update the active filters
-    this.activeFilters.forEach((activeFilter) => {
-      if (activeFilter.fieldName == selectedFilter.fieldName) {
-        activeFilter.list = selectedFilter.list;
-      }
-    });
-
-    //update areFiltersActive
+  areAnyFiltersActive(): void {
     this.areFiltersActive = false;
-    this.activeFilters.forEach((activeFilter) => {
+    this.dataForFilters.forEach((dataForFilter) => {
       this.areFiltersActive =
-        this.areFiltersActive || !!activeFilter.list.length;
+        this.areFiltersActive || !!dataForFilter.formControl.value?.length;
     });
   }
 
-  remove(filter: CoxFilter, element: string): void {
-    this.activeFilters.forEach((activeFilter) => {
-      if (activeFilter.fieldName == filter.fieldName) {
-        const index = filter.list.indexOf(element);
+  remove(filter: any, element: string): void {
+    this.dataForFilters.forEach((dataForFilter) => {
+      if (dataForFilter.fieldName == filter.fieldName) {
+        const index = filter.formControl.value.indexOf(element);
         if (index >= 0) {
-          filter.list.splice(index, 1);
-          activeFilter.formControl.setValue(filter.list);
+          const newValue = filter.formControl.value;
+          newValue.splice(index, 1);
+          dataForFilter.formControl.setValue(newValue);
+          this.areAnyFiltersActive();
         }
       }
     });
   }
 
   resetFn(): void {
-    this.activeFilters.forEach((activeFilter) => {
-      activeFilter.list = [];
-      activeFilter.formControl.setValue([]);
+    this.dataForFilters.forEach((dataForFilter) => {
+      dataForFilter.formControl.setValue([]);
     });
     this.areFiltersActive = false;
     this.filtersEmitter.emit([]);
   }
 
   applyFn(): void {
-    const selectedFilters: CoxFilter[] = [];
-    this.activeFilters.forEach((activeFilter) => {
-      if (activeFilter.list.length) {
-        selectedFilters.push({
-          fieldName: activeFilter.fieldName,
-          list: activeFilter.list,
-        });
-      }
-    });
+    this.filtersEmitter.emit([this._buildFilters()]);
+  }
 
-    this.filtersEmitter.emit(selectedFilters);
+  private _buildFilters(): FindBoostedWhereOption {
+    const filterValue: FindBoostedWhereOption = {};
+    for (const dataForFilter of this.dataForFilters) {
+      if (!dataForFilter.formControl.value?.length) {
+        continue;
+      }
+      const args: string[] = [];
+      for (const entityToFilter of dataForFilter.formControl.value) {
+        args.push(entityToFilter._id);
+      }
+
+      const dbColumnsPointNested: string = dataForFilter.fieldName;
+      const dbColumnsFlat: string[] = dbColumnsPointNested.split('.');
+      let dbColumnPreviousLevel: any = {};
+
+      let copyCurrentNestLevel: any = {};
+      // let lastLevel: any = {};
+      for (let index = 0; index < dbColumnsFlat.length; index++) {
+        const dbColumn = dbColumnsFlat[index];
+
+        // livello intermedio devo creare lo scaffold con il livello precedente
+        if (index > 0) {
+          // const previousLevelColumn = dbColumnsFlat[index - 1];
+
+          // copyCurrentNestLevel[previousLevelColumn][dbColumn] = {};
+          // lastLevel = copyCurrentNestLevel[previousLevelColumn][dbColumn];
+
+          // ultimo livello  metto gli args e fn
+          // if(index === dbColumnsFlat.length - 1) {
+          //   _id: {
+          //     _fn: FIND_BOOSTED_FN.STRING_IN,
+          //     args: args,
+          //   },
+          // }
+          console.log('dbColumnsFlat', dbColumnsFlat);
+          console.log('dbColumnPreviousLevel', dbColumnPreviousLevel);
+          console.log('dbColumn', dbColumn);
+          copyCurrentNestLevel[dbColumnPreviousLevel][dbColumn] = {};
+          dbColumnPreviousLevel =
+            copyCurrentNestLevel[dbColumnPreviousLevel][dbColumn];
+          continue;
+        }
+
+        // se è solo un livello creo l'oggetto da restituire con  gli args e _fn
+        if (dbColumnsFlat.length === 1) {
+          filterValue[dbColumn] = {
+            _id: {
+              _fn: FIND_BOOSTED_FN.STRING_IN,
+              args: args,
+            },
+          };
+          continue;
+        }
+
+        //se sono al primo livello di un oggetto a più livelli creo lo scaffold con il primo livello
+        if (index === 0) {
+          console.log('dbColumn', dbColumn);
+          filterValue[dbColumn] = {};
+          console.log('filterValue', filterValue);
+          dbColumnPreviousLevel = filterValue[dbColumn];
+        }
+
+        // copyCurrentNestLevel[dbColumn] = {};
+      }
+
+      // filterValue[dataForFilter.fieldName] = {
+      //   _id: {
+      //     _fn: FIND_BOOSTED_FN.STRING_IN,
+      //     args: args,
+      //   },
+      // };
+    }
+
+    return filterValue;
   }
 }

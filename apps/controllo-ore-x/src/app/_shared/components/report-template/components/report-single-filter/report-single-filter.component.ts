@@ -32,24 +32,16 @@ export class ReportSingleFilterComponent
   implements OnInit, OnDestroy, SubscriptionsLifecycle
 {
   @Output() change: EventEmitter<any[]> = new EventEmitter<any[]>();
-  dataForFilter: {
+
+  @Input() fieldName!: COX_FILTER;
+
+  dataForFilter!: {
     list: any[];
     singleLabel: string;
     multiLabel: string;
     fieldName: COX_FILTER;
     formControl: FormControl;
-  } = {
-    list: [],
-    singleLabel: '',
-    multiLabel: '',
-    fieldName: COX_FILTER.CUSTOMER,
-    formControl: new FormControl(),
   };
-  @Input() singleLabel: string = '';
-  @Input() multiLabel: string = '';
-  @Input() fieldName!: COX_FILTER;
-  @Input() list: any[] = [];
-  @Input() formControl = new FormControl();
 
   subscriptionsList: Subscription[] = [];
 
@@ -60,6 +52,11 @@ export class ReportSingleFilterComponent
 
   ngOnInit(): void {
     this._setSubscriptions();
+
+    this.dataForFilter.formControl.valueChanges.subscribe((value) => {
+      this._filterService.changeDataForSingleFilter(this.dataForFilter);
+      // this.change.emit(value);
+    });
   }
 
   ngOnDestroy(): void {
@@ -68,10 +65,6 @@ export class ReportSingleFilterComponent
 
   _setSubscriptions(): void {
     this.subscriptionsList.push(
-      this.formControl.valueChanges.subscribe((value) => {
-        this._filterService.changeDataForSingleFilter(this.dataForFilter);
-        this.change.emit(value);
-      }),
       this._filterService.dataForFiltersObservable.subscribe(
         (dataForFilters: any[]) => {
           dataForFilters.forEach((dataForFilter) => {
@@ -89,9 +82,9 @@ export class ReportSingleFilterComponent
       return '';
     }
     if (length === 1) {
-      return '1 ' + this.singleLabel;
+      return '1 ' + this.dataForFilter.singleLabel;
     } else {
-      return (length || 0) + ' ' + this.multiLabel;
+      return (length || 0) + ' ' + this.dataForFilter.multiLabel;
     }
   }
 

@@ -4,10 +4,14 @@ import {
   COX_FILTER,
   CustomerReadDto,
   FindBoostedWhereOption,
+  HoursTagReadDto,
   INDEX_CONFIGURATION_KEY,
+  ProjectReadDto,
+  ReleaseReadDto,
   UserHoursCreateDto,
   UserHoursReadDto,
   UserHoursUpdateDto,
+  UserReadDto,
 } from '@api-interfaces';
 import { IndexConfigurationDataService } from '@app/_core/services/index-configuration.data-service';
 import { ReportDataService } from '@app/_core/services/report.data-service';
@@ -41,7 +45,6 @@ export class ReportTemplateComponent
   CONFIGURATION_KEY: INDEX_CONFIGURATION_KEY = INDEX_CONFIGURATION_KEY.TRACKER;
 
   data: any[] = [];
-  showedData: any;
 
   dataForFilters: {
     list: any[];
@@ -57,38 +60,6 @@ export class ReportTemplateComponent
     private _filterService: FilterService,
   ) {
     super();
-    this.showedData = this.data;
-
-    this.dataForFilters.push({
-      list: [],
-      singleLabel: 'Cliente',
-      multiLabel: 'Clienti',
-      fieldName: COX_FILTER.CUSTOMER,
-      formControl: new FormControl(),
-    });
-    const customersList: CustomerReadDto[] = [];
-    this.data.forEach((data: any) => {
-      customersList.push(data.release.project.customer);
-    });
-    this.dataForFilters.map((dataForFilter) => {
-      if (dataForFilter.fieldName == COX_FILTER.CUSTOMER) {
-        dataForFilter.list = customersList;
-      }
-    });
-    this.dataForFilters.push({
-      list: [
-        'Formaggio',
-        'Funghi',
-        'Cipolla',
-        'Peperoni',
-        'Salsiccia',
-        'Pomodoro',
-      ],
-      singleLabel: 'Progetto',
-      multiLabel: 'Progetti',
-      fieldName: COX_FILTER.PROJECT,
-      formControl: new FormControl(),
-    });
   }
 
   override ngOnInit(): void {
@@ -100,7 +71,9 @@ export class ReportTemplateComponent
   override _setSubscriptions(): void {
     this.subscriptionsList.push(
       this._filterService.dataForFiltersObservable.subscribe(
-        (dataForFilters) => (this.dataForFilters = dataForFilters),
+        (dataForFilters) => {
+          this.dataForFilters = dataForFilters;
+        },
       ),
     );
     super._setSubscriptions();
@@ -113,16 +86,6 @@ export class ReportTemplateComponent
   updateFulltextSearch(fulltextSearch: string): void {
     this.indexTableHandler.status.fulltextSearch = fulltextSearch;
     this.indexTableHandler.statusChange(this.indexTableHandler.status);
-
-    // this.showedData = this.data.filter((data: any) => {
-    //   return (
-    //     data.notes.includes(fulltextSearch) ||
-    //     data.hours.includes(fulltextSearch) ||
-    //     data.date.includes(fulltextSearch)
-    //   );
-    // });
-    // this.indexTableHandler.data = this.showedData;
-    // console.log(this.showedData);
   }
 
   onFilterEmit(filters: FindBoostedWhereOption[]): void {
@@ -141,29 +104,86 @@ export class ReportTemplateComponent
             relations: this.indexTableHandler.tableConfiguration.relations,
           })
           .subscribe((apiResult) => {
+            console.log(apiResult.data);
             this.data = apiResult.data;
-            this.showedData = apiResult.data;
-            const customersList: CustomerReadDto[] = [];
-            this.data.forEach((data: any) => {
-              customersList.findIndex(
-                (customer) => customer._id == data.release.project.customer._id,
-              ) == -1 && customersList.push(data.release.project.customer);
-            });
-            this.dataForFilters.push({
-              list: [],
-              singleLabel: 'Cliente',
-              multiLabel: 'Clienti',
-              fieldName: COX_FILTER.CUSTOMER,
-              formControl: new FormControl(),
-            });
-            this.dataForFilters.map((dataForFilter) => {
-              if (dataForFilter.fieldName == COX_FILTER.CUSTOMER) {
-                dataForFilter.list = customersList;
-              }
-            });
+            this._setFilters();
             this.changeDataForFilters();
           });
         this.isFirstLoadDone.next(true);
       });
+  }
+
+  private _setFilters(): void {
+    const customersList: CustomerReadDto[] = [];
+    this.data.forEach((data: any) => {
+      customersList.findIndex(
+        (customer) => customer._id == data.release.project.customer._id,
+      ) == -1 && customersList.push(data.release.project.customer);
+    });
+    this._insertNewFilter(
+      'Cliente',
+      'Clienti',
+      COX_FILTER.CUSTOMER,
+      customersList,
+    );
+
+    const projectsList: ProjectReadDto[] = [];
+    this.data.forEach((data: any) => {
+      projectsList.findIndex(
+        (project) => project._id == data.release.project._id,
+      ) == -1 && projectsList.push(data.release.project);
+    });
+    this._insertNewFilter(
+      'Progetto',
+      'Progetti',
+      COX_FILTER.PROJECT,
+      projectsList,
+    );
+
+    const releaseList: ReleaseReadDto[] = [];
+    this.data.forEach((data: any) => {
+      releaseList.findIndex((release) => release._id == data.release._id) ==
+        -1 && releaseList.push(data.release);
+    });
+    this._insertNewFilter(
+      'Release',
+      'Release',
+      COX_FILTER.RELEASE,
+      releaseList,
+    );
+
+    const teamList: UserReadDto[] = [];
+    this.data.forEach((data: any) => {
+      teamList.findIndex((user) => user._id == data.user._id) == -1 &&
+        teamList.push(data.user);
+    });
+    this._insertNewFilter('Membro', 'Membri', COX_FILTER.TEAM, teamList);
+
+    const hoursTagList: HoursTagReadDto[] = [];
+    this.data.forEach((data: any) => {
+      hoursTagList.findIndex((hoursTag) => hoursTag._id == data.hoursTag._id) ==
+        -1 && hoursTagList.push(data.hoursTag);
+    });
+    this._insertNewFilter(
+      'Etichetta',
+      'Etichette',
+      COX_FILTER.TAG,
+      hoursTagList,
+    );
+  }
+
+  private _insertNewFilter(
+    singleLabel: string,
+    multiLabel: string,
+    fieldName: COX_FILTER,
+    list: any[],
+  ): void {
+    this.dataForFilters.push({
+      list: list,
+      singleLabel: singleLabel,
+      multiLabel: multiLabel,
+      fieldName: fieldName,
+      formControl: new FormControl(),
+    });
   }
 }

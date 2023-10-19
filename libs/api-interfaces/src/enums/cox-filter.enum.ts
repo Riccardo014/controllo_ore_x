@@ -1,7 +1,7 @@
 export enum COX_FILTER {
-  CUSTOMER = 'Clienti',
-  PROJECT = 'Progetti',
-  RELEASE = 'Release',
-  TEAM = 'Membri',
-  TAG = 'Etichette',
+  CUSTOMER = 'release.project.customer',
+  PROJECT = 'release.project',
+  RELEASE = 'release',
+  TEAM = 'user',
+  TAG = 'hoursTag',
 }

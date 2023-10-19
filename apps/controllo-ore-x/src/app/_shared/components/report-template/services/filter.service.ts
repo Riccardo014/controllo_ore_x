@@ -43,10 +43,9 @@ export class FilterService {
     const dataForFilters = this.dataForFilters.value;
     dataForFilters.forEach((dataForFilter: any) => {
       if (dataForFilter.fieldName === value.fieldName) {
-        dataForFilter.list = value.list;
+        dataForFilter.formControl.value = value.formControl.value;
       }
     });
     this.dataForFilters.next(dataForFilters);
-    console.log(this.dataForFilters.value[0].formControl.value);
   }
 }

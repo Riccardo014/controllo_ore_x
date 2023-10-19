@@ -1,10 +1,10 @@
 <mat-form-field>
-  <mat-label>{{ fieldName }}</mat-label>
-  <mat-select [formControl]="formControl" multiple>
+  <mat-label>{{ dataForFilter.multiLabel }}</mat-label>
+  <mat-select [formControl]="dataForFilter.formControl" multiple>
     <mat-select-trigger>
-      {{ getLabel(formControl.value?.length) }}
+      {{ getLabel(dataForFilter.formControl.value?.length) }}
     </mat-select-trigger>
-    <mat-option *ngFor="let element of list" [value]="element">{{
+    <mat-option *ngFor="let element of dataForFilter.list" [value]="element">{{
       element.name
     }}</mat-option>
   </mat-select>

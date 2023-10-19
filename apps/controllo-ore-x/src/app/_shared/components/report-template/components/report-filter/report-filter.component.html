@@ -1,14 +1,10 @@
 <div class="-report-table-filter">
   <div class="-filters-container">
     <controllo-ore-x-report-single-filter
-      *ngFor="let filter of filters"
-      [singleLabel]="filter.singleLabel"
-      [multiLabel]="filter.multiLabel"
-      [fieldName]="filter.fieldName"
-      [list]="filter.list"
-      [formControl]="filter.formControl"
-      (change)="formEmitter(filter, $event)"
+      *ngFor="let dataForFilter of dataForFilters"
+      [fieldName]="dataForFilter.fieldName"
     ></controllo-ore-x-report-single-filter>
+    <!-- (change)="formEmitter(filter, $event)" -->
   </div>
 
   <div class="-filter-options">
@@ -31,12 +27,12 @@
 </div>
 
 <div *ngIf="areFiltersActive" class="-filter-list">
-  <div *ngFor="let activeFilter of activeFilters">
+  <div *ngFor="let dataForFilter of dataForFilters">
     <mat-chip-row
-      *ngFor="let element of activeFilter.list"
-      (removed)="remove(activeFilter, element)"
+      *ngFor="let element of dataForFilter.formControl.value"
+      (removed)="remove(dataForFilter, element)"
     >
-      {{ element }}
+      {{ element.name }}
       <button matChipRemove>
         <mat-icon>cancel</mat-icon>
       </button>
