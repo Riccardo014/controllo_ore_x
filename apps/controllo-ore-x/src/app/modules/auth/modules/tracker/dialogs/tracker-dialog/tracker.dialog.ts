@@ -137,7 +137,6 @@ export class TrackerDialog
         return;
       }
     });
-
     if (this.data.input && this.data.input.isDuplication) {
       this.isCreating = true;
     }
@@ -162,6 +161,14 @@ export class TrackerDialog
     this.formHelper.form.controls['release'].enable();
 
     this.subscriptionsList.push(this._getReleases());
+  }
+
+  checkHoursTag(tag: any): void {
+    this.hoursTags.forEach((hoursTag: any) => {
+      if (hoursTag.hoursTag._id == tag.hoursTag._id) {
+        hoursTag.checked = true;
+      }
+    });
   }
 
   private _getSelectedDate(): Subscription {
