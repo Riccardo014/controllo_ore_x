@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Features Aggiunte
+
+- +Aggiunto modulo di gestione dei progetti.
+- +Aggiunto modulo di gestione delle release.
+
 ## [0.0.14]
 
 ### Features Aggiunte
