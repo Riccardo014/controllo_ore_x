@@ -15,7 +15,7 @@ export class Release extends BaseEntityTemplate {
   userHours: UserHours[];
 
   @Column()
-  version: string;
+  name: string;
 
   @Column()
   isCompleted: boolean;

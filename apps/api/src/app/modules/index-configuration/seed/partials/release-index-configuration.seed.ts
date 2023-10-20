@@ -10,7 +10,7 @@ export const RELEASE_INDEX_CONFIGURATION_SEED: any = {
       {
         title: 'Versione',
         type: 'STRING',
-        field: 'version',
+        field: 'name',
         sortable: true,
       },
       {
@@ -27,6 +27,6 @@ export const RELEASE_INDEX_CONFIGURATION_SEED: any = {
       },
     ],
     relations: ['project'],
-    fullSearchCols: ['version'],
+    fullSearchCols: ['name'],
   },
 };

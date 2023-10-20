@@ -22,7 +22,7 @@ export const TRACKER_INDEX_CONFIGURATION_SEED: any = {
       {
         title: 'Release',
         type: 'STRING',
-        field: 'release.version',
+        field: 'release.name',
         sortable: true,
       },
       {
@@ -60,7 +60,7 @@ export const TRACKER_INDEX_CONFIGURATION_SEED: any = {
     fullSearchCols: [
       'release.project.customer.name',
       'release.project.name',
-      'release.version',
+      'release.name',
       'notes',
       'user.name',
       'user.surname',

@@ -83,7 +83,7 @@ export class ReleaseTableComponent
     return this._releaseDataService
       .getMany({
         where: { projectId: this.projectId },
-        order: { version: 'DESC' },
+        order: { name: 'DESC' },
       })
       .subscribe({
         next: (releases: ApiPaginatedResponse<ReleaseReadDto>) => {

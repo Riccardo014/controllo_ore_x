@@ -8,7 +8,7 @@ export class ReleaseUpdateDtoV implements ReleaseUpdateDto {
   
   @IsOptional() 
   @IsString()
-  version: string;
+  name: string;
 
   @IsOptional()
   @IsBoolean()

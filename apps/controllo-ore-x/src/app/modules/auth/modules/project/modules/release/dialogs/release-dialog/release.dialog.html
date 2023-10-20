@@ -12,9 +12,9 @@
       <div class="row mb-2 -form__fields">
         <mat-form-field class="col" appearance="outline">
           <mat-label>Versione</mat-label>
-          <input matInput placeholder="Versione" formControlName="version" />
+          <input matInput placeholder="Versione" formControlName="name" />
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
-            <div *ngIf="getFormControlError('version',error)">
+            <div *ngIf="getFormControlError('name',error)">
               {{ error.message }}
             </div>
           </mat-error>

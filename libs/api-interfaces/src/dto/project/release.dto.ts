@@ -5,7 +5,7 @@ export interface ReleaseReadDto {
   _id: string;
   projectId: string;
   project?: ProjectReadDto;
-  version: string;
+  name: string;
   isCompleted: boolean;
   hoursBudget: number;
   billableHoursBudget: number;
@@ -19,7 +19,7 @@ export interface ReleaseReadDto {
 
 export interface ReleaseCreateDto {
   projectId: string;
-  version: string;
+  name: string;
   isCompleted: boolean;
   hoursBudget: number;
   billableHoursBudget: number;
@@ -29,7 +29,7 @@ export interface ReleaseCreateDto {
 
 export interface ReleaseUpdateDto {
   projectId?: string;
-  version?: string;
+  name?: string;
   isCompleted?: boolean;
   hoursBudget?: number;
   billableHoursBudget?: number;

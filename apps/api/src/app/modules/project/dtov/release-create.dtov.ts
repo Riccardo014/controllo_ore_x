@@ -6,7 +6,7 @@ export class ReleaseCreateDtoV implements ReleaseCreateDto {
   projectId: string;
   
   @IsString()
-  version: string;
+  name: string;
 
   @IsBoolean()
   isCompleted: boolean;

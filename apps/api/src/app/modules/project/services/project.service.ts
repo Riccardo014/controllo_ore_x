@@ -39,7 +39,7 @@ export class ProjectService extends CrudService<
   formatReleaseCreateData(project: Project): ReleaseCreateDto {
     return {
       projectId: project._id,
-      version: 'Release 0.0.1',
+      name: 'Release 0.0.1',
       isCompleted: false,
       hoursBudget: project.hoursBudget,
       billableHoursBudget: project.hoursBudget,

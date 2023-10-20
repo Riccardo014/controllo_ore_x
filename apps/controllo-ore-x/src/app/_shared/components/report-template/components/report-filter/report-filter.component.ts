@@ -98,6 +98,31 @@ export class ReportFilterComponent
     this.filtersEmitter.emit([this._buildFilters()]);
   }
 
+  createNestedObject(array: string[]): Record<string, any> {
+  //   let structure: any = {};
+  //   for (let i = array.length - 1; i >= 0; i--) {
+  //     structure = {
+  //       [array[i]]: structure,
+  //     };
+  //   }
+  //   structure['_id'] = 'mystring';
+  //   return structure;
+  // }
+  if (array.length === 0) {
+    return {};
+  }
+
+  const [key, ...rest] = array;
+  return {
+    [key]: array[array.length - 1] === "_id"
+      ? { _id: "" }
+      : {
+          ...this.createNestedObject(rest),
+          "_id": array[array.length - 1],
+        },
+  };
+}
+
   private _buildFilters(): FindBoostedWhereOption {
     const filterValue: FindBoostedWhereOption = {};
     for (const dataForFilter of this.dataForFilters) {
@@ -112,6 +137,9 @@ export class ReportFilterComponent
       const dbColumnsPointNested: string = dataForFilter.fieldName;
       const dbColumnsFlat: string[] = dbColumnsPointNested.split('.');
       let dbColumnPreviousLevel: any = {};
+
+      const nestedStructure = this.createNestedObject(dbColumnsFlat);
+      console.log('nestedStructure', nestedStructure);
 
       let copyCurrentNestLevel: any = {};
       // let lastLevel: any = {};
@@ -170,7 +198,7 @@ export class ReportFilterComponent
       //   },
       // };
     }
-
+console.log('filterValue', filterValue);
     return filterValue;
   }
 }

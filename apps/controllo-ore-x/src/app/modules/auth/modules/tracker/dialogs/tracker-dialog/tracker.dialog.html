@@ -63,7 +63,7 @@
             [compareWith]="compareEntityFn"
           >
             <mat-option *ngFor="let release of releases" [value]="release">
-              {{ release.version }}
+              {{ release.name }}
             </mat-option>
           </mat-select>
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
