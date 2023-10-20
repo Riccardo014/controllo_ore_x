@@ -1,35 +1,36 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import {
+  CustomerCreateDto,
+  CustomerReadDto,
+  CustomerUpdateDto,
   INDEX_CONFIGURATION_KEY,
-  UserCreateDto,
-  UserReadDto,
-  UserUpdateDto,
 } from '@api-interfaces';
+import { CustomerDataService } from '@app/_core/services/customer.data-service';
 import { IndexConfigurationDataService } from '@app/_core/services/index-configuration.data-service';
-import { TeamDataService } from '@app/_core/services/team.data-service';
 import { IndexPage } from '@app/_shared/classes/index-page.class';
 import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
 import { BehaviorSubject } from 'rxjs';
-import { TeamDialog } from '../dialogs/team-dialog/team.dialog';
+import { CustomerDialog } from '../dialogs/customer-dialog/customer.dialog';
 
 @Component({
-  selector: 'controllo-ore-x-team-index',
-  templateUrl: './team-index.page.html',
-  styleUrls: ['./team-index.page.scss'],
+  selector: 'controllo-ore-x-customer-index',
+  templateUrl: './customer-index.page.html',
+  styleUrls: ['./customer-index.page.scss'],
 })
-export class TeamIndexPage extends IndexPage<
-  UserReadDto,
-  UserCreateDto,
-  UserUpdateDto
+export class CustomerIndexPage extends IndexPage<
+  CustomerReadDto,
+  CustomerCreateDto,
+  CustomerUpdateDto
 > {
-  titleIcon: string | null = 'workspaces';
-  title: string = 'Team';
-  pageTitle = 'Team';
-  buttonIcon = 'workspaces';
-  buttonText = 'Nuovo Membro';
+  titleIcon: string | null = 'bakery_dining';
+  title: string = 'Clienti';
+  pageTitle = 'Clienti';
+  buttonIcon = 'bakery_dining';
+  buttonText = 'Nuovo Cliente';
 
-  CONFIGURATION_KEY: INDEX_CONFIGURATION_KEY = INDEX_CONFIGURATION_KEY.TEAM;
+  CONFIGURATION_KEY: INDEX_CONFIGURATION_KEY = INDEX_CONFIGURATION_KEY.CUSTOMER;
   isItLoading: boolean = false;
   _isFirstLoadDone: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false,
@@ -41,16 +42,17 @@ export class TeamIndexPage extends IndexPage<
 
   constructor(
     protected _configurationService: IndexConfigurationDataService,
-    protected _dataService: TeamDataService,
+    protected _dataService: CustomerDataService,
     protected _loadingService: RtLoadingService,
     private _rtDialogService: RtDialogService,
+    private _router: Router,
   ) {
     super();
   }
 
-  openDialogFn($event: UserReadDto): void {
+  openDialogFn($event: CustomerReadDto): void {
     this._rtDialogService
-      .open(TeamDialog, {
+      .open(CustomerDialog, {
         width: '600px',
         maxWidth: '600px',
         data: $event,
@@ -60,7 +62,7 @@ export class TeamIndexPage extends IndexPage<
 
   createFn(): void {
     this._rtDialogService
-      .open(TeamDialog, {
+      .open(CustomerDialog, {
         width: '600px',
         maxWidth: '600px',
       })

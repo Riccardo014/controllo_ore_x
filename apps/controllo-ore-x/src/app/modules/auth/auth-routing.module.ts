@@ -22,9 +22,11 @@ const routes: Routes = [
           ),
       },
       {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'tracker',
+        path: 'clienti',
+        loadChildren: () =>
+          import('./modules/customer/customer.module').then(
+            (module) => module.CustomerModule,
+          ),
       },
     ],
   },
