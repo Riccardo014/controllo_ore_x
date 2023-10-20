@@ -1,48 +1,15 @@
 <div class="-sidebar">
-  <ul class="-sidebar__menu">
-    <li
-      *ngFor="let section of MAIN_MENU_SECTIONS"
-      class="body-1 -sidebar__menu__section"
-      [class.-sidebar__menu__section--is-selected]="
-        this.selectedSection == section.routerLink
-      "
-    >
-      <a [routerLink]="section.routerLink">
-        <span class="material-symbols-outlined">{{ section.iconName }}</span
-        >{{ section.label }}
-      </a>
-    </li>
-  </ul>
+  <controllo-ore-x-sidenav-section
+    [MENU_SECTIONS]="MAIN_MENU_SECTIONS"
+  ></controllo-ore-x-sidenav-section>
 
   <p class="__menu-subtitle">Amministrazione</p>
-  <ul class="-sidebar__menu">
-    <li
-      *ngFor="let section of ADMINISTRATION_MENU_SECTIONS"
-      class="body-1 -sidebar__menu__section"
-      [class.-sidebar__menu__section--is-selected]="
-        this.selectedSection == section.routerLink
-      "
-    >
-      <a [routerLink]="section.routerLink">
-        <span class="material-symbols-outlined">{{ section.iconName }}</span
-        >{{ section.label }}
-      </a>
-    </li>
-  </ul>
+  <controllo-ore-x-sidenav-section
+    [MENU_SECTIONS]="ADMINISTRATION_MENU_SECTIONS"
+  ></controllo-ore-x-sidenav-section>
 
   <p class="-section__menu-subtitle">Gestione</p>
-  <ul class="-sidebar__menu">
-    <li
-      *ngFor="let section of MANAGEMENT_MENU_SECTIONS"
-      class="body-1 -sidebar__menu__section"
-      [class.-sidebar__menu__section--is-selected]="
-        this.selectedSection == section.routerLink
-      "
-    >
-      <a [routerLink]="section.routerLink">
-        <span class="material-symbols-outlined">{{ section.iconName }}</span
-        >{{ section.label }}
-      </a>
-    </li>
-  </ul>
+  <controllo-ore-x-sidenav-section
+    [MENU_SECTIONS]="MANAGEMENT_MENU_SECTIONS"
+  ></controllo-ore-x-sidenav-section>
 </div>

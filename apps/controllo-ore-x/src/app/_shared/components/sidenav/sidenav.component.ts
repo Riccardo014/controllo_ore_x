@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ADMINISTRATION_MENU_SECTIONS } from '@app/_core/config/administration-menu-sections.config';
 import { MAIN_MENU_SECTIONS } from '@app/_core/config/main-menu-sections.config';
@@ -16,7 +16,7 @@ import { NavMenusVisibilityService } from './servicies/nav-menus-visibility.serv
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss'],
 })
-export class SidenavComponent implements OnInit, SubscriptionsLifecycle {
+export class SidenavComponent implements OnInit, OnDestroy, SubscriptionsLifecycle {
   MAIN_MENU_SECTIONS: IMenuSections[] = MAIN_MENU_SECTIONS;
   ADMINISTRATION_MENU_SECTIONS: IMenuSections[] = ADMINISTRATION_MENU_SECTIONS;
   MANAGEMENT_MENU_SECTIONS: IMenuSections[] = MANAGEMENT_MENU_SECTIONS;

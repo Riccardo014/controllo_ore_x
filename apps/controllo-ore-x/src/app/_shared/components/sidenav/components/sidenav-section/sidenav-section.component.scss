@@ -1,0 +1,32 @@
+@import 'libs/ui/core/consts.scss';
+@import 'libs/ui/core/mixins.scss';
+
+.-menu {
+  margin: 0;
+  list-style-type: none;
+  padding: 0;
+  &__section {
+    & a {
+      color: $general-header-color;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: left;
+      gap: 7%;
+      padding: 0 24px;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    &:hover a {
+      color: #000;
+      background-color: map-get($palette-primary, 200);
+    }
+
+    &--is-selected a,
+    &--is-selected:hover a {
+      color: #fff;
+      background-color: map-get($palette-primary, 500);
+    }
+  }
+}

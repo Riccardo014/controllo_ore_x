@@ -1,0 +1,14 @@
+<ul class="-menu">
+  <li
+    *ngFor="let section of MENU_SECTIONS"
+    class="body-1 -menu__section"
+    [class.-menu__section--is-selected]="
+      this.selectedSection == section.routerLink
+    "
+  >
+    <a [routerLink]="section.routerLink">
+      <span class="material-symbols-outlined">{{ section.iconName }}</span
+      >{{ section.label }}
+    </a>
+  </li>
+</ul>
