@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import {
   COX_FILTER,
   CustomerReadDto,
+  FIND_BOOSTED_FN,
   FindBoostedWhereOption,
   HoursTagReadDto,
   INDEX_CONFIGURATION_KEY,
@@ -19,6 +20,8 @@ import { IndexPage } from '@app/_shared/classes/index-page.class';
 import { SubscriptionsLifecycle } from '@app/utils/subscriptions_lifecycle';
 import { Subscription } from 'rxjs';
 import { FilterService } from './services/filter.service';
+import { CalendarDateService } from '../index-template/servicies/calendar-date.service';
+import { endOfDay, startOfDay } from 'date-fns';
 
 /**
  * Template of a report page
@@ -54,10 +57,13 @@ export class ReportTemplateComponent
     formControl: FormControl;
   }[] = [];
 
+  selectedDate: Date = new Date();
+
   constructor(
     protected _configurationService: IndexConfigurationDataService,
     protected _dataService: ReportDataService,
     private _filterService: FilterService,
+    private _calendarDateService: CalendarDateService,
   ) {
     super();
   }
@@ -75,8 +81,55 @@ export class ReportTemplateComponent
           this.dataForFilters = dataForFilters;
         },
       ),
+      this._calendarDateService.currentDateObservable.subscribe(
+        (date: Date) => {
+          this.selectedDate = date;
+          this.changeDataForDate();
+        },
+      ),
     );
     super._setSubscriptions();
+  }
+
+  changeDataForDate(): void {
+    if (
+      !this.indexTableHandler.status ||
+      !this.indexTableHandler.tableConfiguration
+    ) {
+      return;
+    }
+    if (
+      !this.indexTableHandler.status.where &&
+      this.indexTableHandler.tableConfiguration
+    ) {
+      const newWhereOption: FindBoostedWhereOption = {
+        date: {
+          _fn: FIND_BOOSTED_FN.DATE_BETWEEN,
+          args: [
+            startOfDay(this.selectedDate).toISOString(),
+            endOfDay(this.selectedDate).toISOString(),
+          ],
+        },
+      };
+      this.indexTableHandler.status.where = [newWhereOption];
+      this.indexTableHandler.statusChange(this.indexTableHandler.status);
+      return;
+    }
+    const previousWhereOption = this.indexTableHandler.status.where[0];
+
+    const newWhereOption: FindBoostedWhereOption = {
+      ...previousWhereOption,
+      date: {
+        _fn: FIND_BOOSTED_FN.DATE_BETWEEN,
+        args: [
+          startOfDay(this.selectedDate).toISOString(),
+          endOfDay(this.selectedDate).toISOString(),
+        ],
+      },
+    };
+
+    this.indexTableHandler.status.where = [newWhereOption];
+    this.indexTableHandler.statusChange(this.indexTableHandler.status);
   }
 
   changeDataForFilters(): void {
@@ -90,6 +143,7 @@ export class ReportTemplateComponent
 
   onFilterEmit(filters: FindBoostedWhereOption[]): void {
     this.indexTableHandler.status.where = filters;
+    this.changeDataForDate();
     this.indexTableHandler.statusChange(this.indexTableHandler.status);
   }
 
@@ -99,12 +153,12 @@ export class ReportTemplateComponent
       .subscribe((data) => {
         this.configuration = data.configuration;
         this.indexTableHandler.tableConfiguration = this.configuration;
+        this.changeDataForDate();
         this._dataService
           .getMany({
             relations: this.indexTableHandler.tableConfiguration.relations,
           })
           .subscribe((apiResult) => {
-            console.log(apiResult.data);
             this.data = apiResult.data;
             this._setFilters();
             this.changeDataForFilters();

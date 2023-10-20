@@ -131,69 +131,12 @@ export class ReportFilterComponent
       const dbColumnsFlat: string[] = dbColumnsPointNested.split('.');
       const firstDbColumn = dbColumnsFlat.splice(0, 1).toString();
 
-      filterValue[firstDbColumn] = this._createNestedStructure(dbColumnsFlat, args);
+      filterValue[firstDbColumn] = this._createNestedStructure(
+        dbColumnsFlat,
+        args,
+      );
     }
 
-    console.log('filterValue', filterValue);
     return filterValue;
-
-    //   let copyCurrentNestLevel: any = {};
-    //   // let lastLevel: any = {};
-    //   for (let index = 0; index < dbColumnsFlat.length; index++) {
-    //     const dbColumn = dbColumnsFlat[index];
-
-    //     // livello intermedio devo creare lo scaffold con il livello precedente
-    //     if (index > 0) {
-    //       // const previousLevelColumn = dbColumnsFlat[index - 1];
-
-    //       // copyCurrentNestLevel[previousLevelColumn][dbColumn] = {};
-    //       // lastLevel = copyCurrentNestLevel[previousLevelColumn][dbColumn];
-
-    //       // ultimo livello  metto gli args e fn
-    //       // if(index === dbColumnsFlat.length - 1) {
-    //       //   _id: {
-    //       //     _fn: FIND_BOOSTED_FN.STRING_IN,
-    //       //     args: args,
-    //       //   },
-    //       // }
-    //       console.log('dbColumnsFlat', dbColumnsFlat);
-    //       console.log('dbColumnPreviousLevel', dbColumnPreviousLevel);
-    //       console.log('dbColumn', dbColumn);
-    //       copyCurrentNestLevel[dbColumnPreviousLevel][dbColumn] = {};
-    //       dbColumnPreviousLevel =
-    //         copyCurrentNestLevel[dbColumnPreviousLevel][dbColumn];
-    //       continue;
-    //     }
-
-    //     // se è solo un livello creo l'oggetto da restituire con  gli args e _fn
-    //     if (dbColumnsFlat.length === 1) {
-    //       filterValue[dbColumn] = {
-    //         _id: {
-    //           _fn: FIND_BOOSTED_FN.STRING_IN,
-    //           args: args,
-    //         },
-    //       };
-    //       continue;
-    //     }
-
-    //     //se sono al primo livello di un oggetto a più livelli creo lo scaffold con il primo livello
-    //     if (index === 0) {
-    //       console.log('dbColumn', dbColumn);
-    //       filterValue[dbColumn] = {};
-    //       console.log('filterValue', filterValue);
-    //       dbColumnPreviousLevel = filterValue[dbColumn];
-    //     }
-
-    //     // copyCurrentNestLevel[dbColumn] = {};
-    //   }
-
-    //   // filterValue[dataForFilter.fieldName] = {
-    //   //   _id: {
-    //   //     _fn: FIND_BOOSTED_FN.STRING_IN,
-    //   //     args: args,
-    //   //   },
-    //   // };
-    // }
-
   }
 }
