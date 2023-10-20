@@ -16,7 +16,6 @@ export interface ReleaseReadDto {
   deletedAt?: Date | string;
 }
 
-
 export interface ReleaseCreateDto {
   projectId: string;
   name: string;
@@ -25,7 +24,6 @@ export interface ReleaseCreateDto {
   billableHoursBudget: number;
   deadline: Date;
 }
-
 
 export interface ReleaseUpdateDto {
   projectId?: string;
