@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { ADMINISTRATION_MENU_SECTIONS } from '@app/_core/config/administration-menu-sections.config';
 import { MAIN_MENU_SECTIONS } from '@app/_core/config/main-menu-sections.config';
 import { MANAGEMENT_MENU_SECTIONS } from '@app/_core/config/management-menu-sections.config';
@@ -8,7 +8,7 @@ import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
-import { Subscription } from 'rxjs';
+import { Subscription, filter } from 'rxjs';
 import { NavMenusVisibilityService } from './servicies/nav-menus-visibility.service';
 
 @Component({
@@ -67,7 +67,9 @@ export class SidenavComponent
    * Update the active section on route changes.
    */
   updateActiveSectionOnRouterEvent(): Subscription {
-    return this._router.events.subscribe(() => {
+    return this._router.events.pipe(
+      filter((event) => event instanceof NavigationEnd),
+    ).subscribe(() => {
       this.activeSection = this.getActiveSectionFromUrl(this._router.url);
     });
   }
