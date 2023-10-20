@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Features Aggiunte
 
-- +Aggiunto modulo di gestione dei clienti
+- +Aggiunto modulo di gestione dei clienti.
 
 ## [0.0.13]
 
