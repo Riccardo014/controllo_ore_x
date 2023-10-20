@@ -16,14 +16,16 @@ import { NavMenusVisibilityService } from './servicies/nav-menus-visibility.serv
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss'],
 })
-export class SidenavComponent implements OnInit, OnDestroy, SubscriptionsLifecycle {
+export class SidenavComponent
+  implements OnInit, OnDestroy, SubscriptionsLifecycle
+{
   MAIN_MENU_SECTIONS: IMenuSections[] = MAIN_MENU_SECTIONS;
   ADMINISTRATION_MENU_SECTIONS: IMenuSections[] = ADMINISTRATION_MENU_SECTIONS;
   MANAGEMENT_MENU_SECTIONS: IMenuSections[] = MANAGEMENT_MENU_SECTIONS;
 
   isSidenavOpen: boolean = true;
 
-  selectedSection: string;
+  activeSection: string;
 
   subscriptionsList: Subscription[] = [];
 
@@ -34,7 +36,7 @@ export class SidenavComponent implements OnInit, OnDestroy, SubscriptionsLifecyc
     private _router: Router,
     private _sidenavService: NavMenusVisibilityService,
   ) {
-    this.selectedSection = this._router.url.split('/')[2];
+    this.activeSection = this._router.url.split('/')[2];
   }
 
   ngOnInit(): void {
@@ -47,12 +49,33 @@ export class SidenavComponent implements OnInit, OnDestroy, SubscriptionsLifecyc
 
   _setSubscriptions(): void {
     this.subscriptionsList.push(
-      this._sidenavService.visibiliyObservable.subscribe(
-        (isOpen) => (this.isSidenavOpen = isOpen),
-      ),
-      this._router.events.subscribe(() => {
-        this.selectedSection = this._router.url.split('/')[2];
-      }),
+      this.keepSidenavVisibilityInSync(),
+      this.updateActiveSectionOnRouterEvent(),
     );
+  }
+
+  /**
+   * Keep the sidenav visibility in sync with the sidenav service
+   */
+  keepSidenavVisibilityInSync(): Subscription {
+    return this._sidenavService.visibiliyObservable.subscribe(
+      (isOpen) => (this.isSidenavOpen = isOpen),
+    );
+  }
+
+  /**
+   * Update the active section on router event on router changes
+   */
+  updateActiveSectionOnRouterEvent(): Subscription {
+    return this._router.events.subscribe(() => {
+      this.activeSection = this.getActiveSectionFromUrl(this._router.url);
+    });
+  }
+
+  /**
+   * Get the active section from url
+   */
+  getActiveSectionFromUrl(url: string): string {
+    return url.split('/')[2];
   }
 }

@@ -23,8 +23,8 @@
       background-color: map-get($palette-primary, 200);
     }
 
-    &--is-selected a,
-    &--is-selected:hover a {
+    &--is-active a,
+    &--is-active:hover a {
       color: #fff;
       background-color: map-get($palette-primary, 500);
     }
