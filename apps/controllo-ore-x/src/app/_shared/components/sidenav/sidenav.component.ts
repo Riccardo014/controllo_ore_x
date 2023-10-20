@@ -35,7 +35,6 @@ export class SidenavComponent implements OnInit, SubscriptionsLifecycle {
     private _sidenavService: NavMenusVisibilityService,
   ) {
     this.selectedSection = this._router.url.split('/')[2];
-    console.log(this.selectedSection);
   }
 
   ngOnInit(): void {
@@ -51,22 +50,9 @@ export class SidenavComponent implements OnInit, SubscriptionsLifecycle {
       this._sidenavService.visibiliyObservable.subscribe(
         (isOpen) => (this.isSidenavOpen = isOpen),
       ),
+      this._router.events.subscribe(() => {
+        this.selectedSection = this._router.url.split('/')[2];
+      }),
     );
-  }
-
-  /**
-   * Set the active section on the sidenav
-   */
-  setActiveSection(routerLink: string | undefined): boolean {
-    if (!routerLink) {
-      return false;
-    }
-
-    const currentUrl: string = this._router.url;
-    if (!currentUrl.includes(routerLink)) {
-      return false;
-    }
-
-    return true;
   }
 }
