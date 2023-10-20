@@ -3,7 +3,7 @@ import { IMenuSection } from '@app/_core/interfaces/i-menu-section.interface';
 export const MANAGEMENT_MENU_SECTIONS: IMenuSection[] = [
   {
     label: 'Progetti',
-    routerLink: 'projects',
+    routerLink: 'progetti',
     iconName: 'egg',
   },
   {
@@ -18,12 +18,12 @@ export const MANAGEMENT_MENU_SECTIONS: IMenuSection[] = [
   },
   {
     label: 'Etichette',
-    routerLink: 'labels',
+    routerLink: 'etichette',
     iconName: 'sports_tennis',
   },
   {
-    label: 'Etichette',
-    routerLink: 'settings',
+    label: 'Impostazioni',
+    routerLink: 'impostazioni',
     iconName: 'robot',
   },
 ];

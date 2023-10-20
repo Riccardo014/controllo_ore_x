@@ -8,7 +8,7 @@ export const MAIN_MENU_SECTIONS: IMenuSection[] = [
   },
   {
     label: 'Ferie e Permessi',
-    routerLink: 'dayoffs',
+    routerLink: 'ferie-permessi',
     iconName: 'carpenter',
   },
 ];
