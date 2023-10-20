@@ -1,6 +1,6 @@
-import { IMenuSections } from '@app/_core/interfaces/i-menu-sections.interface';
+import { IMenuSection } from '@app/_core/interfaces/i-menu-section.interface';
 
-export const ADMINISTRATION_MENU_SECTIONS: IMenuSections[] = [
+export const ADMINISTRATION_MENU_SECTIONS: IMenuSection[] = [
   {
     label: 'Report',
     routerLink: 'report',

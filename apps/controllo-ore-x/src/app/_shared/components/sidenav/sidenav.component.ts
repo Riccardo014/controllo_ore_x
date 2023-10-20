@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ADMINISTRATION_MENU_SECTIONS } from '@app/_core/config/administration-menu-sections.config';
 import { MAIN_MENU_SECTIONS } from '@app/_core/config/main-menu-sections.config';
 import { MANAGEMENT_MENU_SECTIONS } from '@app/_core/config/management-menu-sections.config';
-import { IMenuSections } from '@app/_core/interfaces/i-menu-sections.interface';
+import { IMenuSection } from '@app/_core/interfaces/i-menu-section.interface';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
@@ -19,9 +19,9 @@ import { NavMenusVisibilityService } from './servicies/nav-menus-visibility.serv
 export class SidenavComponent
   implements OnInit, OnDestroy, SubscriptionsLifecycle
 {
-  MAIN_MENU_SECTIONS: IMenuSections[] = MAIN_MENU_SECTIONS;
-  ADMINISTRATION_MENU_SECTIONS: IMenuSections[] = ADMINISTRATION_MENU_SECTIONS;
-  MANAGEMENT_MENU_SECTIONS: IMenuSections[] = MANAGEMENT_MENU_SECTIONS;
+  MAIN_MENU_SECTIONS: IMenuSection[] = MAIN_MENU_SECTIONS;
+  ADMINISTRATION_MENU_SECTIONS: IMenuSection[] = ADMINISTRATION_MENU_SECTIONS;
+  MANAGEMENT_MENU_SECTIONS: IMenuSection[] = MANAGEMENT_MENU_SECTIONS;
 
   isSidenavOpen: boolean = true;
 
@@ -55,7 +55,7 @@ export class SidenavComponent
   }
 
   /**
-   * Keep the sidenav visibility in sync with the sidenav service
+   * Keep the sidenav visibility in sync with the sidenav service.
    */
   keepSidenavVisibilityInSync(): Subscription {
     return this._sidenavService.visibiliyObservable.subscribe(
@@ -64,7 +64,7 @@ export class SidenavComponent
   }
 
   /**
-   * Update the active section on router event on router changes
+   * Update the active section on route changes.
    */
   updateActiveSectionOnRouterEvent(): Subscription {
     return this._router.events.subscribe(() => {
@@ -73,7 +73,7 @@ export class SidenavComponent
   }
 
   /**
-   * Get the active section from url
+   * Get the active section from url.
    */
   getActiveSectionFromUrl(url: string): string {
     return url.split('/')[2];
