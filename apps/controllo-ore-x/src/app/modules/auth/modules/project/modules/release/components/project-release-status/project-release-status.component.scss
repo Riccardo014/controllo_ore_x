@@ -1,50 +1,56 @@
 @import 'libs/ui/core';
 
-.-release-status-container{
+.-container {
+  overflow-y: auto;
+  height: calc(100vh - 81px - 81px - 48px);
+  @include scrollbar-primary(map-get($palette-grey, 400), 6px, true);
+}
+
+.-release-status-container {
   display: flex;
   flex-direction: row;
   align-items: center;
   width: 100%;
-  border-top: 1px solid map-get($palette-grey, 200 );
-  border-bottom: 1px solid map-get($palette-grey, 200 );
+  border-top: 1px solid map-get($palette-grey, 200);
+  border-bottom: 1px solid map-get($palette-grey, 200);
 }
 
-h2{
+h2 {
   color: rgba(0, 0, 0, 0.5);
 }
 
-.-release-status-single-data{
+.-release-status-single-data {
   display: flex;
   flex-direction: column;
   padding: 20px 40px;
   width: 100%;
 }
 
-.-release-status-single-data-with-borders{
-  border-right: 1px solid map-get($palette-grey, 200 );
-  border-left: 1px solid map-get($palette-grey, 200 );
+.-release-status-single-data-with-borders {
+  border-right: 1px solid map-get($palette-grey, 200);
+  border-left: 1px solid map-get($palette-grey, 200);
 }
 
-.-release-number-and-bar{
+.-release-number-and-bar {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 }
 
-.-progress-bar{
+.-progress-bar {
   max-width: 100px;
 }
 
-.-release-status-single-data-icon{
-  color: map-get($palette-primary, 500 );
+.-release-status-single-data-icon {
+  color: map-get($palette-primary, 500);
 }
 
-.-cards-container{
-  border-bottom: 1px solid map-get($palette-grey, 200 );
+.-cards-container {
+  border-bottom: 1px solid map-get($palette-grey, 200);
 }
 
-.-cards{
+.-cards {
   padding: 40px 20px;
   display: flex;
   flex-direction: row;

@@ -1,0 +1,7 @@
+@import 'libs/ui/core';
+
+.-table {
+  overflow-y: auto;
+  height: calc(100vh - 81px - 81px - 48px - 48px);
+  @include scrollbar-primary(map-get($palette-grey, 400), 6px, true);
+}
