@@ -8,7 +8,7 @@ export const MANAGEMENT_MENU_SECTIONS: IMenuSection[] = [
   },
   {
     label: 'Clienti',
-    routerLink: 'customers',
+    routerLink: 'clienti',
     iconName: 'bakery_dining',
   },
   {
