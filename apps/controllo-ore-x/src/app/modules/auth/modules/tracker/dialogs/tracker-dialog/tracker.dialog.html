@@ -104,6 +104,7 @@
             *ngFor="let hoursTag of hoursTags"
             [value]="hoursTag"
             [checked]="hoursTag.checked"
+            (change)="checkHoursTag(hoursTag)"
           >
             {{ hoursTag.hoursTag.name }}
           </mat-radio-button>
