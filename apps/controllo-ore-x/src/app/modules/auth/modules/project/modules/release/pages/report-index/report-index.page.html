@@ -45,36 +45,46 @@
 
 <div *ngIf="release" class="-release-report-container">
   <div class="-report-element -report-element__var">
-    <div class="body-1 -element-title -element-title__var">Budget ore</div>
-    <div class="subtitle-1 -value__var">
-      {{ convertNumberToHours(release.hoursBudget) }}
+    <div class="-report-element-content">
+      <div class="body-1 -element-title -element-title__var">Budget ore</div>
+      <div class="subtitle-1 -value__var">
+        {{ convertNumberToHours(release.hoursBudget) }}
+      </div>
     </div>
   </div>
 
   <div class="-report-element">
-    <div class="body-1 -element-title">Ore utilizzate</div>
-    <div class="subtitle-1">{{ convertNumberToHours(hoursExecuted) }}</div>
-  </div>
-
-  <div class="-report-element">
-    <div class="body-1 -element-title">Ore fuori budget</div>
-    <div
-      class="subtitle-1"
-      [ngClass]="{'-value__highlighted' : calculatedHoursOutOfBudget() != '00:00' }"
-    >
-      {{ calculatedHoursOutOfBudget() }}
+    <div class="-report-element-content">
+      <div class="body-1 -element-title">Ore utilizzate</div>
+      <div class="subtitle-1">{{ convertNumberToHours(hoursExecuted) }}</div>
     </div>
   </div>
 
   <div class="-report-element">
-    <div class="body-1 -element-title">Ore fatturabili</div>
-    <div class="subtitle-1">
-      {{ convertNumberToHours(release.billableHoursBudget) }}
+    <div class="-report-element-content">
+      <div class="body-1 -element-title">Ore fuori budget</div>
+      <div
+        class="subtitle-1"
+        [ngClass]="{'-value__highlighted' : calculatedHoursOutOfBudget() != '00:00' }"
+      >
+        {{ calculatedHoursOutOfBudget() }}
+      </div>
+    </div>
+  </div>
+
+  <div class="-report-element">
+    <div class="-report-element-content">
+      <div class="body-1 -element-title">Ore fatturabili</div>
+      <div class="subtitle-1">
+        {{ convertNumberToHours(release.billableHoursBudget) }}
+      </div>
     </div>
   </div>
 
   <div class="-report-element -report-deadline">
-    <div class="body-1 -element-title">Scadenza</div>
-    <div class="subtitle-1">{{ deadline }}</div>
+    <div class="-report-element-content">
+      <div class="body-1 -element-title">Scadenza</div>
+      <div class="subtitle-1">{{ deadline }}</div>
+    </div>
   </div>
 </div>

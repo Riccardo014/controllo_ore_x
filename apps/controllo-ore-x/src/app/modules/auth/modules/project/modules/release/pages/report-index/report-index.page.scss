@@ -18,44 +18,42 @@
   gap: 20px;
 }
 
-.-release-data-details{
+.-release-data-details {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
   gap: 10px;
-
 }
 
-.-page-header-options{
+.-page-header-options {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
-  gap: 5%; 
+  gap: 5%;
 }
 
-.-title-icon{
-  color: map-get($palette-primary, 500 );
+.-title-icon {
+  color: map-get($palette-primary, 500);
 }
 
-.-export-button{
+.-export-button {
   background-color: map-get($palette-accent, 200);
   color: #000000;
   padding: 20px;
   border-radius: 10px;
 
-  .-export-button-elements{
+  .-export-button-elements {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 5%;
   }
-
 }
 
-.-release-report-container{
+.-release-report-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   align-items: center;
@@ -63,51 +61,59 @@
   border-bottom: 1px solid map-get($palette-grey, 200);
 }
 
-.-report-element{
-  padding: 40px;
+.-report-element {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-right: 1px solid map-get($palette-grey, 200);
+
+  .-report-element-content {
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+  }
 }
 
-.-report-deadline{
-  background-color: map-get($palette-grey, 100 );
+.-report-deadline {
+  background-color: map-get($palette-grey, 100);
 }
 
-.-element-title{
+.-element-title {
   color: rgba(0, 0, 0, 0.5);
 }
 
-.-report-element__var{
-  background-color: map-get($palette-primary, 500 );
+.-report-element__var {
+  background-color: map-get($palette-primary, 500);
 }
 
-.-element-title__var{
+.-element-title__var {
   color: rgba(255, 255, 255, 0.5);
 }
 
-.-value__var{
-  color: #FFF;
+.-value__var {
+  color: #fff;
 }
 
-.-value__highlighted{
-  color: map-get($palette-primary, 500 );
+.-value__highlighted {
+  color: map-get($palette-primary, 500);
 }
 
-.-release-action-button{
+.-release-action-button {
   background-color: map-get($palette-primary, 50);
   color: map-get($palette-primary, 500);
   padding: 20px;
   border-radius: 10px;
 
-  .-release-action-button-elements{
+  .-release-action-button-elements {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 5%;
 
-    span{
-      white-space: nowrap
+    span {
+      white-space: nowrap;
     }
-
   }
 }
