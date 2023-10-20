@@ -21,6 +21,11 @@ const routes: Routes = [
             (module) => module.TeamModule,
           ),
       },
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'tracker',
+      },
     ],
   },
 ];

@@ -1,22 +1,18 @@
-<div class="-sidebar-wrapper">
+<div class="-sidebar">
+  <controllo-ore-x-sidenav-section
+    [MENU_SECTIONS]="MAIN_MENU_SECTIONS"
+    [activeSection]="activeSection"
+  ></controllo-ore-x-sidenav-section>
 
-  <ul>
-    <li class="body-1 -selected"><span class="material-symbols-outlined">screen_record</span>Tracker</li>
-    <li class="body-1"><span class="material-symbols-outlined">carpenter</span>Ferie e Permessi</li>
-  </ul>
+  <p class="-sidebar__menu-subtitle">Amministrazione</p>
+  <controllo-ore-x-sidenav-section
+    [MENU_SECTIONS]="ADMINISTRATION_MENU_SECTIONS"
+    [activeSection]="activeSection"
+  ></controllo-ore-x-sidenav-section>
 
-  <p class="menu-subtitle">Amministrazione</p>
-  <ul>
-    <li class="body-1"><span class="material-symbols-outlined">chair</span>Report</li>
-  </ul>
-
-  <p class="menu-subtitle">Gestione</p>
-  <ul>
-    <li class="body-1"><span class="material-symbols-outlined">egg</span>Progetti</li>
-    <li class="body-1"><span class="material-symbols-outlined">bakery_dining</span>Clienti</li>
-    <li class="body-1"><span class="material-symbols-outlined">workspaces</span>Team</li>
-    <li class="body-1"><span class="material-symbols-outlined">sports_tennis</span>Etichette</li>
-    <li class="body-1"><span class="material-symbols-outlined">robot</span>Impostazioni</li>
-  </ul>
-
+  <p class="-sidebar__menu-subtitle">Gestione</p>
+  <controllo-ore-x-sidenav-section
+    [MENU_SECTIONS]="MANAGEMENT_MENU_SECTIONS"
+    [activeSection]="activeSection"
+  ></controllo-ore-x-sidenav-section>
 </div>

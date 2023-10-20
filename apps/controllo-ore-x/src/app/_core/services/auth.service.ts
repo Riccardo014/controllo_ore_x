@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoginResponseDto, UserReadDto } from '@api-interfaces';
 import { environment } from '@env';
 import { lastValueFrom } from 'rxjs';
@@ -16,7 +17,10 @@ export class AuthService {
 
   private _loginUri: string = environment.apiUri + '/auth/login';
 
-  constructor(private _http: HttpClient) {
+  constructor(
+    private _http: HttpClient,
+    private _router: Router,
+  ) {
     this._loadState();
   }
 
@@ -34,6 +38,7 @@ export class AuthService {
     localStorage.clear();
     this.loggedInUser = undefined;
     this.authToken = undefined;
+    this._router.navigate(['/']);
   }
 
   /**

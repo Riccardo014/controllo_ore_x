@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UserReadDto } from '@api-interfaces';
+import { AuthService } from '@app/_core/services/auth.service';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
@@ -14,21 +16,24 @@ import { NavMenusVisibilityService } from '../sidenav/servicies/nav-menus-visibi
 export class GlobalTopbarComponent implements OnInit, SubscriptionsLifecycle {
   currentTime: string = '';
 
-  isSidenavOpen: boolean = true;
+  user?: UserReadDto;
 
   subscriptionsList: Subscription[] = [];
 
   _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
 
-  constructor(private _sidenavService: NavMenusVisibilityService) {}
+  constructor(
+    private _sidenavService: NavMenusVisibilityService,
+    private _authService: AuthService,
+  ) {
+    this.user = this._authService.loggedInUser;
+  }
 
   setAutomaticTimerUpdate(): Subscription {
-    return interval(1000)
-      .pipe()
-      .subscribe((_) => {
-        this.currentTime = this.dateToString(new Date());
-      });
+    return interval(1000).subscribe((_) => {
+      this.currentTime = this.dateToString(new Date());
+    });
   }
 
   dateToString(date: Date): string {
@@ -39,6 +44,9 @@ export class GlobalTopbarComponent implements OnInit, SubscriptionsLifecycle {
   }
 
   ngOnInit(): void {
+    if (!this.user) {
+      throw new Error('User is not logged in');
+    }
     this._setSubscriptions();
   }
 
@@ -47,15 +55,14 @@ export class GlobalTopbarComponent implements OnInit, SubscriptionsLifecycle {
   }
 
   _setSubscriptions(): void {
-    this.subscriptionsList.push(
-      this._sidenavService.visibiliyObservable.subscribe(
-        (isOpen) => (this.isSidenavOpen = isOpen),
-      ),
-      this.setAutomaticTimerUpdate(),
-    );
+    this.subscriptionsList.push(this.setAutomaticTimerUpdate());
   }
 
   toggleVisibility(): void {
     this._sidenavService.toggleVisibility();
+  }
+
+  logout(): void {
+    this._authService.logout();
   }
 }

@@ -14,6 +14,7 @@ import { PageTitleComponent } from './components/page-title/page-title.component
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { UpsertTemplateComponent } from './components/upsert-template/upsert-template.component';
 import { RtHeaderModule } from './modules/rt-header/rt-header.module';
+import { SidenavSectionComponent } from './components/sidenav/components/sidenav-section/sidenav-section.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { RtHeaderModule } from './modules/rt-header/rt-header.module';
     PageTitleComponent,
     UpsertTemplateComponent,
     IndexTemplateComponent,
+    SidenavSectionComponent,
   ],
   imports: [
     CommonModule,
