@@ -98,6 +98,12 @@ export class ProjectDialog
     super.onSubmit();
   }
 
+  override navigateAfterDelete(): void {
+    this._router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this._router.navigate(['/auth/progetti/']);
+    });
+  }
+
   openCreateCustomer(): void {
     this._rtDialogService
       .open(CustomerDialog, {

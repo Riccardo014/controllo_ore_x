@@ -8,6 +8,11 @@ const routes: Routes = [
     component: DashboardPage,
     children: [
       {
+        path: '',
+        redirectTo: 'tracker',
+        pathMatch: 'full',
+      },
+      {
         path: 'tracker',
         loadChildren: () =>
           import('./modules/tracker/tracker.module').then(

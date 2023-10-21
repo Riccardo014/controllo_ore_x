@@ -58,12 +58,7 @@ export abstract class BaseDialog<
               await this.formHelper.delete();
               this._baseDialogAlertSvc.openSuccess();
               this.cancel();
-              const currentUrl = this._baseDialogrouter.url;
-              this._baseDialogrouter
-                .navigateByUrl('/', { skipLocationChange: true })
-                .then(() => {
-                  this._baseDialogrouter.navigate([`/${currentUrl}`]);
-                });
+              this.navigateAfterDelete();
             } catch (err) {
               this.isLoading = false;
               this.formHelper.enable();
@@ -79,6 +74,15 @@ export abstract class BaseDialog<
         error: (err) => {
           console.error(err);
         },
+      });
+  }
+
+  navigateAfterDelete(): void {
+    const currentUrl = this._baseDialogrouter.url;
+    this._baseDialogrouter
+      .navigateByUrl('/', { skipLocationChange: true })
+      .then(() => {
+        this._baseDialogrouter.navigate([`/${currentUrl}`]);
       });
   }
 
