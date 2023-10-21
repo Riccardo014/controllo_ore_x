@@ -11,10 +11,21 @@
 >
 </lib-rt-table-fulltext-bar>
 <div class="-content">
-  <controllo-ore-x-project
-    (openDialog)="openDialogFn($event)"
-    (duplicate)="duplicateFn($event)"
-    *ngFor="let project of showedProjects"
-    [projectWithCustomer]="project"
-  ></controllo-ore-x-project>
+  <div *ngIf="isLoading.value">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+  <div *ngIf="showedProjects.length > 0 && !isLoading.value">
+    <controllo-ore-x-project
+      (openDialog)="openDialogFn($event)"
+      (duplicate)="duplicateFn($event)"
+      *ngFor="let project of showedProjects"
+      [projectWithCustomer]="project"
+    ></controllo-ore-x-project>
+  </div>
+  <div
+    *ngIf="showedProjects.length == 0 && !isLoading.value"
+    class="-no-project"
+  >
+    Nessun progetto
+  </div>
 </div>

@@ -64,7 +64,6 @@ export class ProjectIndexPage
     protected _dataService: ProjectDataService,
     protected _loadingService: RtLoadingService,
     private _rtDialogService: RtDialogService,
-    private _router: Router,
   ) {
     super();
   }
@@ -89,6 +88,7 @@ export class ProjectIndexPage
       .subscribe((projects: ApiPaginatedResponse<ProjectReadDto>) => {
         this.projects = projects.data;
         this.showedProjects = projects.data;
+        this.isLoading.next(false);
       });
   }
 

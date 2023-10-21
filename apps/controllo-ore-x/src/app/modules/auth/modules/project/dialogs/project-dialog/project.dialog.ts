@@ -10,7 +10,6 @@ import {
   ProjectUpdateDto,
 } from '@api-interfaces';
 import { CustomerDataService } from '@app/_core/services/customer.data-service';
-import { ProjectDataService } from '@app/_core/services/project.data-service';
 import { BaseDialog } from '@app/_shared/classes/base-dialog.class';
 import {
   SubscriptionsLifecycle,
@@ -59,7 +58,6 @@ export class ProjectDialog
     public override formHelper: ProjectFormHelper,
     protected override _formBuilder: FormBuilder,
     protected _matDialogRef: MatDialogRef<ProjectDialog>,
-    private _projectDataService: ProjectDataService,
     private _rtDialogService: RtDialogService,
     private _alertService: AlertService,
     private _router: Router,
@@ -94,7 +92,7 @@ export class ProjectDialog
   }
 
   override onSubmit(): void {
-    if (this.data.input.isDuplication) {
+    if (!this.isCreating && this.data.input.isDuplication) {
       this.isCreating = true;
     }
     super.onSubmit();
