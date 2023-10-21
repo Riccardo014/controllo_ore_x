@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ROLE, TableConfigurationColumn } from '@api-interfaces';
 import { rtTableColumnValue } from '../../lib/rt-table-column-value';
+import localeIt from '@angular/common/locales/it';
+import { registerLocaleData } from '@angular/common';
 
 @Component({
   selector: 'lib-rt-table-td',
@@ -16,6 +18,10 @@ export class RtTableTdComponent implements OnInit {
   valueToPrint: any;
 
   roles: ROLE[] = [ROLE.SUPERADMIN, ROLE.ADMIN, ROLE.COLLABORATOR];
+
+  constructor() {
+    registerLocaleData(localeIt);
+  }
 
   ngOnInit(): void {
     this.valueToPrint = this.getColumnData();

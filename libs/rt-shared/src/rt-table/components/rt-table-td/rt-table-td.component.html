@@ -12,7 +12,7 @@
     {{ valueToPrint | date: 'd/MM/YY HH:mm' }}
   </ng-container>
   <ng-container *ngSwitchCase="'DATE'">
-    <div class="body-2">{{ valueToPrint | date: 'dd/MM/yyyy' }}</div>
+    <div class="body-2">{{ valueToPrint | date: 'dd MMM yyyy' }}</div>
   </ng-container>
   <ng-container *ngSwitchCase="'PROGRESS'">
     <mat-progress-bar

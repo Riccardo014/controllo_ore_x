@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
@@ -40,6 +40,6 @@ import { RtTableComponent } from './components/rt-table/rt-table.component';
     MatCheckboxModule,
   ],
   exports: [RtTableComponent, RtTableFulltextBarComponent],
-  providers: [],
+  providers: [{ provide: LOCALE_ID, useValue: 'IT' }],
 })
 export class RtTableModule {}
