@@ -1,66 +1,74 @@
 // Fonts
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons+Outlined';
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400&family=Epilogue:wght@400&display=swap');
 
 $my-custom-typography-config: mat.define-typography-config(
-  $headline-1: mat.define-typography-level(64px, 65.6px, 400, 'Lato', -0.04em),
-  $headline-2: mat.define-typography-level(54px, 62.42px, 400, 'Lato', -0.04em),
-  $headline-3: mat.define-typography-level(48px, 56.83px, 400, 'Lato', -0.04em),
-  $headline-4: mat.define-typography-level(40px, 52.08px, 500, 'Lato', -0.04em),
-  $headline-5: mat.define-typography-level(24px, 31.25px, 500, 'Lato', -0.04em),
-  $headline-6: mat.define-typography-level(20px, 26.04px, 400, 'Lato', -0.04em),
-  $subtitle-1: mat.define-typography-level(16px, 20.83px, 700, 'Lato', -0.04em),
-  $subtitle-2: mat.define-typography-level(14px, 18.23px, 700, 'Lato', -0.03em),
-  $body-1: mat.define-typography-level(16px, 20.21px, 400, 'Lato', -0.01em),
-  $body-2: mat.define-typography-level(14px, 21px, 400, 'Lato', -0.01em),
-  $button: mat.define-typography-level(14px, 18.23px, 400, 'Lato', -0.01em),
-  $caption: mat.define-typography-level(12px, 16.8px, 400, 'Lato', -0.01em),
+  $headline-1:
+    mat.define-typography-level(64px, 65.6px, 400, 'Epilogue', -0.04em),
+  $headline-2:
+    mat.define-typography-level(54px, 62.42px, 400, 'Epilogue', -0.04em),
+  $headline-3:
+    mat.define-typography-level(48px, 56.83px, 400, 'Epilogue', -0.04em),
+  $headline-4:
+    mat.define-typography-level(40px, 52.08px, 500, 'DM Sans', -0.04em),
+  $headline-5:
+    mat.define-typography-level(24px, 31.25px, 500, 'DM Sans', -0.04em),
+  $headline-6:
+    mat.define-typography-level(20px, 26.04px, 400, 'DM Sans', -0.04em),
+  $subtitle-1:
+    mat.define-typography-level(16px, 20.83px, 700, 'DM Sans', -0.04em),
+  $subtitle-2:
+    mat.define-typography-level(14px, 18.23px, 700, 'DM Sans', -0.03em),
+  $body-1: mat.define-typography-level(16px, 20.21px, 400, 'DM Sans', -0.01em),
+  $body-2: mat.define-typography-level(14px, 21px, 400, 'DM Sans', -0.01em),
+  $button: mat.define-typography-level(14px, 18.23px, 400, 'DM Sans', -0.01em),
+  $caption: mat.define-typography-level(12px, 16.8px, 400, 'DM Sans', -0.01em),
 );
 
 .headline-1 {
-    @include mat.typography-level($my-custom-typography-config, 'headline-1');
-  }
-  
-  .headline-2 {
-    @include mat.typography-level($my-custom-typography-config, 'headline-2');
-  }
-  
-  .headline-3 {
-    @include mat.typography-level($my-custom-typography-config, 'headline-3');
-  }
-  
-  .headline-4 {
-    @include mat.typography-level($my-custom-typography-config, 'headline-4');
-  }
-  
-  .headline-5 {
-    @include mat.typography-level($my-custom-typography-config, 'headline-5');
-  }
-  
-  .headline-6 {
-    @include mat.typography-level($my-custom-typography-config, 'headline-6');
-  }
-  
-  .subtitle-1 {
-    @include mat.typography-level($my-custom-typography-config, 'subtitle-1');
-  }
-  
-  .subtitle-2 {
-    @include mat.typography-level($my-custom-typography-config, 'subtitle-2');
-  }
-  
-  .body-1 {
-    @include mat.typography-level($my-custom-typography-config, 'body-1');
-  }
-  
-  .body-2 {
-    @include mat.typography-level($my-custom-typography-config, 'body-2');
-  }
-  
-  .button {
-    @include mat.typography-level($my-custom-typography-config, 'button');
-  }
-  
-  .caption {
-    @include mat.typography-level($my-custom-typography-config, 'caption');
-  }
+  @include mat.typography-level($my-custom-typography-config, 'headline-1');
+}
+
+.headline-2 {
+  @include mat.typography-level($my-custom-typography-config, 'headline-2');
+}
+
+.headline-3 {
+  @include mat.typography-level($my-custom-typography-config, 'headline-3');
+}
+
+.headline-4 {
+  @include mat.typography-level($my-custom-typography-config, 'headline-4');
+}
+
+.headline-5 {
+  @include mat.typography-level($my-custom-typography-config, 'headline-5');
+}
+
+.headline-6 {
+  @include mat.typography-level($my-custom-typography-config, 'headline-6');
+}
+
+.subtitle-1 {
+  @include mat.typography-level($my-custom-typography-config, 'subtitle-1');
+}
+
+.subtitle-2 {
+  @include mat.typography-level($my-custom-typography-config, 'subtitle-2');
+}
+
+.body-1 {
+  @include mat.typography-level($my-custom-typography-config, 'body-1');
+}
+
+.body-2 {
+  @include mat.typography-level($my-custom-typography-config, 'body-2');
+}
+
+.button {
+  @include mat.typography-level($my-custom-typography-config, 'button');
+}
+
+.caption {
+  @include mat.typography-level($my-custom-typography-config, 'caption');
+}
