@@ -1,1 +1,6 @@
 @import 'libs/ui/core';
+
+.-no-release {
+  padding: 12px 120px;
+  border-bottom: 1px solid map-get($palette-grey, 200);
+}

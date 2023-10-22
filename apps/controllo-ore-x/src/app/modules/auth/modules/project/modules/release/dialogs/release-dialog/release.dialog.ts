@@ -53,4 +53,13 @@ export class ReleaseDialog
       this.title = 'Modifica release';
     }
   }
+
+  override onSubmit(): void {
+    super.onSubmit();
+    window.location.reload();
+  }
+
+  override navigateAfterDelete(): void {
+    window.location.reload();
+  }
 }

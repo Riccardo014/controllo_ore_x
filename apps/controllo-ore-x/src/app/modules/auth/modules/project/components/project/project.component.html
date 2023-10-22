@@ -6,23 +6,23 @@
   [expanded]="isPanelOpen"
 >
   <mat-expansion-panel-header
-    class="-projects-table-header"
+    class="-project"
     [expandedHeight]="customExpandedHeight"
   >
-    <mat-panel-title class="-project-data">
+    <mat-panel-title class="-project__data">
       <div>
         <span
           class="material-symbols-outlined"
           [ngClass]="{
-            '-expand-more-icon': !isPanelOpen,
-            '-expand-more-icon__rotate': isPanelOpen
+            '-project__data--expand': !isPanelOpen,
+            '-project__data--expand--rotate': isPanelOpen
           }"
           >expand_more</span
         >
       </div>
-      <div class="-project-data-details" (click)="openReleaseIndexPage()">
+      <div class="-project__data__details" (click)="openReleaseIndexPage()">
         <div
-          class="-project-color"
+          class="-project__data__details__color"
           [style.backgroundColor]="this.projectWithCustomer.color"
         ></div>
         <div class="body-1">{{ projectWithCustomer.name }}</div>
@@ -33,15 +33,15 @@
         </div>
       </div>
     </mat-panel-title>
-    <mat-panel-description class="-project-options">
+    <mat-panel-description class="-project__options">
       <button
         mat-flat-button
         extended
-        class="-new-release-button"
+        class="-project__options__release"
         (click)="togglePanel()"
         (click)="openCreateReleaseDialog()"
       >
-        <div class="-new-release-elements">
+        <div class="-project__options__release--elements">
           <span class="material-symbols-outlined">egg_alt</span>
           <span>Nuova Release</span>
         </div>
@@ -51,7 +51,7 @@
         [matMenuTriggerFor]="optionMenu"
         (click)="togglePanel()"
       >
-        <mat-icon class="-more-vert-icon">more_vert</mat-icon>
+        <mat-icon class="-project__options--icon">more_vert</mat-icon>
       </button>
       <mat-menu #optionMenu="matMenu">
         <ng-content select="[menuOptions]"></ng-content>

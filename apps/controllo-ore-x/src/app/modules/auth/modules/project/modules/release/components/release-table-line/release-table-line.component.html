@@ -1,49 +1,54 @@
-<div class="-release-table-line">
-  <div class="-release-table-line-data">
+<div class="-release">
+  <div class="-release__data">
     <div
-      class="body-1 -line-element"
-      [ngClass]="{ '-crossed-out': release.isCompleted }"
+      class="body-1 -release__data__element"
+      [ngClass]="{ '-release__data--crossed-out': release.isCompleted }"
     >
       {{ release.version }}
     </div>
-    <div class="body-1 -expiration-date -line-element">{{ deadline }}</div>
-    <div class="-release-progress-bar-section -line-element">
+    <div class="body-1 -release__data__element -release__data__element--date">
+      {{ deadline }}
+    </div>
+    <div class="-release__data__element -release__data__element--progress">
       <mat-progress-bar
-        class="-release-progress-bar"
+        class="-release__data__element--progress__bar"
         mode="determinate"
         value="{{ (100 * hoursExecuted) / release.hoursBudget }}"
       ></mat-progress-bar>
-      <div class="body-1 -hours-details">
-        <div class="-hours-executed">
+      <div class="body-1 -release__data__element--progress__hours">
+        <div class="-release__data__element--progress__hours--executed">
           {{ convertNumberToHours(hoursExecuted) }}&nbsp;/&nbsp;
         </div>
-        <div class="-hours-planned">
+        <div class="-release__data__element--progress__hours--planned">
           {{ convertNumberToHours(release.hoursBudget) }}
         </div>
       </div>
     </div>
-    <div class="body-1 -line-element">
+    <div class="body-1 -release__data__element">
       {{ convertNumberToHours(release.billableHoursBudget) }}
     </div>
-    <div class="-release-table-line-edit-and-report">
-      <button mat-icon-button (click)="openEditRelease(release)">
-        <span class="material-symbols-outlined -edit-button-icon"
+    <div class="-release__data__options">
+      <button
+        mat-icon-button
+        (click)="openEditRelease(release)"
+        class="-release__data__options--edit"
+      >
+        <span
+          class="material-symbols-outlined -release__data__options--edit__icon"
           >ink_marker
         </span>
       </button>
-      <div>
-        <button
-          mat-flat-button
-          extended
-          class="-report-button"
-          (click)="openReport(release)"
-        >
-          <div class="-report-button-elements">
-            <span class="material-symbols-outlined">chair</span>
-            <div class="body-2">Report</div>
-          </div>
-        </button>
-      </div>
+      <button
+        mat-flat-button
+        extended
+        class="-release__data__options--report"
+        (click)="openReport(release)"
+      >
+        <div class="-release__data__options--report__elements">
+          <span class="material-symbols-outlined">chair</span>
+          <div class="body-2">Report</div>
+        </div>
+      </button>
     </div>
   </div>
 </div>

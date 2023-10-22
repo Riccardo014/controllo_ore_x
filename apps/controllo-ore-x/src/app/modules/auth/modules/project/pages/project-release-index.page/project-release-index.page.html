@@ -1,4 +1,9 @@
-<controllo-ore-x-project-release-table-line
-  *ngFor="let release of releases"
-  [release]="release"
-></controllo-ore-x-project-release-table-line>
+<div *ngIf="releases.length > 0">
+  <controllo-ore-x-project-release-table-line
+    *ngFor="let release of releases"
+    [release]="release"
+  ></controllo-ore-x-project-release-table-line>
+</div>
+<div *ngIf="releases.length == 0" class="body-1 -no-release">
+  Nessuna release
+</div>

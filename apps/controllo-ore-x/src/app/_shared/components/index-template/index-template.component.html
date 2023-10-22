@@ -35,27 +35,19 @@
       >
     </ng-container>
     <ng-template #createLink>
-      <!-- <a
-        routerLink="./create"
-        *ngIf="!shouldHideCreateButton"
-        class="-page-title-link"
-      > -->
       <button
         (click)="openCreateDialogFn()"
-        class="hide-mobile -page-title-link-button"
+        class="hide-mobile -button"
         mat-flat-button
         color="primary"
       >
-        <div class="-page-title-link-button-elements">
+        <div class="-button__elements">
           <span class="material-symbols-outlined">{{ buttonIcon }}</span>
-          <span class="body-2 -page-title-link-button-elements-text">{{
-            buttonText
-          }}</span>
+          <span class="body-2 -button__elements__text">{{ buttonText }}</span>
         </div>
       </button>
 
       <mat-icon class="mt-1 hide-tablet-desktop" color="primary">add</mat-icon>
-      <!-- </a> -->
     </ng-template>
   </ng-container>
 </controllo-ore-x-rt-header>

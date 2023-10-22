@@ -2,7 +2,7 @@
 @import 'libs/ui/core/mixins.scss';
 @import '../../../../../../../../app.component.scss';
 
-.-release-table-line{
+.-release {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -11,84 +11,82 @@
   padding: 0px 40px;
   height: 80px;
 
-  .-release-table-line-data{
+  &__data {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     align-items: center;
     width: 100%;
-  
-    .-release-table-line-data > div {
+
+    & > div {
       padding: 0px 10px;
     }
-  
-    .-expiration-date{
-      color: rgba(0, 0, 0, 0.25);
+
+    &--crossed-out {
+      text-decoration: line-through;
     }
 
-    .-release-progress-bar-section{
+    &__element {
+      min-width: 110px;
+      padding: 0px 10px;
+
+      &--date {
+        color: rgba(0, 0, 0, 0.25);
+      }
+
+      &--progress {
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+        align-items: center;
+        padding: 0px 10px;
+        column-gap: 10%;
+
+        &__bar {
+          max-width: 100px;
+        }
+
+        &__hours {
+          display: flex;
+          flex-direction: row;
+
+          &--executed {
+            color: map-get($palette-primary, 500);
+          }
+
+          &--planned {
+            color: $general-header-color;
+          }
+        }
+      }
+    }
+
+    &__options {
       display: flex;
       flex-direction: row;
-      justify-content: left;
+      justify-content: center;
       align-items: center;
-      padding: 0px 10px;
-      column-gap: 10%;
-    
-      .-release-progress-bar{
-        max-width: 100px;
-      }
-    
-      .-hours-details{
-        display: flex;
-        flex-direction: row;
-    
-        .-hours-executed{
-          color: map-get($palette-primary, 500);
+      gap: 10px;
+
+      &--edit {
+        &__icon {
+          color: rgba(0, 0, 0, 0.5);
         }
-    
-        .-hours-planned{
-          color: $general-header-color;
-        }
-    
       }
-    
+
+      &--report {
+        background-color: map-get($palette-primary, 50);
+        color: map-get($palette-primary, 500);
+        padding: 20px;
+        border-radius: 10px;
+
+        &__elements {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          gap: 5%;
+        }
+      }
     }
   }
-
-  .-release-table-line-edit-and-report{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-  
-    .-report-button{
-      background-color: map-get($palette-primary, 50);
-      color: map-get($palette-primary, 500);
-      padding: 20px;
-      border-radius: 10px;
-  
-      .-report-button-elements{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        gap: 5%;
-      }
-  
-    }
-  }
-
-  .-line-element{
-    min-width: 110px;
-    padding: 0px 10px;
-  }
-
-}
-
-.-edit-button-icon{
-  color: rgba(0, 0, 0, 0.5);
-}
-
-.-crossed-out{
-  text-decoration: line-through;
 }

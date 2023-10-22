@@ -6,8 +6,8 @@
   [isError]="hasErrors"
 >
   <div body>
-    <form class="container p-0" [formGroup]="formHelper.form">
-      <div class="row mb-2 -wrapper-user-upsert-form">
+    <form class="-form p-0" [formGroup]="formHelper.form">
+      <div class="row mb-2 -form__fields">
         <mat-form-field class="col" appearance="outline">
           <mat-label>Nome progetto</mat-label>
           <input matInput placeholder="Nome" formControlName="name" />
@@ -42,7 +42,7 @@
         <button
           mat-flat-button
           *ngIf="isCreating"
-          class="button -creation-button"
+          class="button -form__fields__button"
           (click)="openCreateCustomer()"
         >
           Crea nuovo cliente
@@ -113,11 +113,11 @@
       </div>
     </form>
   </div>
-  <div footer class="-container-reset-btns">
+  <div footer class="-footer">
     <button
       *ngIf="!isCreating"
       (click)="deleteEntity()"
-      class="rt-btn -button -button-delete"
+      class="rt-btn -footer__button -footer__button--delete"
       mat-button
       type="button"
     >

@@ -2,7 +2,7 @@
 @import 'libs/ui/core/mixins.scss';
 @import '../../../../../../app.component.scss';
 
-.-projects-table-header{
+.-project {
   height: 90px;
   border-bottom: 1px solid map-get($palette-grey, 200);
   display: flex;
@@ -11,7 +11,7 @@
   justify-content: space-between;
   padding: 0px 40px;
 
-  .-project-data{
+  &__data {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -20,73 +20,70 @@
     width: auto;
     white-space: nowrap;
 
-    .-expand-more-icon{
+    &--expand {
       transform: rotate(-90deg);
       transition: transform 225ms ease;
-    }
-    
-    .-expand-more-icon__rotate{
-      transform: rotate(0deg);
-      transition: transform 225ms ease;
+
+      &--rotate {
+        transform: rotate(0deg);
+        transition: transform 225ms ease;
+      }
     }
 
-    .-project-data-details{
+    &__details {
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: flex-start;
       gap: 10px;
 
-      .-project-color{
+      &__color {
         width: 21px;
         height: 21px;
         border-radius: 6px;
         background-color: map-get($palette-auxiliaries-blue, 500);
       }
-
     }
   }
 
-  .-project-options{
+  &__options {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
     gap: 2%;
     margin: 0px;
-    
-    .-new-release-button{
+
+    &__release {
       background-color: map-get($palette-primary, 50);
       color: map-get($palette-primary, 500);
       padding: 20px;
       border-radius: 10px;
 
-      .-new-release-elements{
+      &--elements {
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: center;
         gap: 5%;
 
-        span{
-          white-space: nowrap
+        & span {
+          white-space: nowrap;
         }
-
       }
     }
 
-    .-more-vert-icon{
-      color: rgba(28, 27, 31, 1)
+    &--icon {
+      color: rgba(28, 27, 31, 1);
     }
-
   }
 }
 
 //remove the padding around the release line
 ::ng-deep {
   mat-expansion-panel {
-      .mat-expansion-panel-body {
-          padding: 0;
-      }
+    .mat-expansion-panel-body {
+      padding: 0;
+    }
   }
 }

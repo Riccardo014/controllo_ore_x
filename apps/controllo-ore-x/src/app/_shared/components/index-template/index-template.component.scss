@@ -5,30 +5,28 @@
   // padding-bottom: 40px;
   background: #ffffff;
   overflow-y: auto;
-  max-height: calc(100vh - 220px); /* limit the height of the section to the viewport height */
+  max-height: calc(
+    100vh - 220px
+  ); /* limit the height of the section to the viewport height */
   height: auto;
 
   @include scrollbar-primary(map-get($palette-grey, 400), 6px, true);
 }
 
-.-page-title-link{
-  text-decoration: none;
-}
-
-.-page-title-link-button{
+.-button {
   background-color: map-get($palette-primary, 500);
   color: #fff;
   padding: 20px;
-}
 
-.-page-title-link-button-elements{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 5%;
-}
+  &__elements {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5%;
 
-.-page-title-link-button-elements-text{
-  white-space: nowrap
+    &__text {
+      white-space: nowrap;
+    }
+  }
 }
