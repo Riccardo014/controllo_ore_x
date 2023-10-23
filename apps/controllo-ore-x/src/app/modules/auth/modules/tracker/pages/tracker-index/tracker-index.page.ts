@@ -125,6 +125,7 @@ export class TrackerIndexPage
         this.userHours.forEach((userHour: UserHoursReadDto) => {
           this.workedHours += Number(userHour.hours);
         });
+        this.isLoading.next(false);
       });
   }
 

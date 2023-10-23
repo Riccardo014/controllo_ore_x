@@ -90,6 +90,7 @@
             matInput
             placeholder="Ore"
             formControlName="hours"
+            min="0"
           />
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
             <div *ngIf="formHelper.form.controls['hours'].hasError(error.name)">

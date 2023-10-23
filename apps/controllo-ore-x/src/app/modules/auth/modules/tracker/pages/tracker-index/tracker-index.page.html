@@ -30,8 +30,19 @@
 </div>
 
 <div class="-content">
-  <controllo-ore-x-tracker-table-line
-    *ngFor="let userHour of userHours"
-    [userHour]="userHour"
-  ></controllo-ore-x-tracker-table-line>
+  <div *ngIf="isLoading.value">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+  <div *ngIf="userHours.length > 0 && !isLoading.value">
+    <controllo-ore-x-tracker-table-line
+      *ngFor="let userHour of userHours"
+      [userHour]="userHour"
+    ></controllo-ore-x-tracker-table-line>
+  </div>
+  <div
+    *ngIf="userHours.length == 0 && !isLoading.value"
+    class="-content--no-userHours"
+  >
+    Nessuna attività
+  </div>
 </div>
