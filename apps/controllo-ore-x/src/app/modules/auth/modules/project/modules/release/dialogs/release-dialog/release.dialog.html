@@ -27,6 +27,7 @@
             matInput
             placeholder="Budget ore"
             formControlName="hoursBudget"
+            min="0"
           />
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
             <div
@@ -44,6 +45,7 @@
             matInput
             placeholder="Budget ore fatturabili"
             formControlName="billableHoursBudget"
+            min="0"
           />
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
             <div

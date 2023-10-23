@@ -25,9 +25,6 @@ export class ReleaseFormHelper extends UpsertFormHelper<
     const formValues: any = this.form.getRawValue();
 
     return formValues;
-    // projectId: formValues.project,
-    // isCompleted: false,
-    // };
   }
 
   get updateDto(): ReleaseUpdateDto {
