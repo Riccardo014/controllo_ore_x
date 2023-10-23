@@ -1,7 +1,7 @@
 @import 'libs/ui/core';
 @import '../../../../styles/styles.scss';
 
-.-calendar-widget {
+.-calendar {
   display: flex;
   align-items: center;
   background-color: map-get($palette-accent, 200);
