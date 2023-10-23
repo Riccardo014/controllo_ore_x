@@ -1,6 +1,6 @@
 @import 'libs/ui/core';
 
-.-page-header {
+.-header {
   height: 80px;
   border-bottom: 1px solid map-get($palette-grey, 200);
   display: flex;
@@ -8,54 +8,54 @@
   align-items: center;
   justify-content: space-between;
   padding: 0px 30px;
-}
 
-.-page-header-title {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 20px;
-}
-
-.-project-data-details {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 10px;
-
-  .-project-color {
-    width: 21px;
-    height: 21px;
-    border-radius: 6px;
-    background-color: map-get($palette-auxiliaries-blue, 500);
-  }
-}
-
-.-new-release-button {
-  background-color: map-get($palette-primary, 50);
-  color: map-get($palette-primary, 500);
-  padding: 20px;
-  border-radius: 10px;
-
-  .-new-release-elements {
+  &__title {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    gap: 5%;
+    justify-content: flex-start;
+    gap: 20px;
 
-    span {
-      white-space: nowrap;
+    &__project {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+
+      &__color {
+        width: 21px;
+        height: 21px;
+        border-radius: 6px;
+        background-color: map-get($palette-auxiliaries-blue, 500);
+      }
     }
   }
-}
 
-.-page-header-options {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 5%;
+  &__options {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5%;
+
+    &__button {
+      background-color: map-get($palette-primary, 50);
+      color: map-get($palette-primary, 500);
+      padding: 20px;
+      border-radius: 10px;
+
+      &__elements {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 5%;
+
+        span {
+          white-space: nowrap;
+        }
+      }
+    }
+  }
 }

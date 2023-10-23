@@ -1,22 +1,24 @@
-<div class="-page-header" *ngIf="release">
-  <div class="-page-header-title">
+<div class="-header" *ngIf="release">
+  <div class="-header__title">
     <button (click)="navigateBack()" mat-icon-button>
       <mat-icon color="primary">arrow_back</mat-icon>
     </button>
-    <div class="headline-5" *ngIf="release" class="-release-data-details">
+    <div class="headline-5" *ngIf="release" class="-header__title__release">
       <h1 class="headline-5">{{ release.version }}</h1>
-      <span class="material-symbols-outlined -title-icon">egg_alt</span>
+      <span class="material-symbols-outlined -header__title__release__icon"
+        >egg_alt</span
+      >
     </div>
   </div>
-  <div class="-page-header-options">
+  <div class="-header__options">
     <button
       mat-flat-button
       extended
-      class="-release-action-button"
+      class="-header__options__button -header__options__button--complete"
       *ngIf="release.isCompleted"
       (click)="toggleCompletion()"
     >
-      <div class="-release-action-button-elements">
+      <div class="-header__options__button__elements">
         <span class="material-symbols-outlined">close</span>
         <span class="body-2">Segna come non completata</span>
       </div>
@@ -24,18 +26,22 @@
     <button
       mat-flat-button
       extended
-      class="-release-action-button"
+      class="-header__options__button -header__options__button--complete"
       *ngIf="!release.isCompleted"
       (click)="toggleCompletion()"
     >
-      <div class="-release-action-button-elements">
+      <div class="-header__options__button__elements">
         <span class="material-symbols-outlined">done</span>
         <span class="body-2">Completa Release</span>
       </div>
     </button>
     <!-- TODO: add export functionality -->
-    <button mat-flat-button extended class="-export-button">
-      <div class="-export-button-elements">
+    <button
+      mat-flat-button
+      extended
+      class="-header__options__button -header__options__button--export"
+    >
+      <div class="-header__options__button__elements">
         <span class="material-symbols-outlined">blender</span>
         <div class="body-2">Export</div>
       </div>
@@ -43,47 +49,49 @@
   </div>
 </div>
 
-<div *ngIf="release" class="-release-report-container">
-  <div class="-report-element -report-element__var">
-    <div class="-report-element-content">
-      <div class="body-1 -element-title -element-title__var">Budget ore</div>
-      <div class="subtitle-1 -value__var">
+<div *ngIf="release" class="-report">
+  <div class="-report__element -report__element--highlighted">
+    <div class="-report__element__content">
+      <div class="body-1 -report__element__content__title--var">Budget ore</div>
+      <div class="subtitle-1 -report__element__content__value--var">
         {{ convertNumberToHours(release.hoursBudget) }}
       </div>
     </div>
   </div>
 
-  <div class="-report-element">
-    <div class="-report-element-content">
-      <div class="body-1 -element-title">Ore utilizzate</div>
+  <div class="-report__element">
+    <div class="-report__element__content">
+      <div class="body-1 -report__element__content__title">Ore utilizzate</div>
       <div class="subtitle-1">{{ convertNumberToHours(hoursExecuted) }}</div>
     </div>
   </div>
 
-  <div class="-report-element">
-    <div class="-report-element-content">
-      <div class="body-1 -element-title">Ore fuori budget</div>
+  <div class="-report__element">
+    <div class="-report__element__content">
+      <div class="body-1 -report__element__content__title">
+        Ore fuori budget
+      </div>
       <div
         class="subtitle-1"
-        [ngClass]="{'-value__highlighted' : calculatedHoursOutOfBudget() != '00:00' }"
+        [ngClass]="{'-report__element__content__value--highlighted' : calculatedHoursOutOfBudget() != '00:00' }"
       >
         {{ calculatedHoursOutOfBudget() }}
       </div>
     </div>
   </div>
 
-  <div class="-report-element">
-    <div class="-report-element-content">
-      <div class="body-1 -element-title">Ore fatturabili</div>
+  <div class="-report__element">
+    <div class="-report__element__content">
+      <div class="body-1 -report__element__content__title">Ore fatturabili</div>
       <div class="subtitle-1">
         {{ convertNumberToHours(release.billableHoursBudget) }}
       </div>
     </div>
   </div>
 
-  <div class="-report-element -report-deadline">
-    <div class="-report-element-content">
-      <div class="body-1 -element-title">Scadenza</div>
+  <div class="-report__element -report__element--deadline">
+    <div class="-report__element__content">
+      <div class="body-1 -report__element__content__title">Scadenza</div>
       <div class="subtitle-1">{{ deadline }}</div>
     </div>
   </div>

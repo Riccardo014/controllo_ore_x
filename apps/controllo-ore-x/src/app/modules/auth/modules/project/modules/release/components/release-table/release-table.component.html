@@ -9,7 +9,10 @@
       [release]="release"
     ></controllo-ore-x-release-table-line>
   </div>
-  <div *ngIf="releases.length == 0 && !isLoading.value" class="-no-release">
+  <div
+    *ngIf="releases.length == 0 && !isLoading.value"
+    class="-table--no-release"
+  >
     Nessuna release
   </div>
 </div>

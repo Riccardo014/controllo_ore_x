@@ -1,20 +1,20 @@
-<div class="-project-release-table-line">
-  <div class="-release-table-line-data">
+<div class="-release">
+  <div class="-release__data">
     <div class="body-1" [ngClass]="{ '-crossed-out': release.isCompleted }">
       {{ release.version }}
     </div>
-    <div class="body-1 -expiration-date">{{ deadline }}</div>
-    <div class="-release-progress-bar-section">
+    <div class="body-1 -release__data__deadline">{{ deadline }}</div>
+    <div class="-release__data__progress">
       <mat-progress-bar
-        class="-release-progress-bar"
+        class="-release__data__progress__bar"
         mode="determinate"
         value="{{ (100 * hoursExecuted) / release.hoursBudget }}"
       ></mat-progress-bar>
-      <div class="body-1 -hours-details">
-        <div class="-hours-executed">
+      <div class="body-1 -release__data__progress__hours">
+        <div class="-release__data__progress__hours--executed">
           {{ convertNumberToHours(hoursExecuted) }}&nbsp;/&nbsp;
         </div>
-        <div class="-hours-planned">
+        <div class="-release__data__progress__hours--planned">
           {{ convertNumberToHours(release.hoursBudget) }}
         </div>
       </div>

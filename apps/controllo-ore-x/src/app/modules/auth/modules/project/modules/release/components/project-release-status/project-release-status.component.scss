@@ -1,60 +1,60 @@
 @import 'libs/ui/core';
 
-.-container {
+.-status {
   overflow-y: auto;
   height: calc(100vh - 81px - 81px - 48px);
   @include scrollbar-primary(map-get($palette-grey, 400), 6px, true);
-}
 
-.-release-status-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-  border-top: 1px solid map-get($palette-grey, 200);
-  border-bottom: 1px solid map-get($palette-grey, 200);
-}
+  &__container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    border-top: 1px solid map-get($palette-grey, 200);
+    border-bottom: 1px solid map-get($palette-grey, 200);
 
-h2 {
-  color: rgba(0, 0, 0, 0.5);
-}
+    &__data {
+      display: flex;
+      flex-direction: column;
+      padding: 20px 40px;
+      width: 100%;
 
-.-release-status-single-data {
-  display: flex;
-  flex-direction: column;
-  padding: 20px 40px;
-  width: 100%;
-}
+      h2 {
+        color: rgba(0, 0, 0, 0.5);
+      }
 
-.-release-status-single-data-with-borders {
-  border-right: 1px solid map-get($palette-grey, 200);
-  border-left: 1px solid map-get($palette-grey, 200);
-}
+      &--with-borders {
+        border-right: 1px solid map-get($palette-grey, 200);
+        border-left: 1px solid map-get($palette-grey, 200);
+      }
 
-.-release-number-and-bar {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
+      &__elements {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
 
-.-progress-bar {
-  max-width: 100px;
-}
+        &__progress-bar {
+          max-width: 100px;
+        }
 
-.-release-status-single-data-icon {
-  color: map-get($palette-primary, 500);
-}
+        &__completed {
+          color: map-get($palette-primary, 500);
+        }
+      }
+    }
+  }
 
-.-cards-container {
-  border-bottom: 1px solid map-get($palette-grey, 200);
-}
+  &__cards {
+    border-bottom: 1px solid map-get($palette-grey, 200);
 
-.-cards {
-  padding: 40px 20px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
+    &__card {
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+  }
 }

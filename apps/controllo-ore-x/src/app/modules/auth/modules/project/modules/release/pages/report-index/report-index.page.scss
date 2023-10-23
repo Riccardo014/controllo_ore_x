@@ -1,6 +1,6 @@
 @import 'libs/ui/core';
 
-.-page-header {
+.-header {
   height: 80px;
   border-bottom: 1px solid map-get($palette-grey, 200);
   display: flex;
@@ -8,112 +8,107 @@
   align-items: center;
   justify-content: space-between;
   padding: 0px 30px;
-}
 
-.-page-header-title {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 20px;
-}
-
-.-release-data-details {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 10px;
-}
-
-.-page-header-options {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 5%;
-}
-
-.-title-icon {
-  color: map-get($palette-primary, 500);
-}
-
-.-export-button {
-  background-color: map-get($palette-accent, 200);
-  color: #000000;
-  padding: 20px;
-  border-radius: 10px;
-
-  .-export-button-elements {
+  &__title {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    gap: 20px;
+
+    &__release {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+
+      &__icon {
+        color: map-get($palette-primary, 500);
+      }
+    }
+  }
+
+  &__options {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
     gap: 5%;
+
+    &__button {
+      padding: 20px;
+      border-radius: 10px;
+
+      &--complete {
+        background-color: map-get($palette-primary, 50);
+        color: map-get($palette-primary, 500);
+      }
+
+      &__elements {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 5%;
+
+        span {
+          white-space: nowrap;
+        }
+      }
+
+      &--export {
+        background-color: map-get($palette-accent, 200);
+        color: #000000;
+      }
+    }
   }
 }
 
-.-release-report-container {
+.-report {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   align-items: center;
   width: 100%;
   border-bottom: 1px solid map-get($palette-grey, 200);
-}
 
-.-report-element {
-  height: 120px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-right: 1px solid map-get($palette-grey, 200);
-
-  .-report-element-content {
+  &__element {
+    height: 120px;
     display: flex;
-    align-items: start;
-    flex-direction: column;
-  }
-}
-
-.-report-deadline {
-  background-color: map-get($palette-grey, 100);
-}
-
-.-element-title {
-  color: rgba(0, 0, 0, 0.5);
-}
-
-.-report-element__var {
-  background-color: map-get($palette-primary, 500);
-}
-
-.-element-title__var {
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.-value__var {
-  color: #fff;
-}
-
-.-value__highlighted {
-  color: map-get($palette-primary, 500);
-}
-
-.-release-action-button {
-  background-color: map-get($palette-primary, 50);
-  color: map-get($palette-primary, 500);
-  padding: 20px;
-  border-radius: 10px;
-
-  .-release-action-button-elements {
-    display: flex;
-    flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 5%;
+    border-right: 1px solid map-get($palette-grey, 200);
 
-    span {
-      white-space: nowrap;
+    &--highlighted {
+      background-color: map-get($palette-primary, 500);
+    }
+
+    &--deadline {
+      background-color: map-get($palette-grey, 100);
+    }
+
+    &__content {
+      display: flex;
+      align-items: start;
+      flex-direction: column;
+
+      &__title {
+        color: rgba(0, 0, 0, 0.5);
+
+        &--var {
+          color: rgba(255, 255, 255, 0.5);
+        }
+      }
+
+      &__value {
+        &--var {
+          color: #fff;
+        }
+
+        &--highlighted {
+          color: map-get($palette-primary, 500);
+        }
+      }
     }
   }
 }

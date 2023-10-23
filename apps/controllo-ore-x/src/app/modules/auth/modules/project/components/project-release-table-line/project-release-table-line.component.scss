@@ -2,7 +2,7 @@
 @import 'libs/ui/core/mixins.scss';
 @import '../../../../../../app.component.scss';
 
-.-project-release-table-line{
+.-release {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -11,21 +11,21 @@
   padding: 0px 40px;
   height: 80px;
 
-  .-release-table-line-data{
+  &__data {
     padding-left: 80px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
     width: 100%;
 
-    .-expiration-date{
+    &__deadline {
       color: rgba(0, 0, 0, 0.25);
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .-release-progress-bar-section{
+    &__progress {
       display: flex;
       flex-direction: row;
       justify-content: left;
@@ -35,29 +35,27 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      
-      .-release-progress-bar{
+
+      &__bar {
         width: 100px;
       }
 
-      .-hours-details{
+      &__hours {
         display: flex;
         flex-direction: row;
-    
-        .-hours-executed{
+
+        &--executed {
           color: map-get($palette-primary, 500);
         }
-    
-        .-hours-planned{
+
+        &--planned {
           color: $general-header-color;
         }
-    
       }
-
     }
   }
 }
 
-.-crossed-out{
+.-crossed-out {
   text-decoration: line-through;
 }

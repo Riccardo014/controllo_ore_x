@@ -1,7 +1,7 @@
 @import 'libs/ui/core/consts.scss';
 @import 'libs/ui/core/mixins.scss';
 
-.-release-table-header{
+.-header {
   border-top: 1px solid map-get($palette-grey, 300);
   border-bottom: 1px solid map-get($palette-grey, 300);
   padding: 0px 40px;
@@ -12,14 +12,14 @@
   align-items: center;
   justify-content: space-between;
 
-  .-release-table-data{
+  &__datas {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     align-items: center;
     width: 100%;
     height: 100%;
 
-    .-single-header{
+    &__data {
       padding: 0px 10px;
       height: 100%;
       border-left: 1px solid map-get($palette-grey, 300);
@@ -28,5 +28,4 @@
       min-width: 110px;
     }
   }
-
 }

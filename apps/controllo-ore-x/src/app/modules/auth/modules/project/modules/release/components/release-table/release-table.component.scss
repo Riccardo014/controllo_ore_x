@@ -4,9 +4,9 @@
   overflow-y: auto;
   height: calc(100vh - 81px - 81px - 48px - 48px);
   @include scrollbar-primary(map-get($palette-grey, 400), 6px, true);
-}
 
-.-no-release {
-  padding: 12px 8px;
-  border-bottom: 1px solid map-get($palette-grey, 200);
+  &--no-release {
+    padding: 12px 8px;
+    border-bottom: 1px solid map-get($palette-grey, 200);
+  }
 }

@@ -9,9 +9,9 @@
   height: calc(100vh - 81px - 81px - 48px);
 
   @include scrollbar-primary(map-get($palette-grey, 400), 6px, true);
-}
 
-.-no-project {
-  padding: 12px 8px;
-  border-bottom: 1px solid map-get($palette-grey, 200);
+  &--no-project {
+    padding: 12px 8px;
+    border-bottom: 1px solid map-get($palette-grey, 200);
+  }
 }

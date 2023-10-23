@@ -1,6 +1,6 @@
-<div class="-container">
-  <div class="-release-status-container">
-    <div class="-release-status-single-data">
+<div class="-status">
+  <div class="-status__container">
+    <div class="-status__container__data">
       <h2 class="subtitle-1">Release totali</h2>
       <div class="headline-4">
         {{ totalReleases }}
@@ -8,15 +8,15 @@
     </div>
 
     <div
-      class="-release-status-single-data -release-status-single-data-with-borders"
+      class="-status__container__data -status__container__data--with-borders"
     >
       <h2 class="subtitle-1">Release in corso</h2>
-      <div class="-release-number-and-bar">
+      <div class="-status__container__data__elements">
         <div class="headline-4">
           {{ inProgressReleases }}
         </div>
         <mat-progress-bar
-          class="-progress-bar"
+          class="-status__container__data__elements__progress-bar"
           mode="determinate"
           value="60"
           color="primary"
@@ -25,20 +25,21 @@
       </div>
     </div>
 
-    <div class="-release-status-single-data">
+    <div class="-status__container__data">
       <h2 class="subtitle-1">Release completate</h2>
-      <div class="-release-number-and-bar">
+      <div class="-status__container__data__elements">
         <div class="headline-4">
           {{ doneReleases }}
         </div>
-        <span class="material-symbols-outlined -release-status-single-data-icon"
+        <span
+          class="material-symbols-outlined -status__container__data__elements__completed"
           >check</span
         >
       </div>
     </div>
   </div>
-  <div class="-cards-container" *ngIf="tags.length > 0">
-    <div class="-cards">
+  <div class="-status__cards" *ngIf="tags.length > 0">
+    <div class="-status__cards__card">
       <controllo-ore-x-project-activity-card
         *ngFor="let tag of tags"
         [tagWithHours]="tag"

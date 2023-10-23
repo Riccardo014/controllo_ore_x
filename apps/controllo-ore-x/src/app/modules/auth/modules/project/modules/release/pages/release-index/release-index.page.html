@@ -1,11 +1,11 @@
-<div class="-page-header">
-  <div class="-page-header-title">
+<div class="-header">
+  <div class="-header__title">
     <button (click)="navigateBack()" mat-icon-button>
       <mat-icon color="primary">arrow_back</mat-icon>
     </button>
-    <div *ngIf="this.project" class="-project-data-details">
+    <div *ngIf="this.project" class="-header__title__project">
       <div
-        class="-project-color"
+        class="-header__title__project__color"
         [style.backgroundColor]="this.project.color"
       ></div>
       <h1 class="body-1">{{ project.name }}</h1>
@@ -14,14 +14,14 @@
       </div>
     </div>
   </div>
-  <div class="-page-header-options">
+  <div class="-header__options">
     <button
       mat-flat-button
       extended
-      class="-new-release-button"
+      class="-header__options__button"
       (click)="openCreateReleaseDialog()"
     >
-      <div class="-new-release-elements">
+      <div class="-header__options__button__elements">
         <span class="material-symbols-outlined">egg_alt</span>
         <span>Nuova Release</span>
       </div>
@@ -29,10 +29,10 @@
     <button
       mat-flat-button
       extended
-      class="-new-release-button"
+      class="-header__options__button"
       (click)="openEditProjectDialog()"
     >
-      <div class="-new-release-elements">
+      <div class="-header__options__button__elements">
         <span class="material-symbols-outlined">ink_marker</span>
         <span>Modifica</span>
       </div>
