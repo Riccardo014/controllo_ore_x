@@ -47,6 +47,13 @@ const routes: Routes = [
             (module) => module.ProjectModule,
           ),
       },
+      {
+        path: 'etichette',
+        loadChildren: () =>
+          import('./modules/hoursTag/hoursTag.module').then(
+            (module) => module.HoursTagModule,
+          ),
+      },
     ],
   },
 ];

@@ -5,4 +5,5 @@ export enum INDEX_CONFIGURATION_KEY {
   RELEASE = 'releases',
   TRACKER = 'userHours',
   REPORT = 'userHours',
+  HOURSTAG = 'hoursTag',
 }

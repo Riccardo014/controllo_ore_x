@@ -6,4 +6,5 @@ export enum COLUMN_TYPE {
   TIME_DATE = 'TIME_DATE',
   BOOLEAN = 'BOOLEAN',
   EDITABLE = 'EDITABLE',
+  ICON = 'ICON',
 }

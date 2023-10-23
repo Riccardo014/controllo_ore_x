@@ -60,6 +60,9 @@
       </button>
     </div>
   </ng-container>
+  <ng-container *ngSwitchCase="'ICON'">
+    <span class="material-symbols-outlined -icon">{{ valueToPrint }}</span>
+  </ng-container>
   <!-- <ng-container *ngSwitchCase="'PAYMENT_STATUS'">
     <div class="-chip" *ngIf="valueToPrint === PAYMENT_STATUS.NOT_MADE">Non effettuato</div>
     <div class="-chip -background-rejected" *ngIf="valueToPrint === PAYMENT_STATUS.REJECTED">Rifiutato</div>

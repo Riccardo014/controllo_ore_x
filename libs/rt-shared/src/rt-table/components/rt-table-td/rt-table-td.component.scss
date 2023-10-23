@@ -9,7 +9,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 
-
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -35,22 +34,26 @@ mat-icon.-check {
   color: map-get($palette-success, 500);
 }
 
-.-role-chip-superadmin{
-  background-color: map-get($palette-auxiliaries-blue, 500 );
+.-role-chip-superadmin {
+  background-color: map-get($palette-auxiliaries-blue, 500);
 }
 
-.-role-chip-admin{
-  background-color: map-get($palette-auxiliaries-yellow, 500 );
+.-role-chip-admin {
+  background-color: map-get($palette-auxiliaries-yellow, 500);
 }
 
-.-role-chip-collaborator{
-  background-color: map-get($palette-auxiliaries-green, 500 );
+.-role-chip-collaborator {
+  background-color: map-get($palette-auxiliaries-green, 500);
 }
 
-.-editable-container{
+.-editable-container {
   margin: auto;
 }
 
-.-edit-button-icon{
+.-edit-button-icon {
   color: rgba(0, 0, 0, 0.5);
+}
+
+.-icon {
+  color: map-get($palette-primary, 500);
 }
