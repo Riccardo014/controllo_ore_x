@@ -3,6 +3,7 @@
     <controllo-ore-x-report-single-filter
       *ngFor="let dataForFilter of dataForFilters"
       [fieldName]="dataForFilter.fieldName"
+      class="-single-filter"
     ></controllo-ore-x-report-single-filter>
     <!-- (change)="formEmitter(filter, $event)" -->
   </div>

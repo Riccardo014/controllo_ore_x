@@ -3,7 +3,7 @@
 
 .-report-table-filter {
   border-bottom: 1px solid map-get($palette-grey, 300);
-  height: 66px;
+  min-height: 66px;
   padding: 0px 40px;
   display: flex;
   flex-direction: row;
@@ -15,6 +15,9 @@
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
+    flex-wrap: wrap;
+    max-width: 80%;
+    row-gap: 10px;
   }
 
   .-filter-options {
