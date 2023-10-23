@@ -39,6 +39,10 @@
       *ngIf="hasCalendar"
     ></controllo-ore-x-datepicker>
 
+    <controllo-ore-x-range-datepicker
+      *ngIf="hasRangeCalendar"
+    ></controllo-ore-x-range-datepicker>
+
     <ng-template #createLink>
       <button
         *ngIf="!shouldHideCreateButton"

@@ -1,0 +1,25 @@
+<mat-form-field
+  class="subtitle-1 -calendar-widget"
+  appearance="outline"
+  [formGroup]="rangeDates"
+>
+  <mat-date-range-input [rangePicker]="rangePicker">
+    <input matStartDate formControlName="start" placeholder="Inizio" />
+    <input
+      matEndDate
+      formControlName="end"
+      placeholder="Fine"
+      (dateChange)="dateRangeChange()"
+    />
+  </mat-date-range-input>
+  <mat-datepicker-toggle
+    matIconPrefix
+    [for]="rangePicker"
+    class="-calendar__icon"
+  >
+    <mat-icon matDatepickerToggleIcon
+      ><span class="material-symbols-outlined">calendar_month</span></mat-icon
+    >
+  </mat-datepicker-toggle>
+  <mat-date-range-picker #rangePicker></mat-date-range-picker>
+</mat-form-field>

@@ -18,10 +18,10 @@ import { IndexConfigurationDataService } from '@app/_core/services/index-configu
 import { ReportDataService } from '@app/_core/services/report.data-service';
 import { IndexPage } from '@app/_shared/classes/index-page.class';
 import { SubscriptionsLifecycle } from '@app/utils/subscriptions_lifecycle';
-import { Subscription } from 'rxjs';
-import { FilterService } from './services/filter.service';
-import { CalendarDateService } from '../index-template/servicies/calendar-date.service';
 import { endOfDay, startOfDay } from 'date-fns';
+import { Subscription } from 'rxjs';
+import { CalendarDateService } from '../index-template/servicies/calendar-date.service';
+import { FilterService } from './services/filter.service';
 
 /**
  * Template of a report page
@@ -57,7 +57,13 @@ export class ReportTemplateComponent
     formControl: FormControl;
   }[] = [];
 
-  selectedDate: Date = new Date();
+  selectedRangeDate: {
+    start: Date;
+    end: Date;
+  } = {
+    start: new Date(),
+    end: new Date(),
+  };
 
   constructor(
     protected _configurationService: IndexConfigurationDataService,
@@ -81,9 +87,9 @@ export class ReportTemplateComponent
           this.dataForFilters = dataForFilters;
         },
       ),
-      this._calendarDateService.currentDateObservable.subscribe(
-        (date: Date) => {
-          this.selectedDate = date;
+      this._calendarDateService.currentRangeDatesObservable.subscribe(
+        (dates: { start: Date; end: Date }) => {
+          this.selectedRangeDate = dates;
           this.changeDataForDate();
         },
       ),
@@ -106,8 +112,8 @@ export class ReportTemplateComponent
         date: {
           _fn: FIND_BOOSTED_FN.DATE_BETWEEN,
           args: [
-            startOfDay(this.selectedDate).toISOString(),
-            endOfDay(this.selectedDate).toISOString(),
+            startOfDay(this.selectedRangeDate.start).toISOString(),
+            endOfDay(this.selectedRangeDate.end).toISOString(),
           ],
         },
       };
@@ -122,8 +128,8 @@ export class ReportTemplateComponent
       date: {
         _fn: FIND_BOOSTED_FN.DATE_BETWEEN,
         args: [
-          startOfDay(this.selectedDate).toISOString(),
-          endOfDay(this.selectedDate).toISOString(),
+          startOfDay(this.selectedRangeDate.start).toISOString(),
+          endOfDay(this.selectedRangeDate.end).toISOString(),
         ],
       },
     };

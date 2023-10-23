@@ -6,16 +6,6 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import {
-  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
-  MomentDateAdapter,
-} from '@angular/material-moment-adapter';
-import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE,
-} from '@angular/material/core';
 import { IndexPage } from '@app/_shared/classes/index-page.class';
 import {
   SubscriptionsLifecycle,
@@ -32,15 +22,6 @@ import { CalendarDateService } from './servicies/calendar-date.service';
   selector: 'controllo-ore-x-index-template',
   templateUrl: './index-template.component.html',
   styleUrls: ['./index-template.component.scss'],
-  providers: [
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
-    },
-    { provide: MAT_DATE_LOCALE, useValue: 'it-IT' },
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
-  ],
 })
 export class IndexTemplateComponent
   implements OnInit, OnDestroy, SubscriptionsLifecycle
@@ -59,6 +40,11 @@ export class IndexTemplateComponent
    * If true, the page will have a calendar
    */
   @Input() hasCalendar: boolean = false;
+
+  /**
+   * If true, the page will have a range calendar
+   */
+  @Input() hasRangeCalendar: boolean = false;
 
   /**
    * If true, the page will have a button to export the data in csv format
@@ -106,8 +92,6 @@ export class IndexTemplateComponent
   @Output() openCreateDialog: EventEmitter<boolean> =
     new EventEmitter<boolean>();
 
-  date = new FormControl(moment());
-
   subscriptionsList: Subscription[] = [];
 
   completeSubscriptions: (subscriptionsList: Subscription[]) => void =
@@ -139,9 +123,6 @@ export class IndexTemplateComponent
         this._isFirstLoadDone = isFirstLoadDone;
         this._setLoadingParameters();
       }),
-      this._calendarDateService.currentDateObservable.subscribe((date) =>
-        this.date.setValue(moment(date)),
-      ),
     );
   }
 
@@ -151,23 +132,6 @@ export class IndexTemplateComponent
 
   openCreateDialogFn(): void {
     this.openCreateDialogEvent.emit(true);
-  }
-
-  dateChange(): void {
-    if (!this.date.value) {
-      throw new Error('Date is null');
-    }
-    this._calendarDateService.changeDate(this.date.value.toDate());
-  }
-
-  nextDay(): void {
-    this.date.value?.add(1, 'days');
-    this.dateChange();
-  }
-
-  previousDay(): void {
-    this.date.value?.add(-1, 'days');
-    this.dateChange();
   }
 
   getDateToDisplay(date: Date): string {

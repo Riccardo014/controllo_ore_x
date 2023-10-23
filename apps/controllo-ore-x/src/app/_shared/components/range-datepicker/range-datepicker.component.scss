@@ -1,0 +1,17 @@
+@import 'libs/ui/core';
+@import '../../../../styles/styles.scss';
+
+.-calendar-widget {
+  display: flex;
+  align-items: center;
+  background-color: map-get($palette-accent, 200);
+  border-radius: 10px;
+
+  .mat-mdc-form-field {
+    @extend .subtitle-1 !optional;
+  }
+
+  &__icon {
+    color: #000;
+  }
+}
