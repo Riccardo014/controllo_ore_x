@@ -1,32 +1,37 @@
 @import 'libs/ui/core';
-@import '../../../../styles/styles.scss';
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap');
 
 .-calendar {
   display: flex;
   align-items: center;
-  background-color: map-get($palette-accent, 200);
-  border-radius: 10px;
+  font-family: 'Space Mono', monospace;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.01em;
 
   .mat-mdc-form-field {
-    @extend .subtitle-1 !optional;
+    @extend .monospace !optional;
   }
 
   &__icon {
-    color: #000;
+    color: map-get($palette-accent, 900);
   }
 }
 
 //remove the border from the input
-::ng-deep
+.-calendar
+  ::ng-deep
   .mdc-text-field--outlined:not(.mdc-text-field--disabled)
   .mdc-notched-outline__leading,
-::ng-deep
+.-calendar
+  ::ng-deep
   .mdc-text-field--outlined:not(.mdc-text-field--disabled)
   .mdc-notched-outline__trailing {
-  border-color: transparent !important;
+  border-color: map-get($palette-accent, 900) !important;
 }
 
-//force the date width to not beeig cutted
-::ng-deep .mat-date-range-input-wrapper {
-  width: 70px;
+//force the start date width to not beeig cutted
+.-calendar ::ng-deep .mat-date-range-input-wrapper {
+  width: 80px;
 }

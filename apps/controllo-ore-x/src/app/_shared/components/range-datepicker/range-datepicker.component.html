@@ -1,6 +1,7 @@
 <mat-form-field
-  class="subtitle-1 -calendar"
+  class="-calendar"
   appearance="outline"
+  color="accent"
   [formGroup]="rangeDates"
 >
   <mat-date-range-input [rangePicker]="rangePicker">
@@ -13,7 +14,7 @@
     />
   </mat-date-range-input>
   <mat-datepicker-toggle
-    matIconPrefix
+    matIconSuffix
     [for]="rangePicker"
     class="-calendar__icon"
   >
