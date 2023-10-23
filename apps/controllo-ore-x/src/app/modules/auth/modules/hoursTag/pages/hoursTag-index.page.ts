@@ -8,8 +8,10 @@ import {
 import { HoursTagDataService } from '@app/_core/services/hours-tag.data-service';
 import { IndexConfigurationDataService } from '@app/_core/services/index-configuration.data-service';
 import { IndexPage } from '@app/_shared/classes/index-page.class';
-import { RT_DIALOG_CLOSE_RESULT } from '@controllo-ore-x/rt-shared';
-import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
+import {
+  RT_DIALOG_CLOSE_RESULT,
+  RtDialogService,
+} from '@controllo-ore-x/rt-shared';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
 import { BehaviorSubject } from 'rxjs';
 import { HoursTagDialog } from '../dialogs/hoursTag-dialog/hoursTag.dialog';
