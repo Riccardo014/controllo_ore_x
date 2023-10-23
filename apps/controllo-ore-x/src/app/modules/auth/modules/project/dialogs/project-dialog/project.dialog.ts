@@ -100,10 +100,12 @@ export class ProjectDialog
   }
 
   override navigateAfterDelete(): void {
+    if (this._router.url === '/auth/progetti') {
+      window.location.reload();
+    }
     this._router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this._router.navigate(['/auth/progetti/']);
     });
-    window.location.reload();
   }
 
   openCreateCustomer(): void {
