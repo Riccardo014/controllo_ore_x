@@ -26,6 +26,7 @@
   border-color: transparent !important;
 }
 
+//force the date width to not beeig cutted
 ::ng-deep .mat-date-range-input-wrapper {
   width: 70px;
 }
