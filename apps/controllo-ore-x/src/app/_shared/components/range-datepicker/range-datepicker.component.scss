@@ -15,3 +15,17 @@
     color: #000;
   }
 }
+
+//remove the border from the input
+::ng-deep
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+  .mdc-notched-outline__leading,
+::ng-deep
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled)
+  .mdc-notched-outline__trailing {
+  border-color: transparent !important;
+}
+
+::ng-deep .mat-date-range-input-wrapper {
+  width: 70px;
+}
