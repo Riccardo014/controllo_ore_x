@@ -44,7 +44,6 @@
   align-items: center;
   justify-content: flex-start;
   flex-wrap: wrap;
-  gap: 10px;
 
   .-filter-element {
     display: flex;
@@ -53,6 +52,6 @@
     justify-content: flex-start;
     flex-wrap: wrap;
     gap: 10px;
-    padding: 10px 0px;
+    padding: 10px 5px;
   }
 }

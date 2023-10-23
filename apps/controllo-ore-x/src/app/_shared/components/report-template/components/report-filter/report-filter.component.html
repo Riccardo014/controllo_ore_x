@@ -27,15 +27,20 @@
 </div>
 
 <div *ngIf="areFiltersActive" class="-filter-list">
-  <div *ngFor="let dataForFilter of dataForFilters" class="-filter-element">
-    <mat-chip-row
-      *ngFor="let element of dataForFilter.formControl.value"
-      (removed)="remove(dataForFilter, element)"
+  <div *ngFor="let dataForFilter of dataForFilters">
+    <div
+      *ngIf="dataForFilter.formControl.value?.length"
+      class="-filter-element"
     >
-      {{ element.name }}
-      <button matChipRemove>
-        <mat-icon>cancel</mat-icon>
-      </button>
-    </mat-chip-row>
+      <mat-chip-row
+        *ngFor="let element of dataForFilter.formControl.value"
+        (removed)="remove(dataForFilter, element)"
+      >
+        {{ element.name }}
+        <button matChipRemove>
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip-row>
+    </div>
   </div>
 </div>
