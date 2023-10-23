@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -55,5 +55,6 @@ import { TrackerRoutingModule } from './tracker-routing.module';
     MatNativeDateModule,
     MatRadioModule,
   ],
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'it-IT' }],
 })
 export class TrackerModule {}

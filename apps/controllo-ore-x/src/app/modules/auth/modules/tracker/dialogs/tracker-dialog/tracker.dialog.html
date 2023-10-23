@@ -99,6 +99,25 @@
           </mat-error>
         </mat-form-field>
 
+        <mat-form-field class="col" appearance="outline">
+          <mat-label>Data</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            placeholder="Data"
+            formControlName="date"
+          />
+          <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+            <div *ngIf="formHelper.form.controls['date'].hasError(error.name)">
+              {{ error.message }}
+            </div>
+          </mat-error>
+          <mat-datepicker-toggle matIconSuffix [for]="picker">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
         <mat-radio-group required formControlName="hoursTag">
           <mat-radio-button
             color="primary"
