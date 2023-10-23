@@ -13,7 +13,6 @@ import {
 } from '@app/utils/subscriptions_lifecycle';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
 import { Subscription } from 'rxjs';
-import { CalendarDateService } from './services/calendar-date.service';
 
 /**
  * Template of a index page with an header and a body
@@ -97,9 +96,7 @@ export class IndexTemplateComponent
   private _isLoading: boolean = true;
   private _isFirstLoadDone: boolean = false;
 
-  constructor(
-    private _loadingService: RtLoadingService,
-  ) {}
+  constructor(private _loadingService: RtLoadingService) {}
 
   ngOnInit(): void {
     this.setSubscriptions();
