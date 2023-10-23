@@ -27,7 +27,7 @@
 </div>
 
 <div *ngIf="areFiltersActive" class="-filter-list">
-  <div *ngFor="let dataForFilter of dataForFilters">
+  <div *ngFor="let dataForFilter of dataForFilters" class="-filter-element">
     <mat-chip-row
       *ngFor="let element of dataForFilter.formControl.value"
       (removed)="remove(dataForFilter, element)"
