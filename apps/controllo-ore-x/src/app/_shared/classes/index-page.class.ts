@@ -19,11 +19,25 @@ export abstract class IndexPage<T, CreateT, UpdateT>
   implements OnInit, OnDestroy, SubscriptionsLifecycle
 {
   subscriptionsList: Subscription[] = [];
-  isFirstLoadDone: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+  /**
+   * If true, the page will be rendered with a rt-table
+   */
   isPageWithTable: boolean = true;
+  /**
+   * If true, the page will be rendered with a rt-table topbar [searchBar]
+   */
   isTableTopbarVisible: boolean = true;
+  /**
+   * If true, the page will be rendered with the colums header
+   */
   isTableHeaderVisible: boolean = true;
+  /**
+   * If true, the page will be rendered with the title section
+   */
   isCompletePage: boolean = true;
+
+  isFirstLoadDone: BehaviorSubject<boolean> = new BehaviorSubject(false);
   isLoading: BehaviorSubject<boolean> = new BehaviorSubject(true);
   configuration!: TableConfiguration;
   indexTableHandler!: RtTableApiStatusManager<T, CreateT, UpdateT>;
