@@ -93,6 +93,10 @@ export abstract class BaseDialog<
       });
   }
 
+  getFormControlError(field: string, error: Error): boolean {
+    return this.formHelper.form.controls[field].hasError(error.name);
+  }
+
   private async _createEntity(): Promise<void> {
     if (this.formHelper.invalid) {
       throw new Error('The form is not valid');

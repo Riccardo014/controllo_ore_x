@@ -12,7 +12,7 @@
           <mat-label>Nome</mat-label>
           <input matInput placeholder="Nome" formControlName="name" />
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
-            <div *ngIf="formHelper.form.controls['name'].hasError(error.name)">
+            <div *ngIf="getFormControlError('name',error)">
               {{ error.message }}
             </div>
           </mat-error>
@@ -22,9 +22,7 @@
           <mat-label>Cognome</mat-label>
           <input matInput placeholder="Cognome" formControlName="surname" />
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
-            <div
-              *ngIf="formHelper.form.controls['surname'].hasError(error.name)"
-            >
+            <div *ngIf="getFormControlError('surname',error)">
               {{ error.message }}
             </div>
           </mat-error>
@@ -36,7 +34,7 @@
           <mat-error
             *ngFor="let error of [RT_FORM_ERRORS['REQUIRED'], RT_FORM_ERRORS['EMAIL']]"
           >
-            <div *ngIf="formHelper.form.controls['email'].hasError(error.name)">
+            <div *ngIf="getFormControlError('email',error)">
               {{ error.message }}
             </div>
           </mat-error>
@@ -65,9 +63,7 @@
           <mat-error
             *ngFor="let error of [RT_FORM_ERRORS['REQUIRED'], RT_FORM_ERRORS['PASSWORD']]"
           >
-            <div
-              *ngIf="formHelper.form.controls['password'].hasError(error.name)"
-            >
+            <div *ngIf="getFormControlError('password',error)">
               {{ error.message }}
             </div>
           </mat-error>
@@ -86,7 +82,7 @@
             </mat-option>
           </mat-select>
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
-            <div *ngIf="formHelper.form.controls['role'].hasError(error.name)">
+            <div *ngIf="getFormControlError('role',error)">
               {{ error.message }}
             </div>
           </mat-error>

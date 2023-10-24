@@ -12,7 +12,7 @@
           <mat-label>Nome progetto</mat-label>
           <input matInput placeholder="Nome" formControlName="name" />
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
-            <div *ngIf="formHelper.form.controls['name'].hasError(error.name)">
+            <div *ngIf="getFormControlError('name',error)">
               {{ error.message }}
             </div>
           </mat-error>
@@ -34,9 +34,7 @@
             </mat-option>
           </mat-select>
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
-            <div
-              *ngIf="formHelper.form.controls['customer'].hasError(error.name)"
-            >
+            <div *ngIf="getFormControlError('customer',error)">
               {{ error.message }}
             </div>
           </mat-error>
@@ -70,7 +68,7 @@
             </mat-option>
           </mat-select>
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
-            <div *ngIf="formHelper.form.controls['color'].hasError(error.name)">
+            <div *ngIf="getFormControlError('color',error)">
               {{ error.message }}
             </div>
           </mat-error>
@@ -86,9 +84,7 @@
             min="0"
           />
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
-            <div
-              *ngIf="formHelper.form.controls['hoursBudget'].hasError(error.name)"
-            >
+            <div *ngIf="getFormControlError('hoursBudget',error)">
               {{ error.message }}
             </div>
           </mat-error>
@@ -103,9 +99,7 @@
             formControlName="deadline"
           />
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
-            <div
-              *ngIf="formHelper.form.controls['deadline'].hasError(error.name)"
-            >
+            <div *ngIf="getFormControlError('deadline',error)">
               {{ error.message }}
             </div>
           </mat-error>

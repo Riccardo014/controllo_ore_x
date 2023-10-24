@@ -12,9 +12,7 @@
           <mat-label>Versione</mat-label>
           <input matInput placeholder="Versione" formControlName="version" />
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
-            <div
-              *ngIf="formHelper.form.controls['version'].hasError(error.name)"
-            >
+            <div *ngIf="getFormControlError('version',error)">
               {{ error.message }}
             </div>
           </mat-error>
@@ -30,9 +28,7 @@
             min="0"
           />
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
-            <div
-              *ngIf="formHelper.form.controls['hoursBudget'].hasError(error.name)"
-            >
+            <div *ngIf="getFormControlError('hoursBudget',error)">
               {{ error.message }}
             </div>
           </mat-error>
@@ -48,9 +44,7 @@
             min="0"
           />
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
-            <div
-              *ngIf="formHelper.form.controls['billableHoursBudget'].hasError(error.name)"
-            >
+            <div *ngIf="getFormControlError('billableHoursBudget',error)">
               {{ error.message }}
             </div>
           </mat-error>
@@ -65,9 +59,7 @@
             formControlName="deadline"
           />
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
-            <div
-              *ngIf="formHelper.form.controls['deadline'].hasError(error.name)"
-            >
+            <div *ngIf="getFormControlError('deadline',error)">
               {{ error.message }}
             </div>
           </mat-error>
