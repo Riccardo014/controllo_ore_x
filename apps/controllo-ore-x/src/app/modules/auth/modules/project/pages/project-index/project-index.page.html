@@ -16,8 +16,8 @@
   </div>
   <div *ngIf="showedProjects.length > 0 && !isLoading.value">
     <controllo-ore-x-project
-      (openDialog)="openDialogFn($event)"
-      (duplicate)="duplicateFn($event)"
+      (openDialogEvent)="openDialogFn($event)"
+      (duplicateEntityEvent)="duplicateFn($event)"
       *ngFor="let project of showedProjects"
       [projectWithCustomer]="project"
     ></controllo-ore-x-project>

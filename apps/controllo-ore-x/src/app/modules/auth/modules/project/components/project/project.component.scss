@@ -20,11 +20,11 @@
     width: auto;
     white-space: nowrap;
 
-    &--expand {
+    &--expanded {
       transform: rotate(-90deg);
       transition: transform 225ms ease;
 
-      &--rotate {
+      &--collapsed {
         transform: rotate(0deg);
         transition: transform 225ms ease;
       }
@@ -60,7 +60,7 @@
       padding: 20px;
       border-radius: 10px;
 
-      &--elements {
+      &__elements {
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -73,7 +73,7 @@
       }
     }
 
-    &--icon {
+    &__icon {
       color: rgba(28, 27, 31, 1);
     }
   }

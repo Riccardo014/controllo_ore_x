@@ -1,3 +1,4 @@
+import { ReleaseCreateDto } from '@api-interfaces';
 import { ProjectCreateDtoV } from '@modules/project/dtov/project-create.dtov';
 import { ProjectUpdateDtoV } from '@modules/project/dtov/project-update.dtov';
 import { Project } from '@modules/project/entities/project.entity';
@@ -35,7 +36,7 @@ export class ProjectService extends CrudService<
     }, TX);
   }
 
-  formatReleaseCreateData(project: Project): any {
+  formatReleaseCreateData(project: Project): ReleaseCreateDto {
     return {
       projectId: project._id,
       version: '0.0.1',

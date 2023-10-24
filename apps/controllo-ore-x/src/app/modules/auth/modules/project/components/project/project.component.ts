@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { RtDialogService } from '@controllo-ore-x/rt-shared';
 import { ReleaseDialog } from '../../modules/release/dialogs/release-dialog/release.dialog';
@@ -8,12 +8,12 @@ import { ReleaseDialog } from '../../modules/release/dialogs/release-dialog/rele
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.scss'],
 })
-export class ProjectComponent {
+export class ProjectComponent implements OnInit {
   @Input() projectWithCustomer!: any;
 
-  @Output() openDialog: EventEmitter<any> = new EventEmitter<any>();
+  @Output() openDialogEvent: EventEmitter<any> = new EventEmitter<any>();
 
-  @Output() duplicate: EventEmitter<any> = new EventEmitter<any>();
+  @Output() duplicateEntityEvent: EventEmitter<any> = new EventEmitter<any>();
 
   isPanelOpen: boolean = false;
   customExpandedHeight: string = '90px';
@@ -23,8 +23,14 @@ export class ProjectComponent {
     private _rtDialogService: RtDialogService,
   ) {}
 
+  ngOnInit(): void {
+    if (!this.projectWithCustomer) {
+      throw new Error('ProjectWithCustomer is undefined');
+    }
+  }
+
   edit(): void {
-    this.openDialog.emit(this.projectWithCustomer);
+    this.openDialogEvent.emit(this.projectWithCustomer);
   }
 
   openCreateReleaseDialog(): void {
@@ -51,6 +57,6 @@ export class ProjectComponent {
   }
 
   duplicateFn(): void {
-    this.duplicate.emit(this.projectWithCustomer);
+    this.duplicateEntityEvent.emit(this.projectWithCustomer);
   }
 }

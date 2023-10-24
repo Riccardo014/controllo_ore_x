@@ -14,8 +14,8 @@
         <span
           class="material-symbols-outlined"
           [ngClass]="{
-            '-project__data--expand': !isPanelOpen,
-            '-project__data--expand--rotate': isPanelOpen
+            '-project__data--expanded': !isPanelOpen,
+            '-project__data--expanded--collapsed': isPanelOpen
           }"
           >expand_more</span
         >
@@ -41,7 +41,7 @@
         (click)="togglePanel()"
         (click)="openCreateReleaseDialog()"
       >
-        <div class="-project__options__release--elements">
+        <div class="-project__options__release__elements">
           <span class="material-symbols-outlined">egg_alt</span>
           <span>Nuova Release</span>
         </div>
@@ -51,7 +51,7 @@
         [matMenuTriggerFor]="optionMenu"
         (click)="togglePanel()"
       >
-        <mat-icon class="-project__options--icon">more_vert</mat-icon>
+        <mat-icon class="-project__options__icon">more_vert</mat-icon>
       </button>
       <mat-menu #optionMenu="matMenu">
         <ng-content select="[menuOptions]"></ng-content>
