@@ -1,7 +1,7 @@
 <lib-dialog-template
   [cTitle]="title"
   [isFooterEnabled]="true"
-  (closeDialog)="cancel()"
+  (closeDialogEvent)="cancel()"
   [isLoading]="isLoading"
   [isError]="hasErrors"
 >
@@ -105,8 +105,8 @@
       Elimina
     </button>
     <lib-rt-dialog-default-actions
-      (confirm)="onSubmit()"
-      (cancel)="cancel()"
+      (confirmEvent)="onSubmit()"
+      (cancelEvent)="cancel()"
     ></lib-rt-dialog-default-actions>
   </div>
 </lib-dialog-template>

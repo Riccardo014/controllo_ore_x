@@ -1,12 +1,12 @@
 <lib-dialog-template
   [cTitle]="data.title"
   [subtitle]="data.input"
-  (closeDialog)="cancelProcess()"
+  (closeDialogEvent)="cancelProcess()"
 >
   <div footer>
     <lib-rt-dialog-default-actions
-      (cancel)="cancelProcess()"
-      (confirm)="confirmProcess()"
+      (cancelEvent)="cancelProcess()"
+      (confirmEvent)="confirmProcess()"
       textConfirm="Conferma"
     >
     </lib-rt-dialog-default-actions>
