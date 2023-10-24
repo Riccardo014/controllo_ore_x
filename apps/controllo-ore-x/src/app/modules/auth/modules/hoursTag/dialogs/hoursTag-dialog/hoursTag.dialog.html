@@ -6,9 +6,33 @@
   [isError]="hasErrors"
 >
   <div body>
-    <form class="container p-0" [formGroup]="formHelper.form">
-      <div class="row mb-2 -wrapper-user-upsert-form">
-        <mat-form-field class="col" appearance="outline" class="-form-field">
+    <form class="-form p-0" [formGroup]="formHelper.form">
+      <div class="row mb-2">
+        <mat-form-field appearance="outline" class="-form__field">
+          <mat-label>Icona</mat-label>
+          <mat-select
+            matInput
+            placeholder="Icona"
+            formControlName="iconName"
+            [(value)]="currentIconName"
+          >
+            <mat-select-trigger>
+              <span class="material-symbols-outlined">{{currentIconName}}</span>
+            </mat-select-trigger>
+            <mat-option *ngFor="let icon of icons" [value]="icon">
+              <span class="material-symbols-outlined">{{icon}}</span>
+            </mat-option>
+          </mat-select>
+          <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+            <div
+              *ngIf="formHelper.form.controls['iconName'].hasError(error.name)"
+            >
+              {{ error.message }}
+            </div>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="col" appearance="outline" class="-form__field">
           <mat-label>Nome</mat-label>
           <input matInput placeholder="Nome" formControlName="name" />
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
@@ -17,26 +41,14 @@
             </div>
           </mat-error>
         </mat-form-field>
-
-        <mat-form-field class="col" appearance="outline" class="-form-field">
-          <mat-label>Email</mat-label>
-          <input matInput placeholder="Email" formControlName="email" />
-          <mat-error
-            *ngFor="let error of [RT_FORM_ERRORS['REQUIRED'], RT_FORM_ERRORS['EMAIL']]"
-          >
-            <div *ngIf="formHelper.form.controls['email'].hasError(error.name)">
-              {{ error.message }}
-            </div>
-          </mat-error>
-        </mat-form-field>
       </div>
     </form>
   </div>
-  <div footer class="-container-reset-btns">
+  <div footer class="-footer">
     <button
       *ngIf="!isCreating"
       (click)="deleteEntity()"
-      class="rt-btn -button -button-delete"
+      class="rt-btn -footer__button -footer__button--delete"
       mat-button
       type="button"
     >

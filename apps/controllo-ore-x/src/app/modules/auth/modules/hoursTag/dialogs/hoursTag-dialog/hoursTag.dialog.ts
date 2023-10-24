@@ -10,6 +10,7 @@ import {
 import { HoursTagDataService } from '@app/_core/services/hours-tag.data-service';
 import { BaseDialog } from '@app/_shared/classes/base-dialog.class';
 import { IRtDialogInput, RtDialogService } from '@controllo-ore-x/rt-shared';
+import { HoursTagIcon } from 'apps/controllo-ore-x/src/assets/utils/datas/hoursTag-icon';
 import { AlertService } from 'libs/rt-shared/src/alert/services/alert.service';
 import { HoursTagFormHelper } from '../../helpers/hoursTag.form-helper';
 
@@ -26,6 +27,17 @@ export class HoursTagDialog
   override title: string = 'Nuova etichetta';
 
   override isCreating: boolean = true;
+
+  currentIconName?: string;
+  icons: string[] = [
+    HoursTagIcon.sentiment_stressed,
+    HoursTagIcon.draw_collage,
+    HoursTagIcon.celebration,
+    HoursTagIcon.personal_injury,
+    HoursTagIcon.skull,
+    HoursTagIcon.stadia_controller,
+    HoursTagIcon.sports_soccer,
+  ];
 
   constructor(
     public override formHelper: HoursTagFormHelper,
@@ -44,6 +56,7 @@ export class HoursTagDialog
     if (this.data.input) {
       this.isCreating = false;
       this.formHelper.patchForm(this.data.input);
+      this.currentIconName = this.data.input.iconName;
       this.formHelper.entityId = this.data.input._id;
       this.title = 'Modifica etichetta';
     }
