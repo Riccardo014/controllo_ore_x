@@ -2,6 +2,7 @@ export interface HoursTagReadDto {
   _id: string;
   name: string;
   iconName: string;
+  isModifiable: boolean;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   deletedAt?: Date | string;

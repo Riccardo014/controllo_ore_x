@@ -5,8 +5,11 @@ import { UserHours } from '@modules/user-hours/entities/user-hours.entity';
 import { HoursTagService } from '@modules/user-hours/services/hours-tag.service';
 import { UserHoursService } from '@modules/user-hours/services/user-hours.service';
 import { UserModule } from '@modules/user/user.module';
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
+import { HOURS_TAG_SEED } from './seeds/hours-tag.seed';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserHours, HoursTag]), UserModule],
@@ -14,4 +17,39 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   exports: [UserHoursService, HoursTagService],
   providers: [UserHoursService, HoursTagService],
 })
-export class UserHoursModule {}
+export class UserHoursModule {
+  constructor(
+    private _hoursTagService: HoursTagService,
+    private _dataSource: DataSource,
+    private _configService: ConfigService,
+  ) {
+    if (
+      this._configService.get<'true' | 'false'>('SEED_DATA_ACTIVE', 'false') ===
+      'true'
+    ) {
+      this.seedData();
+    }
+  }
+
+  async seedData(): Promise<void> {
+    await this.seedHoursTags();
+  }
+
+  seedHoursTags(): Promise<void> {
+    Logger.log('[SEED HOURS TAG] Start seeding...');
+    return this._dataSource.transaction(async (TX) => {
+      for (const hoursTag of HOURS_TAG_SEED) {
+        const hoursTagSaved: HoursTag = await this._hoursTagService.getOneBy(
+          { name: hoursTag.name },
+          [],
+          TX,
+        );
+        if (!hoursTagSaved) {
+          await this._hoursTagService.create(hoursTag, TX);
+          Logger.log(`[SEED HOURS TAG] ${hoursTag.name} saved`);
+        }
+      }
+      Logger.log('[SEED HOURS TAG] End seeding process.');
+    });
+  }
+}

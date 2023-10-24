@@ -6,4 +6,5 @@ export const HoursTagIcon: string[] = [
   'skull',
   'stadia_controller',
   'sports_soccer',
+  'carpenter',
 ];

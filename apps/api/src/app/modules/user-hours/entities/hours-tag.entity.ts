@@ -8,4 +8,7 @@ export class HoursTag extends BaseEntityTemplate {
 
   @Column()
   iconName: string;
+
+  @Column({ default: true })
+  isModifiable: boolean;
 }

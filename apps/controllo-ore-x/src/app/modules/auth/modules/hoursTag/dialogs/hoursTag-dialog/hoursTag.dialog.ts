@@ -51,6 +51,18 @@ export class HoursTagDialog
       this.currentIconName = this.data.input.iconName;
       this.formHelper.entityId = this.data.input._id;
       this.title = 'Modifica etichetta';
+      if (!this.data.input.isModifiable) {
+        this.formHelper.form.disable();
+        this.isCreating = true;
+      }
+    }
+  }
+
+  override onSubmit(): void {
+    if (!this.data.input.isModifiable) {
+      this.cancel();
+    } else {
+      super.onSubmit();
     }
   }
 }
