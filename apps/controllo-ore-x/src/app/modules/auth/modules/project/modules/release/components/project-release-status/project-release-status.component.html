@@ -1,7 +1,9 @@
 <div class="-status">
   <div class="-status__container">
     <div class="-status__container__data">
-      <h2 class="subtitle-1">Release totali</h2>
+      <h2 class="subtitle-1 -status__container__data__title">
+        Releases totali
+      </h2>
       <div class="headline-4">
         {{ totalReleases }}
       </div>
@@ -10,7 +12,9 @@
     <div
       class="-status__container__data -status__container__data--with-borders"
     >
-      <h2 class="subtitle-1">Release in corso</h2>
+      <h2 class="subtitle-1 -status__container__data__title">
+        Release in corso
+      </h2>
       <div class="-status__container__data__elements">
         <div class="headline-4">
           {{ inProgressReleases }}
@@ -26,13 +30,15 @@
     </div>
 
     <div class="-status__container__data">
-      <h2 class="subtitle-1">Release completate</h2>
+      <h2 class="subtitle-1 -status__container__data__title">
+        Release completate
+      </h2>
       <div class="-status__container__data__elements">
         <div class="headline-4">
-          {{ doneReleases }}
+          {{ completedReleases }}
         </div>
         <span
-          class="material-symbols-outlined -status__container__data__elements__completed"
+          class="material-symbols-outlined -status__container__data__elements--completed"
           >check</span
         >
       </div>

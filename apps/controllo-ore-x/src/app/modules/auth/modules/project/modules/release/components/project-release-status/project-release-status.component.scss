@@ -19,7 +19,7 @@
       padding: 20px 40px;
       width: 100%;
 
-      h2 {
+      &__title {
         color: rgba(0, 0, 0, 0.5);
       }
 
@@ -38,7 +38,7 @@
           max-width: 100px;
         }
 
-        &__completed {
+        &--completed {
           color: map-get($palette-primary, 500);
         }
       }

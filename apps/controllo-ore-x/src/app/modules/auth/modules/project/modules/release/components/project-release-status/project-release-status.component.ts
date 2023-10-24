@@ -1,4 +1,9 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  ApiPaginatedResponse,
+  ReleaseReadDto,
+  UserHoursReadDto,
+} from '@api-interfaces';
 import { ReleaseDataService } from '@app/_core/services/release.data-service';
 import { UserHoursDataService } from '@app/_core/services/user-hour.data-service';
 import {
@@ -17,7 +22,7 @@ export class ProjectReleaseStatusComponent
 {
   totalReleases = 0;
   inProgressReleases = 0;
-  doneReleases = 0;
+  completedReleases = 0;
 
   tags: {
     hoursTagId: string;
@@ -37,6 +42,12 @@ export class ProjectReleaseStatusComponent
   ) {}
 
   ngOnInit(): void {
+    if (!this.projectId) {
+      throw new Error('projectId is required');
+    }
+    if (typeof this.projectId !== 'string') {
+      throw new Error('projectId must be a string');
+    }
     this._setSubscriptions();
   }
 
@@ -45,38 +56,38 @@ export class ProjectReleaseStatusComponent
   }
 
   _setSubscriptions(): void {
-    this.subscriptionsList.push(this._getReleases());
+    this.subscriptionsList.push(this._fetchSetReleases());
   }
 
-  _getReleases(): Subscription {
+  _fetchSetReleases(): Subscription {
     return this._releaseDataService
       .getMany({
         where: { projectId: this.projectId },
       })
-      .subscribe((releases) => {
+      .subscribe((releases: ApiPaginatedResponse<ReleaseReadDto>) => {
         this.totalReleases = releases.data.length;
         releases.data.forEach((release) => {
           if (release.isCompleted) {
-            this.doneReleases += 1;
+            this.completedReleases += 1;
             return;
           }
           this._userHoursDataService
             .getMany({
               where: { releaseId: release._id },
             })
-            .subscribe((userHours: any) => {
+            .subscribe((userHours: ApiPaginatedResponse<UserHoursReadDto>) => {
               if (userHours.data.length > 0) {
                 this.inProgressReleases += 1;
               }
               userHours.data.forEach((userHour: any) => {
-                let isFinded: boolean = false;
+                let hasBeenFound: boolean = false;
                 this.tags.forEach((tag) => {
                   if (tag.hoursTagId === userHour.hoursTagId) {
                     tag.hours += Number(userHour.hours);
-                    isFinded = true;
+                    hasBeenFound = true;
                   }
                 });
-                if (!isFinded) {
+                if (!hasBeenFound) {
                   this.tags.push({
                     hoursTagId: userHour.hoursTagId,
                     hours: Number(userHour.hours),
