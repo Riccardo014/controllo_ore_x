@@ -29,15 +29,7 @@ export class HoursTagDialog
   override isCreating: boolean = true;
 
   currentIconName?: string;
-  icons: string[] = [
-    HoursTagIcon.sentiment_stressed,
-    HoursTagIcon.draw_collage,
-    HoursTagIcon.celebration,
-    HoursTagIcon.personal_injury,
-    HoursTagIcon.skull,
-    HoursTagIcon.stadia_controller,
-    HoursTagIcon.sports_soccer,
-  ];
+  icons: string[] = [...HoursTagIcon];
 
   constructor(
     public override formHelper: HoursTagFormHelper,
