@@ -1,9 +1,5 @@
-<controllo-ore-x-index-template
-  [page]="this"
-  [buttonIcon]="buttonIcon"
-  [buttonText]="buttonText"
-  [shouldHideCreateButton]="true"
-  [hasRangeCalendar]="true"
-  (openDialog)="openDialogFn($event)"
-></controllo-ore-x-index-template>
-<controllo-ore-x-report-template></controllo-ore-x-report-template>
+
+<controllo-ore-x-report-template
+[page]="this"
+[shouldHideCreateButton]="true"
+[hasRangeCalendar]="true"></controllo-ore-x-report-template>

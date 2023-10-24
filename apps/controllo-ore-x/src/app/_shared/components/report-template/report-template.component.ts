@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import {
   COX_FILTER,
@@ -17,11 +17,16 @@ import {
 import { IndexConfigurationDataService } from '@app/_core/services/index-configuration.data-service';
 import { ReportDataService } from '@app/_core/services/report.data-service';
 import { IndexPage } from '@app/_shared/classes/index-page.class';
-import { SubscriptionsLifecycle } from '@app/utils/subscriptions_lifecycle';
+import {
+  SubscriptionsLifecycle,
+  completeSubscriptions,
+} from '@app/utils/subscriptions_lifecycle';
 import { endOfDay, startOfDay } from 'date-fns';
 import { Subscription } from 'rxjs';
 import { CalendarDateService } from '../index-template/servicies/calendar-date.service';
 import { FilterService } from './services/filter.service';
+import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
+import { ReportPage } from '@app/_shared/classes/report-page.class';
 
 /**
  * Template of a report page
@@ -33,19 +38,67 @@ import { FilterService } from './services/filter.service';
   providers: [FilterService],
 })
 export class ReportTemplateComponent
-  extends IndexPage<UserHoursReadDto, UserHoursCreateDto, UserHoursUpdateDto>
   implements OnInit, OnDestroy, SubscriptionsLifecycle
 {
-  titleIcon: string | null = 'chair';
-  title: string = 'Report';
-  pageTitle = 'Report';
-  buttonIcon = 'chair';
-  buttonText = '';
+  onFilterEmit($event: FindBoostedWhereOption[]) {
+    throw new Error('Method not implemented.');
+  }
+  updateFulltextSearch($event: string) {
+    throw new Error('Method not implemented.');
+  }
+  /**
+   * Page to be displayed
+   */
+  @Input() page!: ReportPage<any, any, any>;
+  /**
+   * If true, the page will have a menu with options
+   */
+  @Input() hasMenuOptions: boolean = false;
 
-  override isCompletePage: boolean = false;
-  override isTableTopbarVisible: boolean = false;
+  /**
+   * If true, the page will have a calendar
+   */
+  @Input() hasCalendar: boolean = false;
 
-  CONFIGURATION_KEY: INDEX_CONFIGURATION_KEY = INDEX_CONFIGURATION_KEY.TRACKER;
+  /**
+   * If true, the page will have a range calendar
+   */
+  @Input() hasRangeCalendar: boolean = false;
+
+  /**
+   * If true, the page will have a button to export the data in csv format
+   */
+  @Input() hasExportCsv: boolean = true;
+
+  /**
+   * The function to be called when the user clicks on the create button
+   */
+  @Input() createFn?: () => void | Promise<void>;
+
+  /**
+   * The function to be called when the user clicks on the edit button
+   */
+  @Input() editFn?: (entity: any) => void | Promise<void>;
+
+  /**
+   * If true, the create button will be hidden
+   */
+  @Input() shouldHideCreateButton: boolean = false;
+
+  /**
+   * If true, the edit button in the table line will be shown
+   */
+  @Input() isEditAvailable: boolean = false;
+
+  /**
+   * The icon of the header button
+   */
+  @Input() buttonIcon: string = 'Icon';
+
+  /**
+   * The text of the header button
+   */
+  @Input() buttonText: string = 'Button txt';
 
   data: any[] = [];
 
@@ -65,185 +118,54 @@ export class ReportTemplateComponent
     end: new Date(),
   };
 
+  subscriptionsList: Subscription[] = [];
+
+  _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
+    completeSubscriptions;
+
+  private _isLoading: boolean = true;
+  private _isFirstLoadDone: boolean = false;
+
   constructor(
-    protected _configurationService: IndexConfigurationDataService,
-    protected _dataService: ReportDataService,
+    private _loadingService: RtLoadingService,
     private _filterService: FilterService,
     private _calendarDateService: CalendarDateService,
-  ) {
-    super();
-  }
+  ) {}
 
-  override ngOnInit(): void {
-    super.ngOnInit();
+  ngOnInit(): void {
     this._setSubscriptions();
-    this._load();
   }
 
-  override _setSubscriptions(): void {
+  ngOnDestroy(): void {
+    this._completeSubscriptions(this.subscriptionsList);
+  }
+
+  _setSubscriptions(): void {
     this.subscriptionsList.push(
+      this.page.isLoading.subscribe((isLoading) => {
+        this._isLoading = isLoading;
+        this._setLoadingParameters();
+      }),
+      this.page.isFirstLoadDone.subscribe((isFirstLoadDone) => {
+        this._isFirstLoadDone = isFirstLoadDone;
+        this._setLoadingParameters();
+      }),
       this._filterService.dataForFiltersObservable.subscribe(
         (dataForFilters) => {
           this.dataForFilters = dataForFilters;
         },
       ),
-      this._calendarDateService.currentRangeDatesObservable.subscribe(
-        (dates: { start: Date; end: Date }) => {
-          this.selectedRangeDate = dates;
-          this.changeDataForDate();
-        },
-      ),
     );
-    super._setSubscriptions();
   }
 
-  changeDataForDate(): void {
-    if (
-      !this.indexTableHandler.status ||
-      !this.indexTableHandler.tableConfiguration
-    ) {
-      return;
+  private _setLoadingParameters(): void {
+    if (this._isLoading) {
+      this._isFirstLoadDone
+        ? this._loadingService.showLoading()
+        : this._loadingService.showLoadingBlocking();
+    } else {
+      this._loadingService.hideLoading();
+      this._loadingService.hideLoadingBlocking();
     }
-    if (
-      !this.indexTableHandler.status.where &&
-      this.indexTableHandler.tableConfiguration
-    ) {
-      const newWhereOption: FindBoostedWhereOption = {
-        date: {
-          _fn: FIND_BOOSTED_FN.DATE_BETWEEN,
-          args: [
-            startOfDay(this.selectedRangeDate.start).toISOString(),
-            endOfDay(this.selectedRangeDate.end).toISOString(),
-          ],
-        },
-      };
-      this.indexTableHandler.status.where = [newWhereOption];
-      this.indexTableHandler.statusChange(this.indexTableHandler.status);
-      return;
-    }
-    const previousWhereOption = this.indexTableHandler.status.where[0];
-
-    const newWhereOption: FindBoostedWhereOption = {
-      ...previousWhereOption,
-      date: {
-        _fn: FIND_BOOSTED_FN.DATE_BETWEEN,
-        args: [
-          startOfDay(this.selectedRangeDate.start).toISOString(),
-          endOfDay(this.selectedRangeDate.end).toISOString(),
-        ],
-      },
-    };
-
-    this.indexTableHandler.status.where = [newWhereOption];
-    this.indexTableHandler.statusChange(this.indexTableHandler.status);
-  }
-
-  changeDataForFilters(): void {
-    this._filterService.changeDataForFilters(this.dataForFilters);
-  }
-
-  updateFulltextSearch(fulltextSearch: string): void {
-    this.indexTableHandler.status.fulltextSearch = fulltextSearch;
-    this.indexTableHandler.statusChange(this.indexTableHandler.status);
-  }
-
-  onFilterEmit(filters: FindBoostedWhereOption[]): void {
-    this.indexTableHandler.status.where = filters;
-    this.changeDataForDate();
-    this.indexTableHandler.statusChange(this.indexTableHandler.status);
-  }
-
-  private _load(): Subscription {
-    return this._configurationService
-      .getConfiguration(this.CONFIGURATION_KEY)
-      .subscribe((data) => {
-        this.configuration = data.configuration;
-        this.indexTableHandler.tableConfiguration = this.configuration;
-        this.changeDataForDate();
-        this._dataService
-          .getMany({
-            relations: this.indexTableHandler.tableConfiguration.relations,
-          })
-          .subscribe((apiResult) => {
-            this.data = apiResult.data;
-            this._setFilters();
-            this.changeDataForFilters();
-          });
-        this.isFirstLoadDone.next(true);
-      });
-  }
-
-  private _setFilters(): void {
-    const customersList: CustomerReadDto[] = [];
-    this.data.forEach((data: any) => {
-      customersList.findIndex(
-        (customer) => customer._id == data.release.project.customer._id,
-      ) == -1 && customersList.push(data.release.project.customer);
-    });
-    this._insertNewFilter(
-      'Cliente',
-      'Clienti',
-      COX_FILTER.CUSTOMER,
-      customersList,
-    );
-
-    const projectsList: ProjectReadDto[] = [];
-    this.data.forEach((data: any) => {
-      projectsList.findIndex(
-        (project) => project._id == data.release.project._id,
-      ) == -1 && projectsList.push(data.release.project);
-    });
-    this._insertNewFilter(
-      'Progetto',
-      'Progetti',
-      COX_FILTER.PROJECT,
-      projectsList,
-    );
-
-    const releaseList: ReleaseReadDto[] = [];
-    this.data.forEach((data: any) => {
-      releaseList.findIndex((release) => release._id == data.release._id) ==
-        -1 && releaseList.push(data.release);
-    });
-    this._insertNewFilter(
-      'Release',
-      'Release',
-      COX_FILTER.RELEASE,
-      releaseList,
-    );
-
-    const teamList: UserReadDto[] = [];
-    this.data.forEach((data: any) => {
-      teamList.findIndex((user) => user._id == data.user._id) == -1 &&
-        teamList.push(data.user);
-    });
-    this._insertNewFilter('Membro', 'Membri', COX_FILTER.TEAM, teamList);
-
-    const hoursTagList: HoursTagReadDto[] = [];
-    this.data.forEach((data: any) => {
-      hoursTagList.findIndex((hoursTag) => hoursTag._id == data.hoursTag._id) ==
-        -1 && hoursTagList.push(data.hoursTag);
-    });
-    this._insertNewFilter(
-      'Etichetta',
-      'Etichette',
-      COX_FILTER.TAG,
-      hoursTagList,
-    );
-  }
-
-  private _insertNewFilter(
-    singleLabel: string,
-    multiLabel: string,
-    fieldName: COX_FILTER,
-    list: any[],
-  ): void {
-    this.dataForFilters.push({
-      list: list,
-      singleLabel: singleLabel,
-      multiLabel: multiLabel,
-      fieldName: fieldName,
-      formControl: new FormControl(),
-    });
   }
 }

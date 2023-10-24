@@ -1,3 +1,31 @@
+<controllo-ore-x-rt-header *ngIf="page.isCompletePage">
+  <ng-container title>
+    <h1 class="headline-6">{{ page.title }}</h1>
+  </ng-container>
+
+  <ng-container actions>
+    <button
+      class="hide-desktop me-1"
+      *ngIf="hasMenuOptions"
+      mat-icon-button
+      [matMenuTriggerFor]="menuActions"
+    >
+      <mat-icon class="material-icons-outlined icon-20">more_vert</mat-icon>
+    </button>
+
+    <mat-menu #menuActions="matMenu">
+      <ng-content select="[menuOptions]"></ng-content>
+    </mat-menu>
+
+    <controllo-ore-x-datepicker
+      *ngIf="hasCalendar"
+    ></controllo-ore-x-datepicker>
+
+    <controllo-ore-x-range-datepicker
+      *ngIf="hasRangeCalendar"
+    ></controllo-ore-x-range-datepicker>
+  </ng-container>
+</controllo-ore-x-rt-header>
 <lib-rt-table-fulltext-bar
   class="-search-bar"
   (fulltextSearchEmitter)="updateFulltextSearch($event)"
@@ -7,9 +35,14 @@
   (filtersEmitter)="onFilterEmit($event)"
 ></controllo-ore-x-report-filter>
 
-<controllo-ore-x-index-template
-  [page]="this"
-  [buttonIcon]="buttonIcon"
-  [buttonText]="buttonText"
-  [shouldHideCreateButton]="true"
-></controllo-ore-x-index-template>
+<lib-rt-table
+*ngIf="page.isFirstLoadDone"
+[isLoading]="page.isLoading.getValue()"
+[isTableTopbarVisible]="page.isTableTopbarVisible"
+[isTableHeaderVisible]="page.isTableHeaderVisible"
+(statusChangeEmitter)="page.indexTableHandler.statusChange($event)"
+[tableConfiguration]="page.configuration"
+[data]="page.indexTableHandler.data"
+[isEditAvailable]="isEditAvailable"
+[status]="page.indexTableHandler.status"
+></lib-rt-table>
