@@ -1,7 +1,6 @@
 <mat-expansion-panel
   hideToggle
-  (opened)="isPanelOpen = true"
-  (closed)="isPanelOpen = false"
+  (click)="togglePanel()"
   class="mat-elevation-z0"
   [expanded]="isPanelOpen"
 >
@@ -20,13 +19,13 @@
           >expand_more</span
         >
       </div>
-      <div class="-project__data__details" (click)="openReleaseIndexPage()">
+      <div class="-project__data__details" (click)="navigateToReleaseIndex()">
         <div
           class="-project__data__details__color"
           [style.backgroundColor]="this.projectWithCustomer.color"
         ></div>
         <div class="body-1">{{ projectWithCustomer.name }}</div>
-        <div>
+        <div *ngIf="projectWithCustomer.customer">
           <mat-chip class="caption">{{
             projectWithCustomer.customer.name
           }}</mat-chip>
@@ -55,8 +54,8 @@
       </button>
       <mat-menu #optionMenu="matMenu">
         <ng-content select="[menuOptions]"></ng-content>
-        <button (click)="edit()" mat-menu-item>Modifica</button>
-        <button (click)="duplicateFn()" mat-menu-item>Duplica</button>
+        <button (click)="openEditDialog()" mat-menu-item>Modifica</button>
+        <button (click)="openDuplicateDialog()" mat-menu-item>Duplica</button>
       </mat-menu>
     </mat-panel-description>
   </mat-expansion-panel-header>

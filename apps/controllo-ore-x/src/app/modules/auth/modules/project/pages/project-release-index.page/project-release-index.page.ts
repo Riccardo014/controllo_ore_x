@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ReleaseReadDto } from '@api-interfaces';
+import { ProjectReadDto, ReleaseReadDto } from '@api-interfaces';
 import { ReleaseDataService } from '@app/_core/services/release.data-service';
 import {
   SubscriptionsLifecycle,
@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
 export class ProjectReleaseIndexPage
   implements OnInit, OnDestroy, SubscriptionsLifecycle
 {
-  @Input() project!: ReleaseReadDto;
+  @Input() project!: ProjectReadDto;
 
   releases: ReleaseReadDto[] = [];
 
