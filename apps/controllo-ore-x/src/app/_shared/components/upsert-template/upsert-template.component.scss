@@ -29,14 +29,16 @@
   padding-bottom: 40px;
   background: #f9fafc;
   overflow-y: scroll;
-  max-height: calc(100vh - 220px); /* limit the height of the section to the viewport height */
+  max-height: calc(
+    100vh - 220px
+  ); /* limit the height of the section to the viewport height */
   height: calc(100vh - 220px);
 
   @include scrollbar-primary(map-get($palette-grey, 400), 6px, true);
 }
 
 .tab-menu {
-  height: 48px;
+  height: $subtitle-height;
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;

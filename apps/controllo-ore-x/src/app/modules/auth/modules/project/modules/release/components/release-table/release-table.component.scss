@@ -2,7 +2,7 @@
 
 .-table {
   overflow-y: auto;
-  height: calc(100vh - 81px - 81px - 48px - 48px);
+  height: calc($content-height - $subtitle-height - $subtitle-height);
   @include scrollbar-primary(map-get($palette-grey, 400), 6px, true);
 
   &--no-release {

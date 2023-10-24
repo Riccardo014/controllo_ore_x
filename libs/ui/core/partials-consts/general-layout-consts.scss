@@ -1,7 +1,8 @@
 // MAIN TEMPLATE LIB
 // HEIGHT
 $topbar-height: 81px;
-$header-height: 80px;
+$header-height: 81px;
+$subtitle-height: 48px;
 $content-height: calc(100vh - #{$topbar-height} - #{$header-height});
 
 // PADDINGS

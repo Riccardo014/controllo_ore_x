@@ -2,7 +2,7 @@
 @import 'libs/ui/core/mixins.scss';
 
 .-sidebar {
-  height: calc(100vh - 81px);
+  height: calc(100vh - $topbar-height);
   background-color: #e9ecf5;
   box-sizing: border-box;
   border-right: 1px solid map-get($palette-grey, 300);

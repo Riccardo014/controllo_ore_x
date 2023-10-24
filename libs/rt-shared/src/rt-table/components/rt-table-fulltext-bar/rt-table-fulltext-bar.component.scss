@@ -14,7 +14,7 @@
 
   input {
     flex-grow: 1;
-    line-height: 48px;
+    line-height: $subtitle-height;
     background-color: transparent;
     border: 0 none;
     margin: 0 12px;
@@ -31,4 +31,3 @@
     }
   }
 }
-
