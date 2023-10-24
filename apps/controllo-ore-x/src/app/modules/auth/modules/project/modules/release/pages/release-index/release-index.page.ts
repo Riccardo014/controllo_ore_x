@@ -69,25 +69,37 @@ export class ReleaseIndexPage
   }
 
   openCreateReleaseDialog(): void {
-    this._rtDialogService
-      .open(ReleaseDialog, {
-        width: '600px',
-        maxWidth: '600px',
-        data: {
-          ...this.project,
-          transactionStatus: 'create',
-        },
-      })
-      .subscribe();
+    const dialogConfig = {
+      width: '600px',
+      maxWidth: '600px',
+    };
+    this.subscriptionsList.push(
+      this._rtDialogService
+        .open(ReleaseDialog, {
+          width: dialogConfig.width,
+          maxWidth: dialogConfig.maxWidth,
+          data: {
+            ...this.project,
+            transactionStatus: 'create',
+          },
+        })
+        .subscribe(),
+    );
   }
 
   openEditProjectDialog(): void {
-    this._rtDialogService
-      .open(ProjectDialog, {
-        width: '600px',
-        maxWidth: '600px',
-        data: this.project,
-      })
-      .subscribe();
+    const dialogConfig = {
+      width: '600px',
+      maxWidth: '600px',
+    };
+    this.subscriptionsList.push(
+      this._rtDialogService
+        .open(ProjectDialog, {
+          width: dialogConfig.width,
+          maxWidth: dialogConfig.maxWidth,
+          data: this.project,
+        })
+        .subscribe(),
+    );
   }
 }

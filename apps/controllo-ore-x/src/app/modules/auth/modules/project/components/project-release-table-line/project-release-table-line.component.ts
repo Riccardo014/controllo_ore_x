@@ -66,13 +66,19 @@ export class ProjectReleaseTableLineComponent
   }
 
   openEditReleaseDialog(): void {
-    this._rtDialogService
-      .open(ReleaseDialog, {
-        width: '600px',
-        maxWidth: '600px',
-        data: this.release,
-      })
-      .subscribe();
+    const dialogConfig = {
+      width: '600px',
+      maxWidth: '600px',
+    };
+    this.subscriptionsList.push(
+      this._rtDialogService
+        .open(ReleaseDialog, {
+          width: dialogConfig.width,
+          maxWidth: dialogConfig.maxWidth,
+          data: this.release,
+        })
+        .subscribe(),
+    );
   }
 
   convertNumberToHours(hoursToConvert: number): string {

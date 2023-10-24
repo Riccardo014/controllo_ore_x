@@ -49,21 +49,33 @@ export class TeamIndexPage extends IndexPage<
   }
 
   openDialogFn($event: UserReadDto): void {
-    this._rtDialogService
-      .open(TeamDialog, {
-        width: '600px',
-        maxWidth: '600px',
-        data: $event,
-      })
-      .subscribe();
+    const dialogConfig = {
+      width: '600px',
+      maxWidth: '600px',
+    };
+    this.subscriptionsList.push(
+      this._rtDialogService
+        .open(TeamDialog, {
+          width: dialogConfig.width,
+          maxWidth: dialogConfig.maxWidth,
+          data: $event,
+        })
+        .subscribe(),
+    );
   }
 
   createFn(): void {
-    this._rtDialogService
-      .open(TeamDialog, {
-        width: '600px',
-        maxWidth: '600px',
-      })
-      .subscribe();
+    const dialogConfig = {
+      width: '600px',
+      maxWidth: '600px',
+    };
+    this.subscriptionsList.push(
+      this._rtDialogService
+        .open(TeamDialog, {
+          width: dialogConfig.width,
+          maxWidth: dialogConfig.maxWidth,
+        })
+        .subscribe(),
+    );
   }
 }

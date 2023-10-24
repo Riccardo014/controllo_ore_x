@@ -101,34 +101,52 @@ export class ProjectIndexPage
   }
 
   openDialogFn($event: ProjectReadDto): void {
-    this._rtDialogService
-      .open(ProjectDialog, {
-        width: '600px',
-        maxWidth: '600px',
-        data: $event,
-      })
-      .subscribe();
+    const dialogConfig = {
+      width: '600px',
+      maxWidth: '600px',
+    };
+    this.subscriptionsList.push(
+      this._rtDialogService
+        .open(ProjectDialog, {
+          width: dialogConfig.width,
+          maxWidth: dialogConfig.maxWidth,
+          data: $event,
+        })
+        .subscribe(),
+    );
   }
 
   duplicateFn($event: ProjectReadDto): void {
-    this._rtDialogService
-      .open(ProjectDialog, {
-        width: '600px',
-        maxWidth: '600px',
-        data: {
-          ...$event,
-          isDuplication: true,
-        },
-      })
-      .subscribe();
+    const dialogConfig = {
+      width: '600px',
+      maxWidth: '600px',
+    };
+    this.subscriptionsList.push(
+      this._rtDialogService
+        .open(ProjectDialog, {
+          width: dialogConfig.width,
+          maxWidth: dialogConfig.maxWidth,
+          data: {
+            ...$event,
+            isDuplication: true,
+          },
+        })
+        .subscribe(),
+    );
   }
 
   createFn(): void {
-    this._rtDialogService
-      .open(ProjectDialog, {
-        width: '600px',
-        maxWidth: '600px',
-      })
-      .subscribe();
+    const dialogConfig = {
+      width: '600px',
+      maxWidth: '600px',
+    };
+    this.subscriptionsList.push(
+      this._rtDialogService
+        .open(ProjectDialog, {
+          width: dialogConfig.width,
+          maxWidth: dialogConfig.maxWidth,
+        })
+        .subscribe(),
+    );
   }
 }
