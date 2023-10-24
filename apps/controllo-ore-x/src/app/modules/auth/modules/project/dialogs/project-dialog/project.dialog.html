@@ -24,10 +24,13 @@
             matInput
             placeholder="Cliente"
             formControlName="customer"
-            [(value)]="currentCustomer"
+            [(value)]="userSelectedCustomer"
           >
-            <mat-option *ngFor="let customer of customers" [value]="customer">
-              {{ customer.name }}
+            <mat-option
+              *ngFor="let projectCustomer of projectCustomers"
+              [value]="projectCustomer"
+            >
+              {{ projectCustomer.name }}
             </mat-option>
           </mat-select>
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
@@ -43,7 +46,7 @@
           mat-flat-button
           *ngIf="transactionStatus === 'create'"
           class="button -form__fields__button"
-          (click)="openCreateCustomer()"
+          (click)="openCreateCustomerDialog()"
         >
           Crea nuovo cliente
         </button>
@@ -54,16 +57,16 @@
             matInput
             placeholder="Colore"
             formControlName="color"
-            [(value)]="currentColor"
+            [(value)]="userSelectedColor"
           >
             <mat-select-trigger>
               <div
-                class="-color-square"
-                [style.backgroundColor]="currentColor"
+                class="-square"
+                [style.backgroundColor]="userSelectedColor"
               ></div>
             </mat-select-trigger>
             <mat-option *ngFor="let color of colors" [value]="color">
-              <div class="-color-square" [style.backgroundColor]="color"></div>
+              <div class="-square" [style.backgroundColor]="color"></div>
             </mat-option>
           </mat-select>
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">

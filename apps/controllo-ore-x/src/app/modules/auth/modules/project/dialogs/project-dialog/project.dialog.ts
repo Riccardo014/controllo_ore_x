@@ -34,18 +34,17 @@ export class ProjectDialog
 {
   override title: string = 'Crea nuovo progetto';
 
-  currentCustomer?: CustomerReadDto;
-  customers: CustomerReadDto[] = [];
+  /**
+   * The customer selected by the user to edit.
+   */
+  userSelectedCustomer?: CustomerReadDto;
+  projectCustomers: CustomerReadDto[] = [];
 
-  currentColor?: string;
-  colors: string[] = [
-    ProjectColor.orange,
-    ProjectColor.purple,
-    ProjectColor.blue,
-    ProjectColor.yellow,
-    ProjectColor.green,
-    ProjectColor.red,
-  ];
+  /**
+   * The customer's color to edit.
+   */
+  userSelectedColor?: string;
+  colors: string[] = [...ProjectColor];
 
   subscriptionsList: Subscription[] = [];
 
@@ -70,7 +69,7 @@ export class ProjectDialog
 
     if (this.data.input) {
       this.formHelper.patchForm(this.data.input);
-      this.currentColor = this.data.input.color;
+      this.userSelectedColor = this.data.input.color;
       if (this.data.input.isDuplication) {
         this.title = 'Duplica progetto';
         return;
@@ -86,7 +85,7 @@ export class ProjectDialog
   }
 
   _setSubscriptions(): void {
-    this.subscriptionsList.push(this._getProjectsCustomers());
+    this.subscriptionsList.push(this._fetchSetProjectCustomers());
   }
 
   override onSubmit(): void {
@@ -106,25 +105,31 @@ export class ProjectDialog
     });
   }
 
-  openCreateCustomer(): void {
-    this._rtDialogService
-      .open(CustomerDialog, {
-        width: '600px',
-        maxWidth: '600px',
-      })
-      .subscribe();
+  openCreateCustomerDialog(): void {
+    const dialogConfig = {
+      width: '600px',
+      maxWidth: '600px',
+    };
+    this.subscriptionsList.push(
+      this._rtDialogService
+        .open(CustomerDialog, {
+          width: dialogConfig.width,
+          maxWidth: dialogConfig.maxWidth,
+        })
+        .subscribe(),
+    );
   }
 
   /**
-   * Fetch and set the project' customers from the database.
+   * Fetch and set the project's customers.
    */
-  private _getProjectsCustomers(): Subscription {
+  private _fetchSetProjectCustomers(): Subscription {
     return this._customerDataService
       .getMany({})
       .subscribe((customers: ApiPaginatedResponse<CustomerReadDto>) => {
-        this.customers = customers.data;
+        this.projectCustomers = customers.data;
         if (this.formHelper.form.value.customer) {
-          this.currentCustomer = this.customers.find(
+          this.userSelectedCustomer = this.projectCustomers.find(
             (customer: CustomerReadDto) =>
               customer._id === this.formHelper.form.value.customer._id,
           );
