@@ -30,6 +30,12 @@ export class ProjectActivityCardComponent
   constructor(private _hoursTagDataService: HoursTagDataService) {}
 
   ngOnInit(): void {
+    if (!this.tagWithHours) {
+      throw new Error('tagWithHours is required');
+    }
+    if (typeof this.tagWithHours !== 'object') {
+      throw new Error('tagWithHours must be a object');
+    }
     this._setSubscriptions();
   }
 
@@ -39,11 +45,15 @@ export class ProjectActivityCardComponent
 
   _setSubscriptions(): void {
     this.subscriptionsList.push(
-      this._hoursTagDataService
-        .getOne(this.tagWithHours.hoursTagId)
-        .subscribe((hoursTag: any) => {
-          this.tag = hoursTag;
-        }),
+      this._fetchSetTag(this.tagWithHours.hoursTagId),
     );
+  }
+
+  private _fetchSetTag(tagId: string): Subscription {
+    return this._hoursTagDataService
+      .getOne(tagId)
+      .subscribe((hoursTag: any) => {
+        this.tag = hoursTag;
+      });
   }
 }
