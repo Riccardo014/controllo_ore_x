@@ -61,6 +61,7 @@ export abstract class BaseDialog<
               this.cancel();
               this.navigateAfterDelete();
             } catch (err) {
+              console.error(err);
               this.isLoading = false;
               this.formHelper.enable();
 
