@@ -79,18 +79,19 @@ export class ProjectReleaseStatusComponent
               if (userHours.data.length > 0) {
                 this.inProgressReleases += 1;
               }
+              const tagsIds: Set<string> = new Set<string>();
               userHours.data.forEach((userHour: any) => {
-                let hasBeenFound: boolean = false;
-                this.tags.forEach((tag) => {
-                  if (tag.hoursTagId === userHour.hoursTagId) {
-                    tag.hours += Number(userHour.hours);
-                    hasBeenFound = true;
-                  }
-                });
-                if (!hasBeenFound) {
+                if (!tagsIds.has(userHour.hoursTagId)) {
                   this.tags.push({
                     hoursTagId: userHour.hoursTagId,
                     hours: Number(userHour.hours),
+                  });
+                  tagsIds.add(userHour.hoursTagId);
+                } else {
+                  this.tags.forEach((tag) => {
+                    if (tag.hoursTagId === userHour.hoursTagId) {
+                      tag.hours += Number(userHour.hours);
+                    }
                   });
                 }
               });
