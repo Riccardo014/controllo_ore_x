@@ -1,4 +1,5 @@
 import { FormBuilder } from '@angular/forms';
+import { ApiResponse } from '@api-interfaces';
 import { BaseDataService } from '@controllo-ore-x/rt-shared';
 import { FormHelper } from '@shared/classes/form-helper.class';
 
@@ -47,7 +48,7 @@ export abstract class UpsertFormHelper<
       }
 
       this._dataService.create(this.createDto).subscribe({
-        next: (res: any) => {
+        next: (res: ApiResponse<ReadT>) => {
           return resolve(res.data);
         },
         error: (err: any) => {

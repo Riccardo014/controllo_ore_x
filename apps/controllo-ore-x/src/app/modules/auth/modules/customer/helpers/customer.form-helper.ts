@@ -22,15 +22,11 @@ export class CustomerFormHelper extends UpsertFormHelper<
   }
 
   get createDto(): CustomerCreateDto {
-    const formValues: CustomerCreateDto = this.form.getRawValue();
-
-    return formValues;
+    return this.form.getRawValue();
   }
 
   get updateDto(): CustomerUpdateDto {
-    const formValues: CustomerCreateDto = this.form.getRawValue();
-
-    return formValues;
+    return this.form.getRawValue();
   }
 
   initForm(): FormGroup {
@@ -39,8 +35,6 @@ export class CustomerFormHelper extends UpsertFormHelper<
       email: [null, [Validators.required, Validators.email]],
     });
   }
-
-  setCreationMode(): void {}
 
   patchForm(value: CustomerReadDto): boolean {
     this.form.patchValue(value);
