@@ -188,13 +188,13 @@ export class TrackerDialog
     return this._hoursTagDataService
       .getMany({})
       .subscribe((hoursTag: ApiPaginatedResponse<HoursTagReadDto>) => {
+        //TODO: chiedere se c'è un modo migliore per fare questo
         hoursTag.data.forEach((hoursTag: HoursTagReadDto) => {
           this.hoursTags.push({
             hoursTag: hoursTag,
             checked: false,
           });
 
-          //TODO: chiedere se c'è un modo migliore per fare questo
           if (this.data.input) {
             this.hoursTags.forEach((hoursTag: any) => {
               if (hoursTag.hoursTag._id === this.data.input.hoursTag._id) {
@@ -203,6 +203,9 @@ export class TrackerDialog
             });
           }
         });
+        if (!this.data.input) {
+          this.hoursTags[0].checked = true;
+        }
       });
   }
 
