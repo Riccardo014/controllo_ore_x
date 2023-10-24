@@ -97,7 +97,7 @@ export class ProjectDialog
     window.location.reload();
   }
 
-  override navigateAfterDelete(): void {
+  override navigationDestination(): void {
     if (this._router.url === '/auth/progetti') {
       window.location.reload();
     }

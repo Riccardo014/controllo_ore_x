@@ -61,7 +61,7 @@ export abstract class BaseDialog<
               await this.formHelper.delete();
               this._baseDialogAlertSvc.openSuccess();
               this.cancel();
-              this.navigateAfterDelete();
+              this.navigationDestination();
             } catch (err) {
               console.error(err);
               this.isLoading = false;
@@ -81,7 +81,10 @@ export abstract class BaseDialog<
       });
   }
 
-  navigateAfterDelete(): void {
+  /**
+   * Navigate to the same page and refresh the data after a delete.
+   */
+  navigationDestination(): void {
     const currentUrl = this._baseDialogrouter.url;
     this._baseDialogrouter
       .navigateByUrl('/', { skipLocationChange: true })

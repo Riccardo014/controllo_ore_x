@@ -57,7 +57,7 @@ export class ReleaseDialog
     window.location.reload();
   }
 
-  override navigateAfterDelete(): void {
+  override navigationDestination(): void {
     window.location.reload();
   }
 }
