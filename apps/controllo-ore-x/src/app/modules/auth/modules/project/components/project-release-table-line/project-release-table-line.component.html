@@ -1,6 +1,6 @@
 <div class="-release">
   <div class="-release__data">
-    <div class="body-1" [ngClass]="{ '-crossed-out': release.isCompleted }">
+    <div class="body-1" [ngClass]="{ '-completed': release.isCompleted }">
       {{ release.version }}
     </div>
     <div class="body-1 -release__data__deadline">{{ deadline }}</div>
