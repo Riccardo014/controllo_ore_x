@@ -2,6 +2,7 @@ import { Directive } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
+  IRtDialogClose,
   RT_DIALOG_CLOSE_RESULT,
   RtDialogForm,
   RtDialogService,
@@ -50,8 +51,8 @@ export abstract class BaseDialog<
         "L'operazione non è reversibile",
       )
       .subscribe({
-        next: async (r) => {
-          if (r?.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
+        next: async (closeResult: IRtDialogClose) => {
+          if (closeResult?.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
             this.isLoading = true;
             this.formHelper.disable();
             try {
