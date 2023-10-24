@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReleaseDataService } from '@app/_core/services/release.data-service';
 import { UserHoursDataService } from '@app/_core/services/user-hour.data-service';
+import { convertNumberToHours } from '@app/utils/NumberToHoursConverter';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
@@ -33,7 +34,7 @@ export class ReportIndexPage
     private _activatedRoute: ActivatedRoute,
     private _releaseDataService: ReleaseDataService,
     private _userHoursDataService: UserHoursDataService,
-    ) {}
+  ) {}
 
   ngOnInit(): void {
     this.releaseId = this.getReleaseId();
@@ -43,7 +44,7 @@ export class ReportIndexPage
   ngOnDestroy(): void {
     this._completeSubscriptions(this.subscriptionsList);
   }
-  
+
   navigateBack(): void {
     this._router.navigate(['../../'], {
       relativeTo: this._activatedRoute,
@@ -51,62 +52,61 @@ export class ReportIndexPage
   }
 
   _setSubscriptions(): void {
-    this.subscriptionsList.push(
-      this._getRelease(),
-      this._getHoursExecuted(),
-    );
+    this.subscriptionsList.push(this._getRelease(), this._getHoursExecuted());
   }
 
   /**
-  * Return the release's id.
-  */
+   * Return the release's id.
+   */
   getReleaseId(): string {
     return this._activatedRoute.snapshot.params['id'];
   }
 
   _getRelease(): Subscription {
-    return this._releaseDataService.getOne(this.releaseId).subscribe((release) => {
-      this.release = release;
-      this.formatDeadline(this.release.deadline);
-    });
+    return this._releaseDataService
+      .getOne(this.releaseId)
+      .subscribe((release) => {
+        this.release = release;
+        this.formatDeadline(this.release.deadline);
+      });
   }
 
   _getHoursExecuted(): Subscription {
     return this._userHoursDataService
-    .getMany({
-      where: { releaseId: this.releaseId },
-    })
-    .subscribe((userHours: any) => {
-      userHours.data.forEach((userHour: any) => {
-        this.hoursExecuted += parseFloat(userHour.hours);
+      .getMany({
+        where: { releaseId: this.releaseId },
+      })
+      .subscribe((userHours: any) => {
+        userHours.data.forEach((userHour: any) => {
+          this.hoursExecuted += parseFloat(userHour.hours);
+        });
       });
-    });
   }
 
   formatDeadline(deadline: Date): void {
     this.deadline = new Date(deadline).toLocaleDateString();
   }
 
-  calculatedHoursOutOfBudget(): string{
-    if(this.hoursExecuted - this.release.hoursBudget <=0){
+  calculatedHoursOutOfBudget(): string {
+    if (this.hoursExecuted - this.release.hoursBudget <= 0) {
       return '00:00';
-    } 
-    return this.convertNumberToHours(this.hoursExecuted - this.release.hoursBudget);
+    }
+    return this.convertNumberToHours(
+      this.hoursExecuted - this.release.hoursBudget,
+    );
   }
 
-  convertNumberToHours(number: number): string {
-    const hours = Math.floor(number);
-    const minutes = Math.round((number - hours) * 60).toString();
-    return hours.toString().padStart(2, '0') + ':' + minutes.padStart(2, '0');
+  convertNumberToHours(hoursToConvert: number): string {
+    return convertNumberToHours(hoursToConvert);
   }
 
   toggleCompletion(): void {
     this._releaseDataService
       .update(this.releaseId, {
         isCompleted: !this.release.isCompleted,
-      }).subscribe(()=> {
+      })
+      .subscribe(() => {
         this._getRelease();
       });
   }
-
 }

@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReleaseReadDto } from '@api-interfaces';
 import { UserHoursDataService } from '@app/_core/services/user-hour.data-service';
+import { convertNumberToHours } from '@app/utils/NumberToHoursConverter';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
@@ -88,9 +89,7 @@ export class ReleaseTableLineComponent
     this._router.navigate([this._router.url + '/report/' + $event._id]);
   }
 
-  convertNumberToHours(number: number): string {
-    const hours = Math.floor(number);
-    const minutes = Math.round((number - hours) * 60).toString();
-    return hours.toString().padStart(2, '0') + ':' + minutes.padStart(2, '0');
+  convertNumberToHours(hoursToConvert: number): string {
+    return convertNumberToHours(hoursToConvert);
   }
 }

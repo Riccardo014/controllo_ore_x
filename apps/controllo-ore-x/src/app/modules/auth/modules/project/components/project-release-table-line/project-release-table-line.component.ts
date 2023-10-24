@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ReleaseReadDto } from '@api-interfaces';
 import { UserHoursDataService } from '@app/_core/services/user-hour.data-service';
+import { convertNumberToHours } from '@app/utils/NumberToHoursConverter';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
@@ -82,8 +83,6 @@ export class ProjectReleaseTableLineComponent
   }
 
   convertNumberToHours(hoursToConvert: number): string {
-    const hours = Math.floor(hoursToConvert);
-    const minutes = Math.round((hoursToConvert - hours) * 60).toString();
-    return hours.toString().padStart(2, '0') + ':' + minutes.padStart(2, '0');
+    return convertNumberToHours(hoursToConvert);
   }
 }
