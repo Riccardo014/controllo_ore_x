@@ -38,7 +38,7 @@ export class CustomerIndexPage extends IndexPage<
   hasErrors: boolean = false;
   isEditAvailable: boolean = false;
 
-  @Output() openDialog: EventEmitter<any> = new EventEmitter<any>();
+  @Output() openDialogEvent: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
     protected _configurationService: IndexConfigurationDataService,

@@ -33,12 +33,12 @@ export class RtTableComponent {
   @Input() editFn?: (entity: any) => void | Promise<void>;
   @Input() editIcon?: string;
 
-  @Output() statusChangeEmitter: EventEmitter<RtTableStatus> =
+  @Output() statusChangeEvent: EventEmitter<RtTableStatus> =
     new EventEmitter<RtTableStatus>();
 
-  @Output() openFilterEmitter: EventEmitter<boolean> =
+  @Output() openFilterEvent: EventEmitter<boolean> =
     new EventEmitter<boolean>();
-  @Output() openDialogEmitter: EventEmitter<any> = new EventEmitter<any>();
+  @Output() openDialogEvent: EventEmitter<any> = new EventEmitter<any>();
 
   @Input() thPrefixTemplate?: TemplateRef<any>;
   @Input() thSuffixTemplate?: TemplateRef<any>;
@@ -52,26 +52,26 @@ export class RtTableComponent {
   }
 
   openFilterFn(): void {
-    this.openFilterEmitter.emit(true);
+    this.openFilterEvent.emit(true);
   }
 
   openDialogFn(entity: any): void {
-    this.openDialogEmitter.emit(entity);
+    this.openDialogEvent.emit(entity);
   }
 
   updateFilters(filters: FindBoostedWhereOption[]): void {
     this.status.where = filters;
-    this.statusChangeEmitter.emit(this.status);
+    this.statusChangeEvent.emit(this.status);
   }
 
   updateFulltextSearch(fulltextSearch: string): void {
     this.status.fulltextSearch = fulltextSearch;
-    this.statusChangeEmitter.emit(this.status);
+    this.statusChangeEvent.emit(this.status);
   }
 
   updateOrder(orderBy: any): void {
     this.status.order = orderBy;
-    this.statusChangeEmitter.emit(this.status);
+    this.statusChangeEvent.emit(this.status);
   }
 
   updatePagination(pageEvent: PageEvent): void {
@@ -97,7 +97,7 @@ export class RtTableComponent {
 
       this.status.pagination.currentPage = newPage;
       this.status.pagination.itemsPerPage = itemsPerPage;
-      this.statusChangeEmitter.emit(this.status);
+      this.statusChangeEvent.emit(this.status);
     }
   }
 

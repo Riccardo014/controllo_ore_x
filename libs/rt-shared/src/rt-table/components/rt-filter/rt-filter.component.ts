@@ -30,12 +30,12 @@ export class RtFilterComponent
 {
   areFiltersOpen: boolean = false;
   currentFilters: FormArray;
-  @Output() filtersChangedEmitter: EventEmitter<FindBoostedWhereOption[]> =
+  @Output() filtersChangedEvent: EventEmitter<FindBoostedWhereOption[]> =
     new EventEmitter<FindBoostedWhereOption[]>();
   @Input() filterOptions: FindBoostedWhereOption[] = [];
   FIND_BOOSTED_FN: typeof FIND_BOOSTED_FN = FIND_BOOSTED_FN;
 
-  @Output() openFilterEmitter: EventEmitter<boolean> =
+  @Output() openFilterEvent: EventEmitter<boolean> =
     new EventEmitter<boolean>();
 
   mockForm: FormGroup;
@@ -68,7 +68,7 @@ export class RtFilterComponent
         .pipe(debounceTime(800))
         .subscribe((filterValues) => {
           if (this.currentFilters.valid) {
-            this.filtersChangedEmitter.emit(this._buildFilters(filterValues));
+            this.filtersChangedEvent.emit(this._buildFilters(filterValues));
           }
         }),
     );
@@ -79,13 +79,13 @@ export class RtFilterComponent
   }
 
   toggleFilter(): void {
-    this.openFilterEmitter.emit(true);
+    this.openFilterEvent.emit(true);
     this.areFiltersOpen = !this.areFiltersOpen;
   }
 
   clearFilters(): void {
     this.currentFilters.clear();
-    this.filtersChangedEmitter.emit([]);
+    this.filtersChangedEvent.emit([]);
     this.areFiltersOpen = false;
   }
 

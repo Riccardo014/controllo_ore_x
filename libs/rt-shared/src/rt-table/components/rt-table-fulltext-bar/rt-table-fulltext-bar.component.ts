@@ -10,14 +10,14 @@ import { debounceTime } from 'rxjs/operators';
 export class RtTableFulltextBarComponent implements OnInit {
   fulltextSearch: FormControl = new FormControl<string>('');
 
-  @Output() fulltextSearchEmitter: EventEmitter<string> =
+  @Output() fulltextSearchEvent: EventEmitter<string> =
     new EventEmitter<string>();
 
   ngOnInit(): void {
     this.fulltextSearch.valueChanges
       .pipe(debounceTime(800))
       .subscribe((text: string) => {
-        this.fulltextSearchEmitter.emit(text);
+        this.fulltextSearchEvent.emit(text);
       });
   }
 

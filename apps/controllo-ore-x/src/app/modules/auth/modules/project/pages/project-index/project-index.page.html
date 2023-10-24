@@ -2,12 +2,12 @@
   [page]="this"
   [buttonIcon]="buttonIcon"
   [buttonText]="buttonText"
-  (openDialog)="openDialogFn($event)"
-  (openCreateDialog)="createFn()"
+  (openDialogEvent)="openDialogFn($event)"
+  (openCreateDialogEvent)="createFn()"
 ></controllo-ore-x-index-template>
 <lib-rt-table-fulltext-bar
   class="-search-bar"
-  (fulltextSearchEmitter)="updateFulltextSearch($event)"
+  (fulltextSearchEvent)="updateFulltextSearch($event)"
 >
 </lib-rt-table-fulltext-bar>
 <div class="-content">

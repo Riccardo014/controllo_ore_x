@@ -10,6 +10,6 @@ export class RtDialogDefaultActionsComponent {
   @Input() textCancel: string = 'Annulla';
   @Input() isValid?: boolean;
 
-  @Output() confirm: EventEmitter<void> = new EventEmitter<void>();
-  @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
+  @Output() confirmEvent: EventEmitter<void> = new EventEmitter<void>();
+  @Output() cancelEvent: EventEmitter<void> = new EventEmitter<void>();
 }

@@ -58,12 +58,12 @@
     [isLoading]="page.isLoading.getValue()"
     [isTableTopbarVisible]="page.isTableTopbarVisible"
     [isTableHeaderVisible]="page.isTableHeaderVisible"
-    (statusChangeEmitter)="page.indexTableHandler.statusChange($event)"
+    (statusChangeEvent)="page.indexTableHandler.statusChange($event)"
     [tableConfiguration]="page.configuration"
     [data]="page.indexTableHandler.data"
     [editFn]="editFn"
     [status]="page.indexTableHandler.status"
     [isEditAvailable]="isEditAvailable"
-    (openDialogEmitter)="openDialogFn($event)"
+    (openDialogEvent)="openDialogFn($event)"
   ></lib-rt-table>
 </div>

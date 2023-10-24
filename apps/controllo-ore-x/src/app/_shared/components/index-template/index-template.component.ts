@@ -73,9 +73,9 @@ export class IndexTemplateComponent
   /**
    * The function to be called when the user clicks on the header button, that should open a dialog or redirect to an upsert page
    */
-  @Output() openDialog: EventEmitter<any> = new EventEmitter<any>();
+  @Output() openDialogEvent: EventEmitter<any> = new EventEmitter<any>();
 
-  @Output() openCreateDialog: EventEmitter<boolean> =
+  @Output() openCreateDialogEvent: EventEmitter<boolean> =
     new EventEmitter<boolean>();
 
   subscriptionsList: Subscription[] = [];
@@ -110,11 +110,11 @@ export class IndexTemplateComponent
   }
 
   openDialogFn(entity: any): void {
-    this.openDialog.emit(entity);
+    this.openDialogEvent.emit(entity);
   }
 
   openCreateDialogFn(): void {
-    this.openCreateDialog.emit(true);
+    this.openCreateDialogEvent.emit(true);
   }
 
   private _setLoadingParameters(): void {

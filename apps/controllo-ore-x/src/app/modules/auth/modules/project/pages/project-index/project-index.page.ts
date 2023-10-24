@@ -5,7 +5,6 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { Router } from '@angular/router';
 import {
   ApiPaginatedResponse,
   INDEX_CONFIGURATION_KEY,
@@ -52,7 +51,7 @@ export class ProjectIndexPage
   projects: ProjectReadDto[] = [];
   showedProjects: ProjectReadDto[] = [];
 
-  @Output() openDialog: EventEmitter<any> = new EventEmitter<any>();
+  @Output() openDialogEvent: EventEmitter<any> = new EventEmitter<any>();
 
   override subscriptionsList: Subscription[] = [];
 

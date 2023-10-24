@@ -1,6 +1,6 @@
 <div class="-box">
   <button
-    (click)="cancel.emit()"
+    (click)="cancelEvent.emit()"
     class="rt-btn -button -button-cancel"
     mat-button
     type="button"
@@ -8,7 +8,7 @@
     {{ textCancel }}
   </button>
   <button
-    (click)="confirm.emit()"
+    (click)="confirmEvent.emit()"
     [disabled]="isValid === false"
     class="rt-btn --flat-primary -button"
     color="primary"

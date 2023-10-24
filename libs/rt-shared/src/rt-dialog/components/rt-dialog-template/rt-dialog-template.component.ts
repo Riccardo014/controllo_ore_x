@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./rt-dialog-template.component.scss'],
 })
 export class RtDialogTemplateComponent {
-  @Output() closeDialog: EventEmitter<void> = new EventEmitter<void>();
+  @Output() closeDialogEvent: EventEmitter<void> = new EventEmitter<void>();
 
   @Input() cTitle: string | undefined;
   @Input() subtitle: string | undefined;

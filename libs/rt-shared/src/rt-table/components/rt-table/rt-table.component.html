@@ -1,6 +1,6 @@
 <div class="-topbar" *ngIf="isTableTopbarVisible">
   <lib-rt-table-fulltext-bar
-    (fulltextSearchEmitter)="updateFulltextSearch($event)"
+    (fulltextSearchEvent)="updateFulltextSearch($event)"
   ></lib-rt-table-fulltext-bar>
   <ng-content select="[headingActions]"></ng-content>
 </div>
@@ -16,7 +16,7 @@
         <th *ngFor="let column of tableConfiguration?.columns">
           <lib-rt-table-th
             [column]="column"
-            (orderChangedEmitter)="updateOrder($event)"
+            (orderChangedEvent)="updateOrder($event)"
             [orderBy]="status.order"
           ></lib-rt-table-th>
         </th>
@@ -54,7 +54,7 @@
           </ng-container>
           <ng-container *ngIf="isFirstColumnHidden">
             <button
-              *ngIf="openDialogEmitter"
+              *ngIf="openDialogEvent"
               mat-icon-button
               (click)="openDialogFn(entity)"
             >
@@ -72,7 +72,7 @@
           <lib-rt-table-td
             [column]="column"
             [entity]="entity"
-            (openDialog)="openDialogFn(entity)"
+            (openDialogEvent)="openDialogFn(entity)"
           ></lib-rt-table-td>
         </td>
         <ng-container *ngIf="tdSuffixTemplate">

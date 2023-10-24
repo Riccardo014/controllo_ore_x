@@ -10,9 +10,9 @@ export class PageTitleComponent {
   @Input() buttonIcon: string = 'Icon';
   @Input() buttonText: string = 'Button txt';
 
-  @Output() buttonOnClickEmit: EventEmitter<void> = new EventEmitter<void>();
+  @Output() buttonOnClickEvent: EventEmitter<void> = new EventEmitter<void>();
 
   openDialog(): void {
-    this.buttonOnClickEmit.emit();
+    this.buttonOnClickEvent.emit();
   }
 }

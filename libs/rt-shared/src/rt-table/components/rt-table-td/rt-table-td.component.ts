@@ -1,8 +1,8 @@
+import { registerLocaleData } from '@angular/common';
+import localeIt from '@angular/common/locales/it';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ROLE, TableConfigurationColumn } from '@api-interfaces';
 import { rtTableColumnValue } from '../../lib/rt-table-column-value';
-import localeIt from '@angular/common/locales/it';
-import { registerLocaleData } from '@angular/common';
 
 @Component({
   selector: 'lib-rt-table-td',
@@ -13,7 +13,7 @@ export class RtTableTdComponent implements OnInit {
   @Input() column!: TableConfigurationColumn;
   @Input() entity: any;
 
-  @Output() openDialog: EventEmitter<any> = new EventEmitter<any>();
+  @Output() openDialogEvent: EventEmitter<any> = new EventEmitter<any>();
 
   valueToPrint: any;
 
@@ -32,6 +32,6 @@ export class RtTableTdComponent implements OnInit {
   }
 
   openDialogFn(entity: any): void {
-    this.openDialog.emit(entity);
+    this.openDialogEvent.emit(entity);
   }
 }

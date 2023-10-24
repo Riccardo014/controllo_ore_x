@@ -7,7 +7,7 @@ import { FindBoostedOrder, TableConfigurationColumn } from '@api-interfaces';
   styleUrls: ['./rt-table-th.component.scss'],
 })
 export class RtTableThComponent {
-  @Output() orderChangedEmitter: EventEmitter<FindBoostedOrder> =
+  @Output() orderChangedEvent: EventEmitter<FindBoostedOrder> =
     new EventEmitter<FindBoostedOrder>();
 
   @Input() column!: TableConfigurationColumn;
@@ -47,7 +47,7 @@ export class RtTableThComponent {
         newOrderBy[this.column.field] = 'ASC';
         break;
     }
-    this.orderChangedEmitter.emit(newOrderBy);
+    this.orderChangedEvent.emit(newOrderBy);
   }
 
   private _getOrderIndex(): number {
