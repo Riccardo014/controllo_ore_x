@@ -33,6 +33,9 @@ export class ProjectReleaseTableLineComponent
   ) {}
 
   ngOnInit(): void {
+    if (!this.release) {
+      throw new Error('release is undefined');
+    }
     this.formatDeadline(this.release.deadline);
 
     this._setSubscriptions();
@@ -43,17 +46,19 @@ export class ProjectReleaseTableLineComponent
   }
 
   _setSubscriptions(): void {
-    this.subscriptionsList.push(
-      this._userHoursDataService
-        .getMany({
-          where: { releaseId: this.release._id },
-        })
-        .subscribe((userHours: any) => {
-          userHours.data.forEach((userHour: any) => {
-            this.hoursExecuted += parseFloat(userHour.hours);
-          });
-        }),
-    );
+    this.subscriptionsList.push(this.sethoursExecutedProperty());
+  }
+
+  sethoursExecutedProperty(): Subscription {
+    return this._userHoursDataService
+      .getMany({
+        where: { releaseId: this.release._id },
+      })
+      .subscribe((userHours: any) => {
+        userHours.data.forEach((userHour: any) => {
+          this.hoursExecuted += parseFloat(userHour.hours);
+        });
+      });
   }
 
   formatDeadline(deadline: Date): void {
@@ -70,9 +75,9 @@ export class ProjectReleaseTableLineComponent
       .subscribe();
   }
 
-  convertNumberToHours(number: number): string {
-    const hours = Math.floor(number);
-    const minutes = Math.round((number - hours) * 60).toString();
+  convertNumberToHours(hoursToConvert: number): string {
+    const hours = Math.floor(hoursToConvert);
+    const minutes = Math.round((hoursToConvert - hours) * 60).toString();
     return hours.toString().padStart(2, '0') + ':' + minutes.padStart(2, '0');
   }
 }
