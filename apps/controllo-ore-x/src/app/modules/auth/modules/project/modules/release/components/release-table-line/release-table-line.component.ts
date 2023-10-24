@@ -66,7 +66,9 @@ export class ReleaseTableLineComponent
   }
 
   formatDeadline(deadline: Date): void {
-    this.deadline = new Date(deadline).toLocaleDateString();
+    this.deadline = new Intl.DateTimeFormat(navigator.language).format(
+      new Date(deadline),
+    );
   }
 
   openEditRelease($event: ReleaseReadDto): void {

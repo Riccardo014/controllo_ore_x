@@ -63,7 +63,9 @@ export class ProjectReleaseTableLineComponent
   }
 
   formatDeadline(deadline: Date): void {
-    this.deadline = new Date(deadline).toLocaleDateString();
+    this.deadline = new Intl.DateTimeFormat(navigator.language).format(
+      new Date(deadline),
+    );
   }
 
   openEditReleaseDialog(): void {

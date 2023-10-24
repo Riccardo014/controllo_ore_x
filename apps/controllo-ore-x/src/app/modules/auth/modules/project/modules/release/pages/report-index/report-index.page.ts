@@ -84,7 +84,9 @@ export class ReportIndexPage
   }
 
   formatDeadline(deadline: Date): void {
-    this.deadline = new Date(deadline).toLocaleDateString();
+    this.deadline = new Intl.DateTimeFormat(navigator.language).format(
+      new Date(deadline),
+    );
   }
 
   calculatedHoursOutOfBudget(): string {
