@@ -21,7 +21,7 @@ export abstract class BaseDialog<
 > extends RtDialogForm {
   title: string = 'Dialog title';
 
-  isCreating: boolean = true;
+  transactionStatus: 'create' | 'update' = 'create';
 
   constructor(
     public formHelper: UpsertFormHelper<ReadT, CreateT, UpdateT>,
@@ -41,7 +41,9 @@ export abstract class BaseDialog<
 
     this.formHelper.disable();
 
-    this.isCreating ? this._createEntity() : this._updateEntity();
+    this.transactionStatus === 'create'
+      ? this._createEntity()
+      : this._updateEntity();
   }
 
   deleteEntity(): void {

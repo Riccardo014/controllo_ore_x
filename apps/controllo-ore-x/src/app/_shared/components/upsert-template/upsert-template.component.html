@@ -27,7 +27,7 @@
 
   <ng-container actions>
     <button
-      *ngIf="!page.isCreating && !isMoreOptionHidden"
+      *ngIf="page.transactionStatus === 'update' && !isMoreOptionHidden"
       [matMenuTriggerFor]="optionMenu"
       mat-icon-button
     >
@@ -38,7 +38,11 @@
 
     <button
       (click)="page.toggleEditing()"
-      *ngIf="!page.isCreating && page.isEditEnabled && !page.isEditing"
+      *ngIf="
+        page.transactionStatus === 'update' &&
+        page.isEditEnabled &&
+        !page.isEditing
+      "
       mat-flat-button
       class="hide-mobile"
       color="primary"
@@ -56,7 +60,7 @@
     </button>
     <button
       (click)="page.handleUserSubmission()"
-      *ngIf="page.isCreating || page.isEditing"
+      *ngIf="page.transactionStatus === 'create' || page.isEditing"
       [disabled]="page.formHelper.invalid"
       color="primary"
       class="hide-mobile"
@@ -83,7 +87,7 @@
   <ng-container *ngFor="let tab of page.tabs; let index = index">
     <div
       (click)="page.setTab(index)"
-      *ngIf="!tab.hideOnCreation || !page.isCreating"
+      *ngIf="!tab.hideOnCreation || page.transactionStatus === 'update'"
       [class.active]="page.tab === index"
       class="tab-menu-item"
     >

@@ -34,8 +34,6 @@ export class TeamDialog
   override title: string = 'Crea nuovo membro';
   isPasswordVisible: boolean = false;
 
-  override isCreating: boolean = true;
-
   currentRole?: RoleReadDto;
   userRoles: RoleReadDto[] = [];
 
@@ -65,7 +63,7 @@ export class TeamDialog
       this.formHelper.setCreationMode();
       return;
     }
-    this.isCreating = false;
+    this.transactionStatus = 'update';
     this.formHelper.patchForm(this.data.input);
     this.formHelper.entityId = this.data.input._id;
     this.title = 'Modifica membro';

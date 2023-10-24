@@ -34,7 +34,7 @@ export class ProjectComponent {
         maxWidth: '600px',
         data: {
           ...this.projectWithCustomer,
-          isCreating: true,
+          transactionStatus: 'create',
         },
       })
       .subscribe();

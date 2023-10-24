@@ -28,7 +28,7 @@ export abstract class UpsertPage<
   breadcrumbPrefix: string = 'Page Path Prefix';
   breadcrumbSuffix: string = 'Page Path Suffix';
 
-  isCreating: boolean = true;
+  transactionStatus: 'create' | 'update' = 'create';
   isEditing: boolean = false;
 
   isEditEnabled: boolean = true;
@@ -87,7 +87,7 @@ export abstract class UpsertPage<
 
   ngOnInit(): void {
     if (this.getEntityId()) {
-      this.isCreating = false;
+      this.transactionStatus = 'update';
       this.formHelper.disable();
     }
     this.pageInitialization();
@@ -122,10 +122,12 @@ export abstract class UpsertPage<
   }
 
   /**
-   * Perform a create or update operation depending on the `isCreating` flag.
+   * Perform a create or update operation depending on the `transactionStatus`.
    */
   handleUserSubmission(): void {
-    this.isCreating ? this._createEntry() : this._updateEntry();
+    this.transactionStatus === 'create'
+      ? this._createEntry()
+      : this._updateEntry();
   }
 
   /**

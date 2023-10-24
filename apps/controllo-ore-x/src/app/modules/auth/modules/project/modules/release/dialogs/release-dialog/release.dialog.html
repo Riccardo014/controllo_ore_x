@@ -81,7 +81,7 @@
   </div>
   <div footer class="-footer">
     <button
-      *ngIf="!isCreating"
+      *ngIf="transactionStatus === 'update'"
       (click)="deleteEntity()"
       class="rt-btn -footer__button -footer__button--delete"
       mat-button

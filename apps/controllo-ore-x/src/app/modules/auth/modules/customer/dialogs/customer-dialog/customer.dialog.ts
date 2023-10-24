@@ -25,8 +25,6 @@ export class CustomerDialog
 {
   override title: string = 'Inserisci un nuovo cliente';
 
-  override isCreating: boolean = true;
-
   constructor(
     public override formHelper: CustomerFormHelper,
     protected override _formBuilder: FormBuilder,
@@ -42,7 +40,7 @@ export class CustomerDialog
 
   ngOnInit(): void {
     if (this.data.input) {
-      this.isCreating = false;
+      this.transactionStatus = 'update';
       this.formHelper.patchForm(this.data.input);
       this.formHelper.entityId = this.data.input._id;
       this.title = 'Modifica cliente';

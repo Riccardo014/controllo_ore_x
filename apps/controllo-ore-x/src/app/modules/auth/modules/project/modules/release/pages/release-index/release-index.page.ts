@@ -75,7 +75,7 @@ export class ReleaseIndexPage
         maxWidth: '600px',
         data: {
           ...this.project,
-          isCreating: true,
+          transactionStatus: 'create',
         },
       })
       .subscribe();

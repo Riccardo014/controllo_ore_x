@@ -24,8 +24,6 @@ export class ReleaseDialog
 {
   override title: string = 'Crea nuova release';
 
-  override isCreating: boolean = true;
-
   constructor(
     public override formHelper: ReleaseFormHelper,
     protected override _formBuilder: FormBuilder,
@@ -39,7 +37,7 @@ export class ReleaseDialog
   }
 
   ngOnInit(): void {
-    if (this.data.input.isCreating) {
+    if (this.data.input.transactionStatus === 'create') {
       this.formHelper.form.patchValue({
         projectId: this.data.input._id,
         isCompleted: false,
@@ -47,7 +45,7 @@ export class ReleaseDialog
       return;
     }
     if (this.data.input) {
-      this.isCreating = false;
+      this.transactionStatus = 'update';
       this.formHelper.patchForm(this.data.input);
       this.formHelper.entityId = this.data.input._id;
       this.title = 'Modifica release';

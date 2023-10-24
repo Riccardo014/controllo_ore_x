@@ -34,8 +34,6 @@ export class ProjectDialog
 {
   override title: string = 'Crea nuovo progetto';
 
-  override isCreating: boolean = true;
-
   currentCustomer?: CustomerReadDto;
   customers: CustomerReadDto[] = [];
 
@@ -77,7 +75,7 @@ export class ProjectDialog
         this.title = 'Duplica progetto';
         return;
       }
-      this.isCreating = false;
+      this.transactionStatus = 'update';
       this.formHelper.entityId = this.data.input._id;
       this.title = 'Modifica progetto';
     }
@@ -92,8 +90,8 @@ export class ProjectDialog
   }
 
   override onSubmit(): void {
-    if (!this.isCreating && this.data.input.isDuplication) {
-      this.isCreating = true;
+    if (this.transactionStatus === 'update' && this.data.input.isDuplication) {
+      this.transactionStatus = 'create';
     }
     super.onSubmit();
     window.location.reload();

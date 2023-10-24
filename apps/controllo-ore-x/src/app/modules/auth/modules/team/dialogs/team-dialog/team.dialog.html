@@ -43,7 +43,7 @@
         </mat-form-field>
 
         <mat-form-field
-          *ngIf="isCreating"
+          *ngIf="transactionStatus === 'create'"
           class="col"
           appearance="outline"
           class="-form-field"
@@ -96,7 +96,7 @@
   </div>
   <div footer class="-container-reset-btns">
     <button
-      *ngIf="!isCreating"
+      *ngIf="transactionStatus === 'update'"
       (click)="deleteEntity()"
       class="rt-btn -button -button-delete"
       mat-button

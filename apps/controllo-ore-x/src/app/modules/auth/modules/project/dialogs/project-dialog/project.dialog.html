@@ -41,7 +41,7 @@
 
         <button
           mat-flat-button
-          *ngIf="isCreating"
+          *ngIf="transactionStatus === 'create'"
           class="button -form__fields__button"
           (click)="openCreateCustomer()"
         >
@@ -116,7 +116,7 @@
   </div>
   <div footer class="-footer">
     <button
-      *ngIf="!isCreating"
+      *ngIf="transactionStatus === 'update'"
       (click)="deleteEntity()"
       class="rt-btn -footer__button -footer__button--delete"
       mat-button
