@@ -21,7 +21,7 @@
       padding: 0px 10px;
     }
 
-    &--crossed-out {
+    &--completed {
       text-decoration: line-through;
     }
 
@@ -29,11 +29,11 @@
       min-width: 110px;
       padding: 0px 10px;
 
-      &--date {
+      &__date {
         color: rgba(0, 0, 0, 0.25);
       }
 
-      &--progress {
+      &__progress {
         display: flex;
         flex-direction: row;
         justify-content: left;
@@ -67,19 +67,17 @@
       align-items: center;
       gap: 10px;
 
-      &--edit {
-        &__icon {
-          color: rgba(0, 0, 0, 0.5);
-        }
+      &__icon {
+        color: rgba(0, 0, 0, 0.5);
       }
 
-      &--report {
+      &__report {
         background-color: map-get($palette-primary, 50);
         color: map-get($palette-primary, 500);
         padding: 20px;
         border-radius: 10px;
 
-        &__elements {
+        &__content {
           display: flex;
           flex-direction: row;
           align-items: center;

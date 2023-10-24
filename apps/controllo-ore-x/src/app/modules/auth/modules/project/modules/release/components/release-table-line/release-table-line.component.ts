@@ -35,6 +35,12 @@ export class ReleaseTableLineComponent
   ) {}
 
   ngOnInit(): void {
+    if (!this.release) {
+      throw new Error('release is required');
+    }
+    if (typeof this.release !== 'object') {
+      throw new Error('release must be a ReleaseReadDto object');
+    }
     this.formatDeadline(this.release.deadline);
 
     this._setSubscriptions();
@@ -63,16 +69,22 @@ export class ReleaseTableLineComponent
   }
 
   openEditRelease($event: ReleaseReadDto): void {
-    this._rtDialogService
-      .open(ReleaseDialog, {
-        width: '600px',
-        maxWidth: '600px',
-        data: $event,
-      })
-      .subscribe();
+    const dialogConfig = {
+      width: '600px',
+      maxWidth: '600px',
+    };
+    this.subscriptionsList.push(
+      this._rtDialogService
+        .open(ReleaseDialog, {
+          width: dialogConfig.width,
+          maxWidth: dialogConfig.maxWidth,
+          data: $event,
+        })
+        .subscribe(),
+    );
   }
 
-  openReport($event: ReleaseReadDto): void {
+  openReportDialog($event: ReleaseReadDto): void {
     this._router.navigate([this._router.url + '/report/' + $event._id]);
   }
 

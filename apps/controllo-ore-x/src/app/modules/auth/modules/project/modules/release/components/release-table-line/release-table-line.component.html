@@ -2,24 +2,24 @@
   <div class="-release__data">
     <div
       class="body-1 -release__data__element"
-      [ngClass]="{ '-release__data--crossed-out': release.isCompleted }"
+      [ngClass]="{ '-release__data--completed': release.isCompleted }"
     >
       {{ release.version }}
     </div>
-    <div class="body-1 -release__data__element -release__data__element--date">
+    <div class="body-1 -release__data__element -release__data__element__date">
       {{ deadline }}
     </div>
-    <div class="-release__data__element -release__data__element--progress">
+    <div class="-release__data__element -release__data__element__progress">
       <mat-progress-bar
-        class="-release__data__element--progress__bar"
+        class="-release__data__element__progress__bar"
         mode="determinate"
         value="{{ (100 * hoursExecuted) / release.hoursBudget }}"
       ></mat-progress-bar>
-      <div class="body-1 -release__data__element--progress__hours">
-        <div class="-release__data__element--progress__hours--executed">
+      <div class="body-1 -release__data__element__progress__hours">
+        <div class="-release__data__element__progress__hours--executed">
           {{ convertNumberToHours(hoursExecuted) }}&nbsp;/&nbsp;
         </div>
-        <div class="-release__data__element--progress__hours--planned">
+        <div class="-release__data__element__progress__hours--planned">
           {{ convertNumberToHours(release.hoursBudget) }}
         </div>
       </div>
@@ -28,23 +28,18 @@
       {{ convertNumberToHours(release.billableHoursBudget) }}
     </div>
     <div class="-release__data__options">
-      <button
-        mat-icon-button
-        (click)="openEditRelease(release)"
-        class="-release__data__options--edit"
-      >
-        <span
-          class="material-symbols-outlined -release__data__options--edit__icon"
+      <button mat-icon-button (click)="openEditRelease(release)">
+        <span class="material-symbols-outlined -release__data__options__icon"
           >ink_marker
         </span>
       </button>
       <button
         mat-flat-button
         extended
-        class="-release__data__options--report"
-        (click)="openReport(release)"
+        class="-release__data__options__report"
+        (click)="openReportDialog(release)"
       >
-        <div class="-release__data__options--report__elements">
+        <div class="-release__data__options__report__content">
           <span class="material-symbols-outlined">chair</span>
           <div class="body-2">Report</div>
         </div>

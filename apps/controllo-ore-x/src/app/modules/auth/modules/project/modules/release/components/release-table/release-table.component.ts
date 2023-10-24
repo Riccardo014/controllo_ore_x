@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ReleaseReadDto } from '@api-interfaces';
+import { ApiPaginatedResponse, ReleaseReadDto } from '@api-interfaces';
 import { ReleaseDataService } from '@app/_core/services/release.data-service';
 import {
   SubscriptionsLifecycle,
@@ -29,6 +29,12 @@ export class ReleaseTableComponent
   constructor(protected _releaseDataService: ReleaseDataService) {}
 
   ngOnInit(): void {
+    if (!this.projectId) {
+      throw new Error('projectId is required');
+    }
+    if (typeof this.projectId !== 'string') {
+      throw new Error('projectId must be a string');
+    }
     this._setSubscriptions();
   }
 
@@ -37,16 +43,16 @@ export class ReleaseTableComponent
   }
 
   _setSubscriptions(): void {
-    this.subscriptionsList.push(this._getReleases());
+    this.subscriptionsList.push(this._fetchSetReleases());
   }
 
-  _getReleases(): Subscription {
+  _fetchSetReleases(): Subscription {
     return this._releaseDataService
       .getMany({
         where: { projectId: this.projectId },
         order: { version: 'DESC' },
       })
-      .subscribe((releases: any) => {
+      .subscribe((releases: ApiPaginatedResponse<ReleaseReadDto>) => {
         this.releases = releases.data;
         this.isLoading.next(false);
       });
