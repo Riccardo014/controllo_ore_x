@@ -54,6 +54,13 @@ const routes: Routes = [
             (module) => module.HoursTagModule,
           ),
       },
+      {
+        path: 'ferie-permessi',
+        loadChildren: () =>
+          import('./modules/dayoff/dayoff.module').then(
+            (module) => module.DayoffModule,
+          ),
+      },
     ],
   },
 ];

@@ -1,0 +1,32 @@
+<controllo-ore-x-index-template
+  [page]="this"
+  [buttonIcon]="buttonIcon"
+  [buttonText]="buttonText"
+  [shouldHideCreateButton]="true"
+  [hasCalendar]="true"
+  (openDialog)="openDialogFn($event)"
+></controllo-ore-x-index-template>
+
+<div class="-subtitle">
+  <div class="-subtitle-text">
+    <h2 class="body-1">Ore totali di assenza</h2>
+    <span class="headline-5">{{ convertNumberToHours(workedHours) }}</span>
+  </div>
+  <div>
+    <button
+      class="-subtitle-button"
+      mat-flat-button
+      color="primary"
+      (click)="createFn()"
+    >
+      <div class="-subtitle-button-elements">
+        <span class="material-symbols-outlined">{{ buttonIcon }}</span>
+        <span class="body-2 -subtitle-button-elements-text"
+          >{{ buttonText }}</span
+        >
+      </div>
+    </button>
+  </div>
+</div>
+
+<div class="-content"></div>
