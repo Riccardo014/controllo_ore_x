@@ -1,17 +1,18 @@
-import { MiddlewareConsumer, Module } from '@nestjs/common';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { AppService } from './app.service';
-import { join } from 'path';
-import { HttpLoggerMiddleware } from '@shared/middlewares/http-logger.middleware';
 import { typeormOptionsModuleFactory } from '@config/typeorm-options.config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { UserModule } from '@modules/user/user.module';
 import { AuthModule } from '@modules/auth/auth.module';
 import { CustomerModule } from '@modules/customer/customer.module';
+import { DayoffModule } from '@modules/dayoff/dayoff.module';
+import { IndexConfigurationModule } from '@modules/index-configuration/index-configuration.module';
 import { ProjectModule } from '@modules/project/project.module';
 import { UserHoursModule } from '@modules/user-hours/user-hours.module';
-import { IndexConfigurationModule } from '@modules/index-configuration/index-configuration.module';
+import { UserModule } from '@modules/user/user.module';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { HttpLoggerMiddleware } from '@shared/middlewares/http-logger.middleware';
+import { join } from 'path';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
@@ -19,19 +20,13 @@ import { IndexConfigurationModule } from '@modules/index-configuration/index-con
       isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({
-      imports: [
-        ConfigModule,
-      ],
-      inject: [
-        ConfigService,
-      ],
+      imports: [ConfigModule],
+      inject: [ConfigService],
       useFactory: typeormOptionsModuleFactory,
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'controllo-ore-x'),
-      exclude: [
-        '/api*',
-      ],
+      exclude: ['/api*'],
     }),
 
     UserModule,
@@ -39,6 +34,7 @@ import { IndexConfigurationModule } from '@modules/index-configuration/index-con
     CustomerModule,
     ProjectModule,
     UserHoursModule,
+    DayoffModule,
     IndexConfigurationModule,
   ],
   providers: [AppService],
