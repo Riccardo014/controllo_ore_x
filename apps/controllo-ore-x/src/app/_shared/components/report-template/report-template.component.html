@@ -28,21 +28,26 @@
 </controllo-ore-x-rt-header>
 <lib-rt-table-fulltext-bar
   class="-search-bar"
-  (fulltextSearchEmitter)="updateFulltextSearch($event)"
+  (fulltextSearchEmitter)="page.updateFulltextSearch($event)"
 >
 </lib-rt-table-fulltext-bar>
-<controllo-ore-x-report-filter
-  (filtersEmitter)="onFilterEmit($event)"
-></controllo-ore-x-report-filter>
 
-<lib-rt-table
-*ngIf="page.isFirstLoadDone"
-[isLoading]="page.isLoading.getValue()"
-[isTableTopbarVisible]="page.isTableTopbarVisible"
-[isTableHeaderVisible]="page.isTableHeaderVisible"
-(statusChangeEmitter)="page.indexTableHandler.statusChange($event)"
-[tableConfiguration]="page.configuration"
-[data]="page.indexTableHandler.data"
-[isEditAvailable]="isEditAvailable"
-[status]="page.indexTableHandler.status"
-></lib-rt-table>
+<div class="-page-content">
+  <controllo-ore-x-report-filter
+    (filtersEmitter)="page.onFilterEmit($event)"
+  ></controllo-ore-x-report-filter>
+
+  <div class="-page-content__table">
+    <lib-rt-table
+      *ngIf="page.isFirstLoadDone"
+      [isLoading]="page.isLoading.getValue()"
+      [isTableTopbarVisible]="page.isTableTopbarVisible"
+      [isTableHeaderVisible]="page.isTableHeaderVisible"
+      (statusChangeEmitter)="page.indexTableHandler.statusChange($event)"
+      [tableConfiguration]="page.configuration"
+      [data]="page.indexTableHandler.data"
+      [isEditAvailable]="isEditAvailable"
+      [status]="page.indexTableHandler.status"
+    ></lib-rt-table>
+  </div>
+</div>

@@ -1,32 +1,14 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import {
-  COX_FILTER,
-  CustomerReadDto,
-  FIND_BOOSTED_FN,
-  FindBoostedWhereOption,
-  HoursTagReadDto,
-  INDEX_CONFIGURATION_KEY,
-  ProjectReadDto,
-  ReleaseReadDto,
-  UserHoursCreateDto,
-  UserHoursReadDto,
-  UserHoursUpdateDto,
-  UserReadDto,
-} from '@api-interfaces';
-import { IndexConfigurationDataService } from '@app/_core/services/index-configuration.data-service';
-import { ReportDataService } from '@app/_core/services/report.data-service';
-import { IndexPage } from '@app/_shared/classes/index-page.class';
+import { COX_FILTER } from '@api-interfaces';
+import { ReportPage } from '@app/_shared/classes/report-page.class';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
-import { endOfDay, startOfDay } from 'date-fns';
-import { Subscription } from 'rxjs';
-import { CalendarDateService } from '../index-template/servicies/calendar-date.service';
-import { FilterService } from './services/filter.service';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
-import { ReportPage } from '@app/_shared/classes/report-page.class';
+import { Subscription } from 'rxjs';
+import { FilterService } from './services/filter.service';
 
 /**
  * Template of a report page
@@ -35,17 +17,10 @@ import { ReportPage } from '@app/_shared/classes/report-page.class';
   selector: 'controllo-ore-x-report-template',
   templateUrl: './report-template.component.html',
   styleUrls: ['./report-template.component.scss'],
-  providers: [FilterService],
 })
 export class ReportTemplateComponent
   implements OnInit, OnDestroy, SubscriptionsLifecycle
 {
-  onFilterEmit($event: FindBoostedWhereOption[]) {
-    throw new Error('Method not implemented.');
-  }
-  updateFulltextSearch($event: string) {
-    throw new Error('Method not implemented.');
-  }
   /**
    * Page to be displayed
    */
@@ -129,7 +104,6 @@ export class ReportTemplateComponent
   constructor(
     private _loadingService: RtLoadingService,
     private _filterService: FilterService,
-    private _calendarDateService: CalendarDateService,
   ) {}
 
   ngOnInit(): void {
