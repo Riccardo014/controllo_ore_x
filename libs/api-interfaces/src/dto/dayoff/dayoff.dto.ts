@@ -1,5 +1,8 @@
+import { UserReadDto } from '../user/user.dto';
+
 export interface DayoffReadDto {
   _id: string;
+  user: UserReadDto;
   userId: string;
   startDate: Date;
   endDate: Date;

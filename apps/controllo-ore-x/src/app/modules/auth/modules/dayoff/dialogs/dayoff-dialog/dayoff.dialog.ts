@@ -36,7 +36,8 @@ export class DayoffDialog
   subscriptionsList: Subscription[] = [];
 
   date: Date = new Date();
-  allDaySliderStatus: boolean = false;
+  isAllDaySliderChecked: boolean = false;
+  isAllDaySliderDisabled: boolean = false;
 
   _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
@@ -67,6 +68,16 @@ export class DayoffDialog
 
     if (this.data.input) {
       this.formHelper.patchForm(this.data.input);
+      this._compareDate(
+        this._createDate(
+          this.formHelper.form.value.startDate,
+          this.formHelper.form.value.startTime,
+        ),
+        this._createDate(
+          this.formHelper.form.value.endDate,
+          this.formHelper.form.value.endTime,
+        ),
+      );
       this.isCreating = false;
       this.formHelper.entityId = this.data.input._id;
       this.title = 'Modifica giustificativo';
@@ -90,7 +101,7 @@ export class DayoffDialog
   }
 
   override onSubmit(): void {
-    if (this.allDaySliderStatus) {
+    if (this.isAllDaySliderChecked) {
       this.formHelper.form.patchValue({
         hours: this._calculateHoursOfDifferentDays(
           this.formHelper.form.value.startDate,
@@ -120,26 +131,46 @@ export class DayoffDialog
 
   allDayToggleChange(event: any): void {
     if (event.checked) {
-      this.allDaySliderStatus = true;
+      this.isAllDaySliderChecked = true;
       this.formHelper.form.controls['startTime'].disable();
       this.formHelper.form.controls['endTime'].disable();
+      this.formHelper.form.patchValue({
+        startTime: '00:00',
+        endTime: '00:00',
+      });
     } else {
-      this.allDaySliderStatus = false;
+      this.isAllDaySliderChecked = false;
       this.formHelper.form.controls['startTime'].enable();
       this.formHelper.form.controls['endTime'].enable();
     }
   }
 
-  onEndDateChange(event: any): void {
-    if (event.value >= this.formHelper.form.value.startDate) {
+  onEndDateChange(date: Date): void {
+    this._compareDate(this.formHelper.form.value.startDate, date);
+  }
+
+  onStartDateChange(date: Date): void {
+    this._compareDate(date, this.formHelper.form.value.endDate);
+  }
+
+  private _compareDate(startDate: Date, endDate: Date): void {
+    if (startDate.valueOf() === endDate.valueOf()) {
+      this.isAllDaySliderDisabled = true;
       this.allDayToggleChange({ checked: true });
+    }
+    if (new Date(endDate.toDateString()) > new Date(startDate.toDateString())) {
+      this.isAllDaySliderDisabled = true;
+      this.allDayToggleChange({ checked: true });
+    } else {
+      this.isAllDaySliderDisabled = false;
     }
   }
 
   private _getSelectedDate(): Subscription {
     return this._calendarDateService.currentDateObservable.subscribe(
       (selectedDate: Date) => {
-        this.date = selectedDate;
+        this.date = new Date(selectedDate);
+        this.date.setHours(0, 0, 0, 0);
       },
     );
   }

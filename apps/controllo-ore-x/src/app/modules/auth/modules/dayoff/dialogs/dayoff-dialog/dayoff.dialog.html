@@ -12,7 +12,8 @@
           color="primary"
           class="-toggle"
           (change)="allDayToggleChange($event)"
-          [checked]="allDaySliderStatus"
+          [checked]="isAllDaySliderChecked"
+          [disabled]="isAllDaySliderDisabled"
           ><span class="body-2 -toggle__text">Tutto il giorno</span>
         </mat-slide-toggle>
 
@@ -23,6 +24,7 @@
             [matDatepicker]="startPicker"
             placeholder="Data di inizio"
             formControlName="startDate"
+            (dateChange)="onStartDateChange($event.value)"
           />
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
             <div
@@ -45,7 +47,7 @@
             placeholder="Data di fine"
             formControlName="endDate"
             [min]="formHelper.form.controls['startDate'].value"
-            (dateChange)="onEndDateChange($event)"
+            (dateChange)="onEndDateChange($event.value)"
           />
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
             <div
