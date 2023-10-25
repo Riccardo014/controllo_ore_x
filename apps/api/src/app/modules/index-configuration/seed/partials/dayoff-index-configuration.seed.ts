@@ -43,6 +43,12 @@ export const DAYOFF_INDEX_CONFIGURATION_SEED: any = {
         field: 'notes',
         sortable: true,
       },
+      {
+        title: '',
+        field: '',
+        type: 'EDITABLE',
+        sortable: false,
+      },
     ],
     relations: ['user'],
     fullSearchCols: ['notes'],

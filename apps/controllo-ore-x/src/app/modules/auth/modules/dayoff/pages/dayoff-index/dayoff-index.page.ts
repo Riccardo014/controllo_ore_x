@@ -12,7 +12,6 @@ import {
   DayoffUpdateDto,
   FindBoostedWhereOption,
   INDEX_CONFIGURATION_KEY,
-  UserHoursReadDto,
 } from '@api-interfaces';
 import { AuthService } from '@app/_core/services/auth.service';
 import { DayoffDataService } from '@app/_core/services/dayoff.data-service';
@@ -25,6 +24,7 @@ import {
 import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
+import { DayoffDialog } from '../../dialogs/dayoff-dialog/dayoff.dialog';
 
 @Component({
   selector: 'controllo-ore-x-dayoff-index',
@@ -93,9 +93,14 @@ export class DayoffIndexPage
       });
   }
 
-  openDialogFn($event: UserHoursReadDto): void {
-    this.openDialog.emit($event);
-    this._router.navigate([this._router.url + '/' + $event._id]);
+  openDialogFn($event: DayoffReadDto): void {
+    this._rtDialogService
+      .open(DayoffDialog, {
+        width: '600px',
+        maxWidth: '600px',
+        data: $event,
+      })
+      .subscribe();
   }
 
   convertNumberToHours(number: number): string {
@@ -105,12 +110,12 @@ export class DayoffIndexPage
   }
 
   createFn(): void {
-    // this._rtDialogService
-    //   .open(DayoffDialog, {
-    //     width: '600px',
-    //     maxWidth: '600px',
-    //   })
-    //   .subscribe();
+    this._rtDialogService
+      .open(DayoffDialog, {
+        width: '600px',
+        maxWidth: '600px',
+      })
+      .subscribe();
   }
 
   private _setDayoffsHours(): void {
