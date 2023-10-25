@@ -10,7 +10,7 @@ import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, catchError, concatMap, of } from 'rxjs';
 
 @Component({
   selector: 'controllo-ore-x-project-release-status',
@@ -59,44 +59,106 @@ export class ProjectReleaseStatusComponent
     this.subscriptionsList.push(this._fetchSetReleases());
   }
 
+  // _fetchSetReleases(): Subscription {
+  //   return this._releaseDataService
+  //     .getMany({
+  //       where: { projectId: this.projectId },
+  //     })
+  //     .subscribe((releases: ApiPaginatedResponse<ReleaseReadDto>) => {
+  //       this.totalReleases = releases.data.length;
+  //       releases.data.forEach((release) => {
+  //         if (release.isCompleted) {
+  //           this.completedReleases += 1;
+  //           return;
+  //         }
+  //         this._userHoursDataService
+  //           .getMany({
+  //             where: { releaseId: release._id },
+  //           })
+  //           .subscribe((userHours: ApiPaginatedResponse<UserHoursReadDto>) => {
+  //             if (userHours.data.length > 0) {
+  //               this.inProgressReleases += 1;
+  //             }
+  //             const tagsIds: Set<string> = new Set<string>();
+  //             userHours.data.forEach((userHour: any) => {
+  //               if (!tagsIds.has(userHour.hoursTagId)) {
+  //                 this.tags.push({
+  //                   hoursTagId: userHour.hoursTagId,
+  //                   hours: Number(userHour.hours),
+  //                 });
+  //                 tagsIds.add(userHour.hoursTagId);
+  //               } else {
+  //                 this.tags.forEach((tag) => {
+  //                   if (tag.hoursTagId === userHour.hoursTagId) {
+  //                     tag.hours += Number(userHour.hours);
+  //                   }
+  //                 });
+  //               }
+  //             });
+  //           });
+  //       });
+  //     });
+  // }
+
   _fetchSetReleases(): Subscription {
     return this._releaseDataService
-      .getMany({
-        where: { projectId: this.projectId },
-      })
-      .subscribe((releases: ApiPaginatedResponse<ReleaseReadDto>) => {
-        this.totalReleases = releases.data.length;
-        releases.data.forEach((release) => {
-          if (release.isCompleted) {
-            this.completedReleases += 1;
-            return;
+      .getMany({ where: { projectId: this.projectId } })
+      .pipe(
+        concatMap((releases: any) => {
+          this.totalReleases = releases.data.length;
+          this.completedReleases = 0;
+          this.inProgressReleases = 0;
+          this.tags = [];
+
+          return releases.data.reduce(
+            (previous: any, release: ReleaseReadDto) => {
+              return previous.pipe(
+                concatMap(() => this._handleRelease(release)),
+              );
+            },
+            of(null),
+          );
+        }),
+        catchError((error) => {
+          throw new Error(error.message);
+        }),
+      )
+      .subscribe();
+  }
+
+  _handleRelease(release: ReleaseReadDto): Observable<any> {
+    if (release.isCompleted) {
+      this.completedReleases += 1;
+      return of(null);
+    }
+
+    return this._userHoursDataService
+      .getMany({ where: { releaseId: release._id } })
+      .pipe(
+        concatMap((userHours: ApiPaginatedResponse<UserHoursReadDto>) => {
+          if (userHours.data.length > 0) {
+            this.inProgressReleases += 1;
           }
-          this._userHoursDataService
-            .getMany({
-              where: { releaseId: release._id },
-            })
-            .subscribe((userHours: ApiPaginatedResponse<UserHoursReadDto>) => {
-              if (userHours.data.length > 0) {
-                this.inProgressReleases += 1;
-              }
-              const tagsIds: Set<string> = new Set<string>();
-              userHours.data.forEach((userHour: any) => {
-                if (!tagsIds.has(userHour.hoursTagId)) {
-                  this.tags.push({
-                    hoursTagId: userHour.hoursTagId,
-                    hours: Number(userHour.hours),
-                  });
-                  tagsIds.add(userHour.hoursTagId);
-                } else {
-                  this.tags.forEach((tag) => {
-                    if (tag.hoursTagId === userHour.hoursTagId) {
-                      tag.hours += Number(userHour.hours);
-                    }
-                  });
+
+          const tagsIds: Set<string> = new Set<string>();
+          userHours.data.forEach((userHour: any) => {
+            if (!tagsIds.has(userHour.hoursTagId)) {
+              this.tags.push({
+                hoursTagId: userHour.hoursTagId,
+                hours: Number(userHour.hours),
+              });
+              tagsIds.add(userHour.hoursTagId);
+            } else {
+              this.tags.forEach((tag) => {
+                if (tag.hoursTagId === userHour.hoursTagId) {
+                  tag.hours += Number(userHour.hours);
                 }
               });
-            });
-        });
-      });
+            }
+          });
+
+          return of(null);
+        }),
+      );
   }
 }
