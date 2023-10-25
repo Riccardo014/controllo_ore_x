@@ -81,7 +81,7 @@ export abstract class IndexPage<T, CreateT, UpdateT>
     );
   }
 
-  private _firstLoad(): Subscription {
+  _firstLoad(): Subscription {
     return this._configurationService
       .getConfiguration(this.CONFIGURATION_KEY)
       .subscribe((configuration: ApiResponse<IndexConfigurationReadDto>) => {

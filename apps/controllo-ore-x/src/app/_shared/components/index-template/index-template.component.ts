@@ -51,6 +51,16 @@ export class IndexTemplateComponent
   @Input() hasExportCsv: boolean = true;
 
   /**
+   * If true, the page will have a table to display the data
+   */
+  @Input() isPageWithTable: boolean = true;
+
+  /**
+   * If true, the page will have a header
+   */
+  @Input() isCompletePage: boolean = true;
+
+  /**
    * The function to be called when the user clicks on the create button
    */
   @Input() createFn?: () => void | Promise<void>;

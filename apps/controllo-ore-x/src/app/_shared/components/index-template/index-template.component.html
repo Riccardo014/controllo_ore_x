@@ -1,4 +1,4 @@
-<controllo-ore-x-rt-header *ngIf="page.isCompletePage">
+<controllo-ore-x-rt-header *ngIf="isCompletePage">
   <ng-container title>
     <h1 class="headline-6">{{ page.title }}</h1>
   </ng-container>
@@ -64,7 +64,7 @@
 
 <div class="-page-content">
   <lib-rt-table
-    *ngIf="page.isFirstLoadDone && page.isPageWithTable"
+    *ngIf="page.isFirstLoadDone && isPageWithTable"
     [isLoading]="page.isLoading.getValue()"
     [isTableTopbarVisible]="page.isTableTopbarVisible"
     [isTableHeaderVisible]="page.isTableHeaderVisible"

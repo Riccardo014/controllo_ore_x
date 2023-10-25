@@ -54,7 +54,6 @@ export class TrackerIndexPage
   );
   hasErrors: boolean = false;
   isEditAvailable: boolean = false;
-  override isPageWithTable: boolean = false;
 
   userHours: UserHoursReadDto[] = [];
 

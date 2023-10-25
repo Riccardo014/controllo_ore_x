@@ -4,13 +4,14 @@
   [buttonText]="buttonText"
   [shouldHideCreateButton]="true"
   [hasCalendar]="true"
+  [isPageWithTable]="false"
   (openDialog)="openDialogFn($event)"
 ></controllo-ore-x-index-template>
 
 <div class="-subtitle">
   <div class="-subtitle-text">
     <h2 class="body-1">Ore totali di assenza</h2>
-    <span class="headline-5">{{ convertNumberToHours(workedHours) }}</span>
+    <span class="headline-5">{{ convertNumberToHours(dayoffsHours) }}</span>
   </div>
   <div>
     <button
@@ -29,4 +30,13 @@
   </div>
 </div>
 
-<div class="-content"></div>
+<controllo-ore-x-index-template
+  [page]="this"
+  [buttonIcon]="buttonIcon"
+  [buttonText]="buttonText"
+  [shouldHideCreateButton]="true"
+  [hasCalendar]="true"
+  [isCompletePage]="false"
+  [isPageWithTable]="true"
+  (openDialog)="openDialogFn($event)"
+></controllo-ore-x-index-template>

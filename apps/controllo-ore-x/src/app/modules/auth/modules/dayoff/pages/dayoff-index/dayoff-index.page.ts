@@ -7,23 +7,21 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import {
-  ApiPaginatedResponse,
-  FIND_BOOSTED_FN,
+  DayoffCreateDto,
+  DayoffReadDto,
+  DayoffUpdateDto,
+  FindBoostedWhereOption,
   INDEX_CONFIGURATION_KEY,
-  UserHoursCreateDto,
   UserHoursReadDto,
-  UserHoursUpdateDto,
 } from '@api-interfaces';
 import { AuthService } from '@app/_core/services/auth.service';
 import { DayoffDataService } from '@app/_core/services/dayoff.data-service';
 import { IndexConfigurationDataService } from '@app/_core/services/index-configuration.data-service';
 import { IndexPage } from '@app/_shared/classes/index-page.class';
-import { CalendarDateService } from '@app/_shared/components/index-template/servicies/calendar-date.service';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
-import { endOfDay, startOfDay } from 'date-fns';
 import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -34,7 +32,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
   styleUrls: ['./dayoff-index.page.scss'],
 })
 export class DayoffIndexPage
-  extends IndexPage<UserHoursReadDto, UserHoursCreateDto, UserHoursUpdateDto>
+  extends IndexPage<DayoffReadDto, DayoffCreateDto, DayoffUpdateDto>
   implements OnInit, OnDestroy, SubscriptionsLifecycle
 {
   titleIcon: string | null = 'carpenter';
@@ -42,7 +40,7 @@ export class DayoffIndexPage
   pageTitle = 'Ferie e permessi';
   buttonIcon = 'carpenter';
   buttonText = 'Nuovo giustificativo';
-  workedHours: number = 0;
+  dayoffsHours: number = 0;
   selectedDate: Date = new Date();
 
   CONFIGURATION_KEY: INDEX_CONFIGURATION_KEY = INDEX_CONFIGURATION_KEY.DAYOFF;
@@ -52,9 +50,8 @@ export class DayoffIndexPage
   );
   hasErrors: boolean = false;
   isEditAvailable: boolean = false;
-  override isPageWithTable: boolean = false;
 
-  userHours: UserHoursReadDto[] = [];
+  dayoffs: DayoffReadDto[] = [];
 
   @Output() openDialog: EventEmitter<any> = new EventEmitter<any>();
 
@@ -70,60 +67,29 @@ export class DayoffIndexPage
     private _rtDialogService: RtDialogService,
     private _authService: AuthService,
     private _router: Router,
-    private _calendarDateService: CalendarDateService,
   ) {
     super();
   }
 
   override ngOnInit(): void {
+    super.ngOnInit();
     this._setSubscriptions();
+    this.indexTableHandler.isLoading.subscribe((r) => {
+      this._setDayoffsHours();
+      this.isFirstLoadDone.next(true);
+      this.isLoading.next(r);
+    });
   }
 
-  override ngOnDestroy(): void {
-    this._completeSubscriptions(this.subscriptionsList);
-  }
-
-  override _setSubscriptions(): void {
-    this.subscriptionsList.push(
-      this._getUserHours(),
-      this._calendarDateService.currentDateObservable.subscribe(
-        (date: Date) => {
-          this.selectedDate = date;
-          this._getUserHours();
-        },
-      ),
-    );
-  }
-
-  _getUserHours(): Subscription {
-    if (!this._authService.loggedInUser) {
-      throw new Error('User not logged in');
-    }
-    return this._dataService
-      .getMany({
-        relations: [
-          'release',
-          'release.project',
-          'release.project.customer',
-          'hoursTag',
-        ],
-        where: {
-          userId: this._authService.loggedInUser._id,
-          date: {
-            _fn: FIND_BOOSTED_FN.DATE_BETWEEN,
-            args: [
-              startOfDay(this.selectedDate).toISOString(),
-              endOfDay(this.selectedDate).toISOString(),
-            ],
-          },
-        },
-      })
-      .subscribe((userHours: ApiPaginatedResponse<UserHoursReadDto>) => {
-        this.userHours = userHours.data;
-        this.workedHours = 0;
-        this.userHours.forEach((userHour: UserHoursReadDto) => {
-          this.workedHours += Number(userHour.hours);
-        });
+  override _firstLoad(): Subscription {
+    return this._configurationService
+      .getConfiguration(this.CONFIGURATION_KEY)
+      .subscribe((data) => {
+        this.configuration = data.configuration;
+        this.indexTableHandler.tableConfiguration = this.configuration;
+        this._setTableStatus();
+        this.indexTableHandler.fetchData();
+        this.isFirstLoadDone.next(true);
       });
   }
 
@@ -139,11 +105,29 @@ export class DayoffIndexPage
   }
 
   createFn(): void {
-    //   this._rtDialogService
-    //     .open(DayoffDialog, {
-    //       width: '600px',
-    //       maxWidth: '600px',
-    //     })
-    //     .subscribe();
+    // this._rtDialogService
+    //   .open(DayoffDialog, {
+    //     width: '600px',
+    //     maxWidth: '600px',
+    //   })
+    //   .subscribe();
+  }
+
+  private _setDayoffsHours(): void {
+    this.dayoffsHours = 0;
+    this.indexTableHandler.data.forEach((dayoff: DayoffReadDto) => {
+      this.dayoffsHours += Number(dayoff.hours);
+    });
+  }
+
+  private _setTableStatus(): void {
+    if (!this._authService.loggedInUser) {
+      throw new Error('User not logged in');
+    }
+    const newWhereOption: FindBoostedWhereOption = {
+      userId: this._authService.loggedInUser._id,
+    };
+    this.indexTableHandler.status.where = [newWhereOption];
+    this.indexTableHandler.statusChange(this.indexTableHandler.status);
   }
 }

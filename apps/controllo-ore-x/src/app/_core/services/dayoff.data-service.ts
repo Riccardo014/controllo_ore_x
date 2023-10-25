@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
-  UserHoursCreateDto,
-  UserHoursReadDto,
-  UserHoursUpdateDto,
+  DayoffCreateDto,
+  DayoffReadDto,
+  DayoffUpdateDto,
 } from '@api-interfaces';
 import { BaseDataService } from '@controllo-ore-x/rt-shared';
 import { environment } from '@env';
@@ -12,11 +12,11 @@ import { environment } from '@env';
   providedIn: 'root',
 })
 export class DayoffDataService extends BaseDataService<
-  UserHoursReadDto,
-  UserHoursCreateDto,
-  UserHoursUpdateDto
+  DayoffReadDto,
+  DayoffCreateDto,
+  DayoffUpdateDto
 > {
-  currentApiUri: string = environment.apiUri + '/userHours';
+  currentApiUri: string = environment.apiUri + '/dayoffs';
 
   constructor(protected http: HttpClient) {
     super();

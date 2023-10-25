@@ -41,7 +41,6 @@ export class ProjectIndexPage
   );
   hasErrors: boolean = false;
   isEditAvailable: boolean = false;
-  override isPageWithTable: boolean = false;
 
   projects: ProjectReadDto[] = [];
   showedProjects: ProjectReadDto[] = [];
