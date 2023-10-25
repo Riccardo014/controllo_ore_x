@@ -10,12 +10,15 @@ import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { HOURS_TAG_SEED } from './seeds/hours-tag.seed';
+import { DayoffController } from '@modules/user-hours/controllers/dayoff.controller';
+import { DayoffService } from '@modules/user-hours/services/dayoff.service';
+import { Dayoff } from '@modules/user-hours/entities/dayoff.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserHours, HoursTag]), UserModule],
-  controllers: [UserHoursController, HoursTagController],
-  exports: [UserHoursService, HoursTagService],
-  providers: [UserHoursService, HoursTagService],
+  imports: [TypeOrmModule.forFeature([UserHours, HoursTag, Dayoff]), UserModule],
+  controllers: [UserHoursController, HoursTagController, DayoffController],
+  exports: [UserHoursService, HoursTagService, DayoffService],
+  providers: [UserHoursService, HoursTagService, DayoffService],
 })
 export class UserHoursModule {
   constructor(

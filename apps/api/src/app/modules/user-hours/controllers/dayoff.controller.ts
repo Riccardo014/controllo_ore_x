@@ -1,8 +1,8 @@
 import { FindBoostedOptions } from '@api-interfaces';
 import { FindBoostedResult } from '@find-boosted';
-import { DayoffCreateDtoV } from '@modules/dayoff/dtov/dayoff-create.dtov';
-import { DayoffUpdateDtoV } from '@modules/dayoff/dtov/dayoff-update.dtov';
-import { DayoffService } from '@modules/dayoff/services/dayoff.service';
+import { DayoffCreateDtoV } from '@modules/user-hours/dtov/dayoff-create.dtov';
+import { DayoffUpdateDtoV } from '@modules/user-hours/dtov/dayoff-update.dtov';
+import { DayoffService } from '@modules/user-hours/services/dayoff.service';
 import { User } from '@modules/user/entities/user.entity';
 import {
   Body,

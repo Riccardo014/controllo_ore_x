@@ -1,7 +1,6 @@
 import { typeormOptionsModuleFactory } from '@config/typeorm-options.config';
 import { AuthModule } from '@modules/auth/auth.module';
 import { CustomerModule } from '@modules/customer/customer.module';
-import { DayoffModule } from '@modules/dayoff/dayoff.module';
 import { IndexConfigurationModule } from '@modules/index-configuration/index-configuration.module';
 import { ProjectModule } from '@modules/project/project.module';
 import { UserHoursModule } from '@modules/user-hours/user-hours.module';
@@ -34,7 +33,6 @@ import { AppService } from './app.service';
     CustomerModule,
     ProjectModule,
     UserHoursModule,
-    DayoffModule,
     IndexConfigurationModule,
   ],
   providers: [AppService],
