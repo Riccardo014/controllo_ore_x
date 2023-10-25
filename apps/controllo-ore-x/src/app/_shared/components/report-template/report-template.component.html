@@ -37,6 +37,38 @@
     (filtersEmitter)="page.onFilterEmit($event)"
   ></controllo-ore-x-report-filter>
 
+  <div class="-subtitle">
+    <div class="-subtitle-text">
+      <h2 class="body-1">{{ page.subTitle }}</h2>
+      <span class="headline-5">{{
+        convertNumberToHours(page.subTitleHours)
+      }}</span>
+    </div>
+    <div>
+      <button
+        *ngIf="createFn"
+        class="-subtitle-button"
+        mat-flat-button
+        color="primary"
+        (click)="createFn()"
+      >
+        <div class="-subtitle-button-elements">
+          <span class="material-symbols-outlined">{{ buttonIcon }}</span>
+          <span class="body-2 -subtitle-button-elements-text">{{
+            buttonText
+          }}</span>
+        </div>
+      </button>
+    </div>
+    <!-- TODO: add export functionality -->
+    <button mat-flat-button extended class="-export-button">
+      <div class="-export-button-elements">
+        <span class="material-symbols-outlined">blender</span>
+        <div class="body-2">Export</div>
+      </div>
+    </button>
+  </div>
+
   <div class="-page-content__table">
     <lib-rt-table
       *ngIf="page.isFirstLoadDone"

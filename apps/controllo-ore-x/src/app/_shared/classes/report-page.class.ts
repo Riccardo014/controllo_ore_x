@@ -51,6 +51,8 @@ export abstract class ReportPage<T, CreateT, UpdateT>
     completeSubscriptions;
 
   abstract title: string;
+  abstract subTitle: string;
+  abstract subTitleHours: number;
 
   abstract CONFIGURATION_KEY: INDEX_CONFIGURATION_KEY;
   protected abstract _dataService: BaseDataService<T, CreateT, UpdateT>;
@@ -82,6 +84,7 @@ export abstract class ReportPage<T, CreateT, UpdateT>
       this.indexTableHandler.isLoading.subscribe((r) => {
         this.isFirstLoadDone.next(true);
         this.isLoading.next(r);
+        this.changeSubTitleHours();
       }),
       this._calendarDateService.currentRangeDatesObservable.subscribe(
         (dates: { start: Date; end: Date }) => {
@@ -90,6 +93,13 @@ export abstract class ReportPage<T, CreateT, UpdateT>
         },
       ),
     );
+  }
+
+  changeSubTitleHours(): void {
+    this.subTitleHours = 0;
+    this.indexTableHandler.data.forEach((data: any) => {
+      this.subTitleHours += parseFloat(data.hours);
+    });
   }
 
   changeDataForDate(): void {

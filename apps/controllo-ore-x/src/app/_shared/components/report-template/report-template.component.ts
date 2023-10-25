@@ -132,6 +132,12 @@ export class ReportTemplateComponent
     );
   }
 
+  convertNumberToHours(number: number): string {
+    const hours = Math.floor(number);
+    const minutes = Math.round((number - hours) * 60).toString();
+    return hours.toString().padStart(2, '0') + ':' + minutes.padStart(2, '0');
+  }
+
   private _setLoadingParameters(): void {
     if (this._isLoading) {
       this._isFirstLoadDone

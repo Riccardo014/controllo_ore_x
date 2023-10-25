@@ -15,9 +15,61 @@
 
   @include scrollbar-primary(map-get($palette-grey, 400), 6px, true);
 
-  &__table {
-    overflow-y: auto;
-    max-height: calc($content-height - $header-height - $subtitle-height);
-    @include scrollbar-primary(map-get($palette-grey, 400), 6px, true);
+  // &__table {
+  // overflow-y: auto;
+  // max-height: calc($content-height - $header-height - $subtitle-height);
+  // @include scrollbar-primary(map-get($palette-grey, 400), 6px, true);
+  // }
+}
+
+.-subtitle {
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 40px;
+  border-bottom: 1px solid map-get($palette-grey, 200);
+}
+
+.-subtitle-text {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5%;
+  white-space: nowrap;
+}
+
+.-subtitle-button {
+  background-color: map-get($palette-primary, 500);
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.-subtitle-button-elements {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5%;
+}
+
+.-subtitle-button-elements-text {
+  white-space: nowrap;
+}
+
+.-export-button {
+  background-color: map-get($palette-accent, 200);
+  color: #000000;
+  padding: 20px;
+  border-radius: 10px;
+
+  .-export-button-elements {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5%;
   }
 }

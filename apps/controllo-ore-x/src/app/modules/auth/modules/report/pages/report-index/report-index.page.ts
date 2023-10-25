@@ -37,6 +37,8 @@ export class ReportIndexPage extends ReportPage<
   pageTitle = 'Report';
   buttonIcon = 'chair';
   buttonText = '';
+  subTitle: string = 'Totale ore:';
+  subTitleHours: number = 0;
   selectedDate: Date = new Date();
 
   override isTableTopbarVisible: boolean = false;
