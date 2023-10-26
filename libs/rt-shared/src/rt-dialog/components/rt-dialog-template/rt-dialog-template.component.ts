@@ -8,11 +8,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class RtDialogTemplateComponent {
   @Output() closeDialogEvent: EventEmitter<void> = new EventEmitter<void>();
 
-  @Input() cTitle: string | undefined;
+  @Input() title: string | undefined;
   @Input() subtitle: string | undefined;
   @Input() isFooterEnabled: boolean = true;
   @Input() isLoading: boolean = false;
   @Input() isError: boolean = false;
-  @Input() errorMsg?: string = 'Si è verificato un errore. Riprova';
+  @Input() errorMessage?: string;
   @Input() hasClose: boolean = false;
+
+  @Output() reFetch: EventEmitter<void> = new EventEmitter<void>();
 }

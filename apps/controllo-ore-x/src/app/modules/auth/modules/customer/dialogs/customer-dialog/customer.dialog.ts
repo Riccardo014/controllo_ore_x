@@ -24,6 +24,7 @@ export class CustomerDialog {
 
   isLoading: boolean = false;
   hasErrors: boolean = false;
+  errorMessage: string = '';
 
   customer?: CustomerReadDto;
 
@@ -81,6 +82,10 @@ export class CustomerDialog {
     this._create();
   }
 
+  onReFetch(): void {
+    window.location.reload();
+  }
+
   getFormControlError(field: string, error: Error): boolean {
     return this.customerFormGroup.controls[field].hasError(error.name);
   }
@@ -99,6 +104,7 @@ export class CustomerDialog {
         this.dialogRef.close(modalRes);
       },
       error: () => {
+        this.errorMessage = 'Non è stato possibile creare il cliente';
         this.hasErrors = true;
       },
       complete: () => {
@@ -126,6 +132,7 @@ export class CustomerDialog {
         this.dialogRef.close(modalRes);
       },
       error: () => {
+        this.errorMessage = 'Non è stato possibile aggiornare i dati del cliente';
         this.hasErrors = true;
       },
       complete: () => {
@@ -152,6 +159,7 @@ export class CustomerDialog {
         this.dialogRef.close(modalRes);
       },
       error: () => {
+        this.errorMessage = 'Non è stato possibile eliminare il cliente';
         this.hasErrors = true;
       },
       complete: () => {

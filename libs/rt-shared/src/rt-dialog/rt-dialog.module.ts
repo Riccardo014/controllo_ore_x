@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { RtDialogConfirmationComponent } from './components/rt-dialog-confirmation/rt-dialog-confirmation.component';
 import { RtDialogDefaultActionsComponent } from './components/rt-dialog-default-actions/rt-dialog-default-actions.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { RtDialogTemplateComponent } from './components/rt-dialog-template/rt-dialog-template.component';
 import { RtDialogService } from './services/rt-dialog.service';
@@ -22,6 +23,7 @@ import { RtDialogService } from './services/rt-dialog.service';
     MatProgressBarModule,
     MatButtonModule,
     MatIconModule,
+    MatProgressSpinnerModule,
   ],
   providers: [RtDialogService],
   exports: [

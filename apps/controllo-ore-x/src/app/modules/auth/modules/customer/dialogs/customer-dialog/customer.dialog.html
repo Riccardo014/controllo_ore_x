@@ -1,9 +1,11 @@
 <lib-dialog-template
-  [cTitle]="title"
+  [title]="title"
   [isFooterEnabled]="true"
   (closeDialogEvent)="onCancel()"
+  (reFetch)="onReFetch()"
   [isLoading]="isLoading"
   [isError]="hasErrors"
+  [errorMessage]="errorMessage"
 >
   <div body>
     <form class="p-0 -form" [formGroup]="customerFormGroup">
