@@ -1,12 +1,12 @@
 <lib-dialog-template
   [cTitle]="title"
   [isFooterEnabled]="true"
-  (closeDialogEvent)="cancel()"
+  (closeDialogEvent)="onCancel()"
   [isLoading]="isLoading"
   [isError]="hasErrors"
 >
   <div body>
-    <form class="container p-0" [formGroup]="formHelper.form">
+    <form class="container p-0" [formGroup]="userFormGroup">
       <div class="row mb-2 -wrapper-user-upsert-form">
         <mat-form-field class="col" appearance="outline" class="-form-field">
           <mat-label>Nome</mat-label>
@@ -75,7 +75,7 @@
             matInput
             placeholder="Ruolo"
             formControlName="role"
-            [(value)]="currentRole"
+            [compareWith]="compareRoleFn"
           >
             <mat-option *ngFor="let role of userRoles" [value]="role">
               {{ role.name }}
@@ -93,7 +93,7 @@
   <div footer class="-container-reset-btns">
     <button
       *ngIf="transactionStatus === 'update'"
-      (click)="deleteEntity()"
+      (click)="onDelete()"
       class="rt-btn -button -button-delete"
       mat-button
       type="button"
@@ -102,7 +102,7 @@
     </button>
     <lib-rt-dialog-default-actions
       (confirmEvent)="onSubmit()"
-      (cancelEvent)="cancel()"
+      (cancelEvent)="onCancel()"
     ></lib-rt-dialog-default-actions>
   </div>
 </lib-dialog-template>
