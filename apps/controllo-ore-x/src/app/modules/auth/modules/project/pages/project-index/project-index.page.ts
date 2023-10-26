@@ -52,8 +52,6 @@ export class ProjectIndexPage
   projects: ProjectReadDto[] = [];
   showedProjects: ProjectReadDto[] = [];
 
-  @Output() openDialogEvent: EventEmitter<any> = new EventEmitter<any>();
-
   override subscriptionsList: Subscription[] = [];
 
   override completeSubscriptions: (subscriptionsList: Subscription[]) => void =
@@ -114,7 +112,10 @@ export class ProjectIndexPage
           data: $event,
         })
         .subscribe((res) => {
-          if (res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
+          if (
+            res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM ||
+            res.result === RT_DIALOG_CLOSE_RESULT.DELETE
+          ) {
             this.setSubscriptions();
           }
         }),
@@ -133,10 +134,14 @@ export class ProjectIndexPage
           maxWidth: dialogConfig.maxWidth,
           data: {
             ...$event,
-            isDuplication: true,
+            transactionStatus: 'duplicate',
           },
         })
-        .subscribe(),
+        .subscribe((res) => {
+          if (res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
+            this.setSubscriptions();
+          }
+        }),
     );
   }
 

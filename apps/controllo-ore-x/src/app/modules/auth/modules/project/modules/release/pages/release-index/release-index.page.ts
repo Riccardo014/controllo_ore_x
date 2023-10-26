@@ -5,10 +5,14 @@ import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
-import { RtDialogService } from '@controllo-ore-x/rt-shared';
+import {
+  RT_DIALOG_CLOSE_RESULT,
+  RtDialogService,
+} from '@controllo-ore-x/rt-shared';
 import { Subscription } from 'rxjs';
 import { ProjectDialog } from '../../../../dialogs/project-dialog/project.dialog';
 import { ReleaseDialog } from '../../dialogs/release-dialog/release.dialog';
+import { ApiResponse, ProjectReadDto } from '@api-interfaces';
 
 @Component({
   selector: 'controllo-ore-x-release-index',
@@ -18,9 +22,11 @@ import { ReleaseDialog } from '../../dialogs/release-dialog/release.dialog';
 export class ReleaseIndexPage
   implements OnInit, OnDestroy, SubscriptionsLifecycle
 {
-  projectId!: string;
+  projectId?: string;
+  project?: ProjectReadDto;
 
-  project: any;
+  isLoading: boolean = true;
+  hasErrors: boolean = false;
 
   subscriptionsList: Subscription[] = [];
 
@@ -32,10 +38,11 @@ export class ReleaseIndexPage
     private _activatedRoute: ActivatedRoute,
     private _projectDataService: ProjectDataService,
     private _rtDialogService: RtDialogService,
-  ) {}
+  ) {
+    this.projectId = this._getProjectId();
+  }
 
   ngOnInit(): void {
-    this.projectId = this.getProjectId();
     this.setSubscriptions();
   }
 
@@ -53,21 +60,6 @@ export class ReleaseIndexPage
     this.subscriptionsList.push(this._getProject());
   }
 
-  /**
-   * Return the project's id.
-   */
-  getProjectId(): string {
-    return this._activatedRoute.snapshot.params['projectId'];
-  }
-
-  _getProject(): Subscription {
-    return this._projectDataService
-      .getOne(this.projectId)
-      .subscribe((project) => {
-        this.project = project;
-      });
-  }
-
   openCreateReleaseDialog(): void {
     const dialogConfig = {
       width: '600px',
@@ -78,10 +70,7 @@ export class ReleaseIndexPage
         .open(ReleaseDialog, {
           width: dialogConfig.width,
           maxWidth: dialogConfig.maxWidth,
-          data: {
-            ...this.project,
-            transactionStatus: 'create',
-          },
+          data: this.project,
         })
         .subscribe(),
     );
@@ -99,7 +88,38 @@ export class ReleaseIndexPage
           maxWidth: dialogConfig.maxWidth,
           data: this.project,
         })
-        .subscribe(),
+        .subscribe((res) => {
+          if (res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
+            this.isLoading = true;
+            this.setSubscriptions();
+          }
+          if (res.result === RT_DIALOG_CLOSE_RESULT.DELETE) {
+            this.navigateBack();
+          }
+        }),
     );
+  }
+
+  /**
+   * Return the project's id.
+   */
+  private _getProjectId(): string {
+    return this._activatedRoute.snapshot.params['projectId'];
+  }
+
+  private _getProject(): Subscription {
+    if (!this.projectId) {
+      throw new Error('Project id is not defined.');
+    }
+
+    return this._projectDataService.getOne(this.projectId).subscribe({
+      next: (project: ApiResponse<ProjectReadDto>) => {
+        this.project = project.data;
+        this.isLoading = false;
+      },
+      error: (error: any) => {
+        throw new Error(error);
+      },
+    });
   }
 }

@@ -1,5 +1,5 @@
 import { Directive, OnDestroy, OnInit } from '@angular/core';
-import { INDEX_CONFIGURATION_KEY, TableConfiguration } from '@api-interfaces';
+import { ApiResponse, INDEX_CONFIGURATION_KEY, IndexConfigurationReadDto, TableConfiguration } from '@api-interfaces';
 import { IndexConfigurationDataService } from '@app/_core/services/index-configuration.data-service';
 import {
   SubscriptionsLifecycle,
@@ -79,8 +79,8 @@ export abstract class IndexPage<T, CreateT, UpdateT>
   private _firstLoad(): Subscription {
     return this._configurationService
       .getConfiguration(this.CONFIGURATION_KEY)
-      .subscribe((data) => {
-        this.configuration = data.configuration;
+      .subscribe((configuration: ApiResponse<IndexConfigurationReadDto>) => {
+        this.configuration = configuration.data.configuration;
         this.indexTableHandler.tableConfiguration = this.configuration;
         this.indexTableHandler.fetchData();
         this.isFirstLoadDone.next(true);

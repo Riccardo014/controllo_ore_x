@@ -33,11 +33,12 @@ export class ProjectDialog
   implements SubscriptionsLifecycle, OnDestroy, OnInit
 {
   title: string = 'Crea nuovo progetto';
-  transactionStatus: 'create' | 'update' = 'create';
+  transactionStatus: 'create' | 'update' | 'duplicate' = 'create';
   RT_FORM_ERRORS: { [key: string]: RtFormError } = RT_FORM_ERRORS;
 
   isLoading: boolean = false;
   hasErrors: boolean = false;
+  errorMessage: string = '';
 
   project?: ProjectReadDto;
 
@@ -68,27 +69,21 @@ export class ProjectDialog
     private _customerDataService: CustomerDataService,
   ) {
     if (this.data.input) {
-      this.transactionStatus = 'update';
-      this.title = 'Modifica progetto';
       this.project = this.data.input;
       this.projectFormGroup.patchValue(this.data.input);
+
+      if (this.data.input.transactionStatus === 'duplicate') {
+        this.title = 'Duplica progetto';
+        return;
+      }
+
+      this.transactionStatus = 'update';
+      this.title = 'Modifica progetto';
     }
   }
 
   ngOnInit(): void {
     this.setSubscriptions();
-
-    // if (this.data.input) {
-    //   this.formHelper.patchForm(this.data.input);
-    //   this.userSelectedColor = this.data.input.color;
-    //   if (this.data.input.isDuplication) {
-    //     this.title = 'Duplica progetto';
-    //     return;
-    //   }
-    //   this.transactionStatus = 'update';
-    //   this.formHelper.entityId = this.data.input._id;
-    //   this.title = 'Modifica progetto';
-    // }
   }
 
   ngOnDestroy(): void {
@@ -132,6 +127,10 @@ export class ProjectDialog
     this._create();
   }
 
+  onReFetch(): void {
+    window.location.reload();
+  }
+
   getFormControlError(field: string, error: Error): boolean {
     return this.projectFormGroup.controls[field].hasError(error.name);
   }
@@ -143,13 +142,6 @@ export class ProjectDialog
   compareColorFn(x: string, y: string): boolean {
     return x === y;
   }
-
-  // override onSubmit(): void {
-  //   if (this.transactionStatus === 'update' && this.data.input.isDuplication) {
-  //     this.transactionStatus = 'create';
-  //   }
-  //   super.onSubmit();
-  // }
 
   openCreateCustomerDialog(): void {
     const dialogConfig = {
@@ -184,6 +176,7 @@ export class ProjectDialog
         this.dialogRef.close(modalRes);
       },
       error: () => {
+        this.errorMessage = 'Non è stato possibile creare il progetto';
         this.hasErrors = true;
       },
       complete: () => {
@@ -211,6 +204,8 @@ export class ProjectDialog
         this.dialogRef.close(modalRes);
       },
       error: () => {
+        this.errorMessage =
+          'Non è stato possibile aggiornare i dati del progetto';
         this.hasErrors = true;
       },
       complete: () => {
@@ -232,11 +227,12 @@ export class ProjectDialog
       next: () => {
         this._alertService.openSuccess();
         const modalRes: IRtDialogClose = {
-          result: RT_DIALOG_CLOSE_RESULT.CONFIRM,
+          result: RT_DIALOG_CLOSE_RESULT.DELETE,
         };
         this.dialogRef.close(modalRes);
       },
       error: () => {
+        this.errorMessage = 'Non è stato possibile eliminare il progetto';
         this.hasErrors = true;
       },
       complete: () => {

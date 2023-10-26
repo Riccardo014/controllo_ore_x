@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
+  ApiResponse,
   INDEX_CONFIGURATION_KEY,
   IndexConfigurationReadDto,
 } from '@api-interfaces';
@@ -16,8 +17,8 @@ export class IndexConfigurationDataService {
 
   getConfiguration(
     key: INDEX_CONFIGURATION_KEY,
-  ): Observable<IndexConfigurationReadDto> {
-    return this._http.get<IndexConfigurationReadDto>(
+  ): Observable<ApiResponse<IndexConfigurationReadDto>> {
+    return this._http.get<ApiResponse<IndexConfigurationReadDto>>(
       `${this.currentApiUri}/${key}`,
     );
   }

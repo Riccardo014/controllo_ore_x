@@ -1,62 +1,74 @@
-<div class="-header">
-  <div class="-header__title">
-    <button (click)="navigateBack()" mat-icon-button>
-      <mat-icon color="primary">arrow_back</mat-icon>
-    </button>
-    <div *ngIf="this.project" class="-header__title__project">
-      <div
-        class="-header__title__project__color"
-        [style.backgroundColor]="this.project.color"
-      ></div>
-      <h1 class="body-1">{{ project.name }}</h1>
-      <div>
-        <mat-chip class="caption">{{ project.customer.name }}</mat-chip>
-      </div>
-    </div>
-  </div>
-  <div class="-header__options">
-    <button
-      mat-flat-button
-      extended
-      class="-header__options__button"
-      (click)="openCreateReleaseDialog()"
-    >
-      <div class="-header__options__button__elements">
-        <span class="material-symbols-outlined">egg_alt</span>
-        <span>Nuova Release</span>
-      </div>
-    </button>
-    <button
-      mat-flat-button
-      extended
-      class="-header__options__button"
-      (click)="openEditProjectDialog()"
-    >
-      <div class="-header__options__button__elements">
-        <span class="material-symbols-outlined">ink_marker</span>
-        <span>Modifica</span>
-      </div>
-    </button>
-  </div>
+<mat-progress-bar
+  mode="indeterminate"
+  color="primary"
+  *ngIf="isLoading"
+></mat-progress-bar>
+
+<div *ngIf="hasErrors">
+  Si è verificato un errore durante il caricamento dei dati.
 </div>
 
-<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
-  <mat-tab label="Release">
-    <div>
-      <controllo-ore-x-release-table [projectId]="projectId">
-      </controllo-ore-x-release-table>
+<div *ngIf="!isLoading && !hasErrors">
+  <div class="-header">
+    <div class="-header__title">
+      <button (click)="navigateBack()" mat-icon-button>
+        <mat-icon color="primary">arrow_back</mat-icon>
+      </button>
+      <div *ngIf="this.project" class="-header__title__project">
+        <div
+          class="-header__title__project__color"
+          [style.backgroundColor]="this.project.color"
+        ></div>
+        <h1 class="body-1">{{ project.name }}</h1>
+        <div>
+          <mat-chip class="caption">{{ project.customer?.name }}</mat-chip>
+        </div>
+      </div>
     </div>
-  </mat-tab>
-  <mat-tab label="Stato">
-    <div>
-      <controllo-ore-x-project-release-status [projectId]="projectId">
-      </controllo-ore-x-project-release-status>
+    <div class="-header__options">
+      <button
+        mat-flat-button
+        extended
+        class="-header__options__button"
+        (click)="openCreateReleaseDialog()"
+      >
+        <div class="-header__options__button__elements">
+          <span class="material-symbols-outlined">egg_alt</span>
+          <span>Nuova Release</span>
+        </div>
+      </button>
+      <button
+        mat-flat-button
+        extended
+        class="-header__options__button"
+        (click)="openEditProjectDialog()"
+      >
+        <div class="-header__options__button__elements">
+          <span class="material-symbols-outlined">ink_marker</span>
+          <span>Modifica</span>
+        </div>
+      </button>
     </div>
-  </mat-tab>
-  <!-- TODO: add info tab
+  </div>
+
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+    <mat-tab label="Release">
+      <div *ngIf="project">
+        <controllo-ore-x-release-table [projectId]="project._id">
+        </controllo-ore-x-release-table>
+      </div>
+    </mat-tab>
+    <mat-tab label="Stato">
+      <div *ngIf="project">
+        <controllo-ore-x-project-release-status [projectId]="project._id">
+        </controllo-ore-x-project-release-status>
+      </div>
+    </mat-tab>
+    <!-- TODO: add info tab
   <mat-tab label="Info"> 
     <div>
       Info
     </div> 
   </mat-tab> -->
-</mat-tab-group>
+  </mat-tab-group>
+</div>
