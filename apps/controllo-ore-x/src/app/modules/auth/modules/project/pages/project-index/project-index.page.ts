@@ -19,6 +19,7 @@ import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
+import { RT_DIALOG_CLOSE_RESULT } from '@controllo-ore-x/rt-shared';
 import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -112,7 +113,11 @@ export class ProjectIndexPage
           maxWidth: dialogConfig.maxWidth,
           data: $event,
         })
-        .subscribe(),
+        .subscribe((res) => {
+          if (res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
+            this.setSubscriptions();
+          }
+        }),
     );
   }
 
@@ -146,7 +151,11 @@ export class ProjectIndexPage
           width: dialogConfig.width,
           maxWidth: dialogConfig.maxWidth,
         })
-        .subscribe(),
+        .subscribe((res) => {
+          if (res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
+            this.setSubscriptions();
+          }
+        }),
     );
   }
 }

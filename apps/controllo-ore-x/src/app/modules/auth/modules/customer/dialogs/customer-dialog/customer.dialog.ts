@@ -11,13 +11,11 @@ import {
 } from '@controllo-ore-x/rt-shared';
 import { AlertService } from 'libs/rt-shared/src/alert/services/alert.service';
 import { RT_FORM_ERRORS, RtFormError } from 'libs/utils';
-import { CustomerFormHelper } from '../../helpers/customer.form-helper';
 
 @Component({
   selector: 'controllo-ore-x-customer-dialog',
   templateUrl: './customer.dialog.html',
   styleUrls: ['./customer.dialog.scss'],
-  providers: [CustomerFormHelper],
 })
 export class CustomerDialog {
   title: string = 'Inserisci un nuovo cliente';

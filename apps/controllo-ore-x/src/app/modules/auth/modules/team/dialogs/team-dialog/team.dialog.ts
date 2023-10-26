@@ -27,13 +27,11 @@ import {
 import { AlertService } from 'libs/rt-shared/src/alert/services/alert.service';
 import { RT_FORM_ERRORS, RtFormError } from 'libs/utils';
 import { Subscription } from 'rxjs';
-import { TeamFormHelper } from '../../helpers/team.form-helper';
 
 @Component({
   selector: 'controllo-ore-x-team-dialog',
   templateUrl: './team.dialog.html',
   styleUrls: ['./team.dialog.scss'],
-  providers: [TeamFormHelper],
 })
 export class TeamDialog implements SubscriptionsLifecycle, OnDestroy, OnInit {
   title: string = 'Crea nuovo membro';
@@ -53,7 +51,6 @@ export class TeamDialog implements SubscriptionsLifecycle, OnDestroy, OnInit {
     role: new FormControl(null, Validators.required),
   });
 
-  currentUserRole?: RoleReadDto;
   userRoles: RoleReadDto[] = [];
 
   subscriptionsList: Subscription[] = [];
@@ -138,6 +135,7 @@ export class TeamDialog implements SubscriptionsLifecycle, OnDestroy, OnInit {
   togglePasswordVisibility(): void {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
+
   /**
    * Set the form in creation mode, adding the password field.
    */

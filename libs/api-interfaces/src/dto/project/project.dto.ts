@@ -4,10 +4,10 @@ export interface ProjectReadDto {
   _id: string;
   name: string;
   customerId: string;
+  customer?: CustomerReadDto;
   color: string;
   hoursBudget: number;
   deadline: Date;
-  customer?: CustomerReadDto;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   deletedAt?: Date | string;

@@ -1,12 +1,12 @@
 <lib-dialog-template
   [cTitle]="title"
   [isFooterEnabled]="true"
-  (closeDialogEvent)="cancel()"
+  (closeDialogEvent)="onCancel()"
   [isLoading]="isLoading"
   [isError]="hasErrors"
 >
   <div body>
-    <form class="-form p-0" [formGroup]="formHelper.form">
+    <form class="-form p-0" [formGroup]="projectFormGroup">
       <div class="row mb-2 -form__fields">
         <mat-form-field class="col" appearance="outline">
           <mat-label>Nome progetto</mat-label>
@@ -24,7 +24,7 @@
             matInput
             placeholder="Cliente"
             formControlName="customer"
-            [(value)]="userSelectedCustomer"
+            [compareWith]="compareCustomerFn"
           >
             <mat-option
               *ngFor="let projectCustomer of projectCustomers"
@@ -55,12 +55,12 @@
             matInput
             placeholder="Colore"
             formControlName="color"
-            [(value)]="userSelectedColor"
+            [compareWith]="compareColorFn"
           >
             <mat-select-trigger>
               <div
                 class="-square"
-                [style.backgroundColor]="userSelectedColor"
+                [style.backgroundColor]="projectFormGroup.get('color')?.value"
               ></div>
             </mat-select-trigger>
             <mat-option *ngFor="let color of colors" [value]="color">
@@ -114,7 +114,7 @@
   <div footer class="-footer">
     <button
       *ngIf="transactionStatus === 'update'"
-      (click)="deleteEntity()"
+      (click)="onDelete()"
       class="rt-btn -footer__button -footer__button--delete"
       mat-button
       type="button"
@@ -123,7 +123,7 @@
     </button>
     <lib-rt-dialog-default-actions
       (confirmEvent)="onSubmit()"
-      (cancelEvent)="cancel()"
+      (cancelEvent)="onCancel()"
     ></lib-rt-dialog-default-actions>
   </div>
 </lib-dialog-template>
