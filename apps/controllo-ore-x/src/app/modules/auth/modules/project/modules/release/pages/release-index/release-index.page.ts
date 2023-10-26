@@ -24,7 +24,7 @@ export class ReleaseIndexPage
 
   subscriptionsList: Subscription[] = [];
 
-  _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
+  completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
 
   constructor(
@@ -36,11 +36,11 @@ export class ReleaseIndexPage
 
   ngOnInit(): void {
     this.projectId = this.getProjectId();
-    this._setSubscriptions();
+    this.setSubscriptions();
   }
 
   ngOnDestroy(): void {
-    this._completeSubscriptions(this.subscriptionsList);
+    this.completeSubscriptions(this.subscriptionsList);
   }
 
   navigateBack(): void {
@@ -49,7 +49,7 @@ export class ReleaseIndexPage
     });
   }
 
-  _setSubscriptions(): void {
+  setSubscriptions(): void {
     this.subscriptionsList.push(this._getProject());
   }
 

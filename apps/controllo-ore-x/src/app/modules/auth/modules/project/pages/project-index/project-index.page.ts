@@ -55,7 +55,7 @@ export class ProjectIndexPage
 
   override subscriptionsList: Subscription[] = [];
 
-  override _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
+  override completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
 
   constructor(
@@ -68,14 +68,14 @@ export class ProjectIndexPage
   }
 
   override ngOnInit(): void {
-    this._setSubscriptions();
+    this.setSubscriptions();
   }
 
   override ngOnDestroy(): void {
-    this._completeSubscriptions(this.subscriptionsList);
+    this.completeSubscriptions(this.subscriptionsList);
   }
 
-  override _setSubscriptions(): void {
+  override setSubscriptions(): void {
     this.subscriptionsList.push(this._getProjects());
   }
 

@@ -21,20 +21,20 @@ export class ProjectReleaseIndexPage
 
   subscriptionsList: Subscription[] = [];
 
-  _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
+  completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
 
   constructor(private _releaseDataService: ReleaseDataService) {}
 
   ngOnInit(): void {
-    this._setSubscriptions();
+    this.setSubscriptions();
   }
 
   ngOnDestroy(): void {
-    this._completeSubscriptions(this.subscriptionsList);
+    this.completeSubscriptions(this.subscriptionsList);
   }
 
-  _setSubscriptions(): void {
+  setSubscriptions(): void {
     this.subscriptionsList.push(
       this._releaseDataService
         .getMany({

@@ -8,6 +8,7 @@ import {
 import { IndexConfigurationDataService } from '@app/_core/services/index-configuration.data-service';
 import { TeamDataService } from '@app/_core/services/team.data-service';
 import { IndexPage } from '@app/_shared/classes/index-page.class';
+import { RT_DIALOG_CLOSE_RESULT } from '@controllo-ore-x/rt-shared';
 import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
 import { BehaviorSubject } from 'rxjs';
@@ -60,7 +61,11 @@ export class TeamIndexPage extends IndexPage<
           maxWidth: dialogConfig.maxWidth,
           data: $event,
         })
-        .subscribe(),
+        .subscribe((res) => {
+          if (res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
+            this.indexTableHandler.fetchData();
+          }
+        }),
     );
   }
 
@@ -75,7 +80,11 @@ export class TeamIndexPage extends IndexPage<
           width: dialogConfig.width,
           maxWidth: dialogConfig.maxWidth,
         })
-        .subscribe(),
+        .subscribe((res) => {
+          if (res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
+            this.indexTableHandler.fetchData();
+          }
+        }),
     );
   }
 }

@@ -33,7 +33,7 @@ export class ProjectReleaseStatusComponent
 
   subscriptionsList: Subscription[] = [];
 
-  _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
+  completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
 
   constructor(
@@ -48,14 +48,14 @@ export class ProjectReleaseStatusComponent
     if (typeof this.projectId !== 'string') {
       throw new Error('projectId must be a string');
     }
-    this._setSubscriptions();
+    this.setSubscriptions();
   }
 
   ngOnDestroy(): void {
-    this._completeSubscriptions(this.subscriptionsList);
+    this.completeSubscriptions(this.subscriptionsList);
   }
 
-  _setSubscriptions(): void {
+  setSubscriptions(): void {
     this.subscriptionsList.push(this._fetchSetReleases());
   }
 

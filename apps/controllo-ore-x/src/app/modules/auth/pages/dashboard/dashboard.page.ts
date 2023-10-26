@@ -20,7 +20,7 @@ export class DashboardPage
 
   subscriptionsList: Subscription[] = [];
 
-  _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
+  completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
   user?: UserReadDto;
 
@@ -30,16 +30,16 @@ export class DashboardPage
   ) {}
 
   ngOnInit(): void {
-    this._setSubscriptions();
+    this.setSubscriptions();
 
     this.user = this._authService.loggedInUser;
   }
 
   ngOnDestroy(): void {
-    this._completeSubscriptions(this.subscriptionsList);
+    this.completeSubscriptions(this.subscriptionsList);
   }
 
-  _setSubscriptions(): void {
+  setSubscriptions(): void {
     this.subscriptionsList.push(
       this._sidenavService.areMenusVisibile.subscribe(
         (isOpen) => (this.isSidebarOpen = isOpen),

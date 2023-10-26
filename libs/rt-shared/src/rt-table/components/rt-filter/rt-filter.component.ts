@@ -44,7 +44,7 @@ export class RtFilterComponent
 
   subscriptionsList: Subscription[] = [];
 
-  _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
+  completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
 
   constructor(private _fb: FormBuilder) {
@@ -55,14 +55,14 @@ export class RtFilterComponent
   }
 
   ngOnInit(): void {
-    this._setSubscriptions();
+    this.setSubscriptions();
   }
 
   ngOnDestroy(): void {
-    this._completeSubscriptions(this.subscriptionsList);
+    this.completeSubscriptions(this.subscriptionsList);
   }
 
-  _setSubscriptions(): void {
+  setSubscriptions(): void {
     this.subscriptionsList.push(
       this.currentFilters.valueChanges
         .pipe(debounceTime(800))

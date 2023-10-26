@@ -57,7 +57,7 @@ export class ReleaseDialog
     window.location.reload();
   }
 
-  override navigationDestination(): void {
+  override navigateBackToIndex(): void {
     window.location.reload();
   }
 }

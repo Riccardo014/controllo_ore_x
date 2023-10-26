@@ -24,7 +24,7 @@ export class ProjectActivityCardComponent
 
   subscriptionsList: Subscription[] = [];
 
-  _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
+  completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
 
   constructor(private _hoursTagDataService: HoursTagDataService) {}
@@ -36,14 +36,14 @@ export class ProjectActivityCardComponent
     if (typeof this.tagWithHours !== 'object') {
       throw new Error('tagWithHours must be a object');
     }
-    this._setSubscriptions();
+    this.setSubscriptions();
   }
 
   ngOnDestroy(): void {
-    this._completeSubscriptions(this.subscriptionsList);
+    this.completeSubscriptions(this.subscriptionsList);
   }
 
-  _setSubscriptions(): void {
+  setSubscriptions(): void {
     this.subscriptionsList.push(
       this._fetchSetTag(this.tagWithHours.hoursTagId),
     );

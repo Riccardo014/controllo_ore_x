@@ -9,13 +9,13 @@ export interface SubscriptionsLifecycle {
   /**
    * Subscribes to the provided subscription and adds it to the list.
    */
-  _setSubscriptions(): void;
+  setSubscriptions(): void;
 
   /**
    * Unsubscribes from all the subscriptions in the list.
    * Should use @see {@link completeSubscriptions}
    */
-  _completeSubscriptions: typeof completeSubscriptions;
+  completeSubscriptions: typeof completeSubscriptions;
 }
 
 /**

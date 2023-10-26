@@ -30,7 +30,7 @@ export class AlertComponent
 
   subscriptionsList: Subscription[] = [];
 
-  _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
+  completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
 
   private _currentTimeout: any;
@@ -44,14 +44,14 @@ export class AlertComponent
     if (!this.alert) {
       throw new Error('Alert is undefined');
     }
-    this._setSubscriptions();
+    this.setSubscriptions();
   }
 
   ngOnDestroy(): void {
-    this._completeSubscriptions(this.subscriptionsList);
+    this.completeSubscriptions(this.subscriptionsList);
   }
 
-  _setSubscriptions(): void {
+  setSubscriptions(): void {
     this.subscriptionsList.push(this.setTimeout());
     this.subscriptionsList.push(this.setInterval());
   }
@@ -85,14 +85,14 @@ export class AlertComponent
     this.isPinned = true;
     clearInterval(this._currentInterval);
     clearTimeout(this._currentTimeout);
-    this._completeSubscriptions(this.subscriptionsList);
+    this.completeSubscriptions(this.subscriptionsList);
   }
 
   /**
    * Close the alert
    */
   close(): void {
-    this._completeSubscriptions(this.subscriptionsList);
+    this.completeSubscriptions(this.subscriptionsList);
     clearInterval(this._currentInterval);
     clearTimeout(this._currentTimeout);
     this._rtAlertSvc.removeArticle(this.alert!.id);

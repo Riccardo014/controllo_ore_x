@@ -80,7 +80,7 @@ export class IndexTemplateComponent
 
   subscriptionsList: Subscription[] = [];
 
-  _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
+  completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
 
   private _isLoading: boolean = true;
@@ -89,14 +89,14 @@ export class IndexTemplateComponent
   constructor(private _loadingService: RtLoadingService) {}
 
   ngOnInit(): void {
-    this._setSubscriptions();
+    this.setSubscriptions();
   }
 
   ngOnDestroy(): void {
-    this._completeSubscriptions(this.subscriptionsList);
+    this.completeSubscriptions(this.subscriptionsList);
   }
 
-  _setSubscriptions(): void {
+  setSubscriptions(): void {
     this.subscriptionsList.push(
       this.page.isLoading.pipe().subscribe((isLoading) => {
         this._isLoading = isLoading;

@@ -42,7 +42,7 @@ export abstract class IndexPage<T, CreateT, UpdateT>
   configuration!: TableConfiguration;
   indexTableHandler!: RtTableApiStatusManager<T, CreateT, UpdateT>;
 
-  _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
+  completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
 
   abstract title: string;
@@ -59,14 +59,14 @@ export abstract class IndexPage<T, CreateT, UpdateT>
       throw new Error('Ititialization of indexTableHandler failed');
     }
 
-    this._setSubscriptions();
+    this.setSubscriptions();
   }
 
   ngOnDestroy(): void {
-    this._completeSubscriptions(this.subscriptionsList);
+    this.completeSubscriptions(this.subscriptionsList);
   }
 
-  _setSubscriptions(): void {
+  setSubscriptions(): void {
     this.subscriptionsList.push(
       this._firstLoad(),
       this.indexTableHandler.isLoading.subscribe((r) => {

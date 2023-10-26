@@ -35,7 +35,7 @@ export class ProjectComponent
 
   subscriptionsList: Subscription[] = [];
 
-  _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
+  completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
 
   constructor(
@@ -47,15 +47,15 @@ export class ProjectComponent
     if (!this.projectWithCustomer) {
       throw new Error('ProjectWithCustomer is undefined');
     }
-    this._setSubscriptions();
+    this.setSubscriptions();
   }
 
-  _setSubscriptions(): void {
+  setSubscriptions(): void {
     this.subscriptionsList.push();
   }
 
   ngOnDestroy(): void {
-    this._completeSubscriptions(this.subscriptionsList);
+    this.completeSubscriptions(this.subscriptionsList);
   }
 
   openEditDialog(): void {

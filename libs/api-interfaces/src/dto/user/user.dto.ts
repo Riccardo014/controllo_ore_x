@@ -1,9 +1,12 @@
+import { RoleReadDto } from './role.dto';
+
 export interface UserReadDto {
   _id: string;
   email: string;
   name: string;
   surname: string;
   roleId: string;
+  role?: RoleReadDto;
   isDeletable: boolean;
   createdAt?: Date | string;
   updatedAt?: Date | string;

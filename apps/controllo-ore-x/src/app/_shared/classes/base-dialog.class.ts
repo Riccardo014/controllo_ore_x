@@ -28,7 +28,7 @@ export abstract class BaseDialog<
     protected _formBuilder: FormBuilder,
     private _baseDialogDialogSvc: RtDialogService,
     private _baseDialogAlertSvc: AlertService,
-    private _baseDialogrouter: Router,
+    private _baseDialogRouter: Router,
   ) {
     super();
   }
@@ -61,7 +61,7 @@ export abstract class BaseDialog<
               await this.formHelper.delete();
               this._baseDialogAlertSvc.openSuccess();
               this.cancel();
-              this.navigationDestination();
+              this.navigateBackToIndex();
             } catch (err) {
               console.error(err);
               this.isLoading = false;
@@ -82,14 +82,14 @@ export abstract class BaseDialog<
   }
 
   /**
-   * Navigate to the same page and refresh the data after a delete.
+   * Navigate to the current module index to refresh the data after a delete.
    */
-  navigationDestination(): void {
-    const currentUrl = this._baseDialogrouter.url;
-    this._baseDialogrouter
+  navigateBackToIndex(): void {
+    const currentUrl = this._baseDialogRouter.url;
+    this._baseDialogRouter
       .navigateByUrl('/', { skipLocationChange: true })
       .then(() => {
-        this._baseDialogrouter.navigate([`/${currentUrl}`]);
+        this._baseDialogRouter.navigateByUrl(`/${currentUrl}`);
       });
   }
 
@@ -110,12 +110,6 @@ export abstract class BaseDialog<
       this.isLoading = false;
       this._baseDialogAlertSvc.openSuccess();
       this.cancel();
-      const currentUrl = this._baseDialogrouter.url;
-      this._baseDialogrouter
-        .navigateByUrl('/', { skipLocationChange: true })
-        .then(() => {
-          this._baseDialogrouter.navigate([`/${currentUrl}`]);
-        });
     } catch (err) {
       this.formHelper.enable();
       this._baseDialogAlertSvc.openError(
@@ -143,11 +137,11 @@ export abstract class BaseDialog<
 
       this._baseDialogAlertSvc.openSuccess();
       this.cancel();
-      const currentUrl = this._baseDialogrouter.url;
-      this._baseDialogrouter
+      const currentUrl = this._baseDialogRouter.url;
+      this._baseDialogRouter
         .navigateByUrl('/', { skipLocationChange: true })
         .then(() => {
-          this._baseDialogrouter.navigate([`/${currentUrl}`]);
+          this._baseDialogRouter.navigate([`/${currentUrl}`]);
         });
     } catch (err) {
       this.isLoading = false;

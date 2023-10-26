@@ -48,7 +48,7 @@ export class ProjectDialog
 
   subscriptionsList: Subscription[] = [];
 
-  _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
+  completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
 
   constructor(
@@ -65,7 +65,7 @@ export class ProjectDialog
   }
 
   ngOnInit(): void {
-    this._setSubscriptions();
+    this.setSubscriptions();
 
     if (this.data.input) {
       this.formHelper.patchForm(this.data.input);
@@ -81,10 +81,10 @@ export class ProjectDialog
   }
 
   ngOnDestroy(): void {
-    this._completeSubscriptions(this.subscriptionsList);
+    this.completeSubscriptions(this.subscriptionsList);
   }
 
-  _setSubscriptions(): void {
+  setSubscriptions(): void {
     this.subscriptionsList.push(this._fetchSetProjectCustomers());
   }
 
@@ -93,16 +93,6 @@ export class ProjectDialog
       this.transactionStatus = 'create';
     }
     super.onSubmit();
-    window.location.reload();
-  }
-
-  override navigationDestination(): void {
-    if (this._router.url === '/auth/progetti') {
-      window.location.reload();
-    }
-    this._router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this._router.navigate(['/auth/progetti/']);
-    });
   }
 
   openCreateCustomerDialog(): void {
