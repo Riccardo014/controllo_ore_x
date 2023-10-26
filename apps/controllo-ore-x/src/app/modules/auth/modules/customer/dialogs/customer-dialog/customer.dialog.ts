@@ -1,16 +1,16 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Component, Inject } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import {
-  CustomerCreateDto,
-  CustomerReadDto,
-  CustomerUpdateDto,
-} from '@api-interfaces';
+import { CustomerReadDto } from '@api-interfaces';
 import { CustomerDataService } from '@app/_core/services/customer.data-service';
-import { BaseDialog } from '@app/_shared/classes/base-dialog.class';
-import { IRtDialogInput, RtDialogService } from '@controllo-ore-x/rt-shared';
+import {
+  IRtDialogClose,
+  IRtDialogInput,
+  RT_DIALOG_CLOSE_RESULT,
+  RtDialogService,
+} from '@controllo-ore-x/rt-shared';
 import { AlertService } from 'libs/rt-shared/src/alert/services/alert.service';
+import { RT_FORM_ERRORS, RtFormError } from 'libs/utils';
 import { CustomerFormHelper } from '../../helpers/customer.form-helper';
 
 @Component({
@@ -19,31 +19,146 @@ import { CustomerFormHelper } from '../../helpers/customer.form-helper';
   styleUrls: ['./customer.dialog.scss'],
   providers: [CustomerFormHelper],
 })
-export class CustomerDialog
-  extends BaseDialog<CustomerReadDto, CustomerCreateDto, CustomerUpdateDto>
-  implements OnInit
-{
-  override title: string = 'Inserisci un nuovo cliente';
+export class CustomerDialog {
+  title: string = 'Inserisci un nuovo cliente';
+  transactionStatus: 'create' | 'update' = 'create';
+  RT_FORM_ERRORS: { [key: string]: RtFormError } = RT_FORM_ERRORS;
+
+  isLoading: boolean = false;
+  hasErrors: boolean = false;
+
+  customer?: CustomerReadDto;
+
+  customerFormGroup: FormGroup = new FormGroup({
+    name: new FormControl(null, Validators.required),
+    email: new FormControl(null, [Validators.required, Validators.email]),
+  });
 
   constructor(
-    public override formHelper: CustomerFormHelper,
-    protected override _formBuilder: FormBuilder,
-    protected _matDialogRef: MatDialogRef<CustomerDialog>,
     private _customerDataService: CustomerDataService,
-    private _rtDialogService: RtDialogService,
+    public dialogRef: MatDialogRef<CustomerDialog>,
     private _alertService: AlertService,
-    private _router: Router,
-    @Inject(MAT_DIALOG_DATA) public data: IRtDialogInput<any>,
+    @Inject(MAT_DIALOG_DATA)
+    public data: IRtDialogInput<any>,
+    private _rtDialogService: RtDialogService,
   ) {
-    super(formHelper, _formBuilder, _rtDialogService, _alertService, _router);
-  }
-
-  ngOnInit(): void {
     if (this.data.input) {
       this.transactionStatus = 'update';
-      this.formHelper.patchForm(this.data.input);
-      this.formHelper.entityId = this.data.input._id;
       this.title = 'Modifica cliente';
+      this.customer = this.data.input;
+      this.customerFormGroup.patchValue(this.data.input);
     }
+  }
+
+  onDelete(): void {
+    this._rtDialogService
+      .openConfirmation(
+        "Procedere con l'eliminazione?",
+        "L'operazione non è reversibile",
+      )
+      .subscribe({
+        next: (res) => {
+          if (res?.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
+            this._delete();
+          }
+        },
+      });
+  }
+
+  onCancel(): void {
+    const modalRes: IRtDialogClose = {
+      result: RT_DIALOG_CLOSE_RESULT.CANCEL,
+    };
+    this.dialogRef.close(modalRes);
+  }
+
+  onSubmit(): void {
+    this.hasErrors = false;
+
+    if (this.transactionStatus === 'update') {
+      this._update();
+      return;
+    }
+
+    this._create();
+  }
+
+  getFormControlError(field: string, error: Error): boolean {
+    return this.customerFormGroup.controls[field].hasError(error.name);
+  }
+
+  private _create(): void {
+    const customerDto: CustomerReadDto = this.customerFormGroup.getRawValue();
+
+    this.isLoading = true;
+    this.hasErrors = false;
+    this._customerDataService.create(customerDto).subscribe({
+      next: () => {
+        this._alertService.openSuccess();
+        const modalRes: IRtDialogClose = {
+          result: RT_DIALOG_CLOSE_RESULT.CONFIRM,
+        };
+        this.dialogRef.close(modalRes);
+      },
+      error: () => {
+        this.hasErrors = true;
+      },
+      complete: () => {
+        this.isLoading = false;
+      },
+    });
+  }
+
+  private _update(): void {
+    if (!this.customer || this.transactionStatus === 'create') {
+      return;
+    }
+
+    const customerId: string = this.customer._id;
+    const customerDto: CustomerReadDto = this.customerFormGroup.getRawValue();
+
+    this.isLoading = true;
+    this.hasErrors = false;
+    this._customerDataService.update(customerId, customerDto).subscribe({
+      next: () => {
+        this._alertService.openSuccess();
+        const modalRes: IRtDialogClose = {
+          result: RT_DIALOG_CLOSE_RESULT.CONFIRM,
+        };
+        this.dialogRef.close(modalRes);
+      },
+      error: () => {
+        this.hasErrors = true;
+      },
+      complete: () => {
+        this.isLoading = false;
+      },
+    });
+  }
+
+  private _delete(): void {
+    if (!this.customer) {
+      return;
+    }
+
+    const customerId: string = this.customer._id;
+
+    this.isLoading = true;
+    this.hasErrors = false;
+    this._customerDataService.delete(customerId).subscribe({
+      next: () => {
+        this._alertService.openSuccess();
+        const modalRes: IRtDialogClose = {
+          result: RT_DIALOG_CLOSE_RESULT.CONFIRM,
+        };
+        this.dialogRef.close(modalRes);
+      },
+      error: () => {
+        this.hasErrors = true;
+      },
+      complete: () => {
+        this.isLoading = false;
+      },
+    });
   }
 }

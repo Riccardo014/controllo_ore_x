@@ -1,12 +1,12 @@
 <lib-dialog-template
   [cTitle]="title"
   [isFooterEnabled]="true"
-  (closeDialogEvent)="cancel()"
+  (closeDialogEvent)="onCancel()"
   [isLoading]="isLoading"
   [isError]="hasErrors"
 >
   <div body>
-    <form class="p-0 -form" [formGroup]="formHelper.form">
+    <form class="p-0 -form" [formGroup]="customerFormGroup">
       <div class="row mb-2">
         <mat-form-field class="col -form__field" appearance="outline">
           <mat-label>Nome</mat-label>
@@ -35,7 +35,7 @@
   <div footer class="-footer">
     <button
       *ngIf="transactionStatus === 'update'"
-      (click)="deleteEntity()"
+      (click)="onDelete()"
       class="rt-btn -footer__button -footer__button--delete"
       mat-button
       type="button"
@@ -44,7 +44,7 @@
     </button>
     <lib-rt-dialog-default-actions
       (confirmEvent)="onSubmit()"
-      (cancelEvent)="cancel()"
+      (cancelEvent)="onCancel()"
     ></lib-rt-dialog-default-actions>
   </div>
 </lib-dialog-template>
