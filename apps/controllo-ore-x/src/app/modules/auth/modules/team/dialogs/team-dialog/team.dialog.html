@@ -2,8 +2,10 @@
   [title]="title"
   [isFooterEnabled]="true"
   (closeDialogEvent)="onCancel()"
+  (reFetch)="onReFetch()"
   [isLoading]="isLoading"
   [isError]="hasErrors"
+  [errorMessage]="errorMessage"
 >
   <div body>
     <form class="container p-0" [formGroup]="userFormGroup">

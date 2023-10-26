@@ -41,6 +41,7 @@ export class TeamDialog implements SubscriptionsLifecycle, OnDestroy, OnInit {
 
   isLoading: boolean = false;
   hasErrors: boolean = false;
+  errorMessage: string = '';
 
   user?: UserReadDto;
 
@@ -124,6 +125,10 @@ export class TeamDialog implements SubscriptionsLifecycle, OnDestroy, OnInit {
     this._create();
   }
 
+  onReFetch(): void {
+    window.location.reload();
+  }
+
   getFormControlError(field: string, error: Error): boolean {
     return this.userFormGroup.controls[field].hasError(error.name);
   }
@@ -164,6 +169,7 @@ export class TeamDialog implements SubscriptionsLifecycle, OnDestroy, OnInit {
         this.dialogRef.close(modalRes);
       },
       error: () => {
+        this.errorMessage = 'Non è stato possibile creare l\'utente';
         this.hasErrors = true;
       },
       complete: () => {
@@ -191,6 +197,7 @@ export class TeamDialog implements SubscriptionsLifecycle, OnDestroy, OnInit {
         this.dialogRef.close(modalRes);
       },
       error: () => {
+        this.errorMessage = 'Non è stato possibile aggiornare i dati dell\'utente';
         this.hasErrors = true;
       },
       complete: () => {
@@ -217,6 +224,7 @@ export class TeamDialog implements SubscriptionsLifecycle, OnDestroy, OnInit {
         this.dialogRef.close(modalRes);
       },
       error: () => {
+        this.errorMessage = 'Non è stato possibile eliminare l\'utente';
         this.hasErrors = true;
       },
       complete: () => {
