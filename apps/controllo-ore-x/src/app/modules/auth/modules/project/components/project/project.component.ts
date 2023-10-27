@@ -37,10 +37,6 @@ export class ProjectComponent
     false,
   );
 
-  @Output() openDialog: EventEmitter<any> = new EventEmitter<any>();
-
-  @Output() duplicate: EventEmitter<any> = new EventEmitter<any>();
-
   isPanelOpen: boolean = false;
   customExpandedHeight: string = '90px';
 

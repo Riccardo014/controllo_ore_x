@@ -1,14 +1,14 @@
 <div class="-tracker-table-line">
   <div class="-tracker-activity">
-    <div class="headline-5">{{ userHour.release.project.name }}</div>
+    <div class="headline-5">{{ userHour.release!.project!.name }}</div>
     <div class="body-1">
-      <mat-chip class="-release-chip">{{ userHour.release.version }}</mat-chip>
+      <mat-chip class="-release-chip">{{ userHour.release!.version }}</mat-chip>
     </div>
     <div class="-icon-with-text body-1">
       <span class="material-symbols-outlined icon-highlighted">{{
-        userHour.hoursTag.iconName
+        userHour.hoursTag!.iconName
       }}</span>
-      {{ userHour.hoursTag.name }}
+      {{ userHour.hoursTag!.name }}
     </div>
     <div class="-icon-with-text body-1">
       <span class="material-symbols-outlined icon-highlighted">notes</span>

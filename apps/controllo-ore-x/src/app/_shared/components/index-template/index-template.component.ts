@@ -118,9 +118,6 @@ export class IndexTemplateComponent
   @Output() openCreateDialogEvent: EventEmitter<boolean> =
     new EventEmitter<boolean>();
 
-  @Output() openCreateDialog: EventEmitter<boolean> =
-    new EventEmitter<boolean>();
-
   subscriptionsList: Subscription[] = [];
 
   completeSubscriptions: (subscriptionsList: Subscription[]) => void =
@@ -164,10 +161,6 @@ export class IndexTemplateComponent
 
   openCreateDialogFn(): void {
     this.openCreateDialogEvent.emit(true);
-  }
-
-  openCreateDialogFn(): void {
-    this.openCreateDialog.emit(true);
   }
 
   date = new FormControl(moment());

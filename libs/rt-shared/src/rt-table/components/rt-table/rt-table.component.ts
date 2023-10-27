@@ -38,6 +38,7 @@ export class RtTableComponent {
 
   @Output() openFilterEvent: EventEmitter<boolean> =
     new EventEmitter<boolean>();
+
   @Output() openDialogEvent: EventEmitter<any> = new EventEmitter<any>();
 
   @Input() thPrefixTemplate?: TemplateRef<any>;

@@ -47,7 +47,6 @@ import { TrackerRoutingModule } from './tracker-routing.module';
     MatButtonModule,
     RtInputModule,
     RtLoadingModule,
-    AlertModule,
     RtSelectModule,
     MatExpansionModule,
     MatProgressBarModule,

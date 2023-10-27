@@ -28,6 +28,7 @@ import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { TrackerDialog } from '../../dialogs/tracker-dialog/tracker.dialog';
+import { RT_DIALOG_CLOSE_RESULT } from '@controllo-ore-x/rt-shared';
 
 @Component({
   selector: 'controllo-ore-x-tracker-index',
@@ -57,11 +58,11 @@ export class TrackerIndexPage
 
   userHours: UserHoursReadDto[] = [];
 
-  @Output() openDialog: EventEmitter<any> = new EventEmitter<any>();
+  @Output() openDialogEvent: EventEmitter<any> = new EventEmitter<any>();
 
   override subscriptionsList: Subscription[] = [];
 
-  override _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
+  override completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
 
   constructor(
@@ -77,14 +78,14 @@ export class TrackerIndexPage
   }
 
   override ngOnInit(): void {
-    this._setSubscriptions();
+    this.setSubscriptions();
   }
 
   override ngOnDestroy(): void {
-    this._completeSubscriptions(this.subscriptionsList);
+    this.completeSubscriptions(this.subscriptionsList);
   }
 
-  override _setSubscriptions(): void {
+  override setSubscriptions(): void {
     this.subscriptionsList.push(
       this._getUserHours(),
       this._calendarDateService.currentDateObservable.subscribe(
@@ -130,7 +131,7 @@ export class TrackerIndexPage
   }
 
   openDialogFn($event: UserHoursReadDto): void {
-    this.openDialog.emit($event);
+    this.openDialogEvent.emit($event);
     this._router.navigate([this._router.url + '/' + $event._id]);
   }
 
@@ -141,11 +142,25 @@ export class TrackerIndexPage
   }
 
   createFn(): void {
-    this._rtDialogService
-      .open(TrackerDialog, {
-        width: '600px',
-        maxWidth: '600px',
-      })
-      .subscribe();
+    const dialogConfig = {
+      width: '600px',
+      maxWidth: '600px',
+    };
+    this.subscriptionsList.push(
+      this._rtDialogService
+        .open(TrackerDialog, {
+          width: dialogConfig.width,
+          maxWidth: dialogConfig.maxWidth,
+        })
+        .subscribe((res) => {
+          if (res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
+            this.setSubscriptions();
+          }
+        }),
+    );
+  }
+
+  onUserHourUpdated(): void {
+    this.setSubscriptions();
   }
 }

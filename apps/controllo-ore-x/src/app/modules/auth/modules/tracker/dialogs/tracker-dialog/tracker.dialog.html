@@ -1,20 +1,22 @@
 <lib-dialog-template
-  [cTitle]="title"
+  [title]="title"
   [isFooterEnabled]="true"
-  (closeDialog)="cancel()"
+  (closeDialogEvent)="onCancel()"
+  (reFetchEvent)="onReFetch()"
   [isLoading]="isLoading"
   [isError]="hasErrors"
+  [errorMessage]="errorMessage"
 >
   <div body>
-    <form class="container p-0" [formGroup]="formHelper.form">
-      <div class="row mb-2 -wrapper-user-upsert-form">
+    <form class="-form p-0" [formGroup]="trackerFormGroup">
+      <div class="row mb-2 -form__fields">
         <mat-form-field class="col" appearance="outline">
           <mat-label>Cliente</mat-label>
           <mat-select
             matInput
             placeholder="Cliente"
             formControlName="customer"
-            [(value)]="currentCustomer"
+            [compareWith]="compareEntityFn"
             (selectionChange)="onSelectedCustomer()"
           >
             <mat-option *ngFor="let customer of customers" [value]="customer">
@@ -23,7 +25,7 @@
           </mat-select>
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
             <div
-              *ngIf="formHelper.form.controls['customer'].hasError(error.name)"
+              *ngIf="trackerFormGroup.controls['customer'].hasError(error.name)"
             >
               {{ error.message }}
             </div>
@@ -36,7 +38,7 @@
             matInput
             placeholder="Progetto"
             formControlName="project"
-            [(value)]="currentProject"
+            [compareWith]="compareEntityFn"
             (selectionChange)="onSelectedProject()"
           >
             <mat-option *ngFor="let project of projects" [value]="project">
@@ -45,7 +47,7 @@
           </mat-select>
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
             <div
-              *ngIf="formHelper.form.controls['project'].hasError(error.name)"
+              *ngIf="trackerFormGroup.controls['project'].hasError(error.name)"
             >
               {{ error.message }}
             </div>
@@ -58,7 +60,7 @@
             matInput
             placeholder="Release"
             formControlName="release"
-            [(value)]="currentRelease"
+            [compareWith]="compareEntityFn"
           >
             <mat-option *ngFor="let release of releases" [value]="release">
               {{ release.version }}
@@ -66,7 +68,7 @@
           </mat-select>
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
             <div
-              *ngIf="formHelper.form.controls['release'].hasError(error.name)"
+              *ngIf="trackerFormGroup.controls['release'].hasError(error.name)"
             >
               {{ error.message }}
             </div>
@@ -77,7 +79,9 @@
           <mat-label>Note</mat-label>
           <input matInput placeholder="Note" formControlName="notes" />
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
-            <div *ngIf="formHelper.form.controls['notes'].hasError(error.name)">
+            <div
+              *ngIf="trackerFormGroup.controls['notes'].hasError(error.name)"
+            >
               {{ error.message }}
             </div>
           </mat-error>
@@ -93,7 +97,9 @@
             min="0"
           />
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
-            <div *ngIf="formHelper.form.controls['hours'].hasError(error.name)">
+            <div
+              *ngIf="trackerFormGroup.controls['hours'].hasError(error.name)"
+            >
               {{ error.message }}
             </div>
           </mat-error>
@@ -108,7 +114,7 @@
             formControlName="date"
           />
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
-            <div *ngIf="formHelper.form.controls['date'].hasError(error.name)">
+            <div *ngIf="trackerFormGroup.controls['date'].hasError(error.name)">
               {{ error.message }}
             </div>
           </mat-error>
@@ -134,7 +140,7 @@
           class="-radio-error"
         >
           <div
-            *ngIf="formHelper.form.controls['hoursTag'].hasError(error.name)"
+            *ngIf="trackerFormGroup.controls['hoursTag'].hasError(error.name)"
           >
             {{ error.message }}
           </div>
@@ -142,19 +148,19 @@
       </div>
     </form>
   </div>
-  <div footer class="-container-reset-btns">
+  <div footer class="-footer">
     <button
-      *ngIf="!isCreating"
-      (click)="deleteEntity()"
-      class="rt-btn -button -button-delete"
+      *ngIf="transactionStatus === 'update'"
+      (click)="onDelete()"
+      class="rt-btn -footer__button -footer__button--delete"
       mat-button
       type="button"
     >
       Elimina
     </button>
     <lib-rt-dialog-default-actions
-      (confirm)="onSubmit()"
-      (cancel)="cancel()"
+      (confirmEvent)="onSubmit()"
+      (cancelEvent)="onCancel()"
     ></lib-rt-dialog-default-actions>
   </div>
 </lib-dialog-template>
