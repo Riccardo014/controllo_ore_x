@@ -10,7 +10,14 @@ import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
-import { Observable, Subscription, catchError, concatMap, of } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  Subscription,
+  catchError,
+  concatMap,
+  of,
+} from 'rxjs';
 
 @Component({
   selector: 'controllo-ore-x-project-release-status',
@@ -24,12 +31,15 @@ export class ProjectReleaseStatusComponent
   inProgressReleases = 0;
   completedReleases = 0;
 
+  @Input() projectId!: string;
+
+  @Input() whereReleaseModified: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
   tags: {
     hoursTagId: string;
     hours: number;
   }[] = [];
-
-  @Input() projectId!: string;
 
   subscriptionsList: Subscription[] = [];
 
@@ -56,7 +66,16 @@ export class ProjectReleaseStatusComponent
   }
 
   setSubscriptions(): void {
-    this.subscriptionsList.push(this._fetchSetReleases());
+    this.subscriptionsList.push(
+      this._onNewReleaseCreated(),
+      this._fetchSetReleases(),
+    );
+  }
+
+  private _onNewReleaseCreated(): Subscription {
+    return this.whereReleaseModified.subscribe(() => {
+      this.subscriptionsList.push(this._fetchSetReleases());
+    });
   }
 
   // _fetchSetReleases(): Subscription {
@@ -100,7 +119,7 @@ export class ProjectReleaseStatusComponent
   //     });
   // }
 
-  _fetchSetReleases(): Subscription {
+  private _fetchSetReleases(): Subscription {
     return this._releaseDataService
       .getMany({ where: { projectId: this.projectId } })
       .pipe(
@@ -126,7 +145,7 @@ export class ProjectReleaseStatusComponent
       .subscribe();
   }
 
-  _handleRelease(release: ReleaseReadDto): Observable<any> {
+  private _handleRelease(release: ReleaseReadDto): Observable<any> {
     if (release.isCompleted) {
       this.completedReleases += 1;
       return of(null);

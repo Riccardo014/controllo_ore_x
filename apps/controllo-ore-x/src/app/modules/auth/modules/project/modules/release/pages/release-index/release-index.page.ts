@@ -25,7 +25,7 @@ export class ReleaseIndexPage
   projectId?: string;
   project?: ProjectReadDto;
 
-  isNewReleaseCreated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+  whereReleaseModified: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false,
   );
 
@@ -84,7 +84,7 @@ export class ReleaseIndexPage
         })
         .subscribe((res) => {
           if (res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
-            this.isNewReleaseCreated.next(true);
+            this.whereReleaseModified.next(true);
           }
         }),
     );
@@ -112,6 +112,10 @@ export class ReleaseIndexPage
           }
         }),
     );
+  }
+
+  onReleaseUpdated(): void {
+    this.whereReleaseModified.next(true);
   }
 
   /**

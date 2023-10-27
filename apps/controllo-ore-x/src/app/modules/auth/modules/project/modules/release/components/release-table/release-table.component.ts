@@ -1,4 +1,11 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { ApiPaginatedResponse, ReleaseReadDto } from '@api-interfaces';
 import { ReleaseDataService } from '@app/_core/services/release.data-service';
 import {
@@ -19,6 +26,9 @@ export class ReleaseTableComponent
 
   @Input() isNewReleaseCreated: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
+
+  @Output() onReleaseUpdatedEvent: EventEmitter<void> =
+    new EventEmitter<void>();
 
   isLoading: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
@@ -54,6 +64,7 @@ export class ReleaseTableComponent
 
   onReleaseUpdated(): void {
     this.subscriptionsList.push(this._fetchSetReleases());
+    this.onReleaseUpdatedEvent.emit();
   }
 
   private _onNewReleaseCreated(): Subscription {

@@ -56,14 +56,18 @@
       <div *ngIf="project">
         <controllo-ore-x-release-table
           [projectId]="project._id"
-          [isNewReleaseCreated]="isNewReleaseCreated"
+          [isNewReleaseCreated]="whereReleaseModified"
+          (onReleaseUpdatedEvent)="onReleaseUpdated()"
         >
         </controllo-ore-x-release-table>
       </div>
     </mat-tab>
     <mat-tab label="Stato">
       <div *ngIf="project">
-        <controllo-ore-x-project-release-status [projectId]="project._id">
+        <controllo-ore-x-project-release-status
+          [projectId]="project._id"
+          [whereReleaseModified]="whereReleaseModified"
+        >
         </controllo-ore-x-project-release-status>
       </div>
     </mat-tab>
