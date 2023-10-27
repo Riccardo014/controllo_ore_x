@@ -172,6 +172,7 @@ export class TeamDialog implements SubscriptionsLifecycle, OnDestroy, OnInit {
         this.dialogRef.close(modalRes);
       },
       error: () => {
+        this._alertService.openError();
         this.errorMessage = 'Non è stato possibile creare l\'utente';
         this.hasErrors = true;
       },
@@ -200,6 +201,7 @@ export class TeamDialog implements SubscriptionsLifecycle, OnDestroy, OnInit {
         this.dialogRef.close(modalRes);
       },
       error: () => {
+        this._alertService.openError();
         this.errorMessage = 'Non è stato possibile aggiornare i dati dell\'utente';
         this.hasErrors = true;
       },
@@ -227,6 +229,7 @@ export class TeamDialog implements SubscriptionsLifecycle, OnDestroy, OnInit {
         this.dialogRef.close(modalRes);
       },
       error: () => {
+        this._alertService.openError();
         this.errorMessage = 'Non è stato possibile eliminare l\'utente';
         this.hasErrors = true;
       },

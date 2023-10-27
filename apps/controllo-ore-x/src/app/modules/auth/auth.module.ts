@@ -5,7 +5,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { SharedModule } from '@app/_shared/shared.module';
 import { AuthRoutingModule } from './auth-routing.module';
 import { DashboardPage } from './pages/dashboard/dashboard.page';
-import { AlertModule } from '@controllo-ore-x/rt-shared';
+import { AlertModule, RtLoadingModule } from '@controllo-ore-x/rt-shared';
 
 @NgModule({
   declarations: [DashboardPage],
@@ -15,6 +15,7 @@ import { AlertModule } from '@controllo-ore-x/rt-shared';
     SharedModule,
     MatButtonModule,
     AlertModule,
+    RtLoadingModule,
   ],
   providers: [],
 })

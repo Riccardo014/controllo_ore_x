@@ -104,6 +104,7 @@ export class CustomerDialog {
         this.dialogRef.close(modalRes);
       },
       error: () => {
+        this._alertService.openError();
         this.errorMessage = 'Non è stato possibile creare il cliente';
         this.hasErrors = true;
       },
@@ -132,6 +133,7 @@ export class CustomerDialog {
         this.dialogRef.close(modalRes);
       },
       error: () => {
+        this._alertService.openError();
         this.errorMessage = 'Non è stato possibile aggiornare i dati del cliente';
         this.hasErrors = true;
       },
@@ -159,6 +161,7 @@ export class CustomerDialog {
         this.dialogRef.close(modalRes);
       },
       error: () => {
+        this._alertService.openError();
         this.errorMessage = 'Non è stato possibile eliminare il cliente';
         this.hasErrors = true;
       },

@@ -176,6 +176,7 @@ export class ProjectDialog
         this.dialogRef.close(modalRes);
       },
       error: () => {
+        this._alertService.openError();
         this.errorMessage = 'Non è stato possibile creare il progetto';
         this.hasErrors = true;
       },
@@ -204,6 +205,7 @@ export class ProjectDialog
         this.dialogRef.close(modalRes);
       },
       error: () => {
+        this._alertService.openError();
         this.errorMessage =
           'Non è stato possibile aggiornare i dati del progetto';
         this.hasErrors = true;
@@ -232,6 +234,7 @@ export class ProjectDialog
         this.dialogRef.close(modalRes);
       },
       error: () => {
+        this._alertService.openError();
         this.errorMessage = 'Non è stato possibile eliminare il progetto';
         this.hasErrors = true;
       },

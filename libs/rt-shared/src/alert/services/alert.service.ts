@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { RtAlert } from '../components/alert/alert.interface';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AlertService {
   alerts: BehaviorSubject<RtAlert[]> = new BehaviorSubject([] as RtAlert[]);
 

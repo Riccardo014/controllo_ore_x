@@ -118,6 +118,7 @@ export class ReleaseDialog {
         this.dialogRef.close(modalRes);
       },
       error: () => {
+        this._alertService.openError();
         this.errorMessage = 'Non è stato possibile creare la release';
         this.hasErrors = true;
       },
@@ -147,6 +148,7 @@ export class ReleaseDialog {
       },
       error: () => {
         this.errorMessage =
+        this._alertService.openError();
           'Non è stato possibile aggiornare i dati della release';
         this.hasErrors = true;
       },
@@ -174,6 +176,7 @@ export class ReleaseDialog {
         this.dialogRef.close(modalRes);
       },
       error: () => {
+        this._alertService.openError();
         this.errorMessage = 'Non è stato possibile eliminare la release';
         this.hasErrors = true;
       },
