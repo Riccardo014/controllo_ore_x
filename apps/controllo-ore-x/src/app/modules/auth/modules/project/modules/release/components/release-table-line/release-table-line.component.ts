@@ -94,7 +94,7 @@ export class ReleaseTableLineComponent
     );
   }
 
-  openReportDialog($event: ReleaseReadDto): void {
+  openReleaseReport($event: ReleaseReadDto): void {
     this._router.navigate([this._router.url + '/report/' + $event._id]);
   }
 
