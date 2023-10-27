@@ -16,5 +16,5 @@ export class RtDialogTemplateComponent {
   @Input() errorMessage?: string;
   @Input() hasClose: boolean = false;
 
-  @Output() reFetch: EventEmitter<void> = new EventEmitter<void>();
+  @Output() reFetchEvent: EventEmitter<void> = new EventEmitter<void>();
 }
