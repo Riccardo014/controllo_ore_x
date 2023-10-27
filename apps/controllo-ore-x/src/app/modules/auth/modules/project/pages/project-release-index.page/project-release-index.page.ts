@@ -1,11 +1,11 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ProjectReadDto, ReleaseReadDto } from '@api-interfaces';
+import { ApiResponse, ProjectReadDto, ReleaseReadDto } from '@api-interfaces';
 import { ReleaseDataService } from '@app/_core/services/release.data-service';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'controllo-ore-x-project-release-index',
@@ -16,6 +16,9 @@ export class ProjectReleaseIndexPage
   implements OnInit, OnDestroy, SubscriptionsLifecycle
 {
   @Input() project!: ProjectReadDto;
+
+  @Input() isNewReleaseCreated: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   releases: ReleaseReadDto[] = [];
 
@@ -36,13 +39,24 @@ export class ProjectReleaseIndexPage
 
   setSubscriptions(): void {
     this.subscriptionsList.push(
-      this._releaseDataService
-        .getMany({
-          where: { projectId: this.project._id },
-        })
-        .subscribe((releases: any) => {
-          this.releases = releases.data;
-        }),
+      this._onNewReleaseCreated(),
+      this._getReleases(),
     );
+  }
+
+  private _onNewReleaseCreated(): Subscription {
+    return this.isNewReleaseCreated.subscribe(() => {
+      this.subscriptionsList.push(this._getReleases());
+    });
+  }
+
+  private _getReleases(): Subscription {
+    return this._releaseDataService
+      .getMany({
+        where: { projectId: this.project._id },
+      })
+      .subscribe((releases: ApiResponse<ReleaseReadDto[]>) => {
+        this.releases = releases.data;
+      });
   }
 }

@@ -1,6 +1,9 @@
+import { ProjectReadDto } from './project.dto';
+
 export interface ReleaseReadDto {
   _id: string;
   projectId: string;
+  project?: ProjectReadDto;
   version: string;
   isCompleted: boolean;
   hoursBudget: number;

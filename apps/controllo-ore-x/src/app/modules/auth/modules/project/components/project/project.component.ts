@@ -12,8 +12,8 @@ import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
-import { RtDialogService } from '@controllo-ore-x/rt-shared';
-import { Subscription } from 'rxjs';
+import { RT_DIALOG_CLOSE_RESULT, RtDialogService } from '@controllo-ore-x/rt-shared';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { ReleaseDialog } from '../../modules/release/dialogs/release-dialog/release.dialog';
 
 @Component({
@@ -24,11 +24,14 @@ import { ReleaseDialog } from '../../modules/release/dialogs/release-dialog/rele
 export class ProjectComponent
   implements OnInit, OnDestroy, SubscriptionsLifecycle
 {
-  @Input() projectWithCustomer!: ProjectReadDto;
+  @Input() project!: ProjectReadDto;
 
   @Output() openDialogEvent: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() duplicateEntityEvent: EventEmitter<any> = new EventEmitter<any>();
+
+  isNewReleaseCreated: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   isPanelOpen: boolean = false;
   customExpandedHeight: string = '90px';
@@ -44,8 +47,8 @@ export class ProjectComponent
   ) {}
 
   ngOnInit(): void {
-    if (!this.projectWithCustomer) {
-      throw new Error('ProjectWithCustomer is undefined');
+    if (!this.project) {
+      throw new Error('Project is undefined');
     }
     this.setSubscriptions();
   }
@@ -59,7 +62,7 @@ export class ProjectComponent
   }
 
   openEditDialog(): void {
-    this.openDialogEvent.emit(this.projectWithCustomer);
+    this.openDialogEvent.emit(this.project);
   }
 
   openCreateReleaseDialog(): void {
@@ -73,17 +76,21 @@ export class ProjectComponent
           width: dialogConfig.width,
           maxWidth: dialogConfig.maxWidth,
           data: {
-            ...this.projectWithCustomer,
+            ...this.project,
             transactionStatus: 'create',
           },
         })
-        .subscribe(),
+        .subscribe((res) => {
+          if (res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
+            this.isNewReleaseCreated.next(true);
+          }
+        }),
     );
   }
 
   navigateToReleaseIndex(): void {
     this._router.navigate([
-      this._router.url + '/' + this.projectWithCustomer._id + '/release',
+      this._router.url + '/' + this.project._id + '/release',
     ]);
   }
 
@@ -95,6 +102,6 @@ export class ProjectComponent
    * Emit a event to open a dialog to duplicate the entity.
    */
   openDuplicateDialog(): void {
-    this.duplicateEntityEvent.emit(this.projectWithCustomer);
+    this.duplicateEntityEvent.emit(this.project);
   }
 }

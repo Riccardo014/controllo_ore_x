@@ -22,12 +22,12 @@
       <div class="-project__data__details" (click)="navigateToReleaseIndex()">
         <div
           class="-project__data__details__color"
-          [style.backgroundColor]="this.projectWithCustomer.color"
+          [style.backgroundColor]="this.project.color"
         ></div>
-        <div class="body-1">{{ projectWithCustomer.name }}</div>
-        <div *ngIf="projectWithCustomer.customer">
+        <div class="body-1">{{ project.name }}</div>
+        <div *ngIf="project.customer">
           <mat-chip class="caption">{{
-            projectWithCustomer.customer.name
+            project.customer.name
           }}</mat-chip>
         </div>
       </div>
@@ -59,6 +59,8 @@
       </mat-menu>
     </mat-panel-description>
   </mat-expansion-panel-header>
-  <controllo-ore-x-project-release-index [project]="projectWithCustomer">
+  <controllo-ore-x-project-release-index 
+  [project]="project"
+  [isNewReleaseCreated]="isNewReleaseCreated">
   </controllo-ore-x-project-release-index>
 </mat-expansion-panel>
