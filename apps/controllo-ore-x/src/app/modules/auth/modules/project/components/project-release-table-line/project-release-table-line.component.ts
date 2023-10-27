@@ -6,7 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { ReleaseReadDto } from '@api-interfaces';
+import { ApiResponse, ReleaseReadDto, UserHoursReadDto } from '@api-interfaces';
 import { UserHoursDataService } from '@app/_core/services/user-hour.data-service';
 import { convertNumberToHours } from '@app/utils/NumberToHoursConverter';
 import {
@@ -50,7 +50,7 @@ export class ProjectReleaseTableLineComponent
     if (!this.release) {
       throw new Error('release is undefined');
     }
-    this.formatDeadline(this.release.deadline);
+    this._formatDeadline(this.release.deadline);
 
     this.setSubscriptions();
   }
@@ -60,25 +60,7 @@ export class ProjectReleaseTableLineComponent
   }
 
   setSubscriptions(): void {
-    this.subscriptionsList.push(this.sethoursExecutedProperty());
-  }
-
-  sethoursExecutedProperty(): Subscription {
-    return this._userHoursDataService
-      .getMany({
-        where: { releaseId: this.release._id },
-      })
-      .subscribe((userHours: any) => {
-        userHours.data.forEach((userHour: any) => {
-          this.hoursExecuted += parseFloat(userHour.hours);
-        });
-      });
-  }
-
-  formatDeadline(deadline: Date): void {
-    this.deadline = new Intl.DateTimeFormat(navigator.language).format(
-      new Date(deadline),
-    );
+    this.subscriptionsList.push(this._sethoursExecutedProperty());
   }
 
   openEditReleaseDialog(): void {
@@ -103,5 +85,28 @@ export class ProjectReleaseTableLineComponent
 
   convertNumberToHours(hoursToConvert: number): string {
     return convertNumberToHours(hoursToConvert);
+  }
+
+  private _sethoursExecutedProperty(): Subscription {
+    return this._userHoursDataService
+      .getMany({
+        where: { releaseId: this.release._id },
+      })
+      .subscribe({
+        next: (userHours: ApiResponse<UserHoursReadDto[]>) => {
+          userHours.data.forEach((userHour: UserHoursReadDto) => {
+            this.hoursExecuted += Number(userHour.hours);
+          });
+        },
+        error: (error: any) => {
+          throw new Error(error);
+        },
+      });
+  }
+
+  private _formatDeadline(deadline: Date): void {
+    this.deadline = new Intl.DateTimeFormat(navigator.language).format(
+      new Date(deadline),
+    );
   }
 }

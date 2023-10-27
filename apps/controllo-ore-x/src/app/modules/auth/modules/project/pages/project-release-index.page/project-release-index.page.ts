@@ -20,8 +20,7 @@ export class ProjectReleaseIndexPage
   @Input() isNewReleaseCreated: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
-  @Input() wasReleaseUpdated: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
+    isLoading: boolean = true;
 
   releases: ReleaseReadDto[] = [];
 
@@ -52,18 +51,30 @@ export class ProjectReleaseIndexPage
   }
 
   private _onNewReleaseCreated(): Subscription {
-    return this.isNewReleaseCreated.subscribe(() => {
-      this.subscriptionsList.push(this._getReleases());
-    });
+    return this.isNewReleaseCreated.subscribe({
+        next: () => {
+          this.subscriptionsList.push(this._getReleases());
+        },
+        error: (error: any) => {
+          throw new Error(error);
+        },
+      });
   }
 
   private _getReleases(): Subscription {
+    this.isLoading = true;
     return this._releaseDataService
       .getMany({
         where: { projectId: this.project._id },
       })
-      .subscribe((releases: ApiResponse<ReleaseReadDto[]>) => {
-        this.releases = releases.data;
+      .subscribe({
+        next: (releases: ApiResponse<ReleaseReadDto[]>) => {
+          this.releases = releases.data;
+          this.isLoading = false;
+        },
+        error: (error: any) => {
+          throw new Error(error);
+        },
       });
   }
 }

@@ -4,7 +4,7 @@ import { AlertContainerComponent } from './components/alert-container/alert-cont
 import { AlertComponent } from './components/alert/alert.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { AlertService } from "./services/alert.service";
+import { AlertService } from './services/alert.service';
 
 
 @NgModule({

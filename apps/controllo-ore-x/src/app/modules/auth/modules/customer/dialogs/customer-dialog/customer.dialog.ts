@@ -38,7 +38,7 @@ export class CustomerDialog {
     public dialogRef: MatDialogRef<CustomerDialog>,
     private _alertService: AlertService,
     @Inject(MAT_DIALOG_DATA)
-    public data: IRtDialogInput<any>,
+    public data: IRtDialogInput<CustomerReadDto>,
     private _rtDialogService: RtDialogService,
   ) {
     if (this.data.input) {

@@ -72,18 +72,6 @@ export class ProjectIndexPage
     this.subscriptionsList.push(this._getProjects());
   }
 
-  _getProjects(): Subscription {
-    return this._dataService
-      .getMany({
-        relations: ['customer'],
-      })
-      .subscribe((projects: ApiPaginatedResponse<ProjectReadDto>) => {
-        this.projects = projects.data;
-        this.showedProjects = projects.data;
-        this.isLoading.next(false);
-      });
-  }
-
   updateFulltextSearch(fulltextSearch: string): void {
     this.showedProjects = this.projects.filter((project: any) => {
       return (
@@ -156,5 +144,22 @@ export class ProjectIndexPage
           }
         }),
     );
+  }
+
+  private _getProjects(): Subscription {
+    return this._dataService
+      .getMany({
+        relations: ['customer'],
+      })
+      .subscribe({
+        next: (projects: ApiPaginatedResponse<ProjectReadDto>) => {
+          this.projects = projects.data;
+          this.showedProjects = projects.data;
+          this.isLoading.next(false);
+        },
+        error: (error: any) => {
+          throw new Error(error);
+        },
+      });
   }
 }

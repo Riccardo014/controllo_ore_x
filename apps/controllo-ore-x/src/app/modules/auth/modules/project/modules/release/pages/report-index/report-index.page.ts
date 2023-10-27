@@ -20,7 +20,7 @@ export class ReportIndexPage
 {
   releaseId!: string;
 
-  release: any;
+  release: ReleaseReadDto = {} as ReleaseReadDto;
 
   hoursExecuted: number = 0;
   deadline: string = '';
@@ -79,8 +79,13 @@ export class ReportIndexPage
       .update(this.releaseId, {
         isCompleted: !this.release.isCompleted,
       })
-      .subscribe(() => {
-        this._getRelease();
+      .subscribe({
+        next: () => {
+          this._getRelease();
+        },
+        error: (error: any) => {
+          throw new Error(error);
+        },
       });
   }
 
@@ -92,12 +97,15 @@ export class ReportIndexPage
   }
 
   private _getRelease(): Subscription {
-    return this._releaseDataService
-      .getOne(this.releaseId)
-      .subscribe((release: ApiResponse<ReleaseReadDto>) => {
+    return this._releaseDataService.getOne(this.releaseId).subscribe({
+      next: (release: ApiResponse<ReleaseReadDto>) => {
         this.release = release.data;
         this._formatDeadline(this.release.deadline);
-      });
+      },
+      error: (error: any) => {
+        throw new Error(error);
+      },
+    });
   }
 
   private _formatDeadline(deadline: Date): void {
@@ -111,10 +119,15 @@ export class ReportIndexPage
       .getMany({
         where: { releaseId: this.releaseId },
       })
-      .subscribe((userHours: ApiResponse<UserHoursReadDto[]>) => {
-        userHours.data.forEach((userHour: UserHoursReadDto) => {
-          this.hoursExecuted += Number(userHour.hours);
-        });
+      .subscribe({
+        next: (userHours: ApiResponse<UserHoursReadDto[]>) => {
+          userHours.data.forEach((userHour: UserHoursReadDto) => {
+            this.hoursExecuted += Number(userHour.hours);
+          });
+        },
+        error: (error: any) => {
+          throw new Error(error);
+        },
       });
   }
 }

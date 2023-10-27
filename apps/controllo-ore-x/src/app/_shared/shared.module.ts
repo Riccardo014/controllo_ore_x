@@ -12,7 +12,6 @@ import { GlobalTopbarComponent } from './components/global-topbar/global-topbar.
 import { IndexTemplateComponent } from './components/index-template/index-template.component';
 import { PageTitleComponent } from './components/page-title/page-title.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
-import { UpsertTemplateComponent } from './components/upsert-template/upsert-template.component';
 import { RtHeaderModule } from './modules/rt-header/rt-header.module';
 import { SidenavSectionComponent } from './components/sidenav/components/sidenav-section/sidenav-section.component';
 
@@ -21,7 +20,6 @@ import { SidenavSectionComponent } from './components/sidenav/components/sidenav
     GlobalTopbarComponent,
     SidenavComponent,
     PageTitleComponent,
-    UpsertTemplateComponent,
     IndexTemplateComponent,
     SidenavSectionComponent,
   ],
@@ -41,7 +39,6 @@ import { SidenavSectionComponent } from './components/sidenav/components/sidenav
     GlobalTopbarComponent,
     SidenavComponent,
     PageTitleComponent,
-    UpsertTemplateComponent,
     IndexTemplateComponent,
   ],
 })

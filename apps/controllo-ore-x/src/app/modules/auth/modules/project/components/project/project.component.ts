@@ -29,9 +29,9 @@ export class ProjectComponent
 {
   @Input() project!: ProjectReadDto;
 
-  @Output() openDialogEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Output() openDialogEvent: EventEmitter<ProjectReadDto> = new EventEmitter<ProjectReadDto>();
 
-  @Output() duplicateEntityEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Output() duplicateEntityEvent: EventEmitter<ProjectReadDto> = new EventEmitter<ProjectReadDto>();
 
   isNewReleaseCreated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false,

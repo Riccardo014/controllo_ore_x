@@ -245,10 +245,13 @@ export class ProjectDialog
    * Fetch and set the project's customers.
    */
   private _fetchSetProjectCustomers(): Subscription {
-    return this._customerDataService
-      .getMany({})
-      .subscribe((customers: ApiPaginatedResponse<CustomerReadDto>) => {
+    return this._customerDataService.getMany({}).subscribe({
+      next: (customers: ApiPaginatedResponse<CustomerReadDto>) => {
         this.projectCustomers = customers.data;
-      });
+      },
+      error: (error: any) => {
+        throw new Error(error);
+      },
+    });
   }
 }

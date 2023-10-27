@@ -10,7 +10,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import {
-  AlertModule,
   RtDialogModule,
   RtInputModule,
   RtLoadingModule,
@@ -41,7 +40,6 @@ import { TeamRoutingModule } from './team-routing.module';
     MatButtonModule,
     RtInputModule,
     RtLoadingModule,
-    AlertModule,
     RtSelectModule,
   ],
 })

@@ -50,10 +50,13 @@ export class ProjectActivityCardComponent
   }
 
   private _fetchSetTag(tagId: string): Subscription {
-    return this._hoursTagDataService
-      .getOne(tagId)
-      .subscribe((hoursTag: any) => {
+    return this._hoursTagDataService.getOne(tagId).subscribe({
+      next: (hoursTag: any) => {
         this.tag = hoursTag;
-      });
+      },
+      error: (error: any) => {
+        throw new Error(error);
+      },
+    });
   }
 }

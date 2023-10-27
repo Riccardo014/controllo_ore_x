@@ -1,13 +1,23 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Router } from '@angular/router';
-import { ReleaseReadDto } from '@api-interfaces';
+import { ApiResponse, ReleaseReadDto, UserHoursReadDto } from '@api-interfaces';
 import { UserHoursDataService } from '@app/_core/services/user-hour.data-service';
 import { convertNumberToHours } from '@app/utils/NumberToHoursConverter';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
-import { RT_DIALOG_CLOSE_RESULT, RtDialogService } from '@controllo-ore-x/rt-shared';
+import {
+  RT_DIALOG_CLOSE_RESULT,
+  RtDialogService,
+} from '@controllo-ore-x/rt-shared';
 import { Subscription } from 'rxjs';
 import { ReleaseDialog } from '../../dialogs/release-dialog/release.dialog';
 
@@ -22,7 +32,7 @@ export class ReleaseTableLineComponent
   @Input() release!: ReleaseReadDto;
 
   @Output() onReleaseUpdatedEvent: EventEmitter<void> =
-  new EventEmitter<void>();
+    new EventEmitter<void>();
 
   hoursExecuted: number = 0;
   deadline: string = '';
@@ -45,7 +55,7 @@ export class ReleaseTableLineComponent
     if (typeof this.release !== 'object') {
       throw new Error('release must be a ReleaseReadDto object');
     }
-    this.formatDeadline(this.release.deadline);
+    this._formatDeadline(this.release.deadline);
 
     this.setSubscriptions();
   }
@@ -55,23 +65,7 @@ export class ReleaseTableLineComponent
   }
 
   setSubscriptions(): void {
-    this.subscriptionsList.push(
-      this._userHoursDataService
-        .getMany({
-          where: { releaseId: this.release._id },
-        })
-        .subscribe((userHours: any) => {
-          userHours.data.forEach((userHour: any) => {
-            this.hoursExecuted += parseFloat(userHour.hours);
-          });
-        }),
-    );
-  }
-
-  formatDeadline(deadline: Date): void {
-    this.deadline = new Intl.DateTimeFormat(navigator.language).format(
-      new Date(deadline),
-    );
+    this.subscriptionsList.push(this._getHoursExecuted());
   }
 
   openEditRelease($event: ReleaseReadDto): void {
@@ -100,5 +94,28 @@ export class ReleaseTableLineComponent
 
   convertNumberToHours(hoursToConvert: number): string {
     return convertNumberToHours(hoursToConvert);
+  }
+
+  private _getHoursExecuted(): Subscription {
+    return this._userHoursDataService
+      .getMany({
+        where: { releaseId: this.release._id },
+      })
+      .subscribe({
+        next: (userHours: ApiResponse<UserHoursReadDto[]>) => {
+          userHours.data.forEach((userHour: UserHoursReadDto) => {
+            this.hoursExecuted += Number(userHour.hours);
+          });
+        },
+        error: (error: any) => {
+          throw new Error(error);
+        },
+      });
+  }
+
+  private _formatDeadline(deadline: Date): void {
+    this.deadline = new Intl.DateTimeFormat(navigator.language).format(
+      new Date(deadline),
+    );
   }
 }

@@ -68,8 +68,13 @@ export class ReleaseTableComponent
   }
 
   private _onNewReleaseCreated(): Subscription {
-    return this.isNewReleaseCreated.subscribe(() => {
-      this.subscriptionsList.push(this._fetchSetReleases());
+    return this.isNewReleaseCreated.subscribe({
+      next: () => {
+        this.subscriptionsList.push(this._fetchSetReleases());
+      },
+      error: (error: any) => {
+        throw new Error(error);
+      },
     });
   }
 
@@ -80,9 +85,14 @@ export class ReleaseTableComponent
         where: { projectId: this.projectId },
         order: { version: 'DESC' },
       })
-      .subscribe((releases: ApiPaginatedResponse<ReleaseReadDto>) => {
-        this.releases = releases.data;
-        this.isLoading.next(false);
+      .subscribe({
+        next: (releases: ApiPaginatedResponse<ReleaseReadDto>) => {
+          this.releases = releases.data;
+          this.isLoading.next(false);
+        },
+        error: (error: any) => {
+          throw new Error(error);
+        },
       });
   }
 }

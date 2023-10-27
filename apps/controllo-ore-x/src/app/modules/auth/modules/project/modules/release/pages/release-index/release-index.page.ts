@@ -122,7 +122,7 @@ export class ReleaseIndexPage
    * Return the project's id.
    */
   private _getProjectId(): string {
-    return this._activatedRoute.snapshot.params['projectId'];
+    return this._activatedRoute.snapshot.params['id'];
   }
 
   private _getProject(): Subscription {

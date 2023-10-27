@@ -11,7 +11,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { SharedModule } from '@app/_shared/shared.module';
 import {
-  AlertModule,
   RtDialogModule,
   RtInputModule,
   RtLoadingModule,
@@ -41,7 +40,6 @@ import { CustomerIndexPage } from './pages/customer-index.page';
     MatButtonModule,
     RtInputModule,
     RtLoadingModule,
-    AlertModule,
     RtSelectModule,
   ],
 })

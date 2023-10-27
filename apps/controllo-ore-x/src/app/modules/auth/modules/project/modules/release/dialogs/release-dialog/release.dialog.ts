@@ -72,6 +72,9 @@ export class ReleaseDialog {
             this._delete();
           }
         },
+        error: (error: any) => {
+          throw new Error(error);
+        },
       });
   }
 

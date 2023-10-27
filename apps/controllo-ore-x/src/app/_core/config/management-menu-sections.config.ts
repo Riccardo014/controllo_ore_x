@@ -21,9 +21,4 @@ export const MANAGEMENT_MENU_SECTIONS: IMenuSection[] = [
     routerLink: 'etichette',
     iconName: 'sports_tennis',
   },
-  {
-    label: 'Impostazioni',
-    routerLink: 'impostazioni',
-    iconName: 'robot',
-  },
 ];

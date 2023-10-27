@@ -64,7 +64,7 @@ export class TeamDialog implements SubscriptionsLifecycle, OnDestroy, OnInit {
     public dialogRef: MatDialogRef<TeamDialog>,
     private _alertService: AlertService,
     @Inject(MAT_DIALOG_DATA)
-    public data: IRtDialogInput<any>,
+    public data: IRtDialogInput<UserReadDto>,
     private _rtDialogService: RtDialogService,
 
     protected _formBuilder: FormBuilder,
@@ -104,6 +104,9 @@ export class TeamDialog implements SubscriptionsLifecycle, OnDestroy, OnInit {
             this._delete();
           }
         },
+        error: (error: any) => {
+          throw new Error(error);
+        }
       });
   }
 

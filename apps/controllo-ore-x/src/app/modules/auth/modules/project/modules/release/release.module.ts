@@ -15,7 +15,6 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import {
-  AlertModule,
   RtDialogModule,
   RtInputModule,
   RtLoadingModule,
@@ -61,7 +60,6 @@ import { ReleaseRoutingModule } from './release-routing.module';
     MatButtonModule,
     RtInputModule,
     RtLoadingModule,
-    AlertModule,
     RtSelectModule,
     MatExpansionModule,
     RtTableModule,

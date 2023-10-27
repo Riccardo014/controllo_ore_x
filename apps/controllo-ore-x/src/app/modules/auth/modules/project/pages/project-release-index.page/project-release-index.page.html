@@ -1,4 +1,7 @@
-<div *ngIf="releases.length > 0">
+<div *ngIf="isLoading">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+<div *ngIf="!isLoading && releases.length > 0">
   <controllo-ore-x-project-release-table-line
     *ngFor="let release of releases"
     [release]="release"

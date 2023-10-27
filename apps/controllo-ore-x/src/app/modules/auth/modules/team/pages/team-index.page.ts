@@ -38,7 +38,7 @@ export class TeamIndexPage extends IndexPage<
   hasErrors: boolean = false;
   isEditAvailable: boolean = false;
 
-  @Output() openDialogEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Output() openDialogEvent: EventEmitter<UserReadDto> = new EventEmitter<UserReadDto>();
 
   constructor(
     protected _configurationService: IndexConfigurationDataService,

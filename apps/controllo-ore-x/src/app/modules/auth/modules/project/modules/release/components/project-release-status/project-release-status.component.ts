@@ -73,8 +73,13 @@ export class ProjectReleaseStatusComponent
   }
 
   private _onNewReleaseCreated(): Subscription {
-    return this.whereReleaseModified.subscribe(() => {
+    return this.whereReleaseModified.subscribe({
+      next: () => {
       this.subscriptionsList.push(this._fetchSetReleases());
+      },
+      error: (error: any) => {
+        throw new Error(error);
+      },
     });
   }
 

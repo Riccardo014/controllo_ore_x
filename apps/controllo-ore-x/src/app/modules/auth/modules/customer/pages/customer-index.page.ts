@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { Router } from '@angular/router';
 import {
   CustomerCreateDto,
   CustomerReadDto,
@@ -39,14 +38,13 @@ export class CustomerIndexPage extends IndexPage<
   hasErrors: boolean = false;
   isEditAvailable: boolean = false;
 
-  @Output() openDialogEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Output() openDialogEvent: EventEmitter<CustomerReadDto> = new EventEmitter<CustomerReadDto>();
 
   constructor(
     protected _configurationService: IndexConfigurationDataService,
     protected _dataService: CustomerDataService,
     protected _loadingService: RtLoadingService,
     private _rtDialogService: RtDialogService,
-    private _router: Router,
   ) {
     super();
   }
