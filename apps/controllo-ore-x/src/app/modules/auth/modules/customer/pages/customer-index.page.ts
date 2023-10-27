@@ -49,7 +49,7 @@ export class CustomerIndexPage extends IndexPage<
     super();
   }
 
-  openDialogFn($event: CustomerReadDto): void {
+  openDialogFn(customer: CustomerReadDto): void {
     const dialogConfig = {
       width: '600px',
       maxWidth: '600px',
@@ -59,7 +59,7 @@ export class CustomerIndexPage extends IndexPage<
         .open(CustomerDialog, {
           width: dialogConfig.width,
           maxWidth: dialogConfig.maxWidth,
-          data: $event,
+          data: customer,
         })
         .subscribe((res) => {
           if (res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {

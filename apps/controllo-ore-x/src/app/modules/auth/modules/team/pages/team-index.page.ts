@@ -49,7 +49,7 @@ export class TeamIndexPage extends IndexPage<
     super();
   }
 
-  openDialogFn($event: UserReadDto): void {
+  openDialogFn(user: UserReadDto): void {
     const dialogConfig = {
       width: '600px',
       maxWidth: '600px',
@@ -59,7 +59,7 @@ export class TeamIndexPage extends IndexPage<
         .open(TeamDialog, {
           width: dialogConfig.width,
           maxWidth: dialogConfig.maxWidth,
-          data: $event,
+          data: user,
         })
         .subscribe((res) => {
           if (res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {

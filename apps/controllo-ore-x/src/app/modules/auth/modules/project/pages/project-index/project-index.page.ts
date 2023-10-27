@@ -81,7 +81,7 @@ export class ProjectIndexPage
     });
   }
 
-  openDialogFn($event: ProjectReadDto): void {
+  openDialogFn(project: ProjectReadDto): void {
     const dialogConfig = {
       width: '600px',
       maxWidth: '600px',
@@ -91,7 +91,10 @@ export class ProjectIndexPage
         .open(ProjectDialog, {
           width: dialogConfig.width,
           maxWidth: dialogConfig.maxWidth,
-          data: $event,
+          data: {
+            project,
+            transactionStatus: 'update',
+          },
         })
         .subscribe((res) => {
           if (
@@ -104,7 +107,7 @@ export class ProjectIndexPage
     );
   }
 
-  duplicateFn($event: ProjectReadDto): void {
+  duplicateFn(project: ProjectReadDto): void {
     const dialogConfig = {
       width: '600px',
       maxWidth: '600px',
@@ -115,7 +118,7 @@ export class ProjectIndexPage
           width: dialogConfig.width,
           maxWidth: dialogConfig.maxWidth,
           data: {
-            ...$event,
+            project,
             transactionStatus: 'duplicate',
           },
         })

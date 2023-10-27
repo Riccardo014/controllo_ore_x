@@ -69,8 +69,8 @@ export class ProjectDialog
     private _customerDataService: CustomerDataService,
   ) {
     if (this.data.input) {
-      this.project = this.data.input;
-      this.projectFormGroup.patchValue(this.data.input);
+      this.project = this.data.input.project;
+      this.projectFormGroup.patchValue(this.data.input.project);
 
       if (this.data.input.transactionStatus === 'duplicate') {
         this.title = 'Duplica progetto';

@@ -64,7 +64,7 @@ export class ReleaseIndexPage
   }
 
   openCreateReleaseDialog(): void {
-    if(!this.project){
+    if (!this.project) {
       return;
     }
     const dialogConfig = {
@@ -90,16 +90,25 @@ export class ReleaseIndexPage
   }
 
   openEditProjectDialog(): void {
+    if (!this.project) {
+      return;
+    }
+
     const dialogConfig = {
       width: '600px',
       maxWidth: '600px',
     };
+    const project: ProjectReadDto = this.project;
+
     this.subscriptionsList.push(
       this._rtDialogService
         .open(ProjectDialog, {
           width: dialogConfig.width,
           maxWidth: dialogConfig.maxWidth,
-          data: this.project,
+          data: {
+            project,
+            transactionStatus: 'update',
+          },
         })
         .subscribe((res) => {
           if (res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
