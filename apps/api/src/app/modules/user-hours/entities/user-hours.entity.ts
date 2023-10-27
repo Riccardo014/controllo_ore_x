@@ -20,7 +20,7 @@ export class UserHours extends BaseEntityTemplate {
 
   @ManyToOne(() => HoursTag, { onDelete: 'SET NULL' })
   @JoinColumn({ name: 'hoursTagId' })
-  hoursHoursTag?: HoursTag;
+  hoursTag?: HoursTag;
   @Column()
   hoursTagId: string;
 

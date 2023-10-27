@@ -58,6 +58,7 @@
     </mat-panel-description>
   </mat-expansion-panel-header>
   <controllo-ore-x-project-release-index
+    *ngIf="isPanelOpen"
     (click)="togglePanel()"
     [project]="project"
     [isNewReleaseCreated]="isNewReleaseCreated"

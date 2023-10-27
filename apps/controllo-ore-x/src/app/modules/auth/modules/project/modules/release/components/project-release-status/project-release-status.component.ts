@@ -5,19 +5,11 @@ import {
   UserHoursReadDto,
 } from '@api-interfaces';
 import { ReleaseDataService } from '@app/_core/services/release.data-service';
-import { UserHoursDataService } from '@app/_core/services/user-hour.data-service';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
-import {
-  BehaviorSubject,
-  Observable,
-  Subscription,
-  catchError,
-  concatMap,
-  of,
-} from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'controllo-ore-x-project-release-status',
@@ -46,10 +38,7 @@ export class ProjectReleaseStatusComponent
   completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
 
-  constructor(
-    private _releaseDataService: ReleaseDataService,
-    private _userHoursDataService: UserHoursDataService,
-  ) {}
+  constructor(private _releaseDataService: ReleaseDataService) {}
 
   ngOnInit(): void {
     if (!this.projectId) {
@@ -74,8 +63,11 @@ export class ProjectReleaseStatusComponent
 
   private _onNewReleaseCreated(): Subscription {
     return this.whereReleaseModified.subscribe({
-      next: () => {
-      this.subscriptionsList.push(this._fetchSetReleases());
+      next: (result: boolean) => {
+        if (result) {
+          this.subscriptionsList.push(this._fetchSetReleases());
+          this.whereReleaseModified.next(false);
+        }
       },
       error: (error: any) => {
         throw new Error(error);
@@ -83,89 +75,33 @@ export class ProjectReleaseStatusComponent
     });
   }
 
-  // _fetchSetReleases(): Subscription {
-  //   return this._releaseDataService
-  //     .getMany({
-  //       where: { projectId: this.projectId },
-  //     })
-  //     .subscribe((releases: ApiPaginatedResponse<ReleaseReadDto>) => {
-  //       this.totalReleases = releases.data.length;
-  //       releases.data.forEach((release) => {
-  //         if (release.isCompleted) {
-  //           this.completedReleases += 1;
-  //           return;
-  //         }
-  //         this._userHoursDataService
-  //           .getMany({
-  //             where: { releaseId: release._id },
-  //           })
-  //           .subscribe((userHours: ApiPaginatedResponse<UserHoursReadDto>) => {
-  //             if (userHours.data.length > 0) {
-  //               this.inProgressReleases += 1;
-  //             }
-  //             const tagsIds: Set<string> = new Set<string>();
-  //             userHours.data.forEach((userHour: any) => {
-  //               if (!tagsIds.has(userHour.hoursTagId)) {
-  //                 this.tags.push({
-  //                   hoursTagId: userHour.hoursTagId,
-  //                   hours: Number(userHour.hours),
-  //                 });
-  //                 tagsIds.add(userHour.hoursTagId);
-  //               } else {
-  //                 this.tags.forEach((tag) => {
-  //                   if (tag.hoursTagId === userHour.hoursTagId) {
-  //                     tag.hours += Number(userHour.hours);
-  //                   }
-  //                 });
-  //               }
-  //             });
-  //           });
-  //       });
-  //     });
-  // }
-
   private _fetchSetReleases(): Subscription {
+    this.totalReleases = 0;
+    this.inProgressReleases = 0;
+    this.completedReleases = 0;
+    this.tags = [];
+    const tagsIds: Set<string> = new Set<string>();
+
     return this._releaseDataService
-      .getMany({ where: { projectId: this.projectId } })
-      .pipe(
-        concatMap((releases: any) => {
-          this.totalReleases = releases.data.length;
-          this.completedReleases = 0;
-          this.inProgressReleases = 0;
-          this.tags = [];
-
-          return releases.data.reduce(
-            (previous: any, release: ReleaseReadDto) => {
-              return previous.pipe(
-                concatMap(() => this._handleRelease(release)),
-              );
-            },
-            of(null),
-          );
-        }),
-        catchError((error) => {
-          throw new Error(error.message);
-        }),
-      )
-      .subscribe();
-  }
-
-  private _handleRelease(release: ReleaseReadDto): Observable<any> {
-    if (release.isCompleted) {
-      this.completedReleases += 1;
-      return of(null);
-    }
-
-    return this._userHoursDataService
-      .getMany({ where: { releaseId: release._id } })
-      .pipe(
-        concatMap((userHours: ApiPaginatedResponse<UserHoursReadDto>) => {
-          if (userHours.data.length > 0) {
-            this.inProgressReleases += 1;
+      .getMany({
+        where: { projectId: this.projectId },
+        relations: ['userHours', 'userHours.hoursTag'],
+      })
+      .subscribe((releases: ApiPaginatedResponse<ReleaseReadDto>) => {
+        this.totalReleases = releases.data.length;
+        for (const release of releases.data) {
+          if (release.isCompleted) {
+            this.completedReleases += 1;
+          } else {
+            for (const userHour of release.userHours) {
+              if (Number(userHour.hours) > 0) {
+                this.inProgressReleases += 1;
+                break;
+              }
+            }
           }
 
-          const tagsIds: Set<string> = new Set<string>();
-          userHours.data.forEach((userHour: any) => {
+          for (const userHour of release.userHours) {
             if (!tagsIds.has(userHour.hoursTagId)) {
               this.tags.push({
                 hoursTagId: userHour.hoursTagId,
@@ -179,10 +115,8 @@ export class ProjectReleaseStatusComponent
                 }
               });
             }
-          });
-
-          return of(null);
-        }),
-      );
+          }
+        }
+      });
   }
 }

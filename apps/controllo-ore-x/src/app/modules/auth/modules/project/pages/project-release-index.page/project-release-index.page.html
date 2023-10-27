@@ -8,6 +8,6 @@
     (onReleaseUpdatedEvent)="onReleaseUpdated()"
   ></controllo-ore-x-project-release-table-line>
 </div>
-<div *ngIf="releases.length == 0" class="body-1 -no-release">
+<div *ngIf="!isLoading && releases.length == 0" class="body-1 -no-release">
   Nessuna release
 </div>

@@ -1,3 +1,4 @@
+import { UserHoursReadDto } from '../user-hours/user-hours.dto';
 import { ProjectReadDto } from './project.dto';
 
 export interface ReleaseReadDto {
@@ -9,6 +10,7 @@ export interface ReleaseReadDto {
   hoursBudget: number;
   billableHoursBudget: number;
   deadline: Date;
+  userHours: UserHoursReadDto[];
   createdAt?: Date | string;
   updatedAt?: Date | string;
   deletedAt?: Date | string;

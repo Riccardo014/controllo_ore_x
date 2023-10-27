@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { HoursTagReadDto } from '@api-interfaces';
+import { ApiResponse, HoursTagReadDto } from '@api-interfaces';
 import { HoursTagDataService } from '@app/_core/services/hours-tag.data-service';
 import {
   SubscriptionsLifecycle,
@@ -51,8 +51,8 @@ export class ProjectActivityCardComponent
 
   private _fetchSetTag(tagId: string): Subscription {
     return this._hoursTagDataService.getOne(tagId).subscribe({
-      next: (hoursTag: any) => {
-        this.tag = hoursTag;
+      next: (hoursTag: ApiResponse<HoursTagReadDto>) => {
+        this.tag = hoursTag.data;
       },
       error: (error: any) => {
         throw new Error(error);
