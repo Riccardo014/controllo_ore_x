@@ -115,6 +115,8 @@ export class IndexTemplateComponent
    */
   @Output() openDialogEvent: EventEmitter<any> = new EventEmitter<any>();
 
+  date = new FormControl(moment());
+
   @Output() openCreateDialogEvent: EventEmitter<boolean> =
     new EventEmitter<boolean>();
 
@@ -162,9 +164,6 @@ export class IndexTemplateComponent
   openCreateDialogFn(): void {
     this.openCreateDialogEvent.emit(true);
   }
-
-  date = new FormControl(moment());
-  date1: Date = new Date();
 
   dateChange(): void {
     if (!this.date.value) {
