@@ -4,7 +4,7 @@
   [buttonText]="buttonText"
   [shouldHideCreateButton]="true"
   [hasCalendar]="true"
-  (openDialog)="openDialogFn($event)"
+  (openDialogEvent)="openDialogFn($event)"
 ></controllo-ore-x-index-template>
 
 <div class="-subtitle">
@@ -37,6 +37,7 @@
     <controllo-ore-x-tracker-table-line
       *ngFor="let userHour of userHours"
       [userHour]="userHour"
+      (onUserHourUpdatedEvent)="onUserHourUpdated()"
     ></controllo-ore-x-tracker-table-line>
   </div>
   <div

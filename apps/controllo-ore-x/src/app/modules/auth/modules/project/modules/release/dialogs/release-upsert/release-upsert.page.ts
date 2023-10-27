@@ -35,7 +35,7 @@ export class ReleaseUpsertPage
 
   subscriptionsList: Subscription[] = [];
 
-  _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
+  completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
 
   constructor(
@@ -58,7 +58,7 @@ export class ReleaseUpsertPage
   override ngOnInit(): void {
     super.ngOnInit();
 
-    this._setSubscriptions();
+    this.setSubscriptions();
 
     if (!this.isCreating) {
       this.title = 'Modifica release';
@@ -66,10 +66,10 @@ export class ReleaseUpsertPage
   }
 
   ngOnDestroy(): void {
-    this._completeSubscriptions(this.subscriptionsList);
+    this.completeSubscriptions(this.subscriptionsList);
   }
 
-  _setSubscriptions(): void {
+  setSubscriptions(): void {
     if (!this.isCreating) {
       this.releaseId = this.formHelper.entityId;
       this.subscriptionsList.push(this._getRelease());

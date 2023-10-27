@@ -1,8 +1,15 @@
+import { ReleaseReadDto } from '../project/release.dto';
+import { UserReadDto } from '../user/user.dto';
+import { HoursTagReadDto } from './hours-tag.dto';
+
 export interface UserHoursReadDto {
   _id: string;
   userId: string;
+  user?: UserReadDto;
   releaseId: string;
+  release?: ReleaseReadDto
   hoursTagId: string;
+  hoursTag?: HoursTagReadDto;
   date: Date;
   notes: string;
   hours: number;
