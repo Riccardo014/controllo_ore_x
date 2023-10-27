@@ -4,11 +4,7 @@
   *ngIf="isLoading"
 ></mat-progress-bar>
 
-<div *ngIf="hasErrors">
-  Si è verificato un errore durante il caricamento dei dati.
-</div>
-
-<div *ngIf="!isLoading && !hasErrors">
+<div *ngIf="!isLoading">
   <div class="-header">
     <div class="-header__title">
       <button (click)="navigateBack()" mat-icon-button>

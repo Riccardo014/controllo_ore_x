@@ -30,7 +30,6 @@ export class ReleaseIndexPage
   );
 
   isLoading: boolean = true;
-  hasErrors: boolean = false;
 
   subscriptionsList: Subscription[] = [];
 
