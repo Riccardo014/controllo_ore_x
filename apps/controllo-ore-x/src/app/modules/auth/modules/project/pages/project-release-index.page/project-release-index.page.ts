@@ -20,6 +20,9 @@ export class ProjectReleaseIndexPage
   @Input() isNewReleaseCreated: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
+  @Input() wasReleaseUpdated: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
   releases: ReleaseReadDto[] = [];
 
   subscriptionsList: Subscription[] = [];
@@ -42,6 +45,10 @@ export class ProjectReleaseIndexPage
       this._onNewReleaseCreated(),
       this._getReleases(),
     );
+  }
+
+  onReleaseUpdated(): void {
+    this.subscriptionsList.push(this._getReleases());
   }
 
   private _onNewReleaseCreated(): Subscription {

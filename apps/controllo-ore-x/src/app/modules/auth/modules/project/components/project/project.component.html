@@ -26,9 +26,7 @@
         ></div>
         <div class="body-1">{{ project.name }}</div>
         <div *ngIf="project.customer">
-          <mat-chip class="caption">{{
-            project.customer.name
-          }}</mat-chip>
+          <mat-chip class="caption">{{ project.customer.name }}</mat-chip>
         </div>
       </div>
     </mat-panel-title>
@@ -59,8 +57,10 @@
       </mat-menu>
     </mat-panel-description>
   </mat-expansion-panel-header>
-  <controllo-ore-x-project-release-index 
-  [project]="project"
-  [isNewReleaseCreated]="isNewReleaseCreated">
+  <controllo-ore-x-project-release-index
+    (click)="togglePanel()"
+    [project]="project"
+    [isNewReleaseCreated]="isNewReleaseCreated"
+  >
   </controllo-ore-x-project-release-index>
 </mat-expansion-panel>

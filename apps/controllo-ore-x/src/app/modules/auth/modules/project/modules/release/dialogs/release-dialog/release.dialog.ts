@@ -29,7 +29,7 @@ export class ReleaseDialog {
   release?: ReleaseReadDto;
 
   releaseFormGroup: FormGroup = new FormGroup({
-    project: new FormControl(null, Validators.required),
+    projectId: new FormControl(null, Validators.required),
     version: new FormControl(null, Validators.required),
     hoursBudget: new FormControl(null, Validators.required),
     billableHoursBudget: new FormControl(null, Validators.required),
@@ -47,7 +47,7 @@ export class ReleaseDialog {
   ) {
     if (this.data.input.transactionStatus === 'create') {
       this.releaseFormGroup.patchValue({
-        project: this.data.input,
+        projectId: this.data.input.projectId,
         isCompleted: false,
       });
       return;
@@ -57,7 +57,6 @@ export class ReleaseDialog {
       this.title = 'Modifica release';
       this.release = this.data.input;
       this.releaseFormGroup.patchValue(this.data.input);
-      return;
     }
   }
 

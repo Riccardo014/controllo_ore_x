@@ -12,7 +12,10 @@ import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
-import { RT_DIALOG_CLOSE_RESULT, RtDialogService } from '@controllo-ore-x/rt-shared';
+import {
+  RT_DIALOG_CLOSE_RESULT,
+  RtDialogService,
+} from '@controllo-ore-x/rt-shared';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ReleaseDialog } from '../../modules/release/dialogs/release-dialog/release.dialog';
 
@@ -30,8 +33,9 @@ export class ProjectComponent
 
   @Output() duplicateEntityEvent: EventEmitter<any> = new EventEmitter<any>();
 
-  isNewReleaseCreated: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
+  isNewReleaseCreated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false,
+  );
 
   isPanelOpen: boolean = false;
   customExpandedHeight: string = '90px';
@@ -76,7 +80,7 @@ export class ProjectComponent
           width: dialogConfig.width,
           maxWidth: dialogConfig.maxWidth,
           data: {
-            ...this.project,
+            projectId: this.project._id,
             transactionStatus: 'create',
           },
         })

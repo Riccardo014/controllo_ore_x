@@ -1,4 +1,11 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { ReleaseReadDto } from '@api-interfaces';
 import { UserHoursDataService } from '@app/_core/services/user-hour.data-service';
 import { convertNumberToHours } from '@app/utils/NumberToHoursConverter';
@@ -6,7 +13,10 @@ import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
-import { RtDialogService } from '@controllo-ore-x/rt-shared';
+import {
+  RT_DIALOG_CLOSE_RESULT,
+  RtDialogService,
+} from '@controllo-ore-x/rt-shared';
 import { Subscription } from 'rxjs';
 import { ReleaseDialog } from '../../modules/release/dialogs/release-dialog/release.dialog';
 
@@ -22,6 +32,9 @@ export class ProjectReleaseTableLineComponent
   deadline: string = '';
 
   @Input() release!: ReleaseReadDto;
+
+  @Output() onReleaseUpdatedEvent: EventEmitter<void> =
+    new EventEmitter<void>();
 
   subscriptionsList: Subscription[] = [];
 
@@ -80,7 +93,11 @@ export class ProjectReleaseTableLineComponent
           maxWidth: dialogConfig.maxWidth,
           data: this.release,
         })
-        .subscribe(),
+        .subscribe((res) => {
+          if (res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
+            this.onReleaseUpdatedEvent.emit();
+          }
+        }),
     );
   }
 

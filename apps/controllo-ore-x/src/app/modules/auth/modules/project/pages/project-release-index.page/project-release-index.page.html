@@ -2,6 +2,7 @@
   <controllo-ore-x-project-release-table-line
     *ngFor="let release of releases"
     [release]="release"
+    (onReleaseUpdatedEvent)="onReleaseUpdated()"
   ></controllo-ore-x-project-release-table-line>
 </div>
 <div *ngIf="releases.length == 0" class="body-1 -no-release">
