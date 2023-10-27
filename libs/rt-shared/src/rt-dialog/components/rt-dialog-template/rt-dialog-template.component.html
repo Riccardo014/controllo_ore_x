@@ -31,7 +31,7 @@
       <div *ngIf="isError" class="-container__refetch">
         <div class="-container__refetch__text headline-6">Ops! Qualcosa è andato storto.</div>
         <div class="body-1 -container__refetch__text" *ngIf="errorMessage">{{ errorMessage }}</div>
-        <button mat-flat-button color="accent" (click)="reFetch.emit()">
+        <button mat-flat-button color="accent" (click)="reFetchEvent.emit()">
           Ricarica la pagina
         </button>
       </div>
