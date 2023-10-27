@@ -7,6 +7,7 @@
     <controllo-ore-x-release-table-line
       *ngFor="let release of releases"
       [release]="release"
+      (onReleaseUpdatedEvent)="onReleaseUpdated()"
     ></controllo-ore-x-release-table-line>
   </div>
   <div

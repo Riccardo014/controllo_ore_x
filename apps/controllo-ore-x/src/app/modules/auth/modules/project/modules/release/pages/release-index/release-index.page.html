@@ -54,7 +54,10 @@
   <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
     <mat-tab label="Release">
       <div *ngIf="project">
-        <controllo-ore-x-release-table [projectId]="project._id">
+        <controllo-ore-x-release-table
+          [projectId]="project._id"
+          [isNewReleaseCreated]="isNewReleaseCreated"
+        >
         </controllo-ore-x-release-table>
       </div>
     </mat-tab>

@@ -9,7 +9,7 @@ import {
   RT_DIALOG_CLOSE_RESULT,
   RtDialogService,
 } from '@controllo-ore-x/rt-shared';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { ProjectDialog } from '../../../../dialogs/project-dialog/project.dialog';
 import { ReleaseDialog } from '../../dialogs/release-dialog/release.dialog';
 import { ApiResponse, ProjectReadDto } from '@api-interfaces';
@@ -24,6 +24,10 @@ export class ReleaseIndexPage
 {
   projectId?: string;
   project?: ProjectReadDto;
+
+  isNewReleaseCreated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false,
+  );
 
   isLoading: boolean = true;
   hasErrors: boolean = false;
@@ -61,6 +65,9 @@ export class ReleaseIndexPage
   }
 
   openCreateReleaseDialog(): void {
+    if(!this.project){
+      return;
+    }
     const dialogConfig = {
       width: '600px',
       maxWidth: '600px',
@@ -70,9 +77,16 @@ export class ReleaseIndexPage
         .open(ReleaseDialog, {
           width: dialogConfig.width,
           maxWidth: dialogConfig.maxWidth,
-          data: this.project,
+          data: {
+            projectId: this.project._id,
+            transactionStatus: 'create',
+          },
         })
-        .subscribe(),
+        .subscribe((res) => {
+          if (res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
+            this.isNewReleaseCreated.next(true);
+          }
+        }),
     );
   }
 

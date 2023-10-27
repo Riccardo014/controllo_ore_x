@@ -17,6 +17,9 @@ export class ReleaseTableComponent
 {
   @Input() projectId!: string;
 
+  @Input() isNewReleaseCreated: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
   isLoading: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
   releases: ReleaseReadDto[] = [];
@@ -43,10 +46,24 @@ export class ReleaseTableComponent
   }
 
   setSubscriptions(): void {
+    this.subscriptionsList.push(
+      this._onNewReleaseCreated(),
+      this._fetchSetReleases(),
+    );
+  }
+
+  onReleaseUpdated(): void {
     this.subscriptionsList.push(this._fetchSetReleases());
   }
 
-  _fetchSetReleases(): Subscription {
+  private _onNewReleaseCreated(): Subscription {
+    return this.isNewReleaseCreated.subscribe(() => {
+      this.subscriptionsList.push(this._fetchSetReleases());
+    });
+  }
+
+  private _fetchSetReleases(): Subscription {
+    this.isLoading.next(true);
     return this._releaseDataService
       .getMany({
         where: { projectId: this.projectId },
