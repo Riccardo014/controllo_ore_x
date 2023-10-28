@@ -68,7 +68,7 @@ export class ReleaseTableLineComponent
     this.subscriptionsList.push(this._getHoursExecuted());
   }
 
-  openEditRelease($event: ReleaseReadDto): void {
+  openEditRelease(release: ReleaseReadDto): void {
     const dialogConfig = {
       width: '600px',
       maxWidth: '600px',
@@ -78,7 +78,7 @@ export class ReleaseTableLineComponent
         .open(ReleaseDialog, {
           width: dialogConfig.width,
           maxWidth: dialogConfig.maxWidth,
-          data: $event,
+          data: release,
         })
         .subscribe((res) => {
           if (res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
@@ -88,8 +88,8 @@ export class ReleaseTableLineComponent
     );
   }
 
-  openReleaseReport($event: ReleaseReadDto): void {
-    this._router.navigate([this._router.url + '/report/' + $event._id]);
+  openReleaseReport(release: ReleaseReadDto): void {
+    this._router.navigate([this._router.url + '/report/' + release._id]);
   }
 
   convertNumberToHours(hoursToConvert: number): string {
