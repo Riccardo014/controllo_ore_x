@@ -215,11 +215,12 @@ export class TrackerDialog
   }
 
   checkHoursTag(tag: any): void {
-    this.hoursTags.forEach((hoursTag: any) => {
+    for (const hoursTag of this.hoursTags) {
+      hoursTag.checked = false;
       if (hoursTag.hoursTag._id == tag.hoursTag._id) {
         hoursTag.checked = true;
       }
-    });
+    }
   }
 
   private _create(): void {
@@ -406,8 +407,11 @@ export class TrackerDialog
   }
 
   private _patchHoursTag(): void {
+    console.log(this.hoursTags);
     for (const hoursTag of this.hoursTags) {
       if (hoursTag.checked) {
+
+        console.log(hoursTag);
         this.trackerFormGroup.patchValue({
           hoursTag: hoursTag.hoursTag,
         });

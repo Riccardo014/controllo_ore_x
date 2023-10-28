@@ -98,6 +98,7 @@ export class TrackerIndexPage
   }
 
   _getUserHours(): Subscription {
+    this.isLoading.next(true);
     if (!this._authService.loggedInUser) {
       throw new Error('User not logged in');
     }
@@ -120,13 +121,20 @@ export class TrackerIndexPage
           },
         },
       })
-      .subscribe((userHours: ApiPaginatedResponse<UserHoursReadDto>) => {
-        this.userHours = userHours.data;
-        this.workedHours = 0;
-        this.userHours.forEach((userHour: UserHoursReadDto) => {
-          this.workedHours += Number(userHour.hours);
-        });
-        this.isLoading.next(false);
+      .subscribe({
+        next: (userHours: ApiPaginatedResponse<UserHoursReadDto>) => {
+          this.userHours = userHours.data;
+          this.workedHours = 0;
+          this.userHours.forEach((userHour: UserHoursReadDto) => {
+            this.workedHours += Number(userHour.hours);
+          });
+        },
+        error: () => {
+          this.hasErrors = true;
+        },
+        complete: () => {
+          this.isLoading.next(false);
+        },
       });
   }
 
