@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginResponseDto, UserReadDto } from '@api-interfaces';
+import { ApiResponse, LoginResponseDto, UserReadDto } from '@api-interfaces';
 import { environment } from '@env';
 import { lastValueFrom } from 'rxjs';
 
@@ -47,12 +47,15 @@ export class AuthService {
   async login(email: string, password: string): Promise<boolean> {
     try {
       const loginResponse = await lastValueFrom(
-        this._http.post<LoginResponseDto>(this._loginUri, { email, password }),
+        this._http.post<ApiResponse<LoginResponseDto>>(this._loginUri, {
+          email,
+          password,
+        }),
       );
 
       if (loginResponse) {
-        this.loggedInUser = loginResponse.user;
-        this.authToken = loginResponse.token;
+        this.loggedInUser = loginResponse.data.user;
+        this.authToken = loginResponse.data.token;
         this._saveState();
         return true;
       }
