@@ -43,12 +43,6 @@ export const TRACKER_INDEX_CONFIGURATION_SEED: any = {
         field: 'hoursTag.iconName',
         sortable: true,
       },
-      {
-        title: '',
-        field: '',
-        type: 'EDITABLE',
-        sortable: false,
-      },
     ],
     relations: ['release', 'hoursTag'],
     fullSearchCols: ['notes', 'hours', 'release.version'],
