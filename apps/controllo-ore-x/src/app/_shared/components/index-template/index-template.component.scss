@@ -15,6 +15,7 @@
   background-color: map-get($palette-primary, 500);
   color: #fff;
   padding: 20px;
+  border-radius: 10px;
 
   &__elements {
     display: flex;
@@ -29,18 +30,18 @@
   }
 }
 
-.-calendar-widget{
+.-calendar-widget {
   display: flex;
   align-items: center;
-  background-color: map-get($palette-accent, 200 );
+  background-color: map-get($palette-accent, 200);
   border-radius: 10px;
 }
 
-.mat-mdc-form-field{
+.mat-mdc-form-field {
   @extend .subtitle-1 !optional;
 }
 
-.-calendar-icon{
+.-calendar-icon {
   color: #000;
 }
 
@@ -48,4 +49,3 @@
 // ::ng-deep .mdc-line-ripple {
 //   display: none
 // }
-

@@ -1,32 +1,34 @@
-<div class="-tracker-table-line">
-  <div class="-tracker-activity">
+<div class="-tracker">
+  <div class="-tracker__activity">
     <div class="headline-5">{{ userHour.release!.project!.name }}</div>
     <div class="body-1">
-      <mat-chip class="-release-chip">{{ userHour.release!.version }}</mat-chip>
+      <mat-chip class="-tracker__activity__chip">{{
+        userHour.release!.version
+      }}</mat-chip>
     </div>
-    <div class="-icon-with-text body-1">
+    <div class="-tracker__activity__element body-1">
       <span class="material-symbols-outlined icon-highlighted">{{
         userHour.hoursTag!.iconName
       }}</span>
       {{ userHour.hoursTag!.name }}
     </div>
-    <div class="-icon-with-text body-1">
+    <div class="-tracker__activity__element body-1">
       <span class="material-symbols-outlined icon-highlighted">notes</span>
       {{ userHour.notes }}
     </div>
   </div>
 
-  <div class="-tracker-hours">
+  <div class="-tracker__hours">
     <div class="headline-3">{{ convertNumberToHours(userHour.hours) }}</div>
     <div class="body-2">ore</div>
   </div>
 
-  <div class="-tracker-edit-and-options">
+  <div class="-tracker__options">
     <button mat-icon-button (click)="openEditUserHourDialog()">
       <span class="material-symbols-outlined -button-icon">ink_marker </span>
     </button>
     <button mat-icon-button [matMenuTriggerFor]="optionMenu">
-      <mat-icon class="-more-vert-icon -button-icon">more_vert</mat-icon>
+      <mat-icon class="-button-icon">more_vert</mat-icon>
     </button>
     <mat-menu #optionMenu="matMenu">
       <ng-content select="[menuOptions]"></ng-content>
