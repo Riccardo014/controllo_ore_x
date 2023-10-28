@@ -16,7 +16,6 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { SharedModule } from '@app/_shared/shared.module';
 import {
-  AlertModule,
   RtDialogModule,
   RtInputModule,
   RtLoadingModule,
