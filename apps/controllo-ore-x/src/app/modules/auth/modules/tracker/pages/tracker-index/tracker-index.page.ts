@@ -138,9 +138,9 @@ export class TrackerIndexPage
       });
   }
 
-  openDialogFn($event: UserHoursReadDto): void {
-    this.openDialogEvent.emit($event);
-    this._router.navigate([this._router.url + '/' + $event._id]);
+  openDialogFn(user: UserHoursReadDto): void {
+    this.openDialogEvent.emit(user);
+    this._router.navigate([this._router.url + '/' + user._id]);
   }
 
   convertNumberToHours(number: number): string {

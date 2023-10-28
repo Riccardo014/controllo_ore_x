@@ -1,5 +1,9 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ApiResponse, ProjectReadDto, ReleaseReadDto } from '@api-interfaces';
+import {
+  ApiPaginatedResponse,
+  ProjectReadDto,
+  ReleaseReadDto,
+} from '@api-interfaces';
 import { ReleaseDataService } from '@app/_core/services/release.data-service';
 import {
   SubscriptionsLifecycle,
@@ -20,7 +24,7 @@ export class ProjectReleaseIndexPage
   @Input() isNewReleaseCreated: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
-    isLoading: boolean = true;
+  isLoading: boolean = true;
 
   releases: ReleaseReadDto[] = [];
 
@@ -32,6 +36,10 @@ export class ProjectReleaseIndexPage
   constructor(private _releaseDataService: ReleaseDataService) {}
 
   ngOnInit(): void {
+    if (!this.project) {
+      throw new Error('Project is undefined');
+    }
+
     this.setSubscriptions();
   }
 
@@ -52,13 +60,16 @@ export class ProjectReleaseIndexPage
 
   private _onNewReleaseCreated(): Subscription {
     return this.isNewReleaseCreated.subscribe({
-        next: () => {
+      next: (result: boolean) => {
+        if (result) {
           this.subscriptionsList.push(this._getReleases());
-        },
-        error: (error: any) => {
-          throw new Error(error);
-        },
-      });
+          this.isNewReleaseCreated.next(false);
+        }
+      },
+      error: (error: any) => {
+        throw new Error(error);
+      },
+    });
   }
 
   private _getReleases(): Subscription {
@@ -68,7 +79,7 @@ export class ProjectReleaseIndexPage
         where: { projectId: this.project._id },
       })
       .subscribe({
-        next: (releases: ApiResponse<ReleaseReadDto[]>) => {
+        next: (releases: ApiPaginatedResponse<ReleaseReadDto>) => {
           this.releases = releases.data;
           this.isLoading = false;
         },

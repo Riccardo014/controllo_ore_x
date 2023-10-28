@@ -73,10 +73,10 @@ export class ProjectIndexPage
   }
 
   updateFulltextSearch(fulltextSearch: string): void {
-    this.showedProjects = this.projects.filter((project: any) => {
+    this.showedProjects = this.projects.filter((project: ProjectReadDto) => {
       return (
         project.name.includes(fulltextSearch) ||
-        project.customer.name.includes(fulltextSearch)
+        project.customer!.name.includes(fulltextSearch)
       );
     });
   }
