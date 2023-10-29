@@ -30,7 +30,7 @@ export class ReleaseDialog {
 
   releaseFormGroup: FormGroup = new FormGroup({
     projectId: new FormControl(null, Validators.required),
-    version: new FormControl(null, Validators.required),
+    name: new FormControl(null, Validators.required),
     hoursBudget: new FormControl(null, Validators.required),
     billableHoursBudget: new FormControl(null, Validators.required),
     deadline: new FormControl(null, Validators.required),

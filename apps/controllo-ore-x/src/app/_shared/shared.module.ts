@@ -20,7 +20,6 @@ import { ReportTemplateComponent } from './components/report-template/report-tem
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { RtHeaderModule } from './modules/rt-header/rt-header.module';
 import { SidenavSectionComponent } from './components/sidenav/components/sidenav-section/sidenav-section.component';
-import { ReportSingleFilterComponent } from './components/report-template/components/report-single-filter/report-single-filter.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { RangeDatepickerComponent } from './components/range-datepicker/range-datepicker.component';
 

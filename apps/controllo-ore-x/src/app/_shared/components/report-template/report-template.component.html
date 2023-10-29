@@ -28,13 +28,13 @@
 </controllo-ore-x-rt-header>
 <lib-rt-table-fulltext-bar
   class="-search-bar"
-  (fulltextSearchEmitter)="page.updateFulltextSearch($event)"
+  (fulltextSearchEvent)="page.updateFulltextSearch($event)"
 >
 </lib-rt-table-fulltext-bar>
 
 <div class="-page-content">
   <controllo-ore-x-report-filter
-    (filtersEmitter)="page.onFilterEmit($event)"
+    (filtersEvent)="page.onFilterEmit($event)"
   ></controllo-ore-x-report-filter>
 
   <div class="-subtitle">
@@ -75,7 +75,7 @@
       [isLoading]="page.isLoading.getValue()"
       [isTableTopbarVisible]="page.isTableTopbarVisible"
       [isTableHeaderVisible]="page.isTableHeaderVisible"
-      (statusChangeEmitter)="page.indexTableHandler.statusChange($event)"
+      (statusChangeEvent)="page.indexTableHandler.statusChange($event)"
       [tableConfiguration]="page.configuration"
       [data]="page.indexTableHandler.data"
       [isEditAvailable]="isEditAvailable"

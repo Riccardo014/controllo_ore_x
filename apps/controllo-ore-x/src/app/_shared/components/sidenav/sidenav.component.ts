@@ -9,7 +9,7 @@ import {
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
 import { Subscription, filter } from 'rxjs';
-import { NavMenusVisibilityService } from './servicies/nav-menus-visibility.service';
+import { NavMenusVisibilityService } from './services/nav-menus-visibility.service';
 
 @Component({
   selector: 'controllo-ore-x-sidenav',

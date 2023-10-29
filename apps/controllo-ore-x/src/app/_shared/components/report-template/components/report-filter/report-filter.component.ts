@@ -25,7 +25,7 @@ import { FilterService } from '../../services/filter.service';
 export class ReportFilterComponent
   implements OnInit, OnDestroy, SubscriptionsLifecycle
 {
-  @Output() filtersEmitter: EventEmitter<FindBoostedWhereOption[]> =
+  @Output() filtersEvent: EventEmitter<FindBoostedWhereOption[]> =
     new EventEmitter<FindBoostedWhereOption[]>();
 
   dataForFilters: {
@@ -40,20 +40,20 @@ export class ReportFilterComponent
 
   subscriptionsList: Subscription[] = [];
 
-  _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
+  completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
 
   constructor(private _filterService: FilterService) {}
 
   ngOnInit(): void {
-    this._setSubscriptions();
+    this.setSubscriptions();
   }
 
   ngOnDestroy(): void {
-    this._completeSubscriptions(this.subscriptionsList);
+    this.completeSubscriptions(this.subscriptionsList);
   }
 
-  _setSubscriptions(): void {
+  setSubscriptions(): void {
     this.subscriptionsList.push(
       this._filterService.dataForFiltersObservable.subscribe(
         (dataForFilters) => {
@@ -91,11 +91,11 @@ export class ReportFilterComponent
       dataForFilter.formControl.setValue([]);
     });
     this.areFiltersActive = false;
-    this.filtersEmitter.emit([]);
+    this.filtersEvent.emit([]);
   }
 
   applyFn(): void {
-    this.filtersEmitter.emit([this._buildFilters()]);
+    this.filtersEvent.emit([this._buildFilters()]);
   }
 
   private _createNestedStructure(dbColumnsFlat: string[], args: string[]): any {

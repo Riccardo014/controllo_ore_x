@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserReadDto } from '@api-interfaces';
 import { AuthService } from '@app/_core/services/auth.service';
+import { NavMenusVisibilityService } from '@app/_shared/components/sidenav/services/nav-menus-visibility.service';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,

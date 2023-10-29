@@ -51,7 +51,7 @@ export class ReportIndexPage extends ReportPage<
   hasErrors: boolean = false;
   isEditAvailable: boolean = false;
 
-  @Output() openDialog: EventEmitter<any> = new EventEmitter<any>();
+  @Output() openDialogEvent: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
     protected _configurationService: IndexConfigurationDataService,
@@ -67,7 +67,7 @@ export class ReportIndexPage extends ReportPage<
   }
 
   openDialogFn($event: UserHoursReadDto): void {
-    this.openDialog.emit($event);
+    this.openDialogEvent.emit($event);
     this._router.navigate([this._router.url + '/' + $event._id]);
   }
 

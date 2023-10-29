@@ -31,7 +31,7 @@ import { FilterService } from '../../services/filter.service';
 export class ReportSingleFilterComponent
   implements OnInit, OnDestroy, SubscriptionsLifecycle
 {
-  @Output() change: EventEmitter<any[]> = new EventEmitter<any[]>();
+  @Output() changeEvent: EventEmitter<any[]> = new EventEmitter<any[]>();
 
   @Input() fieldName!: COX_FILTER;
 
@@ -45,13 +45,13 @@ export class ReportSingleFilterComponent
 
   subscriptionsList: Subscription[] = [];
 
-  _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
+  completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
 
   constructor(private _filterService: FilterService) {}
 
   ngOnInit(): void {
-    this._setSubscriptions();
+    this.setSubscriptions();
 
     this.dataForFilter.formControl.valueChanges.subscribe((value) => {
       this._filterService.changeDataForSingleFilter(this.dataForFilter);
@@ -60,10 +60,10 @@ export class ReportSingleFilterComponent
   }
 
   ngOnDestroy(): void {
-    this._completeSubscriptions(this.subscriptionsList);
+    this.completeSubscriptions(this.subscriptionsList);
   }
 
-  _setSubscriptions(): void {
+  setSubscriptions(): void {
     this.subscriptionsList.push(
       this._filterService.dataForFiltersObservable.subscribe(
         (dataForFilters: any[]) => {

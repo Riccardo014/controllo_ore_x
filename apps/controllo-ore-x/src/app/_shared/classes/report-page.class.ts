@@ -1,10 +1,14 @@
 import { Directive, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import {
+  ApiPaginatedResponse,
+  ApiResponse,
   COX_FILTER,
   FIND_BOOSTED_FN,
   FindBoostedWhereOption,
   INDEX_CONFIGURATION_KEY,
+  IndexConfigurationReadDto,
+  ReleaseCreateDto,
   TableConfiguration,
 } from '@api-interfaces';
 import { IndexConfigurationDataService } from '@app/_core/services/index-configuration.data-service';
@@ -47,7 +51,7 @@ export abstract class ReportPage<T, CreateT, UpdateT>
     formControl: FormControl;
   }[] = [];
 
-  _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
+  completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
 
   abstract title: string;
@@ -69,16 +73,16 @@ export abstract class ReportPage<T, CreateT, UpdateT>
       throw new Error('Ititialization of indexTableHandler failed');
     }
 
-    this._setSubscriptions();
+    this.setSubscriptions();
 
     // this._load();
   }
 
   ngOnDestroy(): void {
-    this._completeSubscriptions(this.subscriptionsList);
+    this.completeSubscriptions(this.subscriptionsList);
   }
 
-  _setSubscriptions(): void {
+  setSubscriptions(): void {
     this.subscriptionsList.push(
       this._firstLoad(),
       this.indexTableHandler.isLoading.subscribe((r) => {
@@ -173,31 +177,11 @@ export abstract class ReportPage<T, CreateT, UpdateT>
     });
   }
 
-  private _load(): Subscription {
-    return this._configurationService
-      .getConfiguration(this.CONFIGURATION_KEY)
-      .subscribe((data) => {
-        this.configuration = data.configuration;
-        this.indexTableHandler.tableConfiguration = this.configuration;
-        this.changeDataForDate();
-        this._dataService
-          .getMany({
-            relations: this.indexTableHandler.tableConfiguration.relations,
-          })
-          .subscribe((apiResult) => {
-            this.indexTableHandler.data = apiResult.data;
-            this.setFilters();
-            this.changeDataForFilters();
-          });
-        this.isFirstLoadDone.next(true);
-      });
-  }
-
   private _firstLoad(): Subscription {
     return this._configurationService
       .getConfiguration(this.CONFIGURATION_KEY)
-      .subscribe((data) => {
-        this.configuration = data.configuration;
+      .subscribe((result: ApiResponse<IndexConfigurationReadDto>) => {
+        this.configuration = result.data.configuration;
         this.indexTableHandler.tableConfiguration = this.configuration;
         // this.indexTableHandler.fetchData();
 
@@ -205,7 +189,7 @@ export abstract class ReportPage<T, CreateT, UpdateT>
           .getMany({
             relations: this.indexTableHandler.tableConfiguration.relations,
           })
-          .subscribe((apiResult) => {
+          .subscribe((apiResult: ApiPaginatedResponse<any>) => {
             this.indexTableHandler.data = apiResult.data;
             this.setFilters();
             this.changeDataForFilters();

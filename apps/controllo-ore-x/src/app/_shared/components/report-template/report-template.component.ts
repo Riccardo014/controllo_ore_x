@@ -95,7 +95,7 @@ export class ReportTemplateComponent
 
   subscriptionsList: Subscription[] = [];
 
-  _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
+  completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
 
   private _isLoading: boolean = true;
@@ -107,14 +107,14 @@ export class ReportTemplateComponent
   ) {}
 
   ngOnInit(): void {
-    this._setSubscriptions();
+    this.setSubscriptions();
   }
 
   ngOnDestroy(): void {
-    this._completeSubscriptions(this.subscriptionsList);
+    this.completeSubscriptions(this.subscriptionsList);
   }
 
-  _setSubscriptions(): void {
+  setSubscriptions(): void {
     this.subscriptionsList.push(
       this.page.isLoading.subscribe((isLoading) => {
         this._isLoading = isLoading;

@@ -49,20 +49,20 @@ export class RangeDatepickerComponent {
 
   subscriptionsList: Subscription[] = [];
 
-  _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
+  completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
 
   constructor(private _calendarDateService: CalendarDateService) {}
 
   ngOnInit(): void {
-    this._setSubscriptions();
+    this.setSubscriptions();
   }
 
   ngOnDestroy(): void {
-    this._completeSubscriptions(this.subscriptionsList);
+    this.completeSubscriptions(this.subscriptionsList);
   }
 
-  _setSubscriptions(): void {
+  setSubscriptions(): void {
     this.subscriptionsList.push(
       this._calendarDateService.currentRangeDatesObservable.subscribe(
         (dates) => {
