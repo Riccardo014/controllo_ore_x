@@ -195,5 +195,14 @@ export abstract class ReportPage<T, CreateT, UpdateT>
     return [startDate.toISOString(), endDate.toISOString()];
   }
 
+  private _getRangeDate(): string[] {
+    const startDate = new Date(this.selectedRangeDate.start);
+    const endDate = new Date(this.selectedRangeDate.end);
+
+    startDate.setUTCHours(0, 0, 0, 0);
+    endDate.setUTCHours(23, 59, 59, 999);
+    return [startDate.toISOString(), endDate.toISOString()];
+  }
+
   abstract setFilters(): void;
 }
