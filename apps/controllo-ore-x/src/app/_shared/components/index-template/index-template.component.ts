@@ -6,39 +6,14 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import {
-  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
-  MomentDateAdapter,
-} from '@angular/material-moment-adapter';
-import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE,
-} from '@angular/material/core';
 import { IndexPage } from '@app/_shared/classes/index-page.class';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
-import * as _moment from 'moment';
 import { Subscription } from 'rxjs';
 import { CalendarDateService } from './servicies/calendar-date.service';
-
-const moment = _moment;
-
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'dddd, DD MMMM',
-  },
-  display: {
-    dateInput: 'dddd, DD MMMM',
-    monthYearLabel: 'MMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY',
-  },
-};
 
 /**
  * Template of a index page with an header and a body
@@ -47,15 +22,6 @@ export const MY_FORMATS = {
   selector: 'controllo-ore-x-index-template',
   templateUrl: './index-template.component.html',
   styleUrls: ['./index-template.component.scss'],
-  providers: [
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
-    },
-    { provide: MAT_DATE_LOCALE, useValue: 'it-IT' },
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
-  ],
 })
 export class IndexTemplateComponent
   implements OnInit, OnDestroy, SubscriptionsLifecycle
@@ -115,8 +81,6 @@ export class IndexTemplateComponent
    */
   @Output() openDialogEvent: EventEmitter<any> = new EventEmitter<any>();
 
-  date = new FormControl(moment());
-
   @Output() openCreateDialogEvent: EventEmitter<boolean> =
     new EventEmitter<boolean>();
 
@@ -151,9 +115,6 @@ export class IndexTemplateComponent
         this._isFirstLoadDone = isFirstLoadDone;
         this._setLoadingParameters();
       }),
-      this._calendarDateService.currentDateObservable.subscribe((date) =>
-        this.date.setValue(moment(date)),
-      ),
     );
   }
 
@@ -163,23 +124,6 @@ export class IndexTemplateComponent
 
   openCreateDialogFn(): void {
     this.openCreateDialogEvent.emit(true);
-  }
-
-  dateChange(): void {
-    if (!this.date.value) {
-      throw new Error('Date is null');
-    }
-    this._calendarDateService.changeDate(this.date.value.toDate());
-  }
-
-  nextDay(): void {
-    this.date.value?.add(1, 'days');
-    this.dateChange();
-  }
-
-  previousDay(): void {
-    this.date.value?.add(-1, 'days');
-    this.dateChange();
   }
 
   getDateToDisplay(date: Date): string {

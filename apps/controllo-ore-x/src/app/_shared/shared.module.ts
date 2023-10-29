@@ -15,6 +15,8 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { RtHeaderModule } from './modules/rt-header/rt-header.module';
 import { SidenavSectionComponent } from './components/sidenav/components/sidenav-section/sidenav-section.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { DatepickerComponent } from './components/datepicker/datepicker.component';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     PageTitleComponent,
     IndexTemplateComponent,
     SidenavSectionComponent,
+    DatepickerComponent,
   ],
   imports: [
     CommonModule,
@@ -43,5 +46,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     PageTitleComponent,
     IndexTemplateComponent,
   ],
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'it-IT' }],
 })
 export class SharedModule {}
