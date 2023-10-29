@@ -129,7 +129,10 @@ export class TrackerDialog
   ngOnInit(): void {
     this.setSubscriptions();
 
-    if (this.transactionStatus === 'update' || this.transactionStatus === 'duplicate') {
+    if (
+      this.transactionStatus === 'update' ||
+      this.transactionStatus === 'duplicate'
+    ) {
       this.trackerFormGroup.controls['project'].enable();
       this.trackerFormGroup.controls['release'].enable();
       this.subscriptionsList.push(this._getProjects(), this._getReleases());
@@ -238,7 +241,7 @@ export class TrackerDialog
       },
       error: () => {
         this._alertService.openError();
-        this.errorMessage = 'Non è stato possibile creare l\'attività';
+        this.errorMessage = "Non è stato possibile creare l'attività";
         this.hasErrors = true;
       },
       complete: () => {
@@ -268,7 +271,7 @@ export class TrackerDialog
       error: () => {
         this._alertService.openError();
         this.errorMessage =
-          'Non è stato possibile aggiornare i dati dell\'attività';
+          "Non è stato possibile aggiornare i dati dell'attività";
         this.hasErrors = true;
       },
       complete: () => {
@@ -296,7 +299,7 @@ export class TrackerDialog
       },
       error: () => {
         this._alertService.openError();
-        this.errorMessage = 'Non è stato possibile eliminare l\'attività';
+        this.errorMessage = "Non è stato possibile eliminare l'attività";
         this.hasErrors = true;
       },
       complete: () => {
@@ -407,11 +410,8 @@ export class TrackerDialog
   }
 
   private _patchHoursTag(): void {
-    console.log(this.hoursTags);
     for (const hoursTag of this.hoursTags) {
       if (hoursTag.checked) {
-
-        console.log(hoursTag);
         this.trackerFormGroup.patchValue({
           hoursTag: hoursTag.hoursTag,
         });

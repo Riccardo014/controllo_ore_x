@@ -23,7 +23,6 @@ import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
-import { endOfDay, startOfDay } from 'date-fns';
 import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -87,11 +86,10 @@ export class TrackerIndexPage
 
   override setSubscriptions(): void {
     this.subscriptionsList.push(
-      this._getUserHours(),
       this._calendarDateService.currentDateObservable.subscribe(
         (date: Date) => {
           this.selectedDate = date;
-          this._getUserHours();
+          this.subscriptionsList.push(this._getUserHours());
         },
       ),
     );
@@ -114,10 +112,7 @@ export class TrackerIndexPage
           userId: this._authService.loggedInUser._id,
           date: {
             _fn: FIND_BOOSTED_FN.DATE_BETWEEN,
-            args: [
-              startOfDay(this.selectedDate).toISOString(),
-              endOfDay(this.selectedDate).toISOString(),
-            ],
+            args: this._getRangeDate(),
           },
         },
       })
@@ -170,5 +165,14 @@ export class TrackerIndexPage
 
   onUserHourUpdated(): void {
     this.setSubscriptions();
+  }
+
+  private _getRangeDate(): string[] {
+    const startDate = new Date(this.selectedDate);
+    const endDate = new Date(this.selectedDate);
+
+    startDate.setUTCHours(0, 0, 0, 0);
+    endDate.setUTCHours(23, 59, 59, 999);
+    return [startDate.toISOString(), endDate.toISOString()];
   }
 }

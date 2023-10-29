@@ -7,7 +7,6 @@ import {
   Output,
 } from '@angular/core';
 import {
-  IRtDialogClose,
   RT_DIALOG_CLOSE_RESULT,
   RtDialogService,
 } from '@controllo-ore-x/rt-shared';
