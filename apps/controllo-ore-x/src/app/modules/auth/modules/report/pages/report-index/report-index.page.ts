@@ -16,7 +16,7 @@ import { AuthService } from '@app/_core/services/auth.service';
 import { IndexConfigurationDataService } from '@app/_core/services/index-configuration.data-service';
 import { ReportDataService } from '@app/_core/services/report.data-service';
 import { ReportPage } from '@app/_shared/classes/report-page.class';
-import { CalendarDateService } from '@app/_shared/components/index-template/servicies/calendar-date.service';
+import { CalendarDateService } from '@app/_shared/components/index-template/services/calendar-date.service';
 import { FilterService } from '@app/_shared/components/report-template/services/filter.service';
 import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';

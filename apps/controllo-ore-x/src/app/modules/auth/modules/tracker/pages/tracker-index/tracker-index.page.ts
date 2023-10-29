@@ -18,7 +18,7 @@ import { AuthService } from '@app/_core/services/auth.service';
 import { IndexConfigurationDataService } from '@app/_core/services/index-configuration.data-service';
 import { TrackerDataService } from '@app/_core/services/tracker.data-service';
 import { IndexPage } from '@app/_shared/classes/index-page.class';
-import { CalendarDateService } from '@app/_shared/components/index-template/servicies/calendar-date.service';
+import { CalendarDateService } from '@app/_shared/components/index-template/services/calendar-date.service';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,

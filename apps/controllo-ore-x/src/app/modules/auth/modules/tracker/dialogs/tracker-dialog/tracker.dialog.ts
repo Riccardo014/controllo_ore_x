@@ -16,7 +16,7 @@ import { HoursTagDataService } from '@app/_core/services/hours-tag.data-service'
 import { ProjectDataService } from '@app/_core/services/project.data-service';
 import { ReleaseDataService } from '@app/_core/services/release.data-service';
 import { TrackerDataService } from '@app/_core/services/tracker.data-service';
-import { CalendarDateService } from '@app/_shared/components/index-template/servicies/calendar-date.service';
+import { CalendarDateService } from '@app/_shared/components/index-template/services/calendar-date.service';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,

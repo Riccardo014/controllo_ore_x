@@ -13,7 +13,7 @@ import {
 } from '@app/utils/subscriptions_lifecycle';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
 import { Subscription } from 'rxjs';
-import { CalendarDateService } from './servicies/calendar-date.service';
+import { CalendarDateService } from './services/calendar-date.service';
 
 /**
  * Template of a index page with an header and a body
@@ -99,7 +99,6 @@ export class IndexTemplateComponent
 
   constructor(
     private _loadingService: RtLoadingService,
-    private _calendarDateService: CalendarDateService,
   ) {}
 
   ngOnInit(): void {
@@ -129,19 +128,6 @@ export class IndexTemplateComponent
 
   openCreateDialogFn(): void {
     this.openCreateDialogEvent.emit(true);
-  }
-
-  getDateToDisplay(date: Date): string {
-    let dayOfWeek: string = date.toLocaleDateString('it-IT', {
-      weekday: 'long',
-    });
-    const dateNumber: number = date.getDay();
-    let month: string = date.toLocaleDateString('it-IT', { month: 'long' });
-
-    dayOfWeek = dayOfWeek.charAt(0).toUpperCase() + dayOfWeek.slice(1);
-    month = month.charAt(0).toUpperCase() + month.slice(1);
-
-    return dayOfWeek + ', ' + dateNumber + ' ' + month;
   }
 
   private _setLoadingParameters(): void {

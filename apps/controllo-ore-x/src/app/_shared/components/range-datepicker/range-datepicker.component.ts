@@ -12,7 +12,7 @@ import {
 import { completeSubscriptions } from '@app/utils/subscriptions_lifecycle';
 import * as _moment from 'moment';
 import { Subscription } from 'rxjs';
-import { CalendarDateService } from '../index-template/servicies/calendar-date.service';
+import { CalendarDateService } from '../index-template/services/calendar-date.service';
 
 const moment = _moment;
 

@@ -22,7 +22,7 @@ import {
 } from '@controllo-ore-x/rt-shared';
 import { endOfDay, startOfDay } from 'date-fns';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { CalendarDateService } from '../components/index-template/servicies/calendar-date.service';
+import { CalendarDateService } from '../components/index-template/services/calendar-date.service';
 import { FilterService } from '../components/report-template/services/filter.service';
 
 /**

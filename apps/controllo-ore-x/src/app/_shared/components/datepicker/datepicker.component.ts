@@ -5,7 +5,7 @@ import {
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
 import { Subscription } from 'rxjs';
-import { CalendarDateService } from '../index-template/servicies/calendar-date.service';
+import { CalendarDateService } from '../index-template/services/calendar-date.service';
 
 @Component({
   selector: 'controllo-ore-x-datepicker',
