@@ -120,10 +120,7 @@ export abstract class ReportPage<T, CreateT, UpdateT>
       const newWhereOption: FindBoostedWhereOption = {
         date: {
           _fn: FIND_BOOSTED_FN.DATE_BETWEEN,
-          args: [
-            startOfDay(this.selectedRangeDate.start).toISOString(),
-            endOfDay(this.selectedRangeDate.end).toISOString(),
-          ],
+          args: this._getRangeDate(),
         },
       };
       this.indexTableHandler.status.where = [newWhereOption];
@@ -136,10 +133,7 @@ export abstract class ReportPage<T, CreateT, UpdateT>
       ...previousWhereOption,
       date: {
         _fn: FIND_BOOSTED_FN.DATE_BETWEEN,
-        args: [
-          startOfDay(this.selectedRangeDate.start).toISOString(),
-          endOfDay(this.selectedRangeDate.end).toISOString(),
-        ],
+        args: this._getRangeDate(),
       },
     };
 
@@ -197,6 +191,15 @@ export abstract class ReportPage<T, CreateT, UpdateT>
           });
         this.isFirstLoadDone.next(true);
       });
+  }
+
+  private _getRangeDate(): string[] {
+    const startDate = new Date(this.selectedRangeDate.start);
+    const endDate = new Date(this.selectedRangeDate.end);
+
+    startDate.setUTCHours(0, 0, 0, 0);
+    endDate.setUTCHours(23, 59, 59, 999);
+    return [startDate.toISOString(), endDate.toISOString()];
   }
 
   abstract setFilters(): void;

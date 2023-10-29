@@ -42,7 +42,7 @@ export class DatepickerComponent
 
   onDateChange(): void {
     if (!this.date.value) {
-      throw new Error('Date is null');
+      throw new Error('Date is not valid');
     }
     const date = new Date(this.date.value);
     date.setHours(12);
