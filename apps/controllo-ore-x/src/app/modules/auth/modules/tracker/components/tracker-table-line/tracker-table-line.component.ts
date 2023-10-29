@@ -19,6 +19,7 @@ import { Subscription } from 'rxjs';
 import { UserHoursReadDto } from '@api-interfaces';
 import { TrackerDataService } from '@app/_core/services/tracker.data-service';
 import { AlertService } from 'libs/rt-shared/src/alert/services/alert.service';
+import { convertNumberToHours } from '@app/utils/NumberToHoursConverter';
 
 @Component({
   selector: 'controllo-ore-x-tracker-table-line',
@@ -49,6 +50,9 @@ export class TrackerTableLineComponent
   ) {}
 
   ngOnInit(): void {
+    if (!this.userHour) {
+      throw new Error('UserHour is null');
+    }
     this.setSubscriptions();
   }
 
@@ -60,10 +64,8 @@ export class TrackerTableLineComponent
     this.subscriptionsList.push();
   }
 
-  convertNumberToHours(number: number): string {
-    const hours = Math.floor(number);
-    const minutes = Math.round((number - hours) * 60).toString();
-    return hours.toString().padStart(2, '0') + ':' + minutes.padStart(2, '0');
+  convertNumberToHours(hoursToConvert: number): string {
+    return convertNumberToHours(hoursToConvert);
   }
 
   openEditUserHourDialog(): void {

@@ -92,10 +92,7 @@ export class IndexTemplateComponent
   private _isLoading: boolean = true;
   private _isFirstLoadDone: boolean = false;
 
-  constructor(
-    private _loadingService: RtLoadingService,
-    private _calendarDateService: CalendarDateService,
-  ) {}
+  constructor(private _loadingService: RtLoadingService) {}
 
   ngOnInit(): void {
     this.setSubscriptions();
@@ -107,11 +104,11 @@ export class IndexTemplateComponent
 
   setSubscriptions(): void {
     this.subscriptionsList.push(
-      this.page.isLoading.pipe().subscribe((isLoading) => {
+      this.page.isLoading.subscribe((isLoading) => {
         this._isLoading = isLoading;
         this._setLoadingParameters();
       }),
-      this.page.isFirstLoadDone.pipe().subscribe((isFirstLoadDone) => {
+      this.page.isFirstLoadDone.subscribe((isFirstLoadDone) => {
         this._isFirstLoadDone = isFirstLoadDone;
         this._setLoadingParameters();
       }),
@@ -124,19 +121,6 @@ export class IndexTemplateComponent
 
   openCreateDialogFn(): void {
     this.openCreateDialogEvent.emit(true);
-  }
-
-  getDateToDisplay(date: Date): string {
-    let dayOfWeek: string = date.toLocaleDateString('it-IT', {
-      weekday: 'long',
-    });
-    const dateNumber: number = date.getDay();
-    let month: string = date.toLocaleDateString('it-IT', { month: 'long' });
-
-    dayOfWeek = dayOfWeek.charAt(0).toUpperCase() + dayOfWeek.slice(1);
-    month = month.charAt(0).toUpperCase() + month.slice(1);
-
-    return dayOfWeek + ', ' + dateNumber + ' ' + month;
   }
 
   private _setLoadingParameters(): void {
