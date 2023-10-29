@@ -9,6 +9,7 @@ import {
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
 import { Subscription } from 'rxjs';
 import { FilterService } from './services/filter.service';
+import { convertNumberToHours } from '@app/utils/NumberToHoursConverter';
 
 /**
  * Template of a report page
@@ -132,10 +133,8 @@ export class ReportTemplateComponent
     );
   }
 
-  convertNumberToHours(number: number): string {
-    const hours = Math.floor(number);
-    const minutes = Math.round((number - hours) * 60).toString();
-    return hours.toString().padStart(2, '0') + ':' + minutes.padStart(2, '0');
+  convertNumberToHours(hoursToConvert: number): string {
+    return convertNumberToHours(hoursToConvert);
   }
 
   private _setLoadingParameters(): void {

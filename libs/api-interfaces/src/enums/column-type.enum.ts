@@ -1,5 +1,6 @@
 export enum COLUMN_TYPE {
   DATE = 'DATE',
+  LONG_DATE = 'LONG_DATE',
   NUMBER = 'NUMBER',
   STRING = 'STRING',
   TIME_DATE = 'TIME_DATE',

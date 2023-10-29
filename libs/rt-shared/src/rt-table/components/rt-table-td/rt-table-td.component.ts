@@ -34,4 +34,10 @@ export class RtTableTdComponent implements OnInit {
   openDialogFn(entity: any): void {
     this.openDialogEvent.emit(entity);
   }
+
+  convertNumberToHours(hoursToConvert: number): string {
+  const hours = Math.floor(hoursToConvert);
+  const minutes = Math.round((hoursToConvert - hours) * 60).toString();
+  return hours.toString().padStart(2, '0') + ':' + minutes.padStart(2, '0');
+  }
 }

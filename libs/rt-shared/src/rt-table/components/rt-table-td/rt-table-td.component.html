@@ -11,7 +11,13 @@
   <ng-container *ngSwitchCase="'TIME_DATE'">
     {{ valueToPrint | date: 'd/MM/YY HH:mm' }}
   </ng-container>
+  <ng-container *ngSwitchCase="'TIME'">
+    {{ convertNumberToHours(valueToPrint) }}
+  </ng-container>
   <ng-container *ngSwitchCase="'DATE'">
+    <div class="body-2">{{ valueToPrint | date: 'dd/MM/yyyy' }}</div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'LONG_DATE'">
     <div class="body-2">{{ valueToPrint | date: 'dd MMM yyyy' }}</div>
   </ng-container>
   <ng-container *ngSwitchCase="'PROGRESS'">

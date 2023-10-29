@@ -19,6 +19,7 @@ import { IndexConfigurationDataService } from '@app/_core/services/index-configu
 import { TrackerDataService } from '@app/_core/services/tracker.data-service';
 import { IndexPage } from '@app/_shared/classes/index-page.class';
 import { CalendarDateService } from '@app/_shared/components/index-template/services/calendar-date.service';
+import { convertNumberToHours } from '@app/utils/NumberToHoursConverter';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
@@ -138,10 +139,8 @@ export class TrackerIndexPage
     this._router.navigate([this._router.url + '/' + user._id]);
   }
 
-  convertNumberToHours(number: number): string {
-    const hours = Math.floor(number);
-    const minutes = Math.round((number - hours) * 60).toString();
-    return hours.toString().padStart(2, '0') + ':' + minutes.padStart(2, '0');
+  convertNumberToHours(hoursToConvert: number): string {
+    return convertNumberToHours(hoursToConvert);
   }
 
   createFn(): void {
