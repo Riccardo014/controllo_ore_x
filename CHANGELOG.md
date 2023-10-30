@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Features Aggiunte
 
+- +Aggiunto modulo del tracker.
+
+## [0.0.15]
+
+### Features Aggiunte
+
 - +Aggiunto modulo di gestione dei progetti.
 - +Aggiunto modulo di gestione delle release.
 
@@ -26,8 +32,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - +Aggiunto menù dell'applicazione.
 - Aggiunto componente per la singola sezione del menu.
 
-
 ### Features Cambiate
+
 - Aggiornata topbar con il nome dell'utente e la possibilià di effettuare il logout.
 - Aggiornato authService per il reindirizzamento alla pagina di login dopo l'operazione di logout.
 - Aggiornato sidenav con l'aggiunta delle sezioni del menu.
