@@ -1,7 +1,13 @@
+import { ActivityController } from '@modules/user-hours/controllers/activity.controller';
+import { DayoffController } from '@modules/user-hours/controllers/dayoff.controller';
 import { HoursTagController } from '@modules/user-hours/controllers/hours-tag.controller';
 import { UserHoursController } from '@modules/user-hours/controllers/user-hours.controller';
+import { Activity } from '@modules/user-hours/entities/activity.entity';
+import { Dayoff } from '@modules/user-hours/entities/dayoff.entity';
 import { HoursTag } from '@modules/user-hours/entities/hours-tag.entity';
 import { UserHours } from '@modules/user-hours/entities/user-hours.entity';
+import { ActivityService } from '@modules/user-hours/services/activity.service';
+import { DayoffService } from '@modules/user-hours/services/dayoff.service';
 import { HoursTagService } from '@modules/user-hours/services/hours-tag.service';
 import { UserHoursService } from '@modules/user-hours/services/user-hours.service';
 import { UserModule } from '@modules/user/user.module';
@@ -10,15 +16,25 @@ import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { HOURS_TAG_SEED } from './seeds/hours-tag.seed';
-import { DayoffController } from '@modules/user-hours/controllers/dayoff.controller';
-import { DayoffService } from '@modules/user-hours/services/dayoff.service';
-import { Dayoff } from '@modules/user-hours/entities/dayoff.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserHours, HoursTag, Dayoff]), UserModule],
-  controllers: [UserHoursController, HoursTagController, DayoffController],
-  exports: [UserHoursService, HoursTagService, DayoffService],
-  providers: [UserHoursService, HoursTagService, DayoffService],
+  imports: [
+    TypeOrmModule.forFeature([UserHours, HoursTag, Dayoff, Activity]),
+    UserModule,
+  ],
+  controllers: [
+    UserHoursController,
+    HoursTagController,
+    DayoffController,
+    ActivityController,
+  ],
+  exports: [UserHoursService, HoursTagService, DayoffService, ActivityService],
+  providers: [
+    UserHoursService,
+    HoursTagService,
+    DayoffService,
+    ActivityService,
+  ],
 })
 export class UserHoursModule {
   constructor(

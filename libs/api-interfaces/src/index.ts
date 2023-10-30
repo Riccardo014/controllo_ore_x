@@ -16,8 +16,9 @@ export * from './dto/user/role.dto';
 export * from './dto/user/user.dto';
 export * from './lib/api-interfaces';
 
+export * from './dto/user-hours/activity.dto';
+export * from './dto/user-hours/dayoff.dto';
 export * from './enums/cox-filter.enum';
 export * from './enums/filter-type.enum';
 export * from './enums/index-configuration-key.enum';
 export * from './enums/role.enum';
-export * from './dto/user-hours/dayoff.dto';
