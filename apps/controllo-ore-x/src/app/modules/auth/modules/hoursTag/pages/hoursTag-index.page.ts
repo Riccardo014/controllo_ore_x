@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { Router } from '@angular/router';
 import {
   HoursTagCreateDto,
   HoursTagReadDto,
@@ -9,6 +8,7 @@ import {
 import { HoursTagDataService } from '@app/_core/services/hours-tag.data-service';
 import { IndexConfigurationDataService } from '@app/_core/services/index-configuration.data-service';
 import { IndexPage } from '@app/_shared/classes/index-page.class';
+import { RT_DIALOG_CLOSE_RESULT } from '@controllo-ore-x/rt-shared';
 import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
 import { BehaviorSubject } from 'rxjs';
@@ -38,34 +38,54 @@ export class HoursTagIndexPage extends IndexPage<
   hasErrors: boolean = false;
   isEditAvailable: boolean = false;
 
-  @Output() openDialog: EventEmitter<any> = new EventEmitter<any>();
+  @Output() openDialogEvent: EventEmitter<HoursTagReadDto> =
+    new EventEmitter<HoursTagReadDto>();
 
   constructor(
     protected _configurationService: IndexConfigurationDataService,
     protected _dataService: HoursTagDataService,
     protected _loadingService: RtLoadingService,
     private _rtDialogService: RtDialogService,
-    private _router: Router,
   ) {
     super();
   }
 
-  openDialogFn($event: HoursTagReadDto): void {
-    this._rtDialogService
-      .open(HoursTagDialog, {
-        width: '600px',
-        maxWidth: '600px',
-        data: $event,
-      })
-      .subscribe();
+  openDialogFn(hoursTag: HoursTagReadDto): void {
+    const dialogConfig = {
+      width: '600px',
+      maxWidth: '600px',
+    };
+    this.subscriptionsList.push(
+      this._rtDialogService
+        .open(HoursTagDialog, {
+          width: dialogConfig.width,
+          maxWidth: dialogConfig.maxWidth,
+          data: hoursTag,
+        })
+        .subscribe((res) => {
+          if (res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
+            this.indexTableHandler.fetchData();
+          }
+        }),
+    );
   }
 
   createFn(): void {
-    this._rtDialogService
-      .open(HoursTagDialog, {
-        width: '600px',
-        maxWidth: '600px',
-      })
-      .subscribe();
+    const dialogConfig = {
+      width: '600px',
+      maxWidth: '600px',
+    };
+    this.subscriptionsList.push(
+      this._rtDialogService
+        .open(HoursTagDialog, {
+          width: dialogConfig.width,
+          maxWidth: dialogConfig.maxWidth,
+        })
+        .subscribe((res) => {
+          if (res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
+            this.indexTableHandler.fetchData();
+          }
+        }),
+    );
   }
 }

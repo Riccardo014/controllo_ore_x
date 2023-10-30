@@ -1,12 +1,14 @@
 <lib-dialog-template
-  [cTitle]="title"
+  [title]="title"
   [isFooterEnabled]="true"
-  (closeDialog)="cancel()"
+  (closeDialogEvent)="onCancel()"
+  (reFetchEvent)="onReFetch()"
   [isLoading]="isLoading"
   [isError]="hasErrors"
+  [errorMessage]="errorMessage"
 >
   <div body>
-    <form class="-form p-0" [formGroup]="formHelper.form">
+    <form class="-form p-0" [formGroup]="hoursTagFormGroup">
       <div class="row mb-2">
         <mat-form-field appearance="outline" class="-form__field">
           <mat-label>Icona</mat-label>
@@ -14,19 +16,19 @@
             matInput
             placeholder="Icona"
             formControlName="iconName"
-            [(value)]="currentIconName"
+            [compareWith]="compareIconFn"
           >
             <mat-select-trigger>
-              <span class="material-symbols-outlined">{{currentIconName}}</span>
+              <span class="material-symbols-outlined"
+                >{{hoursTagFormGroup.get('iconName')?.value}}</span
+              >
             </mat-select-trigger>
             <mat-option *ngFor="let icon of icons" [value]="icon">
               <span class="material-symbols-outlined">{{icon}}</span>
             </mat-option>
           </mat-select>
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
-            <div
-              *ngIf="formHelper.form.controls['iconName'].hasError(error.name)"
-            >
+            <div *ngIf="getFormControlError('iconName',error)">
               {{ error.message }}
             </div>
           </mat-error>
@@ -36,7 +38,7 @@
           <mat-label>Nome</mat-label>
           <input matInput placeholder="Nome" formControlName="name" />
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
-            <div *ngIf="formHelper.form.controls['name'].hasError(error.name)">
+            <div *ngIf="getFormControlError('name',error)">
               {{ error.message }}
             </div>
           </mat-error>
@@ -46,8 +48,8 @@
   </div>
   <div footer class="-footer">
     <button
-      *ngIf="!isCreating"
-      (click)="deleteEntity()"
+      *ngIf="transactionStatus === 'update'"
+      (click)="onDelete()"
       class="rt-btn -footer__button -footer__button--delete"
       mat-button
       type="button"
@@ -55,8 +57,8 @@
       Elimina
     </button>
     <lib-rt-dialog-default-actions
-      (confirm)="onSubmit()"
-      (cancel)="cancel()"
+      (confirmEvent)="onSubmit()"
+      (cancelEvent)="onCancel()"
     ></lib-rt-dialog-default-actions>
   </div>
 </lib-dialog-template>
