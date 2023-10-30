@@ -8,6 +8,12 @@
   (openDialog)="openDialogFn($event)"
 ></controllo-ore-x-index-template>
 
+<lib-rt-table-fulltext-bar
+  class="-search-bar"
+  (fulltextSearchEmitter)="updateFulltextSearch($event)"
+>
+</lib-rt-table-fulltext-bar>
+
 <div class="-subtitle">
   <div class="-subtitle-text">
     <h2 class="body-1">Ore totali di assenza</h2>

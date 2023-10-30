@@ -51,6 +51,8 @@ export class DayoffIndexPage
   hasErrors: boolean = false;
   isEditAvailable: boolean = false;
 
+  override isTableTopbarVisible: boolean = false;
+
   dayoffs: DayoffReadDto[] = [];
 
   @Output() openDialog: EventEmitter<any> = new EventEmitter<any>();
@@ -116,6 +118,11 @@ export class DayoffIndexPage
         maxWidth: '600px',
       })
       .subscribe();
+  }
+
+  updateFulltextSearch(fulltextSearch: string): void {
+    this.indexTableHandler.status.fulltextSearch = fulltextSearch;
+    this.indexTableHandler.statusChange(this.indexTableHandler.status);
   }
 
   private _setDayoffsHours(): void {

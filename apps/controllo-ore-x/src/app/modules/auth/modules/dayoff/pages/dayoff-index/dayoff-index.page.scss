@@ -1,16 +1,16 @@
 @import 'libs/ui/core';
 
-.-subtitle{
+.-subtitle {
   height: 80px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   padding: 0px 40px;
-  border-bottom: 1px solid map-get($palette-grey, 200 );
+  border-top: 1px solid map-get($palette-grey, 200);
 }
 
-.-subtitle-text{
+.-subtitle-text {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -18,14 +18,14 @@
   white-space: nowrap;
 }
 
-.-subtitle-button{
+.-subtitle-button {
   background-color: map-get($palette-primary, 500);
   color: #fff;
   padding: 20px;
   border-radius: 10px;
 }
 
-.-subtitle-button-elements{
+.-subtitle-button-elements {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -33,11 +33,11 @@
   gap: 5%;
 }
 
-.-subtitle-button-elements-text{
+.-subtitle-button-elements-text {
   white-space: nowrap;
 }
 
-.-content{
+.-content {
   overflow-y: auto;
   height: calc(100vh - 81px - 80px - 48px - 40px);
 }

@@ -23,7 +23,6 @@ import {
   RtSelectModule,
   RtTableModule,
 } from '@controllo-ore-x/rt-shared';
-import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { DayoffRoutingModule } from './dayoff-routing.module';
 import { DayoffDialog } from './dialogs/dayoff-dialog/dayoff.dialog';
 import { DayoffIndexPage } from './pages/dayoff-index/dayoff-index.page';
@@ -53,7 +52,6 @@ import { DayoffIndexPage } from './pages/dayoff-index/dayoff-index.page';
     MatDatepickerModule,
     MatNativeDateModule,
     MatRadioModule,
-    NgxMaterialTimepickerModule,
     MatSlideToggleModule,
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'it-IT' }],
