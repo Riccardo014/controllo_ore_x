@@ -5,7 +5,9 @@
   position: relative;
   background: #ffffff;
   overflow-y: auto;
-  max-height: $content-height; /* limit the height of the section to the viewport height */
+  max-height: calc(
+    $content-height + 2px
+  ); /* limit the height of the section to the viewport height */
   height: auto;
 
   @include scrollbar-primary(map-get($palette-grey, 400), 6px, true);

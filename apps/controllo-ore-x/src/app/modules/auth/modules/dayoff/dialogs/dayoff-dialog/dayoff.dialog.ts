@@ -1,90 +1,95 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import {
-  DayoffCreateDto,
-  DayoffReadDto,
-  DayoffUpdateDto,
-} from '@api-interfaces';
+import { DayoffReadDto, DayoffUpdateDto } from '@api-interfaces';
 import { AuthService } from '@app/_core/services/auth.service';
-import { BaseDialog } from '@app/_shared/classes/base-dialog.class';
-import { CalendarDateService } from '@app/_shared/components/index-template/servicies/calendar-date.service';
+import { DayoffDataService } from '@app/_core/services/dayoff.data-service';
+import { CalendarDateService } from '@app/_shared/components/index-template/services/calendar-date.service';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
-import { IRtDialogInput, RtDialogService } from '@controllo-ore-x/rt-shared';
+import {
+  IRtDialogClose,
+  IRtDialogInput,
+  RT_DIALOG_CLOSE_RESULT,
+  RtDialogService,
+} from '@controllo-ore-x/rt-shared';
 import { AlertService } from 'libs/rt-shared/src/alert/services/alert.service';
+import { RT_FORM_ERRORS, RtFormError } from 'libs/utils';
 import { Subscription } from 'rxjs';
-import { DayoffFormHelper } from '../../helpers/dayoff.form-helper';
 
 @Component({
   selector: 'controllo-ore-x-dayoff-dialog',
   templateUrl: './dayoff.dialog.html',
   styleUrls: ['./dayoff.dialog.scss'],
-  providers: [DayoffFormHelper],
 })
-export class DayoffDialog
-  extends BaseDialog<DayoffReadDto, DayoffCreateDto, DayoffUpdateDto>
-  implements OnInit, OnDestroy, SubscriptionsLifecycle
-{
-  override title: string = 'Inserimento giustificativo';
+export class DayoffDialog implements OnInit, OnDestroy, SubscriptionsLifecycle {
+  title: string = 'Inserimento giustificativo';
+  transactionStatus: 'create' | 'update' = 'create';
+  RT_FORM_ERRORS: { [key: string]: RtFormError } = RT_FORM_ERRORS;
 
-  override isCreating: boolean = true;
+  isLoading: boolean = false;
+  hasErrors: boolean = false;
+  errorMessage: string = '';
 
-  subscriptionsList: Subscription[] = [];
+  dayoff?: DayoffReadDto;
+
+  dayoffFormGroup: FormGroup = new FormGroup({
+    user: new FormControl(null, Validators.required),
+    startDate: new FormControl(null, Validators.required),
+    endDate: new FormControl(null, Validators.required),
+    startTime: new FormControl(null, Validators.required),
+    endTime: new FormControl(null, Validators.required),
+    hours: new FormControl(null, Validators.required),
+    notes: new FormControl(null, Validators.required),
+  });
 
   date: Date = new Date();
   isAllDaySliderChecked: boolean = false;
   isAllDaySliderDisabled: boolean = false;
 
-  _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
+  subscriptionsList: Subscription[] = [];
+
+  completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
 
   constructor(
-    public override formHelper: DayoffFormHelper,
-    protected override _formBuilder: FormBuilder,
-    protected _matDialogRef: MatDialogRef<DayoffDialog>,
-    private _rtDialogService: RtDialogService,
+    private _dayoffDataService: DayoffDataService,
+    public dialogRef: MatDialogRef<DayoffDialog>,
     private _alertService: AlertService,
-    private _router: Router,
-    @Inject(MAT_DIALOG_DATA) public data: IRtDialogInput<any>,
+    @Inject(MAT_DIALOG_DATA)
+    public data: IRtDialogInput<any>,
+    private _rtDialogService: RtDialogService,
+
     private _authService: AuthService,
     private _calendarDateService: CalendarDateService,
   ) {
-    super(formHelper, _formBuilder, _rtDialogService, _alertService, _router);
-  }
-
-  ngOnInit(): void {
-    this._setSubscriptions();
-
     if (!this._authService.loggedInUser) {
       throw new Error('User not logged in');
     }
-    this.formHelper.form.patchValue({
+    this.dayoffFormGroup.patchValue({
       user: this._authService.loggedInUser,
     });
 
     if (this.data.input) {
-      this.formHelper.patchForm(this.data.input);
+      this.dayoff = this.data.input;
+      this._patchForm(this.data.input);
+      this.transactionStatus = 'update';
+      this.title = 'Modifica giustificativo';
       this._compareDate(
         this._createDate(
-          this.formHelper.form.value.startDate,
-          this.formHelper.form.value.startTime,
+          this.dayoffFormGroup.value.startDate,
+          this.dayoffFormGroup.value.startTime,
         ),
         this._createDate(
-          this.formHelper.form.value.endDate,
-          this.formHelper.form.value.endTime,
+          this.dayoffFormGroup.value.endDate,
+          this.dayoffFormGroup.value.endTime,
         ),
       );
-      this.isCreating = false;
-      this.formHelper.entityId = this.data.input._id;
-      this.title = 'Modifica giustificativo';
       return;
     }
-
-    this.formHelper.form.patchValue({
+    this.dayoffFormGroup.patchValue({
       startTime: '00:00',
       endTime: '00:00',
       startDate: this.date,
@@ -92,65 +97,95 @@ export class DayoffDialog
     });
   }
 
-  ngOnDestroy(): void {
-    this._completeSubscriptions(this.subscriptionsList);
+  get updateDto(): DayoffUpdateDto {
+    const formValues: any = this.dayoffFormGroup.getRawValue();
+
+    return {
+      userId: formValues.user._id,
+      startDate: formValues.startDate,
+      endDate: formValues.endDate,
+      notes: formValues.notes,
+      hours: formValues.hours,
+    };
   }
 
-  _setSubscriptions(): void {
+  ngOnInit(): void {
+    this.setSubscriptions();
+  }
+
+  ngOnDestroy(): void {
+    this.completeSubscriptions(this.subscriptionsList);
+  }
+
+  setSubscriptions(): void {
     this.subscriptionsList.push(this._getSelectedDate());
   }
 
-  override onSubmit(): void {
-    if (this.isAllDaySliderChecked) {
-      this.formHelper.form.patchValue({
-        hours: this._calculateHoursOfDifferentDays(
-          this.formHelper.form.value.startDate,
-          this.formHelper.form.value.endDate,
-        ),
+  onDelete(): void {
+    this._rtDialogService
+      .openConfirmation(
+        "Procedere con l'eliminazione?",
+        "L'operazione non è reversibile",
+      )
+      .subscribe({
+        next: (res) => {
+          if (res?.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
+            this._delete();
+          }
+        },
       });
-      super.onSubmit();
+  }
+
+  onCancel(): void {
+    const modalRes: IRtDialogClose = {
+      result: RT_DIALOG_CLOSE_RESULT.CANCEL,
+    };
+    this.dialogRef.close(modalRes);
+  }
+
+  onSubmit(): void {
+    this.hasErrors = false;
+
+    this._initForm();
+
+    if (this.transactionStatus === 'update') {
+      this._update();
       return;
     }
 
-    this.formHelper.form.patchValue({
-      startDate: this._createDate(
-        this.formHelper.form.value.startDate,
-        this.formHelper.form.value.startTime,
-      ),
-      endDate: this._createDate(
-        this.formHelper.form.value.endDate,
-        this.formHelper.form.value.endTime,
-      ),
-      hours: this._calculateHoursOfSameDay(
-        this.formHelper.form.value.startTime,
-        this.formHelper.form.value.endTime,
-      ),
-    });
-    super.onSubmit();
+    this._create();
+  }
+
+  onReFetch(): void {
+    window.location.reload();
+  }
+
+  getFormControlError(field: string, error: Error): boolean {
+    return this.dayoffFormGroup.controls[field].hasError(error.name);
   }
 
   allDayToggleChange(event: any): void {
     if (event.checked) {
       this.isAllDaySliderChecked = true;
-      this.formHelper.form.controls['startTime'].disable();
-      this.formHelper.form.controls['endTime'].disable();
-      this.formHelper.form.patchValue({
+      this.dayoffFormGroup.controls['startTime'].disable();
+      this.dayoffFormGroup.controls['endTime'].disable();
+      this.dayoffFormGroup.patchValue({
         startTime: '00:00',
         endTime: '00:00',
       });
     } else {
       this.isAllDaySliderChecked = false;
-      this.formHelper.form.controls['startTime'].enable();
-      this.formHelper.form.controls['endTime'].enable();
+      this.dayoffFormGroup.controls['startTime'].enable();
+      this.dayoffFormGroup.controls['endTime'].enable();
     }
   }
 
   onEndDateChange(date: Date): void {
-    this._compareDate(this.formHelper.form.value.startDate, date);
+    this._compareDate(this.dayoffFormGroup.value.startDate, date);
   }
 
   onStartDateChange(date: Date): void {
-    this._compareDate(date, this.formHelper.form.value.endDate);
+    this._compareDate(date, this.dayoffFormGroup.value.endDate);
   }
 
   private _compareDate(startDate: Date, endDate: Date): void {
@@ -167,12 +202,15 @@ export class DayoffDialog
   }
 
   private _getSelectedDate(): Subscription {
-    return this._calendarDateService.currentDateObservable.subscribe(
-      (selectedDate: Date) => {
+    return this._calendarDateService.currentDateObservable.subscribe({
+      next: (selectedDate: Date) => {
         this.date = new Date(selectedDate);
         this.date.setHours(0, 0, 0, 0);
       },
-    );
+      error: (error: any) => {
+        throw new Error(error);
+      },
+    });
   }
 
   private _createDate(date: Date, hours: string): Date {
@@ -190,5 +228,139 @@ export class DayoffDialog
     const days = 1 + Math.abs(endDay.getDate() - startDay.getDate());
     const hoursPerDay = 8;
     return hoursPerDay * days;
+  }
+
+  private _initForm(): void {
+    if (
+      this.dayoffFormGroup.get('startTime')?.value === '00:00' &&
+      this.dayoffFormGroup.get('endTime')?.value === '00:00'
+    ) {
+      this.isAllDaySliderChecked = true;
+    }
+    if (this.isAllDaySliderChecked) {
+      this.dayoffFormGroup.patchValue({
+        hours: this._calculateHoursOfDifferentDays(
+          this.dayoffFormGroup.value.startDate,
+          this.dayoffFormGroup.value.endDate,
+        ),
+      });
+      return;
+    }
+
+    this.dayoffFormGroup.patchValue({
+      startDate: this._createDate(
+        this.dayoffFormGroup.value.startDate,
+        this.dayoffFormGroup.value.startTime,
+      ),
+      endDate: this._createDate(
+        this.dayoffFormGroup.value.endDate,
+        this.dayoffFormGroup.value.endTime,
+      ),
+      hours: this._calculateHoursOfSameDay(
+        this.dayoffFormGroup.value.startTime,
+        this.dayoffFormGroup.value.endTime,
+      ),
+    });
+  }
+
+  private _patchForm(value: DayoffReadDto): void {
+    this.dayoffFormGroup.patchValue({
+      user: value.user,
+      startDate: new Date(new Date(value.startDate).setHours(0, 0, 0, 0)),
+      endDate: new Date(new Date(value.endDate).setHours(0, 0, 0, 0)),
+      startTime: this._timeFromDate(value.startDate),
+      endTime: this._timeFromDate(value.endDate),
+      hours: value.hours,
+      notes: value.notes,
+    });
+  }
+
+  private _timeFromDate(date: Date): string {
+    const formattedDate = new Intl.DateTimeFormat(navigator.language, {
+      timeStyle: 'short',
+    }).format(new Date(date));
+    return formattedDate;
+  }
+
+  private _create(): void {
+    const dayoffDto: DayoffReadDto = this.dayoffFormGroup.getRawValue();
+
+    this.isLoading = true;
+    this.hasErrors = false;
+    this._dayoffDataService.create(dayoffDto).subscribe({
+      next: () => {
+        this._alertService.openSuccess();
+        const modalRes: IRtDialogClose = {
+          result: RT_DIALOG_CLOSE_RESULT.CONFIRM,
+        };
+        this.dialogRef.close(modalRes);
+      },
+      error: () => {
+        this._alertService.openError();
+        this.errorMessage = 'Non è stato possibile creare in giustificativo';
+        this.hasErrors = true;
+      },
+      complete: () => {
+        this.isLoading = false;
+      },
+    });
+  }
+
+  private _update(): void {
+    if (!this.dayoff || this.transactionStatus === 'create') {
+      return;
+    }
+
+    const dayoffId: string = this.dayoff._id;
+    const dayoffDto: DayoffUpdateDto = this.updateDto;
+
+    this.isLoading = true;
+    this.hasErrors = false;
+    this._dayoffDataService.update(dayoffId, dayoffDto).subscribe({
+      next: () => {
+        this._alertService.openSuccess();
+        const modalRes: IRtDialogClose = {
+          result: RT_DIALOG_CLOSE_RESULT.CONFIRM,
+        };
+        this.dialogRef.close(modalRes);
+      },
+      error: () => {
+        this._alertService.openError();
+        this.errorMessage =
+          "Non è stato possibile aggiornare i dati dell'attività";
+        this.hasErrors = true;
+      },
+      complete: () => {
+        this.isLoading = false;
+      },
+    });
+  }
+
+  private _delete(): void {
+    if (!this.dayoff) {
+      return;
+    }
+
+    const dayoffId: string = this.dayoff._id;
+
+    this.isLoading = true;
+    this.hasErrors = false;
+    this._dayoffDataService.delete(dayoffId).subscribe({
+      next: () => {
+        this._alertService.openSuccess();
+        const modalRes: IRtDialogClose = {
+          result: RT_DIALOG_CLOSE_RESULT.CONFIRM,
+        };
+        this.dialogRef.close(modalRes);
+      },
+      error: () => {
+        this._alertService.openError();
+        this.errorMessage = "Non è stato possibile eliminare l'attività";
+        this.hasErrors = true;
+      },
+      complete: () => {
+        this.isLoading = false;
+      },
+    });
   }
 }

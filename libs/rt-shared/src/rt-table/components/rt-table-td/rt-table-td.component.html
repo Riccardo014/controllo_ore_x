@@ -8,10 +8,10 @@
   <ng-container *ngSwitchCase="'HTML'">
     <div [innerHTML]="valueToPrint" class="-html-td"></div>
   </ng-container>
-  <ng-container *ngSwitchCase="'TIME_DATE'">
-    {{ valueToPrint | date: 'd/MM/YY HH:mm' }}
-  </ng-container>
   <ng-container *ngSwitchCase="'TIME'">
+    {{ valueToPrint | date: 'HH:mm' }}
+  </ng-container>
+  <ng-container *ngSwitchCase="'HOURS'">
     {{ convertNumberToHours(valueToPrint) }}
   </ng-container>
   <ng-container *ngSwitchCase="'DATE'">

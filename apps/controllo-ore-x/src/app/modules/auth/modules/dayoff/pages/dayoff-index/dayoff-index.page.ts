@@ -7,11 +7,13 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import {
+  ApiResponse,
   DayoffCreateDto,
   DayoffReadDto,
   DayoffUpdateDto,
   FindBoostedWhereOption,
   INDEX_CONFIGURATION_KEY,
+  IndexConfigurationReadDto,
 } from '@api-interfaces';
 import { AuthService } from '@app/_core/services/auth.service';
 import { DayoffDataService } from '@app/_core/services/dayoff.data-service';
@@ -21,6 +23,7 @@ import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
+import { RT_DIALOG_CLOSE_RESULT } from '@controllo-ore-x/rt-shared';
 import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -59,7 +62,7 @@ export class DayoffIndexPage
 
   override subscriptionsList: Subscription[] = [];
 
-  override _completeSubscriptions: (subscriptionsList: Subscription[]) => void =
+  override completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
 
   constructor(
@@ -75,7 +78,7 @@ export class DayoffIndexPage
 
   override ngOnInit(): void {
     super.ngOnInit();
-    this._setSubscriptions();
+    this.setSubscriptions();
     this.indexTableHandler.isLoading.subscribe((r) => {
       this._setDayoffsHours();
       this.isFirstLoadDone.next(true);
@@ -86,8 +89,8 @@ export class DayoffIndexPage
   override _firstLoad(): Subscription {
     return this._configurationService
       .getConfiguration(this.CONFIGURATION_KEY)
-      .subscribe((data) => {
-        this.configuration = data.configuration;
+      .subscribe((result: ApiResponse<IndexConfigurationReadDto>) => {
+        this.configuration = result.data.configuration;
         this.indexTableHandler.tableConfiguration = this.configuration;
         this._setTableStatus();
         this.indexTableHandler.fetchData();
@@ -95,14 +98,24 @@ export class DayoffIndexPage
       });
   }
 
-  openDialogFn($event: DayoffReadDto): void {
-    this._rtDialogService
-      .open(DayoffDialog, {
-        width: '600px',
-        maxWidth: '600px',
-        data: $event,
-      })
-      .subscribe();
+  openDialogFn(dayoff: DayoffReadDto): void {
+    const dialogConfig = {
+      width: '600px',
+      maxWidth: '600px',
+    };
+    this.subscriptionsList.push(
+      this._rtDialogService
+        .open(DayoffDialog, {
+          width: dialogConfig.width,
+          maxWidth: dialogConfig.maxWidth,
+          data: dayoff,
+        })
+        .subscribe((res) => {
+          if (res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
+            this.indexTableHandler.fetchData();
+          }
+        }),
+    );
   }
 
   convertNumberToHours(number: number): string {
@@ -112,12 +125,22 @@ export class DayoffIndexPage
   }
 
   createFn(): void {
-    this._rtDialogService
-      .open(DayoffDialog, {
-        width: '600px',
-        maxWidth: '600px',
-      })
-      .subscribe();
+    const dialogConfig = {
+      width: '600px',
+      maxWidth: '600px',
+    };
+    this.subscriptionsList.push(
+      this._rtDialogService
+        .open(DayoffDialog, {
+          width: dialogConfig.width,
+          maxWidth: dialogConfig.maxWidth,
+        })
+        .subscribe((res) => {
+          if (res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
+            this.indexTableHandler.fetchData();
+          }
+        }),
+    );
   }
 
   updateFulltextSearch(fulltextSearch: string): void {

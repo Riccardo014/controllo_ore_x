@@ -1,20 +1,24 @@
 <lib-dialog-template
-  [cTitle]="title"
+  [title]="title"
   [isFooterEnabled]="true"
-  (closeDialog)="cancel()"
+  (closeDialogEvent)="onCancel()"
+  (reFetchEvent)="onReFetch()"
   [isLoading]="isLoading"
   [isError]="hasErrors"
+  [errorMessage]="errorMessage"
 >
   <div body>
-    <form class="container p-0" [formGroup]="formHelper.form">
-      <div class="row mb-2 -wrapper-user-upsert-form">
+    <form class="-form p-0" [formGroup]="dayoffFormGroup">
+      <div class="row mb-2 -form__fields">
         <mat-slide-toggle
           color="primary"
-          class="-toggle"
+          class="-form__fields__toggle"
           (change)="allDayToggleChange($event)"
           [checked]="isAllDaySliderChecked"
           [disabled]="isAllDaySliderDisabled"
-          ><span class="body-2 -toggle__text">Tutto il giorno</span>
+          ><span class="body-2 -form__fields__toggle__text"
+            >Tutto il giorno</span
+          >
         </mat-slide-toggle>
 
         <mat-form-field class="col" appearance="outline">
@@ -28,7 +32,7 @@
           />
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
             <div
-              *ngIf="formHelper.form.controls['startDate'].hasError(error.name)"
+              *ngIf="dayoffFormGroup.controls['startDate'].hasError(error.name)"
             >
               {{ error.message }}
             </div>
@@ -46,12 +50,12 @@
             [matDatepicker]="endPicker"
             placeholder="Data di fine"
             formControlName="endDate"
-            [min]="formHelper.form.controls['startDate'].value"
+            [min]="dayoffFormGroup.controls['startDate'].value"
             (dateChange)="onEndDateChange($event.value)"
           />
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
             <div
-              *ngIf="formHelper.form.controls['endDate'].hasError(error.name)"
+              *ngIf="dayoffFormGroup.controls['endDate'].hasError(error.name)"
             >
               {{ error.message }}
             </div>
@@ -68,7 +72,7 @@
             *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]"
           >
             <div
-              *ngIf="formHelper.form.controls['startTime'].hasError(error.name)"
+              *ngIf="dayoffFormGroup.controls['startTime'].hasError(error.name)"
             >
               {{ error.message }}
             </div>
@@ -81,10 +85,10 @@
             matInput
             type="time"
             formControlName="endTime"
-            [min]="formHelper.form.controls['startTime'].value"
+            [min]="dayoffFormGroup.controls['startTime'].value"
           /><mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
             <div
-              *ngIf="formHelper.form.controls['endTime'].hasError(error.name)"
+              *ngIf="dayoffFormGroup.controls['endTime'].hasError(error.name)"
             >
               {{ error.message }}
             </div>
@@ -95,7 +99,7 @@
           <mat-label>Note</mat-label>
           <input matInput placeholder="Note" formControlName="notes" />
           <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
-            <div *ngIf="formHelper.form.controls['notes'].hasError(error.name)">
+            <div *ngIf="dayoffFormGroup.controls['notes'].hasError(error.name)">
               {{ error.message }}
             </div>
           </mat-error>
@@ -103,19 +107,19 @@
       </div>
     </form>
   </div>
-  <div footer class="-container-reset-btns">
+  <div footer class="-footer">
     <button
-      *ngIf="!isCreating"
-      (click)="deleteEntity()"
-      class="rt-btn -button -button-delete"
+      *ngIf="transactionStatus === 'update'"
+      (click)="onDelete()"
+      class="rt-btn -footer__button -footer__button--delete"
       mat-button
       type="button"
     >
       Elimina
     </button>
     <lib-rt-dialog-default-actions
-      (confirm)="onSubmit()"
-      (cancel)="cancel()"
+      (confirmEvent)="onSubmit()"
+      (cancelEvent)="onCancel()"
     ></lib-rt-dialog-default-actions>
   </div>
 </lib-dialog-template>

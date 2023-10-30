@@ -51,7 +51,7 @@ export const REPORT_INDEX_CONFIGURATION_SEED: any = {
       },
       {
         title: 'Ore',
-        type: 'TIME',
+        type: 'HOURS',
         field: 'hours',
         sortable: true,
       },

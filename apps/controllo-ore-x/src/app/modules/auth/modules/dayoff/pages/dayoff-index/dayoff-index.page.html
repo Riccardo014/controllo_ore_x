@@ -5,12 +5,12 @@
   [shouldHideCreateButton]="true"
   [hasCalendar]="true"
   [isPageWithTable]="false"
-  (openDialog)="openDialogFn($event)"
+  (openDialogEvent)="openDialogFn($event)"
 ></controllo-ore-x-index-template>
 
 <lib-rt-table-fulltext-bar
   class="-search-bar"
-  (fulltextSearchEmitter)="updateFulltextSearch($event)"
+  (fulltextSearchEvent)="updateFulltextSearch($event)"
 >
 </lib-rt-table-fulltext-bar>
 
@@ -36,13 +36,15 @@
   </div>
 </div>
 
-<controllo-ore-x-index-template
-  [page]="this"
-  [buttonIcon]="buttonIcon"
-  [buttonText]="buttonText"
-  [shouldHideCreateButton]="true"
-  [hasCalendar]="true"
-  [isCompletePage]="false"
-  [isPageWithTable]="true"
-  (openDialog)="openDialogFn($event)"
-></controllo-ore-x-index-template>
+<div class="-table">
+  <controllo-ore-x-index-template
+    [page]="this"
+    [buttonIcon]="buttonIcon"
+    [buttonText]="buttonText"
+    [shouldHideCreateButton]="true"
+    [hasCalendar]="true"
+    [isCompletePage]="false"
+    [isPageWithTable]="true"
+    (openDialogEvent)="openDialogFn($event)"
+  ></controllo-ore-x-index-template>
+</div>
