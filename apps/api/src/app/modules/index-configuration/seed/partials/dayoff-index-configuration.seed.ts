@@ -6,6 +6,9 @@ export const DAYOFF_INDEX_CONFIGURATION_SEED: any = {
     collectionId: 'dayoff-index',
     exportEnabled: true,
     filters: [],
+    pagination: {
+      disabled: true,
+    },
     columns: [
       {
         title: 'Data da',

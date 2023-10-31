@@ -225,7 +225,10 @@ export class DayoffDialog implements OnInit, OnDestroy, SubscriptionsLifecycle {
   }
 
   private _calculateHoursOfDifferentDays(startDay: Date, endDay: Date): number {
-    const days = 1 + Math.abs(endDay.getDate() - startDay.getDate());
+    startDay.setHours(12, 0, 0, 0);
+    endDay.setHours(12, 0, 0, 0);
+    const days =
+      1 + (endDay.getTime() - startDay.getTime()) / (1000 * 3600 * 24);
     const hoursPerDay = 8;
     return hoursPerDay * days;
   }
@@ -239,6 +242,15 @@ export class DayoffDialog implements OnInit, OnDestroy, SubscriptionsLifecycle {
     }
     if (this.isAllDaySliderChecked) {
       this.dayoffFormGroup.patchValue({
+        startTime: '00:00',
+        endTime: '00:00',
+      });
+      this.dayoffFormGroup.patchValue({
+        startDate: this._createDate(
+          this.dayoffFormGroup.value.startDate,
+          '00:00',
+        ),
+        endDate: this._createDate(this.dayoffFormGroup.value.endDate, '00:00'),
         hours: this._calculateHoursOfDifferentDays(
           this.dayoffFormGroup.value.startDate,
           this.dayoffFormGroup.value.endDate,
