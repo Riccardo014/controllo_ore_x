@@ -50,23 +50,14 @@ export class RangeDatepickerComponent {
       return;
     }
 
-    const date = new Date();
-    this.rangeDates.value.start.setHours(
-      date.getHours(),
-      date.getMinutes(),
-      date.getSeconds(),
-      date.getMilliseconds(),
-    );
-    this.rangeDates.value.end.setHours(
-      date.getHours(),
-      date.getMinutes(),
-      date.getSeconds(),
-      date.getMilliseconds(),
-    );
+    const startDate = new Date(this.rangeDates.value.start);
+    startDate.setHours(12);
+    const endDate = new Date(this.rangeDates.value.start);
+    endDate.setHours(12);
 
     this._calendarDateService.changeRangeDates({
-      start: this.rangeDates.value.start,
-      end: this.rangeDates.value.end,
+      start: startDate,
+      end: endDate,
     });
   }
 }
