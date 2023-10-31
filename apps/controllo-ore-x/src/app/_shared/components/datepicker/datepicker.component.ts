@@ -45,7 +45,7 @@ export class DatepickerComponent
       throw new Error('Date is not valid');
     }
     const date = new Date(this.date.value);
-    date.setHours(12);
+    date.setHours(12, 0, 0, 0);
     this._calendarDateService.changeDate(date);
   }
 
