@@ -51,6 +51,9 @@ export class ReportSingleFilterComponent
     if (!this.fieldName) {
       throw new Error('fieldName is a required input');
     }
+    if (!this.dataForFilter) {
+      throw new Error('dataForFilter is a required input');
+    }
 
     this.setSubscriptions();
 
