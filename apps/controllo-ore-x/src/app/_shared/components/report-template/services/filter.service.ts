@@ -24,4 +24,8 @@ export class FilterService {
     });
     this.dataForFilters$.next(dataForFilters);
   }
+
+  resetFilters(): void {
+    this.dataForFilters$.next([]);
+  }
 }

@@ -60,6 +60,8 @@ export abstract class ReportPage<T, CreateT, UpdateT>
   protected abstract _calendarDateService: CalendarDateService;
 
   ngOnInit(): void {
+    this._filterService.resetFilters();
+
     this.indexTableHandler = new RtTableApiStatusManager<T, CreateT, UpdateT>(
       this._dataService,
     );
