@@ -21,7 +21,7 @@ export const HOURSTAG_INDEX_CONFIGURATION_SEED: any = {
       },
       {
         title: 'Creazione',
-        type: 'DATE',
+        type: 'LONG_DATE',
         field: 'createdAt',
         sortable: true,
       },
