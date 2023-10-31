@@ -20,7 +20,7 @@ import {
   RtTableApiStatusManager,
 } from '@controllo-ore-x/rt-shared';
 import { DataForFilter } from 'libs/utils';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription, firstValueFrom } from 'rxjs';
 import { CalendarDateService } from '../components/index-template/services/calendar-date.service';
 import { FilterService } from '../components/report-template/services/filter.service';
 
@@ -66,7 +66,7 @@ export abstract class ReportPage<T, CreateT, UpdateT>
     if (!this.indexTableHandler) {
       throw new Error('Ititialization of indexTableHandler failed');
     }
-
+    this._firstLoad();
     this.setSubscriptions();
   }
 
@@ -76,7 +76,6 @@ export abstract class ReportPage<T, CreateT, UpdateT>
 
   setSubscriptions(): void {
     this.subscriptionsList.push(
-      this._firstLoad(),
       this.indexTableHandler.isLoading.subscribe((r) => {
         this.isFirstLoadDone.next(true);
         this.isLoading.next(r);
@@ -163,25 +162,26 @@ export abstract class ReportPage<T, CreateT, UpdateT>
     });
   }
 
-  private _firstLoad(): Subscription {
-    return this._configurationService
-      .getConfiguration(this.CONFIGURATION_KEY)
-      .subscribe((result: ApiResponse<IndexConfigurationReadDto>) => {
-        this.configuration = result.data.configuration;
-        this.indexTableHandler.tableConfiguration = this.configuration;
+  private async _firstLoad(): Promise<void> {
+    const configuration = this._configurationService.getConfiguration(
+      this.CONFIGURATION_KEY,
+    );
 
-        this._dataService
-          .getMany({
-            relations: this.indexTableHandler.tableConfiguration.relations,
-          })
-          .subscribe((apiResult: ApiPaginatedResponse<any>) => {
-            this.indexTableHandler.data = apiResult.data;
-            this.setFilters();
-            this.changeDataForFilters();
-            this.changeDataForDate();
-          });
-        this.isFirstLoadDone.next(true);
-      });
+    const configurationResult: ApiResponse<IndexConfigurationReadDto> =
+      await firstValueFrom(configuration);
+    this.configuration = configurationResult.data.configuration;
+    this.indexTableHandler.tableConfiguration = this.configuration;
+    this.isFirstLoadDone.next(true);
+
+    const data = this._dataService.getMany({
+      relations: this.indexTableHandler.tableConfiguration!.relations,
+    });
+
+    const dataResult: ApiPaginatedResponse<T> = await firstValueFrom(data);
+    this.indexTableHandler.data = dataResult.data;
+    this.setFilters();
+    this.changeDataForFilters();
+    this.changeDataForDate();
   }
 
   private _getRangeDate(): string[] {

@@ -63,6 +63,7 @@ export class ReportFilterComponent
           newValue.splice(index, 1);
           dataForFilter.formControl.setValue(newValue);
           this._areAnyFiltersActive();
+          this.applyFn();
         }
       }
     });

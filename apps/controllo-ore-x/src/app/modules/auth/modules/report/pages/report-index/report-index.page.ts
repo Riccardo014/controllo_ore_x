@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 import {
   COX_FILTER,
-  CustomerReadDto,
-  HoursTagReadDto,
   INDEX_CONFIGURATION_KEY,
-  ProjectReadDto,
-  ReleaseReadDto,
   UserHoursCreateDto,
   UserHoursReadDto,
   UserHoursUpdateDto,
-  UserReadDto,
 } from '@api-interfaces';
+import { CustomerDataService } from '@app/_core/services/customer.data-service';
+import { HoursTagDataService } from '@app/_core/services/hours-tag.data-service';
 import { IndexConfigurationDataService } from '@app/_core/services/index-configuration.data-service';
+import { ProjectDataService } from '@app/_core/services/project.data-service';
+import { ReleaseDataService } from '@app/_core/services/release.data-service';
 import { ReportDataService } from '@app/_core/services/report.data-service';
+import { TeamDataService } from '@app/_core/services/team.data-service';
 import { ReportPage } from '@app/_shared/classes/report-page.class';
 import { CalendarDateService } from '@app/_shared/components/index-template/services/calendar-date.service';
 import { FilterService } from '@app/_shared/components/report-template/services/filter.service';
@@ -54,62 +54,59 @@ export class ReportIndexPage extends ReportPage<
     protected _loadingService: RtLoadingService,
     protected _filterService: FilterService,
     protected _calendarDateService: CalendarDateService,
+
+    private _customerDataService: CustomerDataService,
+    private _projectDataService: ProjectDataService,
+    private _releaseDataService: ReleaseDataService,
+    private _teamDataService: TeamDataService,
+    private _hoursTagDataService: HoursTagDataService,
   ) {
     super();
   }
 
   setFilters(): void {
     this.dataForFilters = [];
-    const customersList: CustomerReadDto[] = [];
-    this.indexTableHandler.data.forEach((data: any) => {
-      customersList.findIndex(
-        (customer) => customer._id == data.release.project.customer._id,
-      ) == -1 && customersList.push(data.release.project.customer);
-    });
-    this.insertNewFilter(
-      'Cliente',
-      'Clienti',
-      COX_FILTER.CUSTOMER,
-      customersList,
-    );
 
-    const projectsList: ProjectReadDto[] = [];
-    this.indexTableHandler.data.forEach((data: any) => {
-      projectsList.findIndex(
-        (project) => project._id == data.release.project._id,
-      ) == -1 && projectsList.push(data.release.project);
-    });
-    this.insertNewFilter(
-      'Progetto',
-      'Progetti',
-      COX_FILTER.PROJECT,
-      projectsList,
-    );
+    this.subscriptionsList.push(
+      this._customerDataService.getMany({}).subscribe((customers) => {
+        this.insertNewFilter(
+          'Cliente',
+          'Clienti',
+          COX_FILTER.CUSTOMER,
+          customers.data,
+        );
+      }),
 
-    const releaseList: ReleaseReadDto[] = [];
-    this.indexTableHandler.data.forEach((data: any) => {
-      releaseList.findIndex((release) => release._id == data.release._id) ==
-        -1 && releaseList.push(data.release);
-    });
-    this.insertNewFilter('Release', 'Release', COX_FILTER.RELEASE, releaseList);
+      this._projectDataService.getMany({}).subscribe((projects) => {
+        this.insertNewFilter(
+          'Progetto',
+          'Progetti',
+          COX_FILTER.PROJECT,
+          projects.data,
+        );
+      }),
 
-    const teamList: UserReadDto[] = [];
-    this.indexTableHandler.data.forEach((data: any) => {
-      teamList.findIndex((user) => user._id == data.user._id) == -1 &&
-        teamList.push(data.user);
-    });
-    this.insertNewFilter('Membro', 'Membri', COX_FILTER.TEAM, teamList);
+      this._releaseDataService.getMany({}).subscribe((releases) => {
+        this.insertNewFilter(
+          'Release',
+          'Release',
+          COX_FILTER.RELEASE,
+          releases.data,
+        );
+      }),
 
-    const hoursTagList: HoursTagReadDto[] = [];
-    this.indexTableHandler.data.forEach((data: any) => {
-      hoursTagList.findIndex((hoursTag) => hoursTag._id == data.hoursTag._id) ==
-        -1 && hoursTagList.push(data.hoursTag);
-    });
-    this.insertNewFilter(
-      'Etichetta',
-      'Etichette',
-      COX_FILTER.TAG,
-      hoursTagList,
+      this._teamDataService.getMany({}).subscribe((teams) => {
+        this.insertNewFilter('Membro', 'Membri', COX_FILTER.TEAM, teams.data);
+      }),
+
+      this._hoursTagDataService.getMany({}).subscribe((hoursTags) => {
+        this.insertNewFilter(
+          'Etichetta',
+          'Etichette',
+          COX_FILTER.TAG,
+          hoursTags.data,
+        );
+      }),
     );
   }
 }
