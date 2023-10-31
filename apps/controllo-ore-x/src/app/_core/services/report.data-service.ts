@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
-  UserHoursCreateDto,
-  UserHoursReadDto,
-  UserHoursUpdateDto,
+  ActivityCreateDto,
+  ActivityReadDto,
+  ActivityUpdateDto,
 } from '@api-interfaces';
 import { BaseDataService } from '@controllo-ore-x/rt-shared';
 import { environment } from '@env';
@@ -12,11 +12,11 @@ import { environment } from '@env';
   providedIn: 'root',
 })
 export class ReportDataService extends BaseDataService<
-  UserHoursReadDto,
-  UserHoursCreateDto,
-  UserHoursUpdateDto
+  ActivityReadDto,
+  ActivityCreateDto,
+  ActivityUpdateDto
 > {
-  currentApiUri: string = environment.apiUri + '/userHours';
+  currentApiUri: string = environment.apiUri + '/activitys';
 
   constructor(protected http: HttpClient) {
     super();

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import {
+  ActivityCreateDto,
+  ActivityReadDto,
+  ActivityUpdateDto,
   COX_FILTER,
   INDEX_CONFIGURATION_KEY,
-  UserHoursCreateDto,
-  UserHoursReadDto,
-  UserHoursUpdateDto,
 } from '@api-interfaces';
 import { CustomerDataService } from '@app/_core/services/customer.data-service';
 import { HoursTagDataService } from '@app/_core/services/hours-tag.data-service';
@@ -25,9 +25,9 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./report-index.page.scss'],
 })
 export class ReportIndexPage extends ReportPage<
-  UserHoursReadDto,
-  UserHoursCreateDto,
-  UserHoursUpdateDto
+  ActivityReadDto,
+  ActivityCreateDto,
+  ActivityUpdateDto
 > {
   titleIcon: string | null = 'chair';
   title: string = 'Report';
