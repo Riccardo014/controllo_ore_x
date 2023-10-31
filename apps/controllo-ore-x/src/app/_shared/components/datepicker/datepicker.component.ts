@@ -40,7 +40,7 @@ export class DatepickerComponent
     );
   }
 
-  dateChange(): void {
+  onDateChange(): void {
     if (!this.date.value) {
       throw new Error('Date is null');
     }
@@ -58,13 +58,13 @@ export class DatepickerComponent
     const date = new Date(this.date.value);
     date.setDate(date.getDate() + 1);
     this.date.setValue(date);
-    this.dateChange();
+    this.onDateChange();
   }
 
   previousDay(): void {
     const date = new Date(this.date.value);
     date.setDate(date.getDate() - 1);
     this.date.setValue(date);
-    this.dateChange();
+    this.onDateChange();
   }
 }
