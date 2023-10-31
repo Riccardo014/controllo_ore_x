@@ -35,7 +35,6 @@ export class HoursTagDialog {
     isModifiable: new FormControl(true, Validators.required),
   });
 
-  // currentIconName?: string;
   icons: string[] = [...HoursTagIcon];
 
   constructor(
@@ -156,7 +155,7 @@ export class HoursTagDialog {
       error: () => {
         this._alertService.openError();
         this.errorMessage =
-          "Non è stato possibile aggiornare i dati dell' etichetta";
+          "Non è stato possibile aggiornare i dati dell'etichetta";
         this.hasErrors = true;
       },
       complete: () => {
