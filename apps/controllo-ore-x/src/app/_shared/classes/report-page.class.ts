@@ -8,7 +8,6 @@ import {
   FindBoostedWhereOption,
   INDEX_CONFIGURATION_KEY,
   IndexConfigurationReadDto,
-  ReleaseCreateDto,
   TableConfiguration,
 } from '@api-interfaces';
 import { IndexConfigurationDataService } from '@app/_core/services/index-configuration.data-service';
@@ -20,7 +19,7 @@ import {
   BaseDataService,
   RtTableApiStatusManager,
 } from '@controllo-ore-x/rt-shared';
-import { endOfDay, startOfDay } from 'date-fns';
+import { DataForFilter } from 'libs/utils';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { CalendarDateService } from '../components/index-template/services/calendar-date.service';
 import { FilterService } from '../components/report-template/services/filter.service';
@@ -43,13 +42,9 @@ export abstract class ReportPage<T, CreateT, UpdateT>
   configuration!: TableConfiguration;
   indexTableHandler!: RtTableApiStatusManager<T, CreateT, UpdateT>;
 
-  dataForFilters: {
-    list: any[];
-    singleLabel: string;
-    multiLabel: string;
-    fieldName: COX_FILTER;
-    formControl: FormControl;
-  }[] = [];
+  dataForFilters: DataForFilter[] = [];
+
+  selectedRangeDate: any;
 
   completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
@@ -63,7 +58,6 @@ export abstract class ReportPage<T, CreateT, UpdateT>
   protected abstract _configurationService: IndexConfigurationDataService;
   protected abstract _filterService: FilterService;
   protected abstract _calendarDateService: CalendarDateService;
-  selectedRangeDate: any;
 
   ngOnInit(): void {
     this.indexTableHandler = new RtTableApiStatusManager<T, CreateT, UpdateT>(
@@ -74,8 +68,6 @@ export abstract class ReportPage<T, CreateT, UpdateT>
     }
 
     this.setSubscriptions();
-
-    // this._load();
   }
 
   ngOnDestroy(): void {
@@ -177,7 +169,6 @@ export abstract class ReportPage<T, CreateT, UpdateT>
       .subscribe((result: ApiResponse<IndexConfigurationReadDto>) => {
         this.configuration = result.data.configuration;
         this.indexTableHandler.tableConfiguration = this.configuration;
-        // this.indexTableHandler.fetchData();
 
         this._dataService
           .getMany({

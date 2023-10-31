@@ -77,7 +77,6 @@ export const REPORT_INDEX_CONFIGURATION_SEED: any = {
       'user.name',
       'user.surname',
       'hoursTag.name',
-      'hoursTag.notes',
     ],
   },
 };

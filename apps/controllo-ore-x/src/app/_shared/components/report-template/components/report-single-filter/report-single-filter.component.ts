@@ -7,12 +7,13 @@ import {
   Output,
   forwardRef,
 } from '@angular/core';
-import { FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { COX_FILTER } from '@api-interfaces';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
+import { DataForFilter } from 'libs/utils';
 import { Subscription } from 'rxjs';
 import { FilterService } from '../../services/filter.service';
 
@@ -35,13 +36,9 @@ export class ReportSingleFilterComponent
 
   @Input() fieldName!: COX_FILTER;
 
-  dataForFilter!: {
-    list: any[];
-    singleLabel: string;
-    multiLabel: string;
-    fieldName: COX_FILTER;
-    formControl: FormControl;
-  };
+  dataForFilter!: DataForFilter;
+
+  value!: string;
 
   subscriptionsList: Subscription[] = [];
 
@@ -51,11 +48,14 @@ export class ReportSingleFilterComponent
   constructor(private _filterService: FilterService) {}
 
   ngOnInit(): void {
+    if (!this.fieldName) {
+      throw new Error('fieldName is a required input');
+    }
+
     this.setSubscriptions();
 
-    this.dataForFilter.formControl.valueChanges.subscribe((value) => {
+    this.dataForFilter.formControl.valueChanges.subscribe(() => {
       this._filterService.changeDataForSingleFilter(this.dataForFilter);
-      // this.change.emit(value);
     });
   }
 
@@ -66,8 +66,8 @@ export class ReportSingleFilterComponent
   setSubscriptions(): void {
     this.subscriptionsList.push(
       this._filterService.dataForFiltersObservable.subscribe(
-        (dataForFilters: any[]) => {
-          dataForFilters.forEach((dataForFilter) => {
+        (dataForFilters: DataForFilter[]) => {
+          dataForFilters.forEach((dataForFilter: DataForFilter) => {
             if (dataForFilter.fieldName === this.fieldName) {
               this.dataForFilter = dataForFilter;
             }
@@ -88,7 +88,6 @@ export class ReportSingleFilterComponent
     }
   }
 
-  value: string = '';
   writeValue(value: string): void {
     this.value = value ? value : '';
   }

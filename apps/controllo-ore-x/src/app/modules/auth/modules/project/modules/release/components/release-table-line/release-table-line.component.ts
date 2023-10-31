@@ -20,6 +20,7 @@ import {
 } from '@controllo-ore-x/rt-shared';
 import { Subscription } from 'rxjs';
 import { ReleaseDialog } from '../../dialogs/release-dialog/release.dialog';
+
 @Component({
   selector: 'controllo-ore-x-release-table-line',
   templateUrl: './release-table-line.component.html',

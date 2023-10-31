@@ -32,13 +32,13 @@
 >
 </lib-rt-table-fulltext-bar>
 
-<div class="-page-content">
+<div class="-content">
   <controllo-ore-x-report-filter
     (filtersEvent)="page.onFilterEmit($event)"
   ></controllo-ore-x-report-filter>
 
-  <div class="-subtitle">
-    <div class="-subtitle-text">
+  <div class="-content__subtitle">
+    <div class="-content__subtitle__text">
       <h2 class="body-1">{{ page.subTitle }}</h2>
       <span class="headline-5">{{
         convertNumberToHours(page.subTitleHours)
@@ -47,29 +47,35 @@
     <div>
       <button
         *ngIf="createFn"
-        class="-subtitle-button"
+        class="-content__subtitle__button"
         mat-flat-button
         color="primary"
         (click)="createFn()"
       >
-        <div class="-subtitle-button-elements">
+        <div class="-content__subtitle__button__elements">
           <span class="material-symbols-outlined">{{ buttonIcon }}</span>
-          <span class="body-2 -subtitle-button-elements-text">{{
+          <span class="body-2 -content__subtitle__button__elements__text">{{
             buttonText
           }}</span>
         </div>
       </button>
     </div>
     <!-- TODO: add export functionality -->
-    <button mat-flat-button extended class="-export-button">
-      <div class="-export-button-elements">
+    <button
+      mat-flat-button
+      extended
+      class="-content__subtitle__button -content__subtitle__button--export"
+    >
+      <div class="-content__subtitle__button__elements">
         <span class="material-symbols-outlined">blender</span>
-        <div class="body-2">Export</div>
+        <div class="body-2 -content__subtitle__button__elements__text">
+          Export
+        </div>
       </div>
     </button>
   </div>
 
-  <div class="-page-content__table">
+  <div>
     <lib-rt-table
       *ngIf="page.isFirstLoadDone"
       [isLoading]="page.isLoading.getValue()"

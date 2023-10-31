@@ -1,7 +1,7 @@
 @import 'libs/ui/core/consts.scss';
 @import 'libs/ui/core/mixins.scss';
 
-.-report-table-filter {
+.-filters {
   border-bottom: 1px solid map-get($palette-grey, 300);
   min-height: 66px;
   padding: 0px 40px;
@@ -10,7 +10,7 @@
   align-items: center;
   justify-content: space-between;
 
-  .-filters-container {
+  &__container {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -20,25 +20,25 @@
     row-gap: 10px;
   }
 
-  .-filter-options {
+  &__options {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 20px;
 
-    .-button {
+    &__button {
       padding: 20px;
       border-radius: 10px;
-    }
 
-    .-reset-button {
-      color: rgba(0, 0, 0, 0.5);
+      &--reset {
+        color: rgba(0, 0, 0, 0.5);
+      }
     }
   }
 }
 
-.-filter-list {
+.-chips {
   padding-left: 40px;
   min-height: 46px;
   border-bottom: 1px solid map-get($palette-grey, 300);
@@ -48,7 +48,7 @@
   justify-content: flex-start;
   flex-wrap: wrap;
 
-  .-filter-element {
+  &__element {
     display: flex;
     flex-direction: row;
     align-items: center;

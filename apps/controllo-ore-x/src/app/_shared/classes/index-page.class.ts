@@ -23,8 +23,6 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 export abstract class IndexPage<T, CreateT, UpdateT>
   implements OnInit, OnDestroy, SubscriptionsLifecycle
 {
-  subscriptionsList: Subscription[] = [];
-
   /**
    * If true, the page will be rendered with a rt-table
    */
@@ -46,6 +44,8 @@ export abstract class IndexPage<T, CreateT, UpdateT>
   isLoading: BehaviorSubject<boolean> = new BehaviorSubject(true);
   configuration!: TableConfiguration;
   indexTableHandler!: RtTableApiStatusManager<T, CreateT, UpdateT>;
+
+  subscriptionsList: Subscription[] = [];
 
   completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;

@@ -1,45 +1,23 @@
 import { Injectable } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { COX_FILTER } from '@api-interfaces';
+import { DataForFilter } from 'libs/utils';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FilterService {
-  dataForFilters: BehaviorSubject<
-    {
-      list: any[];
-      singleLabel: string;
-      multiLabel: string;
-      fieldName: COX_FILTER;
-      formControl: FormControl;
-    }[]
-  > = new BehaviorSubject<
-    {
-      list: any[];
-      singleLabel: string;
-      multiLabel: string;
-      fieldName: COX_FILTER;
-      formControl: FormControl;
-    }[]
+  dataForFilters: BehaviorSubject<DataForFilter[]> = new BehaviorSubject<
+    DataForFilter[]
   >([]);
 
-  dataForFiltersObservable: Observable<
-    {
-      list: any[];
-      singleLabel: string;
-      multiLabel: string;
-      fieldName: COX_FILTER;
-      formControl: FormControl;
-    }[]
-  > = this.dataForFilters.asObservable();
+  dataForFiltersObservable: Observable<DataForFilter[]> =
+    this.dataForFilters.asObservable();
 
-  changeDataForFilters(value: any[]): void {
+  changeDataForFilters(value: DataForFilter[]): void {
     this.dataForFilters.next(value);
   }
 
-  changeDataForSingleFilter(value: any): void {
+  changeDataForSingleFilter(value: DataForFilter): void {
     const dataForFilters = this.dataForFilters.value;
     dataForFilters.forEach((dataForFilter: any) => {
       if (dataForFilter.fieldName === value.fieldName) {

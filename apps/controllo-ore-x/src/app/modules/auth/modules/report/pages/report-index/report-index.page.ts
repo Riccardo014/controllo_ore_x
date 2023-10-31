@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 import {
   COX_FILTER,
   CustomerReadDto,
@@ -12,13 +11,11 @@ import {
   UserHoursUpdateDto,
   UserReadDto,
 } from '@api-interfaces';
-import { AuthService } from '@app/_core/services/auth.service';
 import { IndexConfigurationDataService } from '@app/_core/services/index-configuration.data-service';
 import { ReportDataService } from '@app/_core/services/report.data-service';
 import { ReportPage } from '@app/_shared/classes/report-page.class';
 import { CalendarDateService } from '@app/_shared/components/index-template/services/calendar-date.service';
 import { FilterService } from '@app/_shared/components/report-template/services/filter.service';
-import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
 import { BehaviorSubject } from 'rxjs';
 
@@ -51,31 +48,18 @@ export class ReportIndexPage extends ReportPage<
   hasErrors: boolean = false;
   isEditAvailable: boolean = false;
 
-  @Output() openDialogEvent: EventEmitter<any> = new EventEmitter<any>();
-
   constructor(
     protected _configurationService: IndexConfigurationDataService,
     protected _dataService: ReportDataService,
     protected _loadingService: RtLoadingService,
     protected _filterService: FilterService,
-    private _rtDialogService: RtDialogService,
-    private _authService: AuthService,
-    private _router: Router,
     protected _calendarDateService: CalendarDateService,
   ) {
     super();
   }
 
-  openDialogFn($event: UserHoursReadDto): void {
-    this.openDialogEvent.emit($event);
-    this._router.navigate([this._router.url + '/' + $event._id]);
-  }
-
-  openCreateDialog(): void {
-    this._router.navigate([this._router.url + '/create']);
-  }
-
   setFilters(): void {
+    this.dataForFilters = [];
     const customersList: CustomerReadDto[] = [];
     this.indexTableHandler.data.forEach((data: any) => {
       customersList.findIndex(

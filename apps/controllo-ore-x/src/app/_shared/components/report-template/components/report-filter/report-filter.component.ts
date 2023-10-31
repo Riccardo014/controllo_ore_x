@@ -5,16 +5,12 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import {
-  COX_FILTER,
-  FIND_BOOSTED_FN,
-  FindBoostedWhereOption,
-} from '@api-interfaces';
+import { FIND_BOOSTED_FN, FindBoostedWhereOption } from '@api-interfaces';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
+import { DataForFilter } from 'libs/utils';
 import { Subscription } from 'rxjs';
 import { FilterService } from '../../services/filter.service';
 @Component({
@@ -28,13 +24,7 @@ export class ReportFilterComponent
   @Output() filtersEvent: EventEmitter<FindBoostedWhereOption[]> =
     new EventEmitter<FindBoostedWhereOption[]>();
 
-  dataForFilters: {
-    list: any[];
-    singleLabel: string;
-    multiLabel: string;
-    fieldName: COX_FILTER;
-    formControl: FormControl;
-  }[] = [];
+  dataForFilters: DataForFilter[] = [];
 
   areFiltersActive: boolean = false;
 
@@ -56,38 +46,30 @@ export class ReportFilterComponent
   setSubscriptions(): void {
     this.subscriptionsList.push(
       this._filterService.dataForFiltersObservable.subscribe(
-        (dataForFilters) => {
+        (dataForFilters: DataForFilter[]) => {
           this.dataForFilters = dataForFilters;
-          this.areAnyFiltersActive();
+          this._areAnyFiltersActive();
         },
       ),
     );
   }
 
-  areAnyFiltersActive(): void {
-    this.areFiltersActive = false;
-    this.dataForFilters.forEach((dataForFilter) => {
-      this.areFiltersActive =
-        this.areFiltersActive || !!dataForFilter.formControl.value?.length;
-    });
-  }
-
   remove(filter: any, element: string): void {
-    this.dataForFilters.forEach((dataForFilter) => {
+    this.dataForFilters.forEach((dataForFilter: DataForFilter) => {
       if (dataForFilter.fieldName == filter.fieldName) {
         const index = filter.formControl.value.indexOf(element);
         if (index >= 0) {
           const newValue = filter.formControl.value;
           newValue.splice(index, 1);
           dataForFilter.formControl.setValue(newValue);
-          this.areAnyFiltersActive();
+          this._areAnyFiltersActive();
         }
       }
     });
   }
 
   resetFn(): void {
-    this.dataForFilters.forEach((dataForFilter) => {
+    this.dataForFilters.forEach((dataForFilter: DataForFilter) => {
       dataForFilter.formControl.setValue([]);
     });
     this.areFiltersActive = false;
@@ -96,6 +78,14 @@ export class ReportFilterComponent
 
   applyFn(): void {
     this.filtersEvent.emit([this._buildFilters()]);
+  }
+
+  private _areAnyFiltersActive(): void {
+    this.areFiltersActive = false;
+    this.dataForFilters.forEach((dataForFilter: DataForFilter) => {
+      this.areFiltersActive =
+        this.areFiltersActive || !!dataForFilter.formControl.value?.length;
+    });
   }
 
   private _createNestedStructure(dbColumnsFlat: string[], args: string[]): any {

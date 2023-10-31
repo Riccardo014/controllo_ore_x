@@ -52,7 +52,7 @@ export class RangeDatepickerComponent {
 
     const startDate = new Date(this.rangeDates.value.start);
     startDate.setHours(12);
-    const endDate = new Date(this.rangeDates.value.start);
+    const endDate = new Date(this.rangeDates.value.end);
     endDate.setHours(12);
 
     this._calendarDateService.changeRangeDates({

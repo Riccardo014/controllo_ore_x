@@ -1,15 +1,14 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { COX_FILTER } from '@api-interfaces';
 import { ReportPage } from '@app/_shared/classes/report-page.class';
+import { convertNumberToHours } from '@app/utils/NumberToHoursConverter';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
+import { DataForFilter } from 'libs/utils';
 import { Subscription } from 'rxjs';
 import { FilterService } from './services/filter.service';
-import { convertNumberToHours } from '@app/utils/NumberToHoursConverter';
 
 /**
  * Template of a report page
@@ -78,13 +77,7 @@ export class ReportTemplateComponent
 
   data: any[] = [];
 
-  dataForFilters: {
-    list: any[];
-    singleLabel: string;
-    multiLabel: string;
-    fieldName: COX_FILTER;
-    formControl: FormControl;
-  }[] = [];
+  dataForFilters: DataForFilter[] = [];
 
   selectedRangeDate: {
     start: Date;
@@ -126,7 +119,7 @@ export class ReportTemplateComponent
         this._setLoadingParameters();
       }),
       this._filterService.dataForFiltersObservable.subscribe(
-        (dataForFilters) => {
+        (dataForFilters: DataForFilter[]) => {
           this.dataForFilters = dataForFilters;
         },
       ),

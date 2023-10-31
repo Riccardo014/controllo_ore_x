@@ -1,5 +1,5 @@
-<div class="-report-table-filter">
-  <div class="-filters-container">
+<div class="-filters">
+  <div class="-filters__container">
     <controllo-ore-x-report-single-filter
       *ngFor="let dataForFilter of dataForFilters"
       [fieldName]="dataForFilter.fieldName"
@@ -8,10 +8,10 @@
     <!-- (changeEvent)="formEmitter(filter, $event)" -->
   </div>
 
-  <div class="-filter-options">
+  <div class="-filters__options">
     <button
       mat-flat-button
-      class="body-2 -button -reset-button"
+      class="body-2 -filters__options__button -filters__options__button--reset"
       (click)="resetFn()"
     >
       Reset filtri
@@ -19,7 +19,7 @@
     <button
       mat-flat-button
       color="primary"
-      class="body-2 -button"
+      class="body-2 -filters__options__button"
       (click)="applyFn()"
     >
       Applica filtri
@@ -27,11 +27,11 @@
   </div>
 </div>
 
-<div *ngIf="areFiltersActive" class="-filter-list">
+<div *ngIf="areFiltersActive" class="-chips">
   <div *ngFor="let dataForFilter of dataForFilters">
     <div
       *ngIf="dataForFilter.formControl.value?.length"
-      class="-filter-element"
+      class="-chips__element"
     >
       <mat-chip-row
         *ngFor="let element of dataForFilter.formControl.value"

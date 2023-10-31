@@ -1,7 +1,7 @@
 @import 'libs/ui/core/consts.scss';
 @import 'libs/ui/core/mixins.scss';
 
-mat-form-field {
+.-filter {
   padding: 0px 5px;
   border-right: 1px solid map-get($palette-grey, 300);
   --mdc-filled-text-field-container-color: #fff;
