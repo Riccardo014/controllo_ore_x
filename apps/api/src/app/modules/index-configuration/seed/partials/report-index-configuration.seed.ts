@@ -6,6 +6,9 @@ export const REPORT_INDEX_CONFIGURATION_SEED: any = {
     collectionId: 'report-index',
     exportEnabled: true,
     filters: [],
+    pagination: {
+      disabled: true,
+    },
     columns: [
       {
         title: 'Data',
