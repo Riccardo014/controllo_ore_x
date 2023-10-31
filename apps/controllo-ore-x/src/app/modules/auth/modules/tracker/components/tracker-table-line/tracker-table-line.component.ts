@@ -6,20 +6,20 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import {
-  RT_DIALOG_CLOSE_RESULT,
-  RtDialogService,
-} from '@controllo-ore-x/rt-shared';
-import { TrackerDialog } from '../../dialogs/tracker-dialog/tracker.dialog';
+import { UserHoursReadDto } from '@api-interfaces';
+import { TrackerDataService } from '@app/_core/services/tracker.data-service';
+import { convertNumberToHours } from '@app/utils/NumberToHoursConverter';
 import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
-import { Subscription } from 'rxjs';
-import { UserHoursReadDto } from '@api-interfaces';
-import { TrackerDataService } from '@app/_core/services/tracker.data-service';
+import {
+  RT_DIALOG_CLOSE_RESULT,
+  RtDialogService,
+} from '@controllo-ore-x/rt-shared';
 import { AlertService } from 'libs/rt-shared/src/alert/services/alert.service';
-import { convertNumberToHours } from '@app/utils/NumberToHoursConverter';
+import { Subscription } from 'rxjs';
+import { TrackerDialog } from '../../dialogs/tracker-dialog/tracker.dialog';
 
 @Component({
   selector: 'controllo-ore-x-tracker-table-line',
@@ -74,8 +74,8 @@ export class TrackerTableLineComponent
     }
 
     const dialogConfig = {
-      width: '600px',
-      maxWidth: '600px',
+      width: '800px',
+      maxWidth: '800px',
     };
     const userHour: UserHoursReadDto = this.userHour;
 
@@ -103,8 +103,8 @@ export class TrackerTableLineComponent
     }
 
     const dialogConfig = {
-      width: '600px',
-      maxWidth: '600px',
+      width: '800px',
+      maxWidth: '800px',
     };
     const userHour: UserHoursReadDto = this.userHour;
 

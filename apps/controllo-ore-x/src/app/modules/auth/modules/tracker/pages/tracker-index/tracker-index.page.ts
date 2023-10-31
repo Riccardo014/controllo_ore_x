@@ -23,11 +23,11 @@ import {
   SubscriptionsLifecycle,
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
+import { RT_DIALOG_CLOSE_RESULT } from '@controllo-ore-x/rt-shared';
 import { RtDialogService } from 'libs/rt-shared/src/rt-dialog/services/rt-dialog.service';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { TrackerDialog } from '../../dialogs/tracker-dialog/tracker.dialog';
-import { RT_DIALOG_CLOSE_RESULT } from '@controllo-ore-x/rt-shared';
 
 @Component({
   selector: 'controllo-ore-x-tracker-index',
@@ -146,8 +146,8 @@ export class TrackerIndexPage
 
   createFn(): void {
     const dialogConfig = {
-      width: '600px',
-      maxWidth: '600px',
+      width: '800px',
+      maxWidth: '800px',
     };
     this.subscriptionsList.push(
       this._rtDialogService

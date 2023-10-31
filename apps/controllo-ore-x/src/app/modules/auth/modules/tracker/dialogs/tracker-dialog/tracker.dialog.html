@@ -135,10 +135,7 @@
             {{ hoursTag.hoursTag.name }}
           </mat-radio-button>
         </mat-radio-group>
-        <mat-error
-          *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]"
-          class="-radio-error"
-        >
+        <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
           <div
             *ngIf="trackerFormGroup.controls['hoursTag'].hasError(error.name)"
           >

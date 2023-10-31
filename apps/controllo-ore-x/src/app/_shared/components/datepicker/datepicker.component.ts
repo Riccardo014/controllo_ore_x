@@ -44,14 +44,9 @@ export class DatepickerComponent
     if (!this.date.value) {
       throw new Error('Date is null');
     }
-    const date = new Date();
-    this.date.value.setHours(
-      date.getHours(),
-      date.getMinutes(),
-      date.getSeconds(),
-      date.getMilliseconds(),
-    );
-    this._calendarDateService.changeDate(this.date.value);
+    const date = new Date(this.date.value);
+    date.setHours(12);
+    this._calendarDateService.changeDate(date);
   }
 
   nextDay(): void {

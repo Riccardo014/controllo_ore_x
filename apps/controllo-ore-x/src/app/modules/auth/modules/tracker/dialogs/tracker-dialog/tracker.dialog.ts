@@ -11,6 +11,10 @@ import {
   UserHoursUpdateDto,
 } from '@api-interfaces';
 import { AuthService } from '@app/_core/services/auth.service';
+import { CustomerDataService } from '@app/_core/services/customer.data-service';
+import { HoursTagDataService } from '@app/_core/services/hours-tag.data-service';
+import { ProjectDataService } from '@app/_core/services/project.data-service';
+import { ReleaseDataService } from '@app/_core/services/release.data-service';
 import { TrackerDataService } from '@app/_core/services/tracker.data-service';
 import { CalendarDateService } from '@app/_shared/components/index-template/servicies/calendar-date.service';
 import {
@@ -24,12 +28,8 @@ import {
   RtDialogService,
 } from '@controllo-ore-x/rt-shared';
 import { AlertService } from 'libs/rt-shared/src/alert/services/alert.service';
-import { Subscription } from 'rxjs';
 import { RT_FORM_ERRORS, RtFormError } from 'libs/utils';
-import { CustomerDataService } from '@app/_core/services/customer.data-service';
-import { ProjectDataService } from '@app/_core/services/project.data-service';
-import { ReleaseDataService } from '@app/_core/services/release.data-service';
-import { HoursTagDataService } from '@app/_core/services/hours-tag.data-service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'controllo-ore-x-tracker-dialog',
@@ -393,7 +393,7 @@ export class TrackerDialog
         if (this.transactionStatus === 'create') {
           this.hoursTags[0].checked = true;
           this.trackerFormGroup.patchValue({
-            hoursTags: this.hoursTags[0],
+            hoursTag: this.hoursTags[0].hoursTag,
           });
         }
         if (
