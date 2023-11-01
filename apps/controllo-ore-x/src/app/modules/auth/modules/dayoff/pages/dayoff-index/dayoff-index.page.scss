@@ -8,38 +8,33 @@
   justify-content: space-between;
   padding: 0px 40px;
   border-top: 1px solid map-get($palette-grey, 200);
-}
 
-.-subtitle-text {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 5%;
-  white-space: nowrap;
-}
+  &__text {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5%;
+    white-space: nowrap;
+  }
 
-.-subtitle-button {
-  background-color: map-get($palette-primary, 500);
-  color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-}
+  &__button {
+    background-color: map-get($palette-primary, 500);
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
 
-.-subtitle-button-elements {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 5%;
-}
+    &__elements {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 5%;
 
-.-subtitle-button-elements-text {
-  white-space: nowrap;
-}
-
-.-content {
-  overflow-y: auto;
-  height: calc(100vh - 81px - 80px - 48px - 40px);
+      &__text {
+        white-space: nowrap;
+      }
+    }
+  }
 }
 
 .-table {

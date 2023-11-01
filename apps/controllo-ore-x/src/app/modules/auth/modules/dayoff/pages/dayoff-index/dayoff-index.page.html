@@ -9,26 +9,25 @@
 ></controllo-ore-x-index-template>
 
 <lib-rt-table-fulltext-bar
-  class="-search-bar"
   (fulltextSearchEvent)="updateFulltextSearch($event)"
 >
 </lib-rt-table-fulltext-bar>
 
 <div class="-subtitle">
-  <div class="-subtitle-text">
+  <div class="-subtitle__text">
     <h2 class="body-1">Ore totali di assenza</h2>
     <span class="headline-5">{{ convertNumberToHours(dayoffsHours) }}</span>
   </div>
   <div>
     <button
-      class="-subtitle-button"
+      class="-subtitle__button"
       mat-flat-button
       color="primary"
       (click)="createFn()"
     >
-      <div class="-subtitle-button-elements">
+      <div class="-subtitle__button__elements">
         <span class="material-symbols-outlined">{{ buttonIcon }}</span>
-        <span class="body-2 -subtitle-button-elements-text"
+        <span class="body-2 -subtitle__button__elements__text"
           >{{ buttonText }}</span
         >
       </div>
