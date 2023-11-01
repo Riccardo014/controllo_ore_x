@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Features Aggiunte
+
+- +Aggiunto modulo delle ferie e permessi.
+
 ## [0.0.18]
 
 ### Features Aggiunte
