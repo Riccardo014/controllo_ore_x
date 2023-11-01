@@ -43,9 +43,6 @@
 }
 
 .-table {
-  overflow-y: auto;
   max-height: calc($content-height - $header-height - $subtitle-height);
   height: auto;
-
-  @include scrollbar-primary(map-get($palette-grey, 400), 6px, true);
 }
