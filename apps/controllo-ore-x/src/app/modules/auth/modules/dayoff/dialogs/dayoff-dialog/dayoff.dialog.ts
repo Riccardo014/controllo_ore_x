@@ -59,7 +59,7 @@ export class DayoffDialog implements OnInit, OnDestroy, SubscriptionsLifecycle {
     public dialogRef: MatDialogRef<DayoffDialog>,
     private _alertService: AlertService,
     @Inject(MAT_DIALOG_DATA)
-    public data: IRtDialogInput<any>,
+    public data: IRtDialogInput<DayoffReadDto>,
     private _rtDialogService: RtDialogService,
 
     private _authService: AuthService,
@@ -309,7 +309,7 @@ export class DayoffDialog implements OnInit, OnDestroy, SubscriptionsLifecycle {
       },
       error: () => {
         this._alertService.openError();
-        this.errorMessage = 'Non è stato possibile creare in giustificativo';
+        this.errorMessage = 'Non è stato possibile creare il giustificativo';
         this.hasErrors = true;
       },
       complete: () => {
@@ -339,7 +339,7 @@ export class DayoffDialog implements OnInit, OnDestroy, SubscriptionsLifecycle {
       error: () => {
         this._alertService.openError();
         this.errorMessage =
-          "Non è stato possibile aggiornare i dati dell'attività";
+          'Non è stato possibile aggiornare i dati del giustificativo';
         this.hasErrors = true;
       },
       complete: () => {
@@ -367,7 +367,7 @@ export class DayoffDialog implements OnInit, OnDestroy, SubscriptionsLifecycle {
       },
       error: () => {
         this._alertService.openError();
-        this.errorMessage = "Non è stato possibile eliminare l'attività";
+        this.errorMessage = 'Non è stato possibile eliminare il giustificativo';
         this.hasErrors = true;
       },
       complete: () => {
