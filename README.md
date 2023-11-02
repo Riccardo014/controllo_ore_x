@@ -6,6 +6,7 @@
 
   - [ ] Aggiungere la gestione dei ruoli e permessi.
   - [ ] Aggiungere l'avatar per i clienti e i membri del team.
+  - [ ] Aggiungere la pagina del profilo dell'utente.
 
 - [ ] Miglioramenti nella schermata di login:
 
