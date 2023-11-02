@@ -1,9 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Subscription, interval, timeout } from 'rxjs';
-import {
-  SubscriptionsLifecycle,
-  completeSubscriptions,
-} from '../../../../../../apps/controllo-ore-x/src/app/utils/subscriptions_lifecycle';
+import { Subject, Subscription, interval, timeout } from 'rxjs';
 import { AlertService } from '../../services/alert.service';
 import { RtAlert } from './alert.interface';
 
@@ -13,11 +9,14 @@ import { RtAlert } from './alert.interface';
   styleUrls: ['./alert.component.scss'],
 })
 export class AlertComponent
-  implements OnInit, OnDestroy, SubscriptionsLifecycle
+  implements OnInit, OnDestroy
 {
+  destroy$: Subject<boolean> = new Subject();
+  isPinned: boolean = false;
+  shouldShowDetails: boolean = false;
+
   private readonly _ALERT_TIMEOUT: number = 5000;
   @Input() alert?: RtAlert;
-
   /**
    * How much time passed since the alert was created.
    */
@@ -28,15 +27,9 @@ export class AlertComponent
    */
   private _alertLifetimeTotal: number = this._ALERT_TIMEOUT;
 
-  subscriptionsList: Subscription[] = [];
-
-  completeSubscriptions: (subscriptionsList: Subscription[]) => void =
-    completeSubscriptions;
 
   private _currentTimeout: any;
   private _currentInterval: any;
-  isPinned: boolean = false;
-  shouldShowDetails: boolean = false;
 
   constructor(private _rtAlertSvc: AlertService) {}
 
@@ -48,12 +41,12 @@ export class AlertComponent
   }
 
   ngOnDestroy(): void {
-    this.completeSubscriptions(this.subscriptionsList);
+    this.destroy$.next(true);
   }
 
   setSubscriptions(): void {
-    this.subscriptionsList.push(this.setTimeout());
-    this.subscriptionsList.push(this.setInterval());
+    this._currentTimeout = this.setTimeout();
+    this._currentInterval = this.setInterval();
   }
 
   /**
@@ -85,14 +78,14 @@ export class AlertComponent
     this.isPinned = true;
     clearInterval(this._currentInterval);
     clearTimeout(this._currentTimeout);
-    this.completeSubscriptions(this.subscriptionsList);
+    this.destroy$.next(true);
   }
 
   /**
    * Close the alert
    */
   close(): void {
-    this.completeSubscriptions(this.subscriptionsList);
+    this.destroy$.next(true);
     clearInterval(this._currentInterval);
     clearTimeout(this._currentTimeout);
     this._rtAlertSvc.removeArticle(this.alert!.id);
