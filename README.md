@@ -7,6 +7,7 @@
   - [ ] Aggiungere la gestione dei ruoli e permessi.
   - [ ] Aggiungere l'avatar per i clienti e i membri del team.
   - [ ] Aggiungere la pagina del profilo dell'utente.
+  - [ ] Aggiungere un servizio mail di notifica per controllare che siano state inserite le ore della settimana (ogni venerdì alle 17:00).
 
 - [ ] Miglioramenti nella schermata di login:
 
