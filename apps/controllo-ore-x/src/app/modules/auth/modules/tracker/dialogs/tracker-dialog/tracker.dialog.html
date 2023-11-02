@@ -1,0 +1,163 @@
+<lib-dialog-template
+  [title]="title"
+  [isFooterEnabled]="true"
+  (closeDialogEvent)="onCancel()"
+  (reFetchEvent)="onReFetch()"
+  [isLoading]="isLoading"
+  [isError]="hasErrors"
+  [errorMessage]="errorMessage"
+>
+  <div body>
+    <form class="-form p-0" [formGroup]="trackerFormGroup">
+      <div class="row mb-2 -form__fields">
+        <mat-form-field class="col" appearance="outline">
+          <mat-label>Cliente</mat-label>
+          <mat-select
+            matInput
+            placeholder="Cliente"
+            formControlName="customer"
+            [compareWith]="compareEntityFn"
+            (selectionChange)="onSelectedCustomer()"
+          >
+            <mat-option *ngFor="let customer of customers" [value]="customer">
+              {{ customer.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+            <div
+              *ngIf="trackerFormGroup.controls['customer'].hasError(error.name)"
+            >
+              {{ error.message }}
+            </div>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="col" appearance="outline">
+          <mat-label>Progetto</mat-label>
+          <mat-select
+            matInput
+            placeholder="Progetto"
+            formControlName="project"
+            [compareWith]="compareEntityFn"
+            (selectionChange)="onSelectedProject()"
+          >
+            <mat-option *ngFor="let project of projects" [value]="project">
+              {{ project.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+            <div
+              *ngIf="trackerFormGroup.controls['project'].hasError(error.name)"
+            >
+              {{ error.message }}
+            </div>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="col" appearance="outline">
+          <mat-label>Release</mat-label>
+          <mat-select
+            matInput
+            placeholder="Release"
+            formControlName="release"
+            [compareWith]="compareEntityFn"
+          >
+            <mat-option *ngFor="let release of releases" [value]="release">
+              {{ release.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+            <div
+              *ngIf="trackerFormGroup.controls['release'].hasError(error.name)"
+            >
+              {{ error.message }}
+            </div>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="col" appearance="outline">
+          <mat-label>Note</mat-label>
+          <input matInput placeholder="Note" formControlName="notes" />
+          <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+            <div
+              *ngIf="trackerFormGroup.controls['notes'].hasError(error.name)"
+            >
+              {{ error.message }}
+            </div>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="col" appearance="outline">
+          <mat-label>Ore</mat-label>
+          <input
+            type="number"
+            matInput
+            placeholder="Ore"
+            formControlName="hours"
+            min="0"
+          />
+          <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+            <div
+              *ngIf="trackerFormGroup.controls['hours'].hasError(error.name)"
+            >
+              {{ error.message }}
+            </div>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="col" appearance="outline">
+          <mat-label>Data</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            placeholder="Data"
+            formControlName="date"
+          />
+          <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+            <div *ngIf="trackerFormGroup.controls['date'].hasError(error.name)">
+              {{ error.message }}
+            </div>
+          </mat-error>
+          <mat-datepicker-toggle matIconSuffix [for]="picker">
+            <mat-icon matDatepickerToggleIcon>calendar_today</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-radio-group required formControlName="hoursTag">
+          <mat-radio-button
+            color="primary"
+            *ngFor="let hoursTag of hoursTags"
+            [value]="hoursTag"
+            [checked]="hoursTag.checked"
+            (change)="checkHoursTag(hoursTag)"
+          >
+            {{ hoursTag.hoursTag.name }}
+          </mat-radio-button>
+        </mat-radio-group>
+        <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+          <div
+            *ngIf="trackerFormGroup.controls['hoursTag'].hasError(error.name)"
+          >
+            {{ error.message }}
+          </div>
+        </mat-error>
+      </div>
+    </form>
+  </div>
+  <div footer class="-footer">
+    <button
+      *ngIf="transactionStatus === 'update'"
+      (click)="onDelete()"
+      class="rt-btn -footer__button -footer__button--delete"
+      mat-button
+      type="button"
+    >
+      Elimina
+    </button>
+    <lib-rt-dialog-default-actions
+      (confirmEvent)="onSubmit()"
+      (cancelEvent)="onCancel()"
+    ></lib-rt-dialog-default-actions>
+  </div>
+</lib-dialog-template>

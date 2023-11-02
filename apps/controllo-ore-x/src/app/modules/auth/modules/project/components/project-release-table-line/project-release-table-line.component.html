@@ -1,0 +1,28 @@
+<div class="-release">
+  <div class="-release__data">
+    <div class="body-1" [ngClass]="{ '-completed': release.isCompleted }">
+      {{ release.name }}
+    </div>
+    <div class="body-1 -release__data__deadline">{{ deadline }}</div>
+    <div class="-release__data__progress">
+      <mat-progress-bar
+        class="-release__data__progress__bar"
+        mode="determinate"
+        value="{{ (100 * hoursExecuted) / release.hoursBudget }}"
+      ></mat-progress-bar>
+      <div class="body-1 -release__data__progress__hours">
+        <div class="-release__data__progress__hours--executed">
+          {{ convertNumberToHours(hoursExecuted) }}&nbsp;/&nbsp;
+        </div>
+        <div class="-release__data__progress__hours--planned">
+          {{ convertNumberToHours(release.hoursBudget) }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="-release-table-line-edit-and-report">
+    <button mat-icon-button (click)="openEditReleaseDialog()">
+      <span class="material-symbols-outlined icon">ink_marker</span>
+    </button>
+  </div>
+</div>

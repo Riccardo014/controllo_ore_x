@@ -1,0 +1,34 @@
+@import 'libs/ui/core.scss';
+
+.-form {
+  &__fields {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    &__toggle {
+      padding: 16px 0px;
+
+      &__text {
+        color: rgba(0, 0, 0, 0.5);
+      }
+    }
+  }
+}
+
+.-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+
+  &__button {
+    padding: 20px 40px;
+    border-radius: 10px;
+
+    &--delete {
+      color: map-get($palette-error, 50);
+      background-color: map-get($palette-error, 500);
+    }
+  }
+}

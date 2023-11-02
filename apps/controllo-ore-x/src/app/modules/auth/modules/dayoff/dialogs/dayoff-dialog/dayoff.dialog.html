@@ -1,0 +1,125 @@
+<lib-dialog-template
+  [title]="title"
+  [isFooterEnabled]="true"
+  (closeDialogEvent)="onCancel()"
+  (reFetchEvent)="onReFetch()"
+  [isLoading]="isLoading"
+  [isError]="hasErrors"
+  [errorMessage]="errorMessage"
+>
+  <div body>
+    <form class="-form p-0" [formGroup]="dayoffFormGroup">
+      <div class="row mb-2 -form__fields">
+        <mat-slide-toggle
+          color="primary"
+          class="-form__fields__toggle"
+          (change)="allDayToggleChange($event)"
+          [checked]="isAllDaySliderChecked"
+          [disabled]="isAllDaySliderDisabled"
+          ><span class="body-2 -form__fields__toggle__text"
+            >Tutto il giorno</span
+          >
+        </mat-slide-toggle>
+
+        <mat-form-field class="col" appearance="outline">
+          <mat-label>Data di inizio</mat-label>
+          <input
+            matInput
+            [matDatepicker]="startPicker"
+            placeholder="Data di inizio"
+            formControlName="startDate"
+            (dateChange)="onStartDateChange($event.value)"
+          />
+          <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+            <div
+              *ngIf="dayoffFormGroup.controls['startDate'].hasError(error.name)"
+            >
+              {{ error.message }}
+            </div>
+          </mat-error>
+          <mat-datepicker-toggle matIconSuffix [for]="startPicker">
+            <mat-icon matDatepickerToggleIcon>calendar_today</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #startPicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="col" appearance="outline">
+          <mat-label>Data di fine</mat-label>
+          <input
+            matInput
+            [matDatepicker]="endPicker"
+            placeholder="Data di fine"
+            formControlName="endDate"
+            [min]="dayoffFormGroup.controls['startDate'].value"
+            (dateChange)="onEndDateChange($event.value)"
+          />
+          <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+            <div
+              *ngIf="dayoffFormGroup.controls['endDate'].hasError(error.name)"
+            >
+              {{ error.message }}
+            </div>
+          </mat-error>
+          <mat-datepicker-toggle matIconSuffix [for]="endPicker">
+            <mat-icon matDatepickerToggleIcon>calendar_today</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #endPicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="col" appearance="outline">
+          <mat-label>Ora di inizio</mat-label>
+          <input matInput type="time" formControlName="startTime" /><mat-error
+            *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]"
+          >
+            <div
+              *ngIf="dayoffFormGroup.controls['startTime'].hasError(error.name)"
+            >
+              {{ error.message }}
+            </div>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="col" appearance="outline">
+          <mat-label>Ora di fine</mat-label>
+          <input
+            matInput
+            type="time"
+            formControlName="endTime"
+            [min]="dayoffFormGroup.controls['startTime'].value"
+          /><mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+            <div
+              *ngIf="dayoffFormGroup.controls['endTime'].hasError(error.name)"
+            >
+              {{ error.message }}
+            </div>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="col" appearance="outline">
+          <mat-label>Note</mat-label>
+          <input matInput placeholder="Note" formControlName="notes" />
+          <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+            <div *ngIf="dayoffFormGroup.controls['notes'].hasError(error.name)">
+              {{ error.message }}
+            </div>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+  <div footer class="-footer">
+    <button
+      *ngIf="transactionStatus === 'update'"
+      (click)="onDelete()"
+      class="rt-btn -footer__button -footer__button--delete"
+      mat-button
+      type="button"
+    >
+      Elimina
+    </button>
+    <lib-rt-dialog-default-actions
+      (confirmEvent)="onSubmit()"
+      (cancelEvent)="onCancel()"
+    ></lib-rt-dialog-default-actions>
+  </div>
+</lib-dialog-template>

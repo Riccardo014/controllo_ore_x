@@ -1,0 +1,49 @@
+<div class="-release">
+  <div class="-release__data">
+    <div
+      class="body-1 -release__data__section"
+      [ngClass]="{ '-release__data--completed': release.isCompleted }"
+    >
+      {{ release.name }}
+    </div>
+    <div class="body-1 -release__data__section -release__data__section__date">
+      {{ deadline }}
+    </div>
+    <div class="-release__data__section -release__data__section__progress">
+      <mat-progress-bar
+        class="-release__data__section__progress__bar"
+        mode="determinate"
+        value="{{ (100 * hoursExecuted) / release.hoursBudget }}"
+      ></mat-progress-bar>
+      <div class="body-1 -release__data__section__progress__hours">
+        <div class="-release__data__section__progress__hours--executed">
+          {{ convertNumberToHours(hoursExecuted) }}&nbsp;/&nbsp;
+        </div>
+        <div class="-release__data__section__progress__hours--planned">
+          {{ convertNumberToHours(release.hoursBudget) }}
+        </div>
+      </div>
+    </div>
+    <div class="body-1 -release__data__section">
+      {{ convertNumberToHours(release.billableHoursBudget) }}
+    </div>
+    <div class="-release__data__options">
+      <button mat-icon-button (click)="openEditRelease(release)">
+        <span class="material-symbols-outlined -release__data__options__icon"
+          >ink_marker
+        </span>
+      </button>
+      <button
+        mat-flat-button
+        extended
+        class="-release__data__options__report"
+        (click)="openReleaseReport(release)"
+      >
+        <div class="-release__data__options__report__content">
+          <span class="material-symbols-outlined">chair</span>
+          <div class="body-2">Report</div>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>

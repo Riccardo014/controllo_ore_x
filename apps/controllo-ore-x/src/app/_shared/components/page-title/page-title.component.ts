@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'controllo-ore-x-page-title',
@@ -6,9 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./page-title.component.scss'],
 })
 export class PageTitleComponent {
+  @Input() title: string = 'Title';
+  @Input() buttonIcon: string = 'Icon';
+  @Input() buttonText: string = 'Button txt';
 
-  title = 'Progetti';
-  button_icon = 'egg';
-  button_text = 'Nuovo Progetto';
+  @Output() buttonOnClickEvent: EventEmitter<void> = new EventEmitter<void>();
 
+  openDialog(): void {
+    this.buttonOnClickEvent.emit();
+  }
 }

@@ -1,16 +1,24 @@
-import { DataSource, EntityManager, Repository, SelectQueryBuilder } from 'typeorm';
-import { add } from 'date-fns';
 import {
   FIND_BOOSTED_FN,
+  FULL_SEARCH_COLUMN_TYPE,
   FindBoostedCondition,
   FindBoostedOptions,
   FindBoostedOrder,
-  FULL_SEARCH_COLUMN_TYPE,
 } from '@api-interfaces';
+import { add } from 'date-fns';
+import {
+  DataSource,
+  EntityManager,
+  Repository,
+  SelectQueryBuilder,
+} from 'typeorm';
 import { FindBoostedResult } from './find-boosted-result.interface';
 
 export class FindBoosted<T> {
-  constructor(private _dataSource: DataSource, private _rootRepository: Repository<T>) {}
+  constructor(
+    private _dataSource: DataSource,
+    private _rootRepository: Repository<T>,
+  ) {}
 
   /**
    * This method takes an object and builds the string with the given params
@@ -18,19 +26,36 @@ export class FindBoosted<T> {
    * @param startingParent
    * @private
    */
-  private static _buildWhereAndLogic(whereLogic: any, startingParent = ''): string {
+  private static _buildWhereAndLogic(
+    whereLogic: any,
+    startingParent = '',
+  ): string {
     // Check object, do recursive if not contains _fn
     let resultString: string = '1=1';
     for (const key of Object.keys(whereLogic)) {
       if (whereLogic[key] !== undefined) {
         // if element is an object
-        if (typeof whereLogic[key] === 'object' && !Array.isArray(whereLogic[key]) && whereLogic[key] !== null) {
+        if (
+          typeof whereLogic[key] === 'object' &&
+          !Array.isArray(whereLogic[key]) &&
+          whereLogic[key] !== null
+        ) {
           // if element contains _fn
           if (Object.keys(whereLogic[key]).find((k) => k === '_fn')) {
-            resultString += ' AND ' + FindBoosted._handleFnLogic(whereLogic[key], `${startingParent}.${key}`);
+            resultString +=
+              ' AND ' +
+              FindBoosted._handleFnLogic(
+                whereLogic[key],
+                `${startingParent}.${key}`,
+              );
           } else {
             // Recursive path
-            resultString += ' AND ' + FindBoosted._buildWhereAndLogic(whereLogic[key], `${startingParent}_${key}`);
+            resultString +=
+              ' AND ' +
+              FindBoosted._buildWhereAndLogic(
+                whereLogic[key],
+                `${startingParent}_${key}`,
+              );
           }
         } else {
           // handle simple property
@@ -54,7 +79,10 @@ export class FindBoosted<T> {
    * @param currentProperty
    * @private
    */
-  private static _handleFnLogic(whereLogicElement: FindBoostedCondition, currentProperty: any): string {
+  private static _handleFnLogic(
+    whereLogicElement: FindBoostedCondition,
+    currentProperty: any,
+  ): string {
     if (!whereLogicElement._fn) {
       throw new Error('Unprocessable _fn Function. _fn not set');
     }
@@ -95,9 +123,13 @@ export class FindBoosted<T> {
         return `${currentProperty} <> ${whereLogicElement.args}`;
       // string
       case FIND_BOOSTED_FN.STRING_IN:
-        return `${currentProperty} IN (${whereLogicElement.args.join(',')})`;
+        return `${currentProperty} IN ('${whereLogicElement.args.join(
+          "','",
+        )}')`;
       case FIND_BOOSTED_FN.STRING_NOT_IN:
-        return `${currentProperty} NOT IN (${whereLogicElement.args.join(',')})`;
+        return `${currentProperty} NOT IN (${whereLogicElement.args.join(
+          ',',
+        )})`;
       case FIND_BOOSTED_FN.STRING_LIKE:
         return `${currentProperty} ILIKE '%${whereLogicElement.args}%'`;
 
@@ -110,7 +142,9 @@ export class FindBoosted<T> {
         return `(${currentProperty} BETWEEN '${from.toISOString()}' AND '${to.toISOString()}')`;
       }
       case FIND_BOOSTED_FN.DATE_NOT_IN:
-        return `${currentProperty} NOT IN ('${whereLogicElement.args.join(',')}')`;
+        return `${currentProperty} NOT IN ('${whereLogicElement.args.join(
+          ',',
+        )}')`;
       case FIND_BOOSTED_FN.DATE_GREATER:
         return `${currentProperty} > '${whereLogicElement.args}'`;
       case FIND_BOOSTED_FN.DATE_GREATER_EQUAL:
@@ -130,12 +164,18 @@ export class FindBoosted<T> {
    * @param options
    * @param TX
    */
-  async execute(options: FindBoostedOptions, TX?: EntityManager): Promise<FindBoostedResult<T>> {
+  async execute(
+    options: FindBoostedOptions,
+    TX?: EntityManager,
+  ): Promise<FindBoostedResult<T>> {
     let queryBuilder: SelectQueryBuilder<T> = TX
-      ? TX.createQueryBuilder(this._rootRepository.metadata.target, this._rootRepository.metadata.tableName)
+      ? TX.createQueryBuilder(
+          this._rootRepository.metadata.target,
+          this._rootRepository.metadata.tableName,
+        )
       : this._dataSource.createQueryBuilder(
           this._rootRepository.metadata.target,
-          this._rootRepository.metadata.tableName
+          this._rootRepository.metadata.tableName,
         );
 
     // Adding relations with left join
@@ -145,10 +185,15 @@ export class FindBoosted<T> {
 
         const relationSplit: string[] = relation.split('.');
         const currentRelationToAdd: string =
-          relationSplit.slice(0, relationSplit.length - 1).join('_') + '.' + relationSplit[relationSplit.length - 1];
+          relationSplit.slice(0, relationSplit.length - 1).join('_') +
+          '.' +
+          relationSplit[relationSplit.length - 1];
         const sanitizedRelationName: string = relationSplit.join('_');
 
-        queryBuilder = queryBuilder.leftJoinAndSelect(currentRelationToAdd, sanitizedRelationName);
+        queryBuilder = queryBuilder.leftJoinAndSelect(
+          currentRelationToAdd,
+          sanitizedRelationName,
+        );
       }
     }
 
@@ -158,11 +203,16 @@ export class FindBoosted<T> {
 
     if (options.fulltextSearch && options.fullSearchCols) {
       const fullTextSearch: string = options.fulltextSearch;
-      const fullSearchCols: (string | {
-        type: FULL_SEARCH_COLUMN_TYPE;
-        field: string;
-    })[] = options.fullSearchCols;
-      queryBuilder = queryBuilder.andWhere(this._buildWhereFullSearch(fullTextSearch, fullSearchCols));
+      const fullSearchCols: (
+        | string
+        | {
+            type: FULL_SEARCH_COLUMN_TYPE;
+            field: string;
+          }
+      )[] = options.fullSearchCols;
+      queryBuilder = queryBuilder.andWhere(
+        this._buildWhereFullSearch(fullTextSearch, fullSearchCols),
+      );
     }
 
     if (options.select) {
@@ -174,8 +224,11 @@ export class FindBoosted<T> {
     }
 
     if (options.pagination) {
-      const skip: number = options.pagination.itemsPerPage * (options.pagination.currentPage - 1);
-      queryBuilder = queryBuilder.take(options.pagination.itemsPerPage).skip(skip);
+      const skip: number =
+        options.pagination.itemsPerPage * (options.pagination.currentPage - 1);
+      queryBuilder = queryBuilder
+        .take(options.pagination.itemsPerPage)
+        .skip(skip);
     }
 
     if (options.logging) {
@@ -183,10 +236,10 @@ export class FindBoosted<T> {
       console.log('[BOOSTED QUERY] ' + queryBuilder.getSql());
     }
 
-    const [
-      data,
-      totalItems,
-    ] = (await queryBuilder.getManyAndCount()) as [T[], number];
+    const [data, totalItems] = (await queryBuilder.getManyAndCount()) as [
+      T[],
+      number,
+    ];
     return {
       data,
       pagination: {
@@ -206,14 +259,20 @@ export class FindBoosted<T> {
     if (Array.isArray(options.where)) {
       // In this case we have a or clause for each object
       options.where.forEach((whereLogic, index) => {
-        whereClauseString += FindBoosted._buildWhereAndLogic(whereLogic, this._rootRepository.metadata.tableName);
+        whereClauseString += FindBoosted._buildWhereAndLogic(
+          whereLogic,
+          this._rootRepository.metadata.tableName,
+        );
         if (index !== options.where.length - 1) {
           whereClauseString += ' OR ';
         }
       });
     } else {
       // Only a where clause with each element in AND logic operator
-      whereClauseString += FindBoosted._buildWhereAndLogic(options.where, this._rootRepository.metadata.tableName);
+      whereClauseString += FindBoosted._buildWhereAndLogic(
+        options.where,
+        this._rootRepository.metadata.tableName,
+      );
     }
 
     return whereClauseString;
@@ -243,18 +302,18 @@ export class FindBoosted<T> {
    */
   private _buildWhereFullSearch(
     fullSearch: string,
-    dbCols: (string | { type: FULL_SEARCH_COLUMN_TYPE; field: string })[]
+    dbCols: (string | { type: FULL_SEARCH_COLUMN_TYPE; field: string })[],
   ): string {
     let where: string = '';
 
-    const dbColsArray: (string | { type: FULL_SEARCH_COLUMN_TYPE; field: string })[] = Array.from(dbCols.values());
+    const dbColsArray: (
+      | string
+      | { type: FULL_SEARCH_COLUMN_TYPE; field: string }
+    )[] = Array.from(dbCols.values());
 
     // wrap for every fullSearch words
     where += '(';
-    for (const [
-      index,
-      dbCol,
-    ] of dbColsArray.entries()) {
+    for (const [index, dbCol] of dbColsArray.entries()) {
       if (index !== 0) {
         where += ' OR ';
       }
@@ -265,7 +324,9 @@ export class FindBoosted<T> {
       } else {
         switch (dbCol.type) {
           case FULL_SEARCH_COLUMN_TYPE.NUMBER: {
-            const sanitizedFieldName: string = this._sanitizeFieldName(dbCol.field);
+            const sanitizedFieldName: string = this._sanitizeFieldName(
+              dbCol.field,
+            );
             where += `(${sanitizedFieldName}::varchar(255) ILIKE '%${fullSearch.trim()}%')`;
             break;
           }
@@ -286,10 +347,14 @@ export class FindBoosted<T> {
    * returns rootTable_col.nestedProperty fif nested
    */
   private _sanitizeFieldName(dbColName: string): string {
-    let fieldName: string = this._rootRepository.metadata.tableName + '.' + dbColName;
+    let fieldName: string =
+      this._rootRepository.metadata.tableName + '.' + dbColName;
     const splittedFieldName: string[] = fieldName.split('.');
     if (splittedFieldName.length > 2) {
-      fieldName = splittedFieldName.slice(0, -1).join('_') + '.' + splittedFieldName[splittedFieldName.length - 1];
+      fieldName =
+        splittedFieldName.slice(0, -1).join('_') +
+        '.' +
+        splittedFieldName[splittedFieldName.length - 1];
     }
 
     return fieldName;

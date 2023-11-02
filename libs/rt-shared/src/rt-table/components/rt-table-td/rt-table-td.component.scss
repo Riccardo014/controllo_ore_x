@@ -1,0 +1,59 @@
+@import 'libs/ui/core.scss';
+
+:host {
+  display: block;
+  box-sizing: border-box;
+  height: 64px;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: $table-font-size-column;
+}
+
+.-chip {
+  background: map-get($palette-accent, 200);
+  border-radius: 18px;
+  padding: 10px 10px;
+  width: fit-content;
+}
+
+.-background-completed {
+  background: map-get($palette-success, 100);
+}
+
+.-background-rejected {
+  background: map-get($palette-error, 100);
+}
+
+mat-icon.-check {
+  color: map-get($palette-success, 500);
+}
+
+.-role-chip-superadmin {
+  background-color: map-get($palette-auxiliaries-blue, 500);
+}
+
+.-role-chip-admin {
+  background-color: map-get($palette-auxiliaries-yellow, 500);
+}
+
+.-role-chip-collaborator {
+  background-color: map-get($palette-auxiliaries-green, 500);
+}
+
+.-editable-container {
+  margin: auto;
+}
+
+.-edit-button-icon {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.-icon {
+  color: map-get($palette-primary, 500);
+}

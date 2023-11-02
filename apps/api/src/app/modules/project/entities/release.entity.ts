@@ -1,27 +1,31 @@
 import { BaseEntityTemplate } from '@shared/classes/base-entity-template.class';
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { Project } from './project.entity';
+import { UserHours } from '@modules/user-hours/entities/user-hours.entity';
 
 @Entity()
-export class Release extends BaseEntityTemplate{
-
-
+export class Release extends BaseEntityTemplate {
   @ManyToOne(() => Project, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'projectId' })
   project?: Project;
   @Column()
   projectId: string;
 
-  @Column()
-  version: string;
+  @OneToMany(() => UserHours, (u) => u.release)
+  userHours: UserHours[];
 
-  @Column( { nullable: true } )
+  @Column()
+  name: string;
+
+  @Column()
+  isCompleted: boolean;
+
+  @Column({ nullable: true })
   hoursBudget: number;
 
-  @Column( { nullable: true } )
+  @Column({ nullable: true })
   billableHoursBudget: number;
 
-  @Column( { nullable: true } )
+  @Column({ nullable: true })
   deadline: Date;
-
 }

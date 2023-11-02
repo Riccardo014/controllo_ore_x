@@ -1,0 +1,32 @@
+<controllo-ore-x-index-template
+  [page]="this"
+  [buttonIcon]="buttonIcon"
+  [buttonText]="buttonText"
+  [isPageWithTable]="false"
+  (openDialogEvent)="openDialogFn($event)"
+  (openCreateDialogEvent)="createFn()"
+></controllo-ore-x-index-template>
+<lib-rt-table-fulltext-bar
+  class="-search-bar"
+  (fulltextSearchEvent)="updateFulltextSearch($event)"
+>
+</lib-rt-table-fulltext-bar>
+<div class="-content">
+  <div *ngIf="isLoading.value">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+  <div *ngIf="showedProjects.length > 0 && !isLoading.value">
+    <controllo-ore-x-project
+      (openDialogEvent)="openDialogFn($event)"
+      (duplicateEntityEvent)="duplicateFn($event)"
+      *ngFor="let project of showedProjects"
+      [project]="project"
+    ></controllo-ore-x-project>
+  </div>
+  <div
+    *ngIf="showedProjects.length == 0 && !isLoading.value"
+    class="-content--no-project"
+  >
+    Nessun progetto
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<controllo-ore-x-release-table-header></controllo-ore-x-release-table-header>
+<div class="-table">
+  <div *ngIf="isLoading.value">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+  <div *ngIf="releases.length > 0 && !isLoading.value">
+    <controllo-ore-x-release-table-line
+      *ngFor="let release of releases"
+      [release]="release"
+      (onReleaseUpdatedEvent)="onReleaseUpdated()"
+    ></controllo-ore-x-release-table-line>
+  </div>
+  <div
+    *ngIf="releases.length == 0 && !isLoading.value"
+    class="-table--no-release"
+  >
+    Nessuna release
+  </div>
+</div>

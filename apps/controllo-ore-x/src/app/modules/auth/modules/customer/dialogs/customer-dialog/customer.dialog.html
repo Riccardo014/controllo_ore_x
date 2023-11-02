@@ -1,0 +1,52 @@
+<lib-dialog-template
+  [title]="title"
+  [isFooterEnabled]="true"
+  (closeDialogEvent)="onCancel()"
+  (reFetchEvent)="onReFetch()"
+  [isLoading]="isLoading"
+  [isError]="hasErrors"
+  [errorMessage]="errorMessage"
+>
+  <div body>
+    <form class="p-0 -form" [formGroup]="customerFormGroup">
+      <div class="row mb-2">
+        <mat-form-field class="col -form__field" appearance="outline">
+          <mat-label>Nome</mat-label>
+          <input matInput placeholder="Nome" formControlName="name" />
+          <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+            <div *ngIf="getFormControlError('name',error)">
+              {{ error.message }}
+            </div>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="col -form__field" appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="Email" formControlName="email" />
+          <mat-error
+            *ngFor="let error of [RT_FORM_ERRORS['REQUIRED'], RT_FORM_ERRORS['EMAIL']]"
+          >
+            <div *ngIf="getFormControlError('email',error)">
+              {{ error.message }}
+            </div>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+  <div footer class="-footer">
+    <button
+      *ngIf="transactionStatus === 'update'"
+      (click)="onDelete()"
+      class="rt-btn -footer__button -footer__button--delete"
+      mat-button
+      type="button"
+    >
+      Elimina
+    </button>
+    <lib-rt-dialog-default-actions
+      (confirmEvent)="onSubmit()"
+      (cancelEvent)="onCancel()"
+    ></lib-rt-dialog-default-actions>
+  </div>
+</lib-dialog-template>

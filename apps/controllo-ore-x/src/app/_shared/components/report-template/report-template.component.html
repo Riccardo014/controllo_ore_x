@@ -1,0 +1,92 @@
+<controllo-ore-x-rt-header *ngIf="page.isCompletePage">
+  <ng-container title>
+    <h1 class="headline-6">{{ page.title }}</h1>
+  </ng-container>
+
+  <ng-container actions>
+    <button
+      class="hide-desktop me-1"
+      *ngIf="hasMenuOptions"
+      mat-icon-button
+      [matMenuTriggerFor]="menuActions"
+    >
+      <mat-icon class="material-icons-outlined icon-20">more_vert</mat-icon>
+    </button>
+
+    <mat-menu #menuActions="matMenu">
+      <ng-content select="[menuOptions]"></ng-content>
+    </mat-menu>
+
+    <controllo-ore-x-datepicker
+      *ngIf="hasCalendar"
+    ></controllo-ore-x-datepicker>
+
+    <controllo-ore-x-range-datepicker
+      *ngIf="hasRangeCalendar"
+    ></controllo-ore-x-range-datepicker>
+  </ng-container>
+</controllo-ore-x-rt-header>
+<lib-rt-table-fulltext-bar
+  class="-search-bar"
+  (fulltextSearchEvent)="page.updateFulltextSearch($event)"
+>
+</lib-rt-table-fulltext-bar>
+
+<div class="-content">
+  <controllo-ore-x-report-filter
+    *ngIf="dataForFilters.length > 0"
+    (filtersEvent)="page.onFilterEmit($event)"
+  ></controllo-ore-x-report-filter>
+
+  <div class="-content__subtitle">
+    <div class="-content__subtitle__text">
+      <h2 class="body-1">{{ page.subTitle }}</h2>
+      <span class="headline-5">{{
+        convertNumberToHours(page.subTitleHours)
+      }}</span>
+    </div>
+    <div>
+      <button
+        *ngIf="createFn"
+        class="-content__subtitle__button"
+        mat-flat-button
+        color="primary"
+        (click)="createFn()"
+      >
+        <div class="-content__subtitle__button__elements">
+          <span class="material-symbols-outlined">{{ buttonIcon }}</span>
+          <span class="body-2 -content__subtitle__button__elements__text">{{
+            buttonText
+          }}</span>
+        </div>
+      </button>
+    </div>
+    <!-- TODO: add export functionality -->
+    <button
+      mat-flat-button
+      extended
+      class="-content__subtitle__button -content__subtitle__button--export"
+    >
+      <div class="-content__subtitle__button__elements">
+        <span class="material-symbols-outlined">blender</span>
+        <div class="body-2 -content__subtitle__button__elements__text">
+          Export
+        </div>
+      </div>
+    </button>
+  </div>
+
+  <div>
+    <lib-rt-table
+      *ngIf="page.isFirstLoadDone"
+      [isLoading]="page.isLoading.getValue()"
+      [isTableTopbarVisible]="page.isTableTopbarVisible"
+      [isTableHeaderVisible]="page.isTableHeaderVisible"
+      (statusChangeEvent)="page.indexTableHandler.statusChange($event)"
+      [tableConfiguration]="page.configuration"
+      [data]="page.indexTableHandler.data"
+      [isEditAvailable]="isEditAvailable"
+      [status]="page.indexTableHandler.status"
+    ></lib-rt-table>
+  </div>
+</div>

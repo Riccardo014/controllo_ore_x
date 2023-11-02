@@ -1,0 +1,58 @@
+@import 'libs/ui/core';
+
+.-search-bar {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid map-get($palette-grey, 200);
+}
+
+.-content {
+  position: relative;
+  background: #ffffff;
+  overflow-y: auto;
+  max-height: calc($content-height - $header-height);
+  height: auto;
+
+  @include scrollbar-primary(map-get($palette-grey, 400), 6px, true);
+
+  &__subtitle {
+    height: 80px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 40px;
+
+    &__text {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 5%;
+      white-space: nowrap;
+    }
+
+    &__button {
+      background-color: map-get($palette-primary, 500);
+      color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+
+      &--export {
+        background-color: map-get($palette-accent, 200);
+        color: #000000;
+      }
+
+      &__elements {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 5%;
+
+        &__text {
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}

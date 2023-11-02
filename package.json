@@ -1,6 +1,6 @@
 {
   "name": "@controllo-ore-x/source",
-  "version": "0.0.10",
+  "version": "0.0.20",
   "license": "MIT",
   "scripts": {},
   "private": true,
@@ -37,6 +37,7 @@
     "axios": "^1.0.0",
     "class-validator": "^0.14.0",
     "date-fns": "^2.30.0",
+    "file-saver-es": "^2.0.5",
     "jest-environment-node": "^29.7.0",
     "jsonwebtoken": "^9.0.2",
     "nx-cloud": "^16.4.0",

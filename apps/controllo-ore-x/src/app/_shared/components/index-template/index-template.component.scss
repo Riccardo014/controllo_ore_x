@@ -1,0 +1,36 @@
+@import 'libs/ui/core';
+@import '../../../../styles/styles.scss';
+
+.-page-content {
+  position: relative;
+  background: #ffffff;
+  overflow-y: auto;
+  max-height: $content-height;
+  height: auto;
+
+  @include scrollbar-primary(map-get($palette-grey, 400), 6px, true);
+}
+
+.-button {
+  background-color: map-get($palette-primary, 500);
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+
+  &__elements {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5%;
+
+    &__text {
+      white-space: nowrap;
+    }
+  }
+}
+
+// hide the bottom line of the input in case of appareance="fill"
+// ::ng-deep .mdc-line-ripple {
+//   display: none
+// }

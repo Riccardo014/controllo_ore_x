@@ -1,0 +1,66 @@
+<mat-expansion-panel
+  hideToggle
+  (click)="togglePanel()"
+  class="mat-elevation-z0"
+  [expanded]="isPanelOpen"
+>
+  <mat-expansion-panel-header
+    class="-project"
+    [expandedHeight]="customExpandedHeight"
+  >
+    <mat-panel-title class="-project__data">
+      <div>
+        <span
+          class="material-symbols-outlined"
+          [ngClass]="{
+            '-project__data--expanded': !isPanelOpen,
+            '-project__data--expanded--collapsed': isPanelOpen
+          }"
+          >expand_more</span
+        >
+      </div>
+      <div class="-project__data__details" (click)="navigateToReleaseIndex()">
+        <div
+          class="-project__data__details__color"
+          [style.backgroundColor]="this.project.color"
+        ></div>
+        <div class="body-1">{{ project.name }}</div>
+        <div *ngIf="project.customer">
+          <mat-chip class="caption">{{ project.customer.name }}</mat-chip>
+        </div>
+      </div>
+    </mat-panel-title>
+    <mat-panel-description class="-project__options">
+      <button
+        mat-flat-button
+        extended
+        class="-project__options__release"
+        (click)="togglePanel()"
+        (click)="openCreateReleaseDialog()"
+      >
+        <div class="-project__options__release__elements">
+          <span class="material-symbols-outlined">egg_alt</span>
+          <span>Nuova Release</span>
+        </div>
+      </button>
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="optionMenu"
+        (click)="togglePanel()"
+      >
+        <mat-icon class="-project__options__icon">more_vert</mat-icon>
+      </button>
+      <mat-menu #optionMenu="matMenu">
+        <ng-content select="[menuOptions]"></ng-content>
+        <button (click)="openEditDialog()" mat-menu-item>Modifica</button>
+        <button (click)="openDuplicateDialog()" mat-menu-item>Duplica</button>
+      </mat-menu>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <controllo-ore-x-project-release-index
+    (click)="togglePanel()"
+    [project]="project"
+    [isNewReleaseCreated]="isNewReleaseCreated"
+  >
+  </controllo-ore-x-project-release-index>
+</mat-expansion-panel>

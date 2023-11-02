@@ -1,0 +1,23 @@
+<mat-form-field class="-calendar" appearance="outline" color="accent">
+  <input
+    matInput
+    [matDatepicker]="picker"
+    [formControl]="date"
+    (dateChange)="onDateChange()"
+  />
+  <mat-datepicker-toggle matIconSuffix (click)="previousDay()">
+    <mat-icon matDatepickerToggleIcon class="-calendar__icon"
+      >arrow_left</mat-icon
+    >
+  </mat-datepicker-toggle>
+  <mat-datepicker-toggle matIconSuffix (click)="nextDay()">
+    <mat-icon matDatepickerToggleIcon class="-calendar__icon"
+      >arrow_right</mat-icon
+    > </mat-datepicker-toggle
+  ><mat-datepicker-toggle matIconSuffix [for]="picker" class="-calendar__icon">
+    <mat-icon matDatepickerToggleIcon
+      ><span class="material-symbols-outlined">calendar_month</span></mat-icon
+    >
+  </mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>

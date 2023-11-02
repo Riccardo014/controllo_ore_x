@@ -1,0 +1,79 @@
+<controllo-ore-x-rt-header *ngIf="isCompletePage">
+  <ng-container title>
+    <h1 class="headline-6">{{ page.title }}</h1>
+  </ng-container>
+
+  <ng-container actions>
+    <button
+      class="hide-desktop me-1"
+      *ngIf="hasMenuOptions"
+      mat-icon-button
+      [matMenuTriggerFor]="menuActions"
+    >
+      <mat-icon class="material-icons-outlined icon-20">more_vert</mat-icon>
+    </button>
+
+    <mat-menu #menuActions="matMenu">
+      <ng-content select="[menuOptions]"></ng-content>
+    </mat-menu>
+
+    <ng-container *ngIf="createFn; else createLink">
+      <button
+        mat-flat-button
+        color="primary"
+        class="hide-mobile"
+        (click)="createFn()"
+      >
+        <mat-icon class="mt-1">add</mat-icon>
+        Nuovo
+      </button>
+      <mat-icon
+        class="mt-1 hide-tablet-desktop"
+        color="primary"
+        (click)="createFn()"
+        >add</mat-icon
+      >
+    </ng-container>
+
+    <controllo-ore-x-datepicker
+      *ngIf="hasCalendar"
+    ></controllo-ore-x-datepicker>
+
+    <controllo-ore-x-range-datepicker
+      *ngIf="hasRangeCalendar"
+    ></controllo-ore-x-range-datepicker>
+
+    <ng-template #createLink>
+      <button
+        *ngIf="!shouldHideCreateButton"
+        (click)="openCreateDialogFn()"
+        class="hide-mobile -button"
+        mat-flat-button
+        color="primary"
+      >
+        <div class="-button__elements">
+          <span class="material-symbols-outlined">{{ buttonIcon }}</span>
+          <span class="body-2 -button__elements__text">{{ buttonText }}</span>
+        </div>
+      </button>
+
+      <mat-icon class="mt-1 hide-tablet-desktop" color="primary">add</mat-icon>
+    </ng-template>
+  </ng-container>
+</controllo-ore-x-rt-header>
+
+<div class="-page-content">
+  <lib-rt-table
+    *ngIf="page.isFirstLoadDone && isPageWithTable"
+    [isLoading]="page.isLoading.getValue()"
+    [isTableTopbarVisible]="page.isTableTopbarVisible"
+    [isTableHeaderVisible]="page.isTableHeaderVisible"
+    (statusChangeEvent)="page.indexTableHandler.statusChange($event)"
+    [tableConfiguration]="page.configuration"
+    [data]="page.indexTableHandler.data"
+    [editFn]="editFn"
+    [status]="page.indexTableHandler.status"
+    [isEditAvailable]="isEditAvailable"
+    (openDialogEvent)="openDialogFn($event)"
+  ></lib-rt-table>
+</div>

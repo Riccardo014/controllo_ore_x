@@ -1,0 +1,114 @@
+@import 'libs/ui/core';
+
+.-header {
+  height: 80px;
+  border-bottom: 1px solid map-get($palette-grey, 200);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 30px;
+
+  &__title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+
+    &__release {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+
+      &__icon {
+        color: map-get($palette-primary, 500);
+      }
+    }
+  }
+
+  &__options {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5%;
+
+    &__button {
+      padding: 20px;
+      border-radius: 10px;
+
+      &--complete {
+        background-color: map-get($palette-primary, 50);
+        color: map-get($palette-primary, 500);
+      }
+
+      &__elements {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 5%;
+
+        span {
+          white-space: nowrap;
+        }
+      }
+
+      &--export {
+        background-color: map-get($palette-accent, 200);
+        color: #000000;
+      }
+    }
+  }
+}
+
+.-report {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid map-get($palette-grey, 200);
+
+  &__element {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid map-get($palette-grey, 200);
+
+    &--highlighted {
+      background-color: map-get($palette-primary, 500);
+    }
+
+    &--deadline {
+      background-color: map-get($palette-grey, 100);
+    }
+
+    &__content {
+      display: flex;
+      align-items: start;
+      flex-direction: column;
+
+      &__title {
+        color: rgba(0, 0, 0, 0.5);
+
+        &--var {
+          color: rgba(255, 255, 255, 0.5);
+        }
+      }
+
+      &__value {
+        &--var {
+          color: #fff;
+        }
+
+        &--highlighted {
+          color: map-get($palette-primary, 500);
+        }
+      }
+    }
+  }
+}

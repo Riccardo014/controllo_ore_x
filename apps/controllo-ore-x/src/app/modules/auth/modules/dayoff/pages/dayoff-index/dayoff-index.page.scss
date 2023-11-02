@@ -1,0 +1,46 @@
+@import 'libs/ui/core';
+
+.-subtitle {
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 40px;
+  border-top: 1px solid map-get($palette-grey, 200);
+
+  &__text {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5%;
+    white-space: nowrap;
+  }
+
+  &__button {
+    background-color: map-get($palette-primary, 500);
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+
+    &__elements {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 5%;
+
+      &__text {
+        white-space: nowrap;
+      }
+    }
+  }
+}
+
+.-table {
+  overflow-y: auto;
+  max-height: calc($content-height - $header-height - $subtitle-height);
+  height: auto;
+
+  @include scrollbar-primary(map-get($palette-grey, 400), 6px, true);
+}

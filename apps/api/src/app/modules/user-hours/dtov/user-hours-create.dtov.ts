@@ -9,7 +9,7 @@ export class UserHoursCreateDtoV implements UserHoursCreateDto {
   releaseId: string;
 
   @IsUUID()
-  labelId: string;
+  hoursTagId: string;
 
   @IsDate()
   date: Date;
@@ -19,5 +19,4 @@ export class UserHoursCreateDtoV implements UserHoursCreateDto {
 
   @IsNumber()
   hours: number;
-
 }

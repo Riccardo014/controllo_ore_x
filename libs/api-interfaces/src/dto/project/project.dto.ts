@@ -1,7 +1,10 @@
+import { CustomerReadDto } from '../customer/customer.dto';
+
 export interface ProjectReadDto {
   _id: string;
   name: string;
   customerId: string;
+  customer?: CustomerReadDto;
   color: string;
   hoursBudget: number;
   deadline: Date;
@@ -10,7 +13,6 @@ export interface ProjectReadDto {
   deletedAt?: Date | string;
 }
 
-
 export interface ProjectCreateDto {
   name: string;
   customerId: string;
@@ -18,7 +20,6 @@ export interface ProjectCreateDto {
   hoursBudget: number;
   deadline: Date;
 }
-
 
 export interface ProjectUpdateDto {
   name?: string;

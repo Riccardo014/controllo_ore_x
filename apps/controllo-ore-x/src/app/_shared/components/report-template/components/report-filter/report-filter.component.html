@@ -1,0 +1,47 @@
+<div class="-filters">
+  <div class="-filters__container">
+    <controllo-ore-x-report-single-filter
+      *ngFor="let dataForFilter of dataForFilters"
+      [fieldName]="dataForFilter.fieldName"
+      class="-single-filter"
+    ></controllo-ore-x-report-single-filter>
+    <!-- (changeEvent)="formEmitter(filter, $event)" -->
+  </div>
+
+  <div class="-filters__options">
+    <button
+      mat-flat-button
+      class="body-2 -filters__options__button -filters__options__button--reset"
+      (click)="resetFn()"
+    >
+      Reset filtri
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      class="body-2 -filters__options__button"
+      (click)="applyFn()"
+    >
+      Applica filtri
+    </button>
+  </div>
+</div>
+
+<div *ngIf="areFiltersActive" class="-chips">
+  <div *ngFor="let dataForFilter of dataForFilters">
+    <div
+      *ngIf="dataForFilter.formControl.value?.length"
+      class="-chips__element"
+    >
+      <mat-chip-row
+        *ngFor="let element of dataForFilter.formControl.value"
+        (removed)="remove(dataForFilter, element)"
+      >
+        {{ element.name }}
+        <button matChipRemove>
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip-row>
+    </div>
+  </div>
+</div>

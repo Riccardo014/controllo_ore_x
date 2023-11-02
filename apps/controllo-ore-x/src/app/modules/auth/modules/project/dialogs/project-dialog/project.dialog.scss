@@ -1,0 +1,41 @@
+@import 'libs/ui/core.scss';
+
+.-form {
+  &__fields {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    &__button {
+      background-color: map-get($palette-primary, 50);
+      color: map-get($palette-primary, 500);
+      height: 44px;
+      width: 40%;
+      border-radius: 10px;
+      white-space: nowrap;
+    }
+  }
+}
+
+.-square {
+  width: 21px;
+  height: 21px;
+  border-radius: 6px;
+}
+
+.-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+
+  &__button {
+    padding: 20px 40px;
+    border-radius: 10px;
+
+    &--delete {
+      color: map-get($palette-error, 50);
+      background-color: map-get($palette-error, 500);
+    }
+  }
+}

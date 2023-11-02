@@ -1,0 +1,17 @@
+@import 'libs/ui/core';
+
+.-search-bar {
+  border-bottom: 1px solid map-get($palette-grey, 200);
+}
+
+.-content {
+  overflow-y: auto;
+  height: calc($content-height - $subtitle-height);
+
+  @include scrollbar-primary(map-get($palette-grey, 400), 6px, true);
+
+  &--no-project {
+    padding: 12px 8px;
+    border-bottom: 1px solid map-get($palette-grey, 200);
+  }
+}

@@ -1,0 +1,20 @@
+<div class="-box">
+  <button
+    (click)="cancelEvent.emit()"
+    class="rt-btn -button -button-cancel"
+    mat-button
+    type="button"
+  >
+    {{ textCancel }}
+  </button>
+  <button
+    (click)="confirmEvent.emit()"
+    [disabled]="isValid === false"
+    class="rt-btn --flat-primary -button"
+    color="primary"
+    mat-flat-button
+    type="button"
+  >
+    {{ textConfirm }}
+  </button>
+</div>

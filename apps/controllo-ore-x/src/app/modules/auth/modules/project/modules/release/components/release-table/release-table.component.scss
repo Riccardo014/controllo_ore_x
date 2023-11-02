@@ -1,0 +1,12 @@
+@import 'libs/ui/core';
+
+.-table {
+  overflow-y: auto;
+  height: calc($content-height - $subtitle-height - $subtitle-height);
+  @include scrollbar-primary(map-get($palette-grey, 400), 6px, true);
+
+  &--no-release {
+    padding: 12px 8px;
+    border-bottom: 1px solid map-get($palette-grey, 200);
+  }
+}

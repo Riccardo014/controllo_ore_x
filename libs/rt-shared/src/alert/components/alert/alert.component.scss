@@ -1,0 +1,65 @@
+@import "libs/ui/core.scss";
+
+.-alert {
+  padding: 16px;
+  margin-top: 8px;
+  border-radius: 4px;
+  position: relative;
+  color: $background-light-color;
+
+}
+
+.-alert__container {
+  padding-right: 24px;
+  padding-left: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.-alert__buttons {
+  position: absolute;
+  top: 6px;
+  right: 4px;
+}
+
+.-alert__buttons mat-icon {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  font-size: 1rem;
+  margin-right: 2px;
+}
+
+mat-icon {
+  margin-right: 24px;
+}
+
+.-progress-close {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.-alert__error {
+  background-color: map-get($palette-error, 400);
+}
+
+.-alert__success {
+  background-color: map-get($palette-success, 400);
+}
+
+.-alert__warning {
+  background-color: map-get($palette-warning, 400);
+}
+
+.-alert__details {
+  border-radius: 4px;
+  font-size: .8rem;
+  margin-top: 16px;
+  padding: 12px;
+  overflow-y: auto;
+  max-width: 400px;
+  max-height: 400px;
+  position: relative;
+  background-color: map-get($palette-black, 300);
+}

@@ -1,0 +1,91 @@
+<lib-dialog-template
+  [title]="title"
+  [isFooterEnabled]="true"
+  (closeDialogEvent)="onCancel()"
+  (reFetchEvent)="onReFetch()"
+  [isLoading]="isLoading"
+  [isError]="hasErrors"
+  [errorMessage]="errorMessage"
+>
+  <div body>
+    <form class="-form p-0" [formGroup]="releaseFormGroup">
+      <div class="row mb-2 -form__fields">
+        <mat-form-field class="col" appearance="outline">
+          <mat-label>Versione</mat-label>
+          <input matInput placeholder="Versione" formControlName="name" />
+          <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+            <div *ngIf="getFormControlError('name',error)">
+              {{ error.message }}
+            </div>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="col" appearance="outline">
+          <mat-label>Budget ore</mat-label>
+          <input
+            type="number"
+            matInput
+            placeholder="Budget ore"
+            formControlName="hoursBudget"
+            min="0"
+          />
+          <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+            <div *ngIf="getFormControlError('hoursBudget',error)">
+              {{ error.message }}
+            </div>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="col" appearance="outline">
+          <mat-label>Budget ore fatturabili</mat-label>
+          <input
+            type="number"
+            matInput
+            placeholder="Budget ore fatturabili"
+            formControlName="billableHoursBudget"
+            min="0"
+          />
+          <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+            <div *ngIf="getFormControlError('billableHoursBudget',error)">
+              {{ error.message }}
+            </div>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="col" appearance="outline">
+          <mat-label>Data di scadenza</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            placeholder="Data di scadenza"
+            formControlName="deadline"
+          />
+          <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+            <div *ngIf="getFormControlError('deadline',error)">
+              {{ error.message }}
+            </div>
+          </mat-error>
+          <mat-datepicker-toggle matIconSuffix [for]="picker">
+            <mat-icon matDatepickerToggleIcon>calendar_today</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+  <div footer class="-footer">
+    <button
+      *ngIf="transactionStatus === 'update'"
+      (click)="onDelete()"
+      class="rt-btn -footer__button -footer__button--delete"
+      mat-button
+      type="button"
+    >
+      Elimina
+    </button>
+    <lib-rt-dialog-default-actions
+      (confirmEvent)="onSubmit()"
+      (cancelEvent)="onCancel()"
+    ></lib-rt-dialog-default-actions>
+  </div>
+</lib-dialog-template>

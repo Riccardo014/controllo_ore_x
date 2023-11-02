@@ -1,0 +1,89 @@
+@import 'libs/ui/core/consts.scss';
+@import 'libs/ui/core/mixins.scss';
+@import '../../../../../../app.component.scss';
+
+.-project {
+  height: 90px;
+  border-bottom: 1px solid map-get($palette-grey, 200);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 40px;
+
+  &__data {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5%;
+    width: auto;
+    white-space: nowrap;
+
+    &--expanded {
+      transform: rotate(-90deg);
+      transition: transform 225ms ease;
+
+      &--collapsed {
+        transform: rotate(0deg);
+        transition: transform 225ms ease;
+      }
+    }
+
+    &__details {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+
+      &__color {
+        width: 21px;
+        height: 21px;
+        border-radius: 6px;
+        background-color: map-get($palette-auxiliaries-blue, 500);
+      }
+    }
+  }
+
+  &__options {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 2%;
+    margin: 0px;
+
+    &__release {
+      background-color: map-get($palette-primary, 50);
+      color: map-get($palette-primary, 500);
+      padding: 20px;
+      border-radius: 10px;
+
+      &__elements {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 5%;
+
+        & span {
+          white-space: nowrap;
+        }
+      }
+    }
+
+    &__icon {
+      color: rgba(28, 27, 31, 1);
+    }
+  }
+}
+
+//remove the padding around the release line
+::ng-deep {
+  mat-expansion-panel {
+    .mat-expansion-panel-body {
+      padding: 0;
+    }
+  }
+}
