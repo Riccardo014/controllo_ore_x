@@ -34,14 +34,16 @@
 </div>
 
 <div class="-table">
-  <controllo-ore-x-index-template
-    [page]="this"
-    [buttonIcon]="buttonIcon"
-    [buttonText]="buttonText"
-    [shouldHideCreateButton]="true"
-    [hasCalendar]="true"
-    [isCompletePage]="false"
-    [isPageWithTable]="true"
+  <lib-rt-table
+    *ngIf="this.isFirstLoadDone"
+    [isLoading]="this.isLoading.getValue()"
+    [isTableTopbarVisible]="this.isTableTopbarVisible"
+    [isTableHeaderVisible]="this.isTableHeaderVisible"
+    (statusChangeEvent)="this.indexTableHandler.statusChange($event)"
+    [tableConfiguration]="this.configuration"
+    [data]="this.indexTableHandler.data"
+    [status]="this.indexTableHandler.status"
+    [isEditAvailable]="false"
     (openDialogEvent)="openDialogFn($event)"
-  ></controllo-ore-x-index-template>
+  ></lib-rt-table>
 </div>
