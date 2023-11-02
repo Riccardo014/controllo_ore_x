@@ -197,6 +197,62 @@ export class ActivityService extends CrudService<
     };
   }
 
+  private _createActivityFromMultipleDayoff(dayoff: Dayoff): Activity[] {
+    const currentDate = new Date(dayoff.startDate);
+    const activities: Activity[] = [];
+
+    dayoff.startDate.setHours(12, 0, 0, 0);
+    dayoff.endDate.setHours(12, 0, 0, 0);
+    currentDate.setHours(12, 0, 0, 0);
+
+    while (currentDate <= dayoff.endDate) {
+      activities.push({
+        _id: dayoff._id,
+        createdAt: dayoff.createdAt,
+        updatedAt: dayoff.updatedAt,
+        deletedAt: dayoff.deletedAt,
+        userId: dayoff.userId,
+        user: dayoff.user,
+        hoursTagId: dayoff.hoursTagId,
+        hoursTag: dayoff.hoursTag,
+        date: this._calcolateDate(currentDate),
+        notes: dayoff.notes,
+        hours: 8.0,
+      });
+
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return activities;
+  }
+
+  private _filterMultipleDayoffActivities(
+    rangeDates: {
+      startDate: Date;
+      endDate: Date;
+    },
+    multipleDayoffActivities: Activity[],
+  ): Activity[] {
+    const dayoffActivities: Activity[] = [];
+    for (const multipleDayoffActivity of multipleDayoffActivities) {
+      if (rangeDates && rangeDates.startDate && rangeDates.endDate) {
+        const startDate = new Date(rangeDates.startDate);
+        const endDate = new Date(rangeDates.endDate);
+
+        startDate.setUTCHours(12, 0, 0, 0);
+        endDate.setUTCHours(12, 0, 0, 0);
+
+        if (
+          multipleDayoffActivity.date >= startDate &&
+          multipleDayoffActivity.date <= endDate
+        ) {
+          dayoffActivities.push(multipleDayoffActivity);
+        }
+      }
+    }
+    return dayoffActivities;
+  }
+
   private _orderDayoffActivities(
     activities: Activity[],
     findConditions: FindBoostedOptions,
@@ -255,62 +311,6 @@ export class ActivityService extends CrudService<
         }
       }
     }
-    return activities;
-  }
-
-  private _filterMultipleDayoffActivities(
-    rangeDates: {
-      startDate: Date;
-      endDate: Date;
-    },
-    multipleDayoffActivities: Activity[],
-  ): Activity[] {
-    const dayoffActivities: Activity[] = [];
-    for (const multipleDayoffActivity of multipleDayoffActivities) {
-      if (rangeDates && rangeDates.startDate && rangeDates.endDate) {
-        const startDate = new Date(rangeDates.startDate);
-        const endDate = new Date(rangeDates.endDate);
-
-        startDate.setUTCHours(12, 0, 0, 0);
-        endDate.setUTCHours(12, 0, 0, 0);
-
-        if (
-          multipleDayoffActivity.date >= startDate &&
-          multipleDayoffActivity.date <= endDate
-        ) {
-          dayoffActivities.push(multipleDayoffActivity);
-        }
-      }
-    }
-    return dayoffActivities;
-  }
-
-  private _createActivityFromMultipleDayoff(dayoff: Dayoff): Activity[] {
-    const currentDate = new Date(dayoff.startDate);
-    const activities: Activity[] = [];
-
-    dayoff.startDate.setHours(12, 0, 0, 0);
-    dayoff.endDate.setHours(12, 0, 0, 0);
-    currentDate.setHours(12, 0, 0, 0);
-
-    while (currentDate <= dayoff.endDate) {
-      activities.push({
-        _id: dayoff._id,
-        createdAt: dayoff.createdAt,
-        updatedAt: dayoff.updatedAt,
-        deletedAt: dayoff.deletedAt,
-        userId: dayoff.userId,
-        user: dayoff.user,
-        hoursTagId: dayoff.hoursTagId,
-        hoursTag: dayoff.hoursTag,
-        date: this._calcolateDate(currentDate),
-        notes: dayoff.notes,
-        hours: 8.0,
-      });
-
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-
     return activities;
   }
 
