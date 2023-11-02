@@ -36,6 +36,12 @@
               "maximumError": "1mb"
             }
           ],
+          "fileReplacements": [
+            {
+              "replace": "apps/controllo-ore-x/src/environments/environment.ts",
+              "with": "apps/controllo-ore-x/src/environments/environment.prod.ts"
+            }
+          ],
           "outputHashing": "all"
         },
         "development": {
