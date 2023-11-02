@@ -4,7 +4,7 @@ export enum INDEX_CONFIGURATION_KEY {
   PROJECT = 'projects',
   RELEASE = 'releases',
   TRACKER = 'userHours',
-  REPORT = 'activitys',
+  REPORT = 'activities',
   DAYOFF = 'dayoffs',
   HOURSTAG = 'hoursTag',
 }

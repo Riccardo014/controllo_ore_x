@@ -20,8 +20,8 @@ import { CastObjectPipe } from '@shared/pipes/cast-object.pipe';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { Activity } from '../entities/activity.entity';
 
-@ApiTags('activitys')
-@Controller('activitys')
+@ApiTags('activities')
+@Controller('activities')
 export class ActivityController {
   constructor(private _activityService: ActivityService) {}
 

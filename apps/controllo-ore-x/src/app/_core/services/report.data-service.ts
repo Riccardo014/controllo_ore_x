@@ -16,7 +16,7 @@ export class ReportDataService extends BaseDataService<
   ActivityCreateDto,
   ActivityUpdateDto
 > {
-  currentApiUri: string = environment.apiUri + '/activitys';
+  currentApiUri: string = environment.apiUri + '/activities';
 
   constructor(protected http: HttpClient) {
     super();
