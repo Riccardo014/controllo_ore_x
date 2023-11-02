@@ -5,7 +5,7 @@
       {{ getLabel(dataForFilter.formControl.value?.length) }}
     </mat-select-trigger>
     <mat-option *ngFor="let element of dataForFilter.list" [value]="element">{{
-      element.name
+      element.name + ' ' + (element?.surname ? element.surname : '')
     }}</mat-option>
   </mat-select>
 </mat-form-field>

@@ -5,7 +5,7 @@ export interface RtTableStatus {
 
   where?: FindBoostedWhereOption[] | any;
   order?: any;
-  pagination?: {
+  pagination: {
     totalItems?: number;
     currentPage: number;
     itemsPerPage: number;

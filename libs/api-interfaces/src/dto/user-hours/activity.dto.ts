@@ -8,7 +8,7 @@ export interface ActivityReadDto {
   user?: UserReadDto;
   releaseId?: string;
   release?: ReleaseReadDto;
-  hoursTagId?: string;
+  hoursTagId: string;
   hoursTag?: HoursTagReadDto;
   date: Date;
   notes: string;
@@ -20,7 +20,7 @@ export interface ActivityReadDto {
 export interface ActivityCreateDto {
   userId: string;
   releaseId?: string;
-  hoursTagId?: string;
+  hoursTagId: string;
   date: Date;
   notes: string;
   hours: number;

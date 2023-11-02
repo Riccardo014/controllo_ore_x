@@ -8,7 +8,7 @@ export class ActivityCreateDtoV implements ActivityCreateDto {
   releaseId?: string;
 
   @IsUUID()
-  hoursTagId?: string;
+  hoursTagId: string;
 
   @IsDate()
   date: Date;

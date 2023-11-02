@@ -41,7 +41,7 @@ export class DayoffController {
 
   @Get(':id')
   getOne(@Param('id') id: string): Promise<Dayoff> {
-    return this._dayoffService.getOne(id, ['user']);
+    return this._dayoffService.getOne(id, ['user', 'hoursTag']);
   }
 
   @Post()

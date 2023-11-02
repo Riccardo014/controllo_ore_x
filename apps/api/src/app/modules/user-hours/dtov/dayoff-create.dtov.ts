@@ -5,6 +5,9 @@ export class DayoffCreateDtoV implements DayoffCreateDto {
   @IsUUID()
   userId: string;
 
+  @IsUUID()
+  hoursTagId: string;
+
   @IsDate()
   startDate: Date;
 

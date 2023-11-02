@@ -35,11 +35,16 @@ export class ActivityService extends CrudService<
     /**
      * Filtri disponibili solo per le userHours e non per i dayoffs
      */
-    const filterFields = ['release', 'hoursTag'];
+    const filterFields = ['release'];
 
     findConditions.pagination = false;
 
     const activities: Activity[] = [];
+
+    const rangeDates: {
+      startDate: Date;
+      endDate: Date;
+    } = this._buildRangeDates(findConditions);
 
     const userHours = await this._userHoursService.getMany(findConditions, TX);
     for (const userHour of userHours.data) {
@@ -78,84 +83,35 @@ export class ActivityService extends CrudService<
         const multipleDayoffActivities: Activity[] =
           this._createActivityFromMultipleDayoff(dayoff);
 
-        for (const multipleDayoffActivity of multipleDayoffActivities) {
-          if (
-            dayoffFindConditions.where[0].startDate &&
-            dayoffFindConditions.where[0].endDate
-          ) {
-            const startDate = new Date(
-              dayoffFindConditions.where[0].startDate.args,
-            );
-            startDate.setHours(12, 0, 0, 0);
-            console.log(multipleDayoffActivity.date, startDate);
-            console.log(multipleDayoffActivity.date >= startDate);
-            if (multipleDayoffActivity.date >= startDate) {
-              activities.push(multipleDayoffActivity);
-            }
-          }
+        const dayoffActivities: Activity[] =
+          this._filterMultipleDayoffActivities(
+            rangeDates,
+            multipleDayoffActivities,
+          );
+        for (const dayoffActivity of dayoffActivities) {
+          activities.push(dayoffActivity);
         }
       }
     }
 
     return {
-      data: activities,
+      data: this._orderDayoffActivities(activities, findConditions),
       pagination: {
         itemsPerPage: activities.length,
         currentPage: 1,
         totalItems: activities.length,
       },
     };
+  }
 
-    //   const dayoffWhere = !!findConditions.where ? findConditions.where : {};
-    //   const dayoffFulltextSearch = !!findConditions.fulltextSearch
-    //     ? findConditions.fulltextSearch
-    //     : null;
-
-    //   let dayoffWhereOptions = {};
-
-    //   if (dayoffWhere.date) {
-    //     dayoffWhereOptions = {
-    //       startDate: dayoffWhere.date,
-    //     };
-    //   }
-    //   if (dayoffWhere.user) {
-    //     dayoffWhereOptions = {
-    //       user: dayoffWhere.user,
-    //     };
-    //   }
-
-    //   if (dayoffWhere[0]) {
-    //     if (dayoffWhere[0].date) {
-    //       dayoffWhereOptions['startDate'] = dayoffWhere[0].date;
-    //     }
-    //     if (dayoffWhere[0].user) {
-    //       dayoffWhereOptions['user'] = dayoffWhere[0].user;
-    //     }
-    //   }
-
-    //   // const dayoffFindConditions: FindBoostedOptions = {
-    //   //   relations: ['user'],
-    //   //   fullSearchCols: ['notes'],
-    //   //   where: [dayoffWhereOptions],
-    //   //   pagination: false,
-    //   //   fulltextSearch: dayoffFulltextSearch,
-    //   // };
-
-    //   const dayoffs = await this._dayoffService.getMany(dayoffFindConditions, TX);
-
-    //   for (const dayoff of dayoffs.data) {
-    //     activities.push(this._createActivityFromDayoff(dayoff));
-    //   }
-
-    //   return {
-    //     data: activities,
-    //     //TODO: sistema pagination
-    //     pagination: {
-    //       itemsPerPage: 10,
-    //       currentPage: 1,
-    //       totalItems: activities.length,
-    //     },
-    //   };
+  private _buildRangeDates(findConditions: FindBoostedOptions): any {
+    const dayoffWhere = !!findConditions.where ? findConditions.where : {};
+    if (dayoffWhere[0] && dayoffWhere[0].date) {
+      return {
+        startDate: dayoffWhere[0].date.args[0],
+        endDate: dayoffWhere[0].date.args[1],
+      };
+    }
   }
 
   private _buildDayoffFindConditions(
@@ -165,6 +121,14 @@ export class ActivityService extends CrudService<
     const dayoffWhereOptions = {};
     if (dayoffWhere[0]) {
       if (dayoffWhere[0].date) {
+        dayoffWhereOptions['startDate'] = {
+          _fn: FIND_BOOSTED_FN.DATE_BETWEEN,
+          args: dayoffWhere[0].date.args,
+        };
+        dayoffWhereOptions['endDate'] = {
+          _fn: FIND_BOOSTED_FN.DATE_BETWEEN,
+          args: dayoffWhere[0].date.args,
+        };
         dayoffWhereOptions['startDate'] = {
           _fn: FIND_BOOSTED_FN.DATE_LOWER_EQUAL,
           args: dayoffWhere[0].date.args[1],
@@ -177,21 +141,47 @@ export class ActivityService extends CrudService<
       if (dayoffWhere[0].user) {
         dayoffWhereOptions['user'] = dayoffWhere[0].user;
       }
+      if (dayoffWhere[0].hoursTag) {
+        dayoffWhereOptions['hoursTag'] = dayoffWhere[0].hoursTag;
+      }
+    }
+
+    const dayoffOrder = !!findConditions.order ? findConditions.order : {};
+    const dayoffOrderOptions = {};
+
+    if (dayoffOrder) {
+      if (dayoffOrder['user.name']) {
+        dayoffOrderOptions['user.name'] = dayoffOrder['user.name'];
+      }
+      if (dayoffOrder['user.surname']) {
+        dayoffOrderOptions['user.surname'] = dayoffOrder['user.surname'];
+      }
+      if (dayoffOrder['hoursTag.name']) {
+        dayoffOrderOptions['hoursTag.name'] = dayoffOrder['hoursTag.name'];
+      }
+      if (dayoffOrder['hours']) {
+        dayoffOrderOptions['hours'] = dayoffOrder['hours'];
+      }
+      if (dayoffOrder['notes']) {
+        dayoffOrderOptions['notes'] = dayoffOrder['notes'];
+      }
     }
 
     // costruisci tutte le altre opzioni della findboosted
     return {
       select: findConditions.select,
-      relations: ['user'],
+      relations: ['user', 'hoursTag'],
       fullSearchCols: ['notes'],
       where: [dayoffWhereOptions],
       pagination: findConditions.pagination,
       fulltextSearch: findConditions.fulltextSearch,
-      order: findConditions.order,
+      order: dayoffOrderOptions,
     };
   }
 
   private _createActivityFromSingleDayoff(dayoff: Dayoff): Activity {
+    const date: Date = new Date(dayoff.startDate);
+    date.setHours(12, 0, 0, 0);
     return {
       _id: dayoff._id,
       createdAt: dayoff.createdAt,
@@ -199,10 +189,100 @@ export class ActivityService extends CrudService<
       deletedAt: dayoff.deletedAt,
       userId: dayoff.userId,
       user: dayoff.user,
-      date: this._calcolateDate(dayoff.startDate),
+      hoursTagId: dayoff.hoursTagId,
+      hoursTag: dayoff.hoursTag,
+      date: date,
       notes: dayoff.notes,
       hours: dayoff.hours,
     };
+  }
+
+  private _orderDayoffActivities(
+    activities: Activity[],
+    findConditions: FindBoostedOptions,
+  ): Activity[] {
+    const orderOptions = !!findConditions.order ? findConditions.order : {};
+
+    if (orderOptions) {
+      if (orderOptions['date']) {
+        if (orderOptions['date'] === 'ASC') {
+          activities.sort((a, b) => 0 - (a.date > b.date ? -1 : 1));
+        } else if (orderOptions['date'] === 'DESC') {
+          activities.sort((a, b) => 0 - (a.date > b.date ? 1 : -1));
+        }
+      }
+      if (orderOptions['user.name']) {
+        if (orderOptions['user.name'] === 'ASC') {
+          activities.sort((a, b) => 0 - (a.user.name > b.user.name ? -1 : 1));
+        } else if (orderOptions['user.name'] === 'DESC') {
+          activities.sort((a, b) => 0 - (a.user.name > b.user.name ? 1 : -1));
+        }
+      }
+      if (orderOptions['user.surname']) {
+        if (orderOptions['user.surname'] === 'ASC') {
+          activities.sort(
+            (a, b) => 0 - (a.user.surname > b.user.surname ? -1 : 1),
+          );
+        } else if (orderOptions['user.surname'] === 'DESC') {
+          activities.sort(
+            (a, b) => 0 - (a.user.surname > b.user.surname ? 1 : -1),
+          );
+        }
+      }
+      if (orderOptions['hoursTag.name']) {
+        if (orderOptions['hoursTag.name'] === 'ASC') {
+          activities.sort(
+            (a, b) => 0 - (a.hoursTag.name > b.hoursTag.name ? -1 : 1),
+          );
+        } else if (orderOptions['hoursTag.name'] === 'DESC') {
+          activities.sort(
+            (a, b) => 0 - (a.hoursTag.name > b.hoursTag.name ? 1 : -1),
+          );
+        }
+      }
+      if (orderOptions['hours']) {
+        if (orderOptions['hours'] === 'ASC') {
+          activities.sort((a, b) => 0 - (a.hours > b.hours ? -1 : 1));
+        } else if (orderOptions['hours'] === 'DESC') {
+          activities.sort((a, b) => 0 - (a.hours > b.hours ? 1 : -1));
+        }
+      }
+      if (orderOptions['notes']) {
+        if (orderOptions['notes'] === 'ASC') {
+          activities.sort((a, b) => 0 - (a.notes > b.notes ? -1 : 1));
+        } else if (orderOptions['notes'] === 'DESC') {
+          activities.sort((a, b) => 0 - (a.notes > b.notes ? 1 : -1));
+        }
+      }
+    }
+    return activities;
+  }
+
+  private _filterMultipleDayoffActivities(
+    rangeDates: {
+      startDate: Date;
+      endDate: Date;
+    },
+    multipleDayoffActivities: Activity[],
+  ): Activity[] {
+    const dayoffActivities: Activity[] = [];
+    for (const multipleDayoffActivity of multipleDayoffActivities) {
+      if (rangeDates && rangeDates.startDate && rangeDates.endDate) {
+        const startDate = new Date(rangeDates.startDate);
+        const endDate = new Date(rangeDates.endDate);
+
+        startDate.setUTCHours(12, 0, 0, 0);
+        endDate.setUTCHours(12, 0, 0, 0);
+
+        if (
+          multipleDayoffActivity.date >= startDate &&
+          multipleDayoffActivity.date <= endDate
+        ) {
+          dayoffActivities.push(multipleDayoffActivity);
+        }
+      }
+    }
+    return dayoffActivities;
   }
 
   private _createActivityFromMultipleDayoff(dayoff: Dayoff): Activity[] {
@@ -221,9 +301,11 @@ export class ActivityService extends CrudService<
         deletedAt: dayoff.deletedAt,
         userId: dayoff.userId,
         user: dayoff.user,
+        hoursTagId: dayoff.hoursTagId,
+        hoursTag: dayoff.hoursTag,
         date: this._calcolateDate(currentDate),
         notes: dayoff.notes,
-        hours: 8,
+        hours: 8.0,
       });
 
       currentDate.setDate(currentDate.getDate() + 1);
@@ -233,9 +315,8 @@ export class ActivityService extends CrudService<
   }
 
   private _calcolateDate(dayoffDate: Date): Date {
-    //TODO: set della data dividendo i dayoffs per i giorni in cui è attivo in caso di giorni multipli
     const date = new Date(dayoffDate);
-    date.setHours(12);
+    date.setUTCHours(12, 0, 0, 0);
     return date;
   }
 }

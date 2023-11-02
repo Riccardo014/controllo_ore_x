@@ -13,6 +13,10 @@ export class DayoffUpdateDtoV implements DayoffUpdateDto {
   userId?: string;
 
   @IsOptional()
+  @IsUUID()
+  hoursTagId?: string;
+
+  @IsOptional()
   @IsDate()
   startDate?: Date;
 

@@ -53,7 +53,7 @@ export const DAYOFF_INDEX_CONFIGURATION_SEED: any = {
         sortable: false,
       },
     ],
-    relations: ['user'],
+    relations: ['user', 'hoursTag'],
     fullSearchCols: ['notes'],
   },
 };

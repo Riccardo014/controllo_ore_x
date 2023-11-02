@@ -18,7 +18,7 @@ export class UserHoursUpdateDtoV implements UserHoursUpdateDto {
 
   @IsOptional()
   @IsUUID()
-  tagId?: string;
+  hoursTagId?: string;
 
   @IsOptional()
   @IsDate()

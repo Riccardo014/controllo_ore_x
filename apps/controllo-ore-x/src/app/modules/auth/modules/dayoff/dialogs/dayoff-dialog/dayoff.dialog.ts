@@ -37,6 +37,7 @@ export class DayoffDialog implements OnInit, OnDestroy, SubscriptionsLifecycle {
 
   dayoffFormGroup: FormGroup = new FormGroup({
     user: new FormControl(null, Validators.required),
+    hoursTag: new FormControl(null, Validators.required),
     startDate: new FormControl(null, Validators.required),
     endDate: new FormControl(null, Validators.required),
     startTime: new FormControl(null, Validators.required),
@@ -278,6 +279,7 @@ export class DayoffDialog implements OnInit, OnDestroy, SubscriptionsLifecycle {
   private _patchForm(value: DayoffReadDto): void {
     this.dayoffFormGroup.patchValue({
       user: value.user,
+      hoursTag: value.hoursTag,
       startDate: new Date(new Date(value.startDate).setHours(0, 0, 0, 0)),
       endDate: new Date(new Date(value.endDate).setHours(0, 0, 0, 0)),
       startTime: this._timeFromDate(value.startDate),
