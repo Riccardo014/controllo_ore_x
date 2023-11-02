@@ -4,7 +4,6 @@
   "license": "MIT",
   "scripts": {
     "build": "nx run-many --parallel --target=build --projects=controllo-ore-x,api",
-    "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main",
     "start": "node dist/apps/api/main.js",
     "start:dev": "nx serve",
     "lint": "nx run-many --all --target=lint"
