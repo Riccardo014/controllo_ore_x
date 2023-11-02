@@ -90,7 +90,10 @@ export class TrackerTableLineComponent
           },
         })
         .subscribe((res) => {
-          if (res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
+          if (
+            res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM ||
+            res.result === RT_DIALOG_CLOSE_RESULT.DELETE
+          ) {
             this.onUserHourUpdatedEvent.emit();
           }
         }),
