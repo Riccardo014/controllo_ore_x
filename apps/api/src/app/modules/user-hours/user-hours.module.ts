@@ -2,7 +2,6 @@ import { ActivityController } from '@modules/user-hours/controllers/activity.con
 import { DayoffController } from '@modules/user-hours/controllers/dayoff.controller';
 import { HoursTagController } from '@modules/user-hours/controllers/hours-tag.controller';
 import { UserHoursController } from '@modules/user-hours/controllers/user-hours.controller';
-import { Activity } from '@modules/user-hours/entities/activity.entity';
 import { Dayoff } from '@modules/user-hours/entities/dayoff.entity';
 import { HoursTag } from '@modules/user-hours/entities/hours-tag.entity';
 import { UserHours } from '@modules/user-hours/entities/user-hours.entity';
@@ -19,7 +18,7 @@ import { HOURS_TAG_SEED } from './seeds/hours-tag.seed';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UserHours, HoursTag, Dayoff, Activity]),
+    TypeOrmModule.forFeature([UserHours, HoursTag, Dayoff]),
     UserModule,
   ],
   controllers: [

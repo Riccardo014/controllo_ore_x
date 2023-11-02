@@ -1,45 +1,31 @@
 import {
+  ActivityReadDto,
   FIND_BOOSTED_FN,
   FindBoostedOptions,
   FindBoostedResult,
+  UserReadDto,
 } from '@api-interfaces';
-import { ActivityCreateDtoV } from '@modules/user-hours/dtov/activity-create.dtov';
-import { ActivityUpdateDtoV } from '@modules/user-hours/dtov/activity-update.dtov';
-import { Activity } from '@modules/user-hours/entities/activity.entity';
 import { Injectable } from '@nestjs/common';
-import { CrudService } from '@shared/classes/crud-service.class';
+import { isSameDay } from 'date-fns';
 import { EntityManager } from 'typeorm';
 import { Dayoff } from '../entities/dayoff.entity';
 import { DayoffService } from './dayoff.service';
 import { UserHoursService } from './user-hours.service';
 
 @Injectable()
-export class ActivityService extends CrudService<
-  Activity,
-  ActivityCreateDtoV,
-  ActivityUpdateDtoV
-> {
-  target: typeof Activity = Activity;
-
+export class ActivityService {
   constructor(
     private _userHoursService: UserHoursService,
     private _dayoffService: DayoffService,
-  ) {
-    super();
-  }
+  ) {}
 
   async getMany(
     findConditions: FindBoostedOptions,
     TX?: EntityManager,
-  ): Promise<FindBoostedResult<Activity>> {
-    /**
-     * Filtri disponibili solo per le userHours e non per i dayoffs
-     */
-    const filterFields = ['release'];
-
+  ): Promise<FindBoostedResult<ActivityReadDto>> {
     findConditions.pagination = false;
 
-    const activities: Activity[] = [];
+    const activities: ActivityReadDto[] = [];
 
     const rangeDates: {
       startDate: Date;
@@ -48,23 +34,21 @@ export class ActivityService extends CrudService<
 
     const userHours = await this._userHoursService.getMany(findConditions, TX);
     for (const userHour of userHours.data) {
-      activities.push(userHour);
+      activities.push(userHour as unknown as ActivityReadDto);
     }
 
     //TODO: aggiungi i controlli per gli altri campi
 
     if (findConditions.where && findConditions.where[0]) {
-      for (const filterField of filterFields) {
-        if (findConditions.where[0][filterField]) {
-          return {
-            data: activities,
-            pagination: {
-              itemsPerPage: activities.length,
-              currentPage: 1,
-              totalItems: activities.length,
-            },
-          };
-        }
+      if (findConditions.where[0]['release']) {
+        return {
+          data: activities,
+          pagination: {
+            itemsPerPage: activities.length,
+            currentPage: 1,
+            totalItems: activities.length,
+          },
+        };
       }
     }
 
@@ -76,14 +60,14 @@ export class ActivityService extends CrudService<
     const dayoffs = await this._dayoffService.getMany(dayoffFindConditions, TX);
 
     for (const dayoff of dayoffs.data) {
-      if (dayoff.startDate.toDateString() === dayoff.endDate.toDateString()) {
+      if (isSameDay(dayoff.startDate, dayoff.endDate)) {
         activities.push(this._createActivityFromSingleDayoff(dayoff));
       } else {
         // il permesso dura più di un giorno
-        const multipleDayoffActivities: Activity[] =
+        const multipleDayoffActivities: ActivityReadDto[] =
           this._createActivityFromMultipleDayoff(dayoff);
 
-        const dayoffActivities: Activity[] =
+        const dayoffActivities: ActivityReadDto[] =
           this._filterMultipleDayoffActivities(
             rangeDates,
             multipleDayoffActivities,
@@ -179,7 +163,7 @@ export class ActivityService extends CrudService<
     };
   }
 
-  private _createActivityFromSingleDayoff(dayoff: Dayoff): Activity {
+  private _createActivityFromSingleDayoff(dayoff: Dayoff): ActivityReadDto {
     const date: Date = new Date(dayoff.startDate);
     date.setHours(12, 0, 0, 0);
     return {
@@ -188,7 +172,7 @@ export class ActivityService extends CrudService<
       updatedAt: dayoff.updatedAt,
       deletedAt: dayoff.deletedAt,
       userId: dayoff.userId,
-      user: dayoff.user,
+      user: dayoff.user as unknown as UserReadDto,
       hoursTagId: dayoff.hoursTagId,
       hoursTag: dayoff.hoursTag,
       date: date,
@@ -197,9 +181,9 @@ export class ActivityService extends CrudService<
     };
   }
 
-  private _createActivityFromMultipleDayoff(dayoff: Dayoff): Activity[] {
+  private _createActivityFromMultipleDayoff(dayoff: Dayoff): ActivityReadDto[] {
     const currentDate = new Date(dayoff.startDate);
-    const activities: Activity[] = [];
+    const activities: ActivityReadDto[] = [];
 
     dayoff.startDate.setHours(12, 0, 0, 0);
     dayoff.endDate.setHours(12, 0, 0, 0);
@@ -212,7 +196,7 @@ export class ActivityService extends CrudService<
         updatedAt: dayoff.updatedAt,
         deletedAt: dayoff.deletedAt,
         userId: dayoff.userId,
-        user: dayoff.user,
+        user: dayoff.user as unknown as UserReadDto,
         hoursTagId: dayoff.hoursTagId,
         hoursTag: dayoff.hoursTag,
         date: this._calcolateDate(currentDate),
@@ -231,9 +215,9 @@ export class ActivityService extends CrudService<
       startDate: Date;
       endDate: Date;
     },
-    multipleDayoffActivities: Activity[],
-  ): Activity[] {
-    const dayoffActivities: Activity[] = [];
+    multipleDayoffActivities: ActivityReadDto[],
+  ): ActivityReadDto[] {
+    const dayoffActivities: ActivityReadDto[] = [];
     for (const multipleDayoffActivity of multipleDayoffActivities) {
       if (rangeDates && rangeDates.startDate && rangeDates.endDate) {
         const startDate = new Date(rangeDates.startDate);
@@ -254,9 +238,9 @@ export class ActivityService extends CrudService<
   }
 
   private _orderDayoffActivities(
-    activities: Activity[],
+    activities: ActivityReadDto[],
     findConditions: FindBoostedOptions,
-  ): Activity[] {
+  ): ActivityReadDto[] {
     const orderOptions = !!findConditions.order ? findConditions.order : {};
 
     if (orderOptions) {
