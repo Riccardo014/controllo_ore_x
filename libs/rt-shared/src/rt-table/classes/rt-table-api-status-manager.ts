@@ -55,9 +55,7 @@ export class RtTableApiStatusManager<
       relations: this.tableConfiguration.relations,
       fullSearchCols: this.tableConfiguration.fullSearchCols,
       where: this._buildWhereOption(),
-      pagination: this.tableConfiguration.pagination?.disabled
-        ? false
-        : this.status.pagination,
+      pagination: this.status.pagination,
       fulltextSearch: this.status.fulltextSearch,
       order: this.status.order,
     };

@@ -162,6 +162,7 @@ export class DayoffIndexPage
     const newWhereOption: FindBoostedWhereOption = {
       userId: this._authService.loggedInUser._id,
     };
+    this.indexTableHandler.status.pagination = undefined;
     this.indexTableHandler.status.where = [newWhereOption];
     this.indexTableHandler.statusChange(this.indexTableHandler.status);
   }
