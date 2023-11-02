@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.20]
+
 ### Features Aggiunte
 
 - +Aggiunta la visualizzazione di ferie e permessi nel report.
