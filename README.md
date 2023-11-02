@@ -5,6 +5,7 @@
 - [ ] Miglioramenti generali:
 
   - [ ] Aggiungere la gestione dei ruoli e permessi.
+  - [ ] Aggiungere l'avatar per i clienti e i membri del team.
 
 - [ ] Miglioramenti nella schermata di login:
 
@@ -12,18 +13,19 @@
   - [ ] Carosello dei testi nella parte inferiore sinistra.
   - [ ] Login con google.
   - [ ] Recupero password.
+  - [ ] Mostra / nascondi password.
   - [ ] Pagina dei "Terms of service".
   - [ ] Pagina della "Privacy Policy".
 
 - [ ] Miglioramenti nella topbar:
 
-  - [ ] Implementazione tema scuro.
+  - [ ] Implementazione cambio tema (chiaro / scuro).
   - [ ] Implementazione notifiche (icona sveglia).
 
 - [ ] Modulo ferie e permessi:
 
   - [ ] Aggiungere lo stato dei permessi (Da approvare / approvato / Non approvato).
-  - [ ] Aggiungere la funzionalità per admin / superadmin di approvare / rifiutare le richieste di feerie e permessi.
+  - [ ] Aggiungere la funzionalità per admin / superadmin di approvare / rifiutare le richieste di ferie e permessi.
 
 - [ ] Modulo report:
 
@@ -41,3 +43,5 @@
 - [ ] Richiesta dei dati all'endpoint "activities" (refactor "apps\api\src\app\modules\user-hours\services\activity.service.ts").
 
 - [ ] Migliorare la visualizzazione degli errori nei dialog.
+
+- [ ] Migliorare la grafica dell'applicativo nel caso in cui sia visualizzato da tablet / mobile.
