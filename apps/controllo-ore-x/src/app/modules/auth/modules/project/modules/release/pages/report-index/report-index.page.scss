@@ -39,11 +39,8 @@
     &__button {
       padding: 20px;
       border-radius: 10px;
-
-      &--complete {
-        background-color: map-get($palette-primary, 50);
-        color: map-get($palette-primary, 500);
-      }
+      background-color: map-get($palette-primary, 50);
+      color: map-get($palette-primary, 500);
 
       &__elements {
         display: flex;
@@ -56,59 +53,14 @@
           white-space: nowrap;
         }
       }
-
-      &--export {
-        background-color: map-get($palette-accent, 200);
-        color: #000000;
-      }
     }
   }
 }
 
-.-report {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  align-items: center;
-  width: 100%;
-  border-bottom: 1px solid map-get($palette-grey, 200);
+.-content {
+  overflow-y: auto;
+  max-height: $content-height;
+  height: auto;
 
-  &__element {
-    height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-right: 1px solid map-get($palette-grey, 200);
-
-    &--highlighted {
-      background-color: map-get($palette-primary, 500);
-    }
-
-    &--deadline {
-      background-color: map-get($palette-grey, 100);
-    }
-
-    &__content {
-      display: flex;
-      align-items: start;
-      flex-direction: column;
-
-      &__title {
-        color: rgba(0, 0, 0, 0.5);
-
-        &--var {
-          color: rgba(255, 255, 255, 0.5);
-        }
-      }
-
-      &__value {
-        &--var {
-          color: #fff;
-        }
-
-        &--highlighted {
-          color: map-get($palette-primary, 500);
-        }
-      }
-    }
-  }
+  @include scrollbar-primary(map-get($palette-grey, 400), 6px, true);
 }

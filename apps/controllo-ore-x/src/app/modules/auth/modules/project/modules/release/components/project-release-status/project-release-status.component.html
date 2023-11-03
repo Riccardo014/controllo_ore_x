@@ -3,13 +3,7 @@
     [projectId]="projectId"
   ></controllo-ore-x-project-release-status-data>
 
-  <div class="-status__cards" *ngIf="tags.length > 0">
-    <div class="-status__cards__card">
-      <controllo-ore-x-project-activity-card
-        *ngFor="let tag of tags"
-        [tagWithHours]="tag"
-      >
-      </controllo-ore-x-project-activity-card>
-    </div>
-  </div>
+  <controllo-ore-x-report-template
+    [page]="this"
+  ></controllo-ore-x-report-template>
 </div>

@@ -1,118 +1,142 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ApiPaginatedResponse, ReleaseReadDto } from '@api-interfaces';
-import { ReleaseDataService } from '@app/_core/services/release.data-service';
+import { Component, Input } from '@angular/core';
 import {
-  SubscriptionsLifecycle,
-  completeSubscriptions,
-} from '@app/utils/subscriptions_lifecycle';
-import { BehaviorSubject, Subscription } from 'rxjs';
+  ApiPaginatedResponse,
+  ApiResponse,
+  COX_FILTER,
+  FindBoostedWhereOption,
+  INDEX_CONFIGURATION_KEY,
+  IndexConfigurationReadDto,
+  UserHoursReadDto,
+} from '@api-interfaces';
+import { HoursTagDataService } from '@app/_core/services/hours-tag.data-service';
+import { IndexConfigurationDataService } from '@app/_core/services/index-configuration.data-service';
+import { ReleaseDataService } from '@app/_core/services/release.data-service';
+import { TeamDataService } from '@app/_core/services/team.data-service';
+import { TrackerDataService } from '@app/_core/services/tracker.data-service';
+import { ReportPage } from '@app/_shared/classes/report-page.class';
+import { CalendarDateService } from '@app/_shared/components/index-template/services/calendar-date.service';
+import { FilterService } from '@app/_shared/components/report-template/services/filter.service';
+import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
+import { BehaviorSubject, firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'controllo-ore-x-project-release-status',
   templateUrl: './project-release-status.component.html',
   styleUrls: ['./project-release-status.component.scss'],
 })
-export class ProjectReleaseStatusComponent
-  implements OnInit, OnDestroy, SubscriptionsLifecycle
-{
-  totalReleases = 0;
-  inProgressReleases = 0;
-  completedReleases = 0;
-
+export class ProjectReleaseStatusComponent extends ReportPage<
+  UserHoursReadDto,
+  UserHoursReadDto,
+  UserHoursReadDto
+> {
   @Input() projectId!: string;
 
   @Input() whereReleaseModified: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
-  tags: {
-    hoursTagId: string;
-    hours: number;
-  }[] = [];
+  titleIcon: string | null = '';
+  title: string = '';
+  pageTitle = '';
+  buttonIcon = '';
+  buttonText = '';
+  subTitle: string = 'Totale ore:';
+  subTitleHours: number = 0;
 
-  subscriptionsList: Subscription[] = [];
+  override isTableTopbarVisible: boolean = false;
+  override isCompletePage: boolean = false;
+  override areDateFiltersActive: boolean = false;
 
-  completeSubscriptions: (subscriptionsList: Subscription[]) => void =
-    completeSubscriptions;
+  CONFIGURATION_KEY: INDEX_CONFIGURATION_KEY =
+    INDEX_CONFIGURATION_KEY.PROJECT_HOURS;
+  isItLoading: boolean = false;
+  _isFirstLoadDone: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false,
+  );
+  hasErrors: boolean = false;
+  isEditAvailable: boolean = false;
 
-  constructor(private _releaseDataService: ReleaseDataService) {}
+  constructor(
+    protected _configurationService: IndexConfigurationDataService,
+    protected _dataService: TrackerDataService,
+    protected _loadingService: RtLoadingService,
+    protected _filterService: FilterService,
+    protected _calendarDateService: CalendarDateService,
 
-  ngOnInit(): void {
-    if (!this.projectId) {
-      throw new Error('projectId is required');
-    }
-    if (typeof this.projectId !== 'string') {
-      throw new Error('projectId must be a string');
-    }
-    this.setSubscriptions();
+    private _releaseDataService: ReleaseDataService,
+    private _teamDataService: TeamDataService,
+    private _hoursTagDataService: HoursTagDataService,
+  ) {
+    super();
   }
 
-  ngOnDestroy(): void {
-    this.completeSubscriptions(this.subscriptionsList);
-  }
+  setFilters(): void {
+    this.dataForFilters = [];
 
-  setSubscriptions(): void {
     this.subscriptionsList.push(
-      this._onNewReleaseCreated(),
-      this._fetchSetReleases(),
+      this._releaseDataService
+        .getMany({
+          where: { projectId: this.projectId },
+        })
+        .subscribe((releases) => {
+          this.insertNewFilter(
+            'Release',
+            'Release',
+            COX_FILTER.RELEASE,
+            releases.data,
+          );
+        }),
+
+      this._teamDataService.getMany({}).subscribe((teams) => {
+        this.insertNewFilter('Membro', 'Membri', COX_FILTER.TEAM, teams.data);
+      }),
+
+      this._hoursTagDataService.getMany({}).subscribe((hoursTags) => {
+        this.insertNewFilter(
+          'Etichetta',
+          'Etichette',
+          COX_FILTER.TAG,
+          hoursTags.data,
+        );
+      }),
     );
   }
 
-  private _onNewReleaseCreated(): Subscription {
-    return this.whereReleaseModified.subscribe({
-      next: (result: boolean) => {
-        if (result) {
-          this.subscriptionsList.push(this._fetchSetReleases());
-          this.whereReleaseModified.next(false);
-        }
-      },
-      error: (error: any) => {
-        throw new Error(error);
-      },
+  override async firstLoad(): Promise<void> {
+    const configuration = this._configurationService.getConfiguration(
+      this.CONFIGURATION_KEY,
+    );
+
+    const configurationResult: ApiResponse<IndexConfigurationReadDto> =
+      await firstValueFrom(configuration);
+    this.configuration = configurationResult.data.configuration;
+    this.indexTableHandler.tableConfiguration = this.configuration;
+    this.isFirstLoadDone.next(true);
+
+    const data = this._dataService.getMany({
+      relations: this.indexTableHandler.tableConfiguration!.relations,
+      where: { release: { projectId: this.projectId } },
     });
+
+    const dataResult: ApiPaginatedResponse<UserHoursReadDto> =
+      await firstValueFrom(data);
+    this.indexTableHandler.data = dataResult.data;
+    this.setFilters();
+    this.changeDataForFilters();
+    this.indexTableHandler.status.where = [
+      { release: { projectId: this.projectId } },
+    ];
+    this.indexTableHandler.statusChange(this.indexTableHandler.status);
+    this.isLoading.next(false);
   }
 
-  private _fetchSetReleases(): Subscription {
-    this.totalReleases = 0;
-    this.inProgressReleases = 0;
-    this.completedReleases = 0;
-    this.tags = [];
-    const tagsIds: Set<string> = new Set<string>();
-
-    return this._releaseDataService
-      .getMany({
-        where: { projectId: this.projectId },
-        relations: ['userHours', 'userHours.hoursTag'],
-      })
-      .subscribe((releases: ApiPaginatedResponse<ReleaseReadDto>) => {
-        this.totalReleases = releases.data.length;
-        for (const release of releases.data) {
-          if (release.isCompleted) {
-            this.completedReleases += 1;
-          } else {
-            for (const userHour of release.userHours) {
-              if (Number(userHour.hours) > 0) {
-                this.inProgressReleases += 1;
-                break;
-              }
-            }
-          }
-
-          for (const userHour of release.userHours) {
-            if (!tagsIds.has(userHour.hoursTagId)) {
-              this.tags.push({
-                hoursTagId: userHour.hoursTagId,
-                hours: Number(userHour.hours),
-              });
-              tagsIds.add(userHour.hoursTagId);
-            } else {
-              this.tags.forEach((tag) => {
-                if (tag.hoursTagId === userHour.hoursTagId) {
-                  tag.hours += Number(userHour.hours);
-                }
-              });
-            }
-          }
-        }
-      });
+  override onFilterEmit(filters: FindBoostedWhereOption[]): void {
+    if (filters[0] && filters[0]['release']) {
+      super.onFilterEmit(filters);
+      return;
+    }
+    this.indexTableHandler.status.where = [
+      { ...filters[0], release: { projectId: this.projectId } },
+    ];
+    this.indexTableHandler.statusChange(this.indexTableHandler.status);
   }
 }

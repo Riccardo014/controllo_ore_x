@@ -171,7 +171,7 @@ export class ReleaseDialog {
       next: () => {
         this._alertService.openSuccess();
         const modalRes: IRtDialogClose = {
-          result: RT_DIALOG_CLOSE_RESULT.CONFIRM,
+          result: RT_DIALOG_CLOSE_RESULT.DELETE,
         };
         this.dialogRef.close(modalRes);
       },

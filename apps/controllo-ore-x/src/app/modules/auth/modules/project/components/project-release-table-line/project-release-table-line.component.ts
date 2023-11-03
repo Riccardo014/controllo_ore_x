@@ -76,7 +76,10 @@ export class ProjectReleaseTableLineComponent
           data: this.release,
         })
         .subscribe((res) => {
-          if (res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
+          if (
+            res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM ||
+            res.result === RT_DIALOG_CLOSE_RESULT.DELETE
+          ) {
             this.onReleaseUpdatedEvent.emit();
           }
         }),

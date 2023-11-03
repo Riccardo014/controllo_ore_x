@@ -1,0 +1,12 @@
+<div *ngIf="tagWithHours.length > 0">
+  <controllo-ore-x-release-status-data-hours-tag-table-header>
+  </controllo-ore-x-release-status-data-hours-tag-table-header>
+
+  <controllo-ore-x-release-status-data-hours-tag-table-line
+    *ngFor="let hoursTag of tagWithHours"
+    [hoursTag]="hoursTag.hoursTag"
+    [hours]="hoursTag.hours"
+    [totalHours]="totalHours"
+  >
+  </controllo-ore-x-release-status-data-hours-tag-table-line>
+</div>
