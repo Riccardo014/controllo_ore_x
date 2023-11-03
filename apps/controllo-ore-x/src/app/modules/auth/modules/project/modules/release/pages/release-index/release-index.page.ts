@@ -10,9 +10,8 @@ import {
   RT_DIALOG_CLOSE_RESULT,
   RtDialogService,
 } from '@controllo-ore-x/rt-shared';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ProjectDialog } from '../../../../dialogs/project-dialog/project.dialog';
-import { ReleaseDialog } from '../../dialogs/release-dialog/release.dialog';
 
 @Component({
   selector: 'controllo-ore-x-release-index',
@@ -24,10 +23,6 @@ export class ReleaseIndexPage
 {
   projectId?: string;
   project?: ProjectReadDto;
-
-  whereReleaseModified: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false,
-  );
 
   isLoading: boolean = true;
 
@@ -63,32 +58,6 @@ export class ReleaseIndexPage
     this.subscriptionsList.push(this._getProject());
   }
 
-  openCreateReleaseDialog(): void {
-    if (!this.project) {
-      return;
-    }
-    const dialogConfig = {
-      width: '600px',
-      maxWidth: '600px',
-    };
-    this.subscriptionsList.push(
-      this._rtDialogService
-        .open(ReleaseDialog, {
-          width: dialogConfig.width,
-          maxWidth: dialogConfig.maxWidth,
-          data: {
-            projectId: this.project._id,
-            transactionStatus: 'create',
-          },
-        })
-        .subscribe((res) => {
-          if (res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
-            this.whereReleaseModified.next(true);
-          }
-        }),
-    );
-  }
-
   openEditProjectDialog(): void {
     if (!this.project) {
       return;
@@ -120,10 +89,6 @@ export class ReleaseIndexPage
           }
         }),
     );
-  }
-
-  onReleaseUpdated(): void {
-    this.whereReleaseModified.next(true);
   }
 
   /**

@@ -31,9 +31,6 @@ export class ProjectReleaseStatusComponent extends ReportPage<
 > {
   @Input() projectId!: string;
 
-  @Input() whereReleaseModified: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
-
   titleIcon: string | null = '';
   title: string = '';
   pageTitle = '';

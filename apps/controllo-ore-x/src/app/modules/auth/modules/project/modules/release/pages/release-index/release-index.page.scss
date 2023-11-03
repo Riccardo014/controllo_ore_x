@@ -45,6 +45,11 @@
       padding: 20px;
       border-radius: 10px;
 
+      &--export {
+        background-color: map-get($palette-accent, 200);
+        color: #000000;
+      }
+
       &__elements {
         display: flex;
         flex-direction: row;
