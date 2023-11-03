@@ -1,7 +1,27 @@
 <div class="-release">
   <div class="-release__data">
-    <div class="body-1" [ngClass]="{ '-completed': release.isCompleted }">
-      {{ release.name }}
+    <div class="-release__data__name">
+      <div class="body-1" [ngClass]="{ '-completed': release.isCompleted }">
+        {{ release.name }}
+      </div>
+      <mat-chip
+        *ngIf="release.isCompleted"
+        class="caption -release__data__name__status--done"
+      >
+        Done
+      </mat-chip>
+      <mat-chip
+        *ngIf="!release.isCompleted && hoursExecuted > 0"
+        class="caption -release__data__name__status--in-progress"
+      >
+        In progress
+      </mat-chip>
+      <mat-chip
+        *ngIf="!release.isCompleted && hoursExecuted === 0"
+        class="caption -release__data__name__status--planned"
+      >
+        Planned
+      </mat-chip>
     </div>
     <div class="body-1 -release__data__deadline">{{ deadline }}</div>
     <div class="-release__data__progress">
