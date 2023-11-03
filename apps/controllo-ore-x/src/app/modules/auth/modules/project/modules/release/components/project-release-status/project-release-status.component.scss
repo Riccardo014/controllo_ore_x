@@ -5,46 +5,6 @@
   height: calc($content-height - $subtitle-height);
   @include scrollbar-primary(map-get($palette-grey, 400), 6px, true);
 
-  &__container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
-    border-top: 1px solid map-get($palette-grey, 200);
-    border-bottom: 1px solid map-get($palette-grey, 200);
-
-    &__data {
-      display: flex;
-      flex-direction: column;
-      padding: 20px 40px;
-      width: 100%;
-
-      &__title {
-        color: rgba(0, 0, 0, 0.5);
-      }
-
-      &--with-borders {
-        border-right: 1px solid map-get($palette-grey, 200);
-        border-left: 1px solid map-get($palette-grey, 200);
-      }
-
-      &__elements {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-
-        &__progress-bar {
-          max-width: 100px;
-        }
-
-        &--completed {
-          color: map-get($palette-primary, 500);
-        }
-      }
-    }
-  }
-
   &__cards {
     border-bottom: 1px solid map-get($palette-grey, 200);
 

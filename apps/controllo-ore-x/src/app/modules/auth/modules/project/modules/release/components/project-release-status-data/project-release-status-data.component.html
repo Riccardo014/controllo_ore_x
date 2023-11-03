@@ -1,0 +1,85 @@
+<div class="-status">
+  <div class="-status__data">
+    <h2 class="subtitle-1 -status__data__title">Releases totali</h2>
+    <div class="headline-4">{{ totalReleases }}</div>
+  </div>
+
+  <div class="-status__data -status__data--with-borders">
+    <h2 class="subtitle-1 -status__data__title">Release in corso</h2>
+    <div class="-status__data__elements">
+      <div class="headline-4">{{ inProgressReleases }}</div>
+      <mat-progress-bar
+        class="-status__data__elements__progress-bar"
+        mode="determinate"
+        value="60"
+        color="primary"
+      >
+      </mat-progress-bar>
+    </div>
+  </div>
+
+  <div class="-status__data">
+    <h2 class="subtitle-1 -status__data__title">Release completate</h2>
+    <div class="-status__data__elements">
+      <div class="headline-4">{{ completedReleases }}</div>
+      <span class="material-symbols-outlined -status__data__elements--completed"
+        >check</span
+      >
+    </div>
+  </div>
+</div>
+
+<div *ngIf="project" class="-hours-report">
+  <div class="-hours-report__element">
+    <div class="-hours-report__element__content">
+      <div class="body-2 -hours-report__element__content__title">
+        Budget ore
+      </div>
+      <div class="headline-4">
+        {{ convertNumberToHours(project.hoursBudget) }}
+      </div>
+    </div>
+  </div>
+  <div class="-hours-report__element">
+    <div class="-hours-report__element__content">
+      <div class="body-2 -hours-report__element__content__title">
+        Ore fatturabili
+      </div>
+      <div class="headline-4">
+        {{ convertNumberToHours(billableHours) }}
+      </div>
+    </div>
+  </div>
+  <div class="-hours-report__element">
+    <div class="-hours-report__element__content">
+      <div class="body-2 -hours-report__element__content__title">
+        Ore utilizzate
+      </div>
+      <div class="headline-4">
+        {{ convertNumberToHours(usedHours) }}
+      </div>
+    </div>
+  </div>
+  <div class="-hours-report__element">
+    <div class="-hours-report__element__content">
+      <div class="body-2 -hours-report__element__content__title">
+        Ore fuori budget
+      </div>
+      <div
+        class="headline-4 -hours-report__element__content__value--highlighted"
+      >
+        {{ convertNumberToHours(hoursOutOfBudget) }}
+      </div>
+    </div>
+  </div>
+  <div class="-hours-report__element -hours-report__element--highlighted">
+    <div class="-hours-report__element__content">
+      <div class="body-2 -hours-report__element__content__title--var">
+        Budget ore totale
+      </div>
+      <div class="headline-4 -hours-report__element__content__value--var">
+        {{ convertNumberToHours(totalHoursBudget) }}
+      </div>
+    </div>
+  </div>
+</div>

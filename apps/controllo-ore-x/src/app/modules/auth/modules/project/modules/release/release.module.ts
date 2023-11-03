@@ -31,6 +31,7 @@ import { ReleaseDialog } from './dialogs/release-dialog/release.dialog';
 import { ReleaseIndexPage } from './pages/release-index/release-index.page';
 import { ReportIndexPage } from './pages/report-index/report-index.page';
 import { ReleaseRoutingModule } from './release-routing.module';
+import { ProjectReleaseStatusDataComponent } from './components/project-release-status-data/project-release-status-data.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { ReleaseRoutingModule } from './release-routing.module';
     ReportIndexPage,
     ReleaseDialog,
     ProjectActivityCardComponent,
+    ProjectReleaseStatusDataComponent,
   ],
   imports: [
     CommonModule,
