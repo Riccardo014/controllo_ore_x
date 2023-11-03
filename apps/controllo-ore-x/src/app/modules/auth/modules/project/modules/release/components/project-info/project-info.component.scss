@@ -1,0 +1,10 @@
+@import 'libs/ui/core';
+
+.-content {
+  border-top: 1px solid map-get($palette-grey, 200);
+  overflow-y: auto;
+  max-height: calc($content-height - $subtitle-height);
+  height: auto;
+
+  @include scrollbar-primary(map-get($palette-grey, 400), 6px, true);
+}
