@@ -37,6 +37,8 @@ import { ReleaseStatusDataHoursTagComponent } from './components/release-status-
 import { ReleaseStatusDataHoursTagTableHeaderComponent } from './components/release-status-data-hours-tag-table-header/release-status-data-hours-tag-table-header.component';
 import { ReleaseStatusDataHoursTagTableLineComponent } from './components/release-status-data-hours-tag-table-line/release-status-data-hours-tag-table-line.component';
 import { ReleaseStatusInfoComponent } from './components/release-status-info/release-status-info.component';
+import { ProjectStatusInfoComponent } from './components/project-status-info/project-status-info.component';
+import { ProjectInfoComponent } from './components/project-info/project-info.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,8 @@ import { ReleaseStatusInfoComponent } from './components/release-status-info/rel
     ReleaseStatusDataHoursTagTableHeaderComponent,
     ReleaseStatusDataHoursTagTableLineComponent,
     ReleaseStatusInfoComponent,
+    ProjectStatusInfoComponent,
+    ProjectInfoComponent,
   ],
   imports: [
     CommonModule,

@@ -10,7 +10,7 @@ import {
   RT_DIALOG_CLOSE_RESULT,
   RtDialogService,
 } from '@controllo-ore-x/rt-shared';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { ProjectDialog } from '../../../../dialogs/project-dialog/project.dialog';
 
 @Component({
@@ -23,6 +23,10 @@ export class ReleaseIndexPage
 {
   projectId?: string;
   project?: ProjectReadDto;
+
+  wasProjectUpdated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false,
+  );
 
   isLoading: boolean = true;
 
@@ -81,6 +85,7 @@ export class ReleaseIndexPage
         })
         .subscribe((res) => {
           if (res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
+            this.wasProjectUpdated.next(true);
             this.isLoading = true;
             this.setSubscriptions();
           }

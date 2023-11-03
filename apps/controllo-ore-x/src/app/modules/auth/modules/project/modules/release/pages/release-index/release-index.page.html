@@ -51,8 +51,10 @@
     <mat-tab label="Info">
       <ng-template matTabContent>
         <div *ngIf="project">
-          <controllo-ore-x-release-table [projectId]="project._id">
-          </controllo-ore-x-release-table>
+          <controllo-ore-x-project-info
+            [projectId]="project._id"
+            [wasProjectUpdated]="wasProjectUpdated"
+          ></controllo-ore-x-project-info>
         </div>
       </ng-template>
     </mat-tab>
