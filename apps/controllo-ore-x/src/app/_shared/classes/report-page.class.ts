@@ -43,6 +43,7 @@ export abstract class ReportPage<T, CreateT, UpdateT>
   indexTableHandler!: RtTableApiStatusManager<T, CreateT, UpdateT>;
 
   dataForFilters: DataForFilter[] = [];
+  areDateFiltersActive: boolean = true;
 
   selectedRangeDate: any;
 
@@ -68,7 +69,7 @@ export abstract class ReportPage<T, CreateT, UpdateT>
     if (!this.indexTableHandler) {
       throw new Error('Ititialization of indexTableHandler failed');
     }
-    this._firstLoad();
+    this.firstLoad();
     this.setSubscriptions();
   }
 
@@ -100,6 +101,9 @@ export abstract class ReportPage<T, CreateT, UpdateT>
   }
 
   changeDataForDate(): void {
+    if (!this.areDateFiltersActive) {
+      return;
+    }
     if (
       !this.indexTableHandler.status ||
       !this.indexTableHandler.tableConfiguration
@@ -164,7 +168,7 @@ export abstract class ReportPage<T, CreateT, UpdateT>
     });
   }
 
-  private async _firstLoad(): Promise<void> {
+  async firstLoad(): Promise<void> {
     const configuration = this._configurationService.getConfiguration(
       this.CONFIGURATION_KEY,
     );

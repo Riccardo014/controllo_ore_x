@@ -1,0 +1,14 @@
+<div class="-line">
+  <div class="-line__information">
+    <div class="body-2 -line__information__data">{{ hoursTag.name }}</div>
+    <div
+      class="body-2 -line__information__data -line__information__data--progress"
+    >
+      <mat-progress-bar
+        mode="determinate"
+        value="{{ (100 * hours) / totalHours }}"
+      ></mat-progress-bar>
+      {{ convertNumberToHours(hours) }}
+    </div>
+  </div>
+</div>

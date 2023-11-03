@@ -14,7 +14,7 @@
     <button
       mat-flat-button
       extended
-      class="-header__options__button -header__options__button--complete"
+      class="-header__options__button"
       *ngIf="release.isCompleted"
       (click)="toggleCompletion()"
     >
@@ -26,7 +26,7 @@
     <button
       mat-flat-button
       extended
-      class="-header__options__button -header__options__button--complete"
+      class="-header__options__button"
       *ngIf="!release.isCompleted"
       (click)="toggleCompletion()"
     >
@@ -35,64 +35,28 @@
         <span class="body-2">Completa Release</span>
       </div>
     </button>
-    <!-- TODO: add export functionality -->
     <button
       mat-flat-button
       extended
-      class="-header__options__button -header__options__button--export"
+      class="-header__options__button"
+      (click)="openEditDialog()"
     >
       <div class="-header__options__button__elements">
-        <span class="material-symbols-outlined">blender</span>
-        <div class="body-2">Export</div>
+        <span class="material-symbols-outlined">ink_marker</span>
+        <span class="body-2">Modifica</span>
       </div>
     </button>
   </div>
 </div>
 
-<div *ngIf="release" class="-report">
-  <div class="-report__element -report__element--highlighted">
-    <div class="-report__element__content">
-      <div class="body-1 -report__element__content__title--var">Budget ore</div>
-      <div class="subtitle-1 -report__element__content__value--var">
-        {{ convertNumberToHours(release.hoursBudget) }}
-      </div>
-    </div>
-  </div>
+<div class="-content">
+  <controllo-ore-x-release-status-data
+    [releaseId]="releaseId"
+    [wasReleaseUpdated]="wasReleaseUpdated"
+  ></controllo-ore-x-release-status-data>
 
-  <div class="-report__element">
-    <div class="-report__element__content">
-      <div class="body-1 -report__element__content__title">Ore utilizzate</div>
-      <div class="subtitle-1">{{ convertNumberToHours(hoursExecuted) }}</div>
-    </div>
-  </div>
-
-  <div class="-report__element">
-    <div class="-report__element__content">
-      <div class="body-1 -report__element__content__title">
-        Ore fuori budget
-      </div>
-      <div
-        class="subtitle-1"
-        [ngClass]="{'-report__element__content__value--highlighted' : calculatedHoursOutOfBudget() != '00:00' }"
-      >
-        {{ calculatedHoursOutOfBudget() }}
-      </div>
-    </div>
-  </div>
-
-  <div class="-report__element">
-    <div class="-report__element__content">
-      <div class="body-1 -report__element__content__title">Ore fatturabili</div>
-      <div class="subtitle-1">
-        {{ convertNumberToHours(release.billableHoursBudget) }}
-      </div>
-    </div>
-  </div>
-
-  <div class="-report__element -report__element--deadline">
-    <div class="-report__element__content">
-      <div class="body-1 -report__element__content__title">Scadenza</div>
-      <div class="subtitle-1">{{ deadline }}</div>
-    </div>
-  </div>
+  <controllo-ore-x-report-template
+    [page]="this"
+    [hasSubtitle]="false"
+  ></controllo-ore-x-report-template>
 </div>

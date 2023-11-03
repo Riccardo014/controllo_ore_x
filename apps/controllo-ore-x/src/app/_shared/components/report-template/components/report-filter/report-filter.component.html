@@ -37,7 +37,7 @@
         *ngFor="let element of dataForFilter.formControl.value"
         (removed)="remove(dataForFilter, element)"
       >
-        {{ element.name }}
+        {{ element.name + ' ' + (element?.surname ? element.surname : '') }}
         <button matChipRemove>
           <mat-icon>cancel</mat-icon>
         </button>

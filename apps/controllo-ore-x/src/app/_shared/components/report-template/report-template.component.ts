@@ -75,6 +75,11 @@ export class ReportTemplateComponent
    */
   @Input() buttonText: string = 'Button txt';
 
+  /**
+   * The page will have a subtitle
+   */
+  @Input() hasSubtitle: boolean = true;
+
   data: any[] = [];
 
   dataForFilters: DataForFilter[] = [];

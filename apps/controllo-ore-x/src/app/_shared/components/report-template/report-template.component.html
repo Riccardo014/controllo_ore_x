@@ -38,7 +38,7 @@
     (filtersEvent)="page.onFilterEmit($event)"
   ></controllo-ore-x-report-filter>
 
-  <div class="-content__subtitle">
+  <div *ngIf="hasSubtitle" class="-content__subtitle">
     <div class="-content__subtitle__text">
       <h2 class="body-1">{{ page.subTitle }}</h2>
       <span class="headline-5">{{

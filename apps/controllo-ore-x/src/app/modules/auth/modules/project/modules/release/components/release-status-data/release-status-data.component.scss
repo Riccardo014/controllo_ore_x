@@ -1,0 +1,33 @@
+@import 'libs/ui/core';
+
+.-hours-report {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid map-get($palette-grey, 200);
+
+  &__element {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid map-get($palette-grey, 200);
+
+    &__content {
+      display: flex;
+      align-items: start;
+      flex-direction: column;
+
+      &__title {
+        color: rgba(0, 0, 0, 0.5);
+      }
+
+      &__value {
+        &--highlighted {
+          color: map-get($palette-primary, 500);
+        }
+      }
+    }
+  }
+}

@@ -26,7 +26,7 @@ export class ProjectReleaseStatusDataComponent
   inProgressReleases = 0;
   completedReleases = 0;
   billableHours = 0;
-  usedHours = 0;
+  hoursExecuted = 0;
   totalHoursBudget = 0;
   hoursOutOfBudget = 0;
 
@@ -67,11 +67,14 @@ export class ProjectReleaseStatusDataComponent
   }
 
   private _getProject(): Subscription {
-    return this._projectDataService
-      .getOne(this.projectId)
-      .subscribe((project: ApiResponse<ProjectReadDto>) => {
+    return this._projectDataService.getOne(this.projectId).subscribe({
+      next: (project: ApiResponse<ProjectReadDto>) => {
         this.project = project.data;
-      });
+      },
+      error: (error: any) => {
+        throw new Error(error);
+      },
+    });
   }
 
   private _fetchSetReleases(): Subscription {
@@ -79,7 +82,7 @@ export class ProjectReleaseStatusDataComponent
     this.inProgressReleases = 0;
     this.completedReleases = 0;
     this.billableHours = 0;
-    this.usedHours = 0;
+    this.hoursExecuted = 0;
     this.totalHoursBudget = 0;
     this.hoursOutOfBudget = 0;
 
@@ -102,14 +105,14 @@ export class ProjectReleaseStatusDataComponent
                 break;
               }
             }
-            for (const userHour of release.userHours) {
-              this.usedHours += Number(userHour.hours);
-            }
+          }
+          for (const userHour of release.userHours) {
+            this.hoursExecuted += Number(userHour.hours);
           }
         }
         this.hoursOutOfBudget =
-          this.totalHoursBudget - this.usedHours < 0
-            ? Math.abs(this.totalHoursBudget - this.usedHours)
+          this.totalHoursBudget - this.hoursExecuted < 0
+            ? Math.abs(this.totalHoursBudget - this.hoursExecuted)
             : 0;
       });
   }

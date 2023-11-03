@@ -32,6 +32,10 @@ import { ReleaseIndexPage } from './pages/release-index/release-index.page';
 import { ReportIndexPage } from './pages/report-index/report-index.page';
 import { ReleaseRoutingModule } from './release-routing.module';
 import { ProjectReleaseStatusDataComponent } from './components/project-release-status-data/project-release-status-data.component';
+import { ReleaseStatusDataComponent } from './components/release-status-data/release-status-data.component';
+import { ReleaseStatusDataHoursTagComponent } from './components/release-status-data-hours-tag/release-status-data-hours-tag.component';
+import { ReleaseStatusDataHoursTagTableHeaderComponent } from './components/release-status-data-hours-tag-table-header/release-status-data-hours-tag-table-header.component';
+import { ReleaseStatusDataHoursTagTableLineComponent } from './components/release-status-data-hours-tag-table-line/release-status-data-hours-tag-table-line.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +48,10 @@ import { ProjectReleaseStatusDataComponent } from './components/project-release-
     ReleaseDialog,
     ProjectActivityCardComponent,
     ProjectReleaseStatusDataComponent,
+    ReleaseStatusDataComponent,
+    ReleaseStatusDataHoursTagComponent,
+    ReleaseStatusDataHoursTagTableHeaderComponent,
+    ReleaseStatusDataHoursTagTableLineComponent,
   ],
   imports: [
     CommonModule,
