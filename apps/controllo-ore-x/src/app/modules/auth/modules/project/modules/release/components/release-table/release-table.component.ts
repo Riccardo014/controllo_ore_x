@@ -13,6 +13,11 @@ import {
   completeSubscriptions,
 } from '@app/utils/subscriptions_lifecycle';
 import { BehaviorSubject, Subscription } from 'rxjs';
+import { ReleaseDialog } from '../../dialogs/release-dialog/release.dialog';
+import {
+  RT_DIALOG_CLOSE_RESULT,
+  RtDialogService,
+} from '@controllo-ore-x/rt-shared';
 
 @Component({
   selector: 'controllo-ore-x-release-table',
@@ -24,12 +29,6 @@ export class ReleaseTableComponent
 {
   @Input() projectId!: string;
 
-  @Input() isNewReleaseCreated: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
-
-  @Output() onReleaseUpdatedEvent: EventEmitter<void> =
-    new EventEmitter<void>();
-
   isLoading: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
   releases: ReleaseReadDto[] = [];
@@ -39,7 +38,10 @@ export class ReleaseTableComponent
   completeSubscriptions: (subscriptionsList: Subscription[]) => void =
     completeSubscriptions;
 
-  constructor(protected _releaseDataService: ReleaseDataService) {}
+  constructor(
+    private _rtDialogService: RtDialogService,
+    protected _releaseDataService: ReleaseDataService,
+  ) {}
 
   ngOnInit(): void {
     if (!this.projectId) {
@@ -56,26 +58,37 @@ export class ReleaseTableComponent
   }
 
   setSubscriptions(): void {
-    this.subscriptionsList.push(
-      this._onNewReleaseCreated(),
-      this._fetchSetReleases(),
-    );
+    this.subscriptionsList.push(this._fetchSetReleases());
   }
 
   onReleaseUpdated(): void {
     this.subscriptionsList.push(this._fetchSetReleases());
-    this.onReleaseUpdatedEvent.emit();
   }
 
-  private _onNewReleaseCreated(): Subscription {
-    return this.isNewReleaseCreated.subscribe({
-      next: () => {
-        this.subscriptionsList.push(this._fetchSetReleases());
-      },
-      error: (error: any) => {
-        throw new Error(error);
-      },
-    });
+  openCreateReleaseDialog(): void {
+    if (!this.projectId) {
+      return;
+    }
+    const dialogConfig = {
+      width: '600px',
+      maxWidth: '600px',
+    };
+    this.subscriptionsList.push(
+      this._rtDialogService
+        .open(ReleaseDialog, {
+          width: dialogConfig.width,
+          maxWidth: dialogConfig.maxWidth,
+          data: {
+            projectId: this.projectId,
+            transactionStatus: 'create',
+          },
+        })
+        .subscribe((res) => {
+          if (res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
+            this._fetchSetReleases();
+          }
+        }),
+    );
   }
 
   private _fetchSetReleases(): Subscription {

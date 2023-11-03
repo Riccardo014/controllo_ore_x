@@ -22,15 +22,15 @@
       </div>
     </div>
     <div class="-header__options">
+      <!-- TODO: add export functionality -->
       <button
         mat-flat-button
         extended
-        class="-header__options__button"
-        (click)="openCreateReleaseDialog()"
+        class="-header__options__button -header__options__button--export"
       >
         <div class="-header__options__button__elements">
-          <span class="material-symbols-outlined">egg_alt</span>
-          <span>Nuova Release</span>
+          <span class="material-symbols-outlined">blender</span>
+          <span class="body-2"> Export </span>
         </div>
       </button>
       <button
@@ -41,7 +41,7 @@
       >
         <div class="-header__options__button__elements">
           <span class="material-symbols-outlined">ink_marker</span>
-          <span>Modifica</span>
+          <span class="body-2">Modifica</span>
         </div>
       </button>
     </div>
@@ -51,11 +51,7 @@
     <mat-tab label="Info">
       <ng-template matTabContent>
         <div *ngIf="project">
-          <controllo-ore-x-release-table
-            [projectId]="project._id"
-            [isNewReleaseCreated]="whereReleaseModified"
-            (onReleaseUpdatedEvent)="onReleaseUpdated()"
-          >
+          <controllo-ore-x-release-table [projectId]="project._id">
           </controllo-ore-x-release-table>
         </div>
       </ng-template>
@@ -63,10 +59,7 @@
     <mat-tab label="Stato">
       <ng-template matTabContent>
         <div *ngIf="project">
-          <controllo-ore-x-project-release-status
-            [projectId]="project._id"
-            [whereReleaseModified]="whereReleaseModified"
-          >
+          <controllo-ore-x-project-release-status [projectId]="project._id">
           </controllo-ore-x-project-release-status>
         </div>
       </ng-template>

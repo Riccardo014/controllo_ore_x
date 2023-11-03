@@ -1,3 +1,20 @@
+<div class="-header">
+  <h1 class="headline-6">Release</h1>
+  <div class="-header__options">
+    <button
+      mat-flat-button
+      extended
+      class="-header__options__button"
+      (click)="openCreateReleaseDialog()"
+    >
+      <div class="-header__options__button__elements">
+        <span class="material-symbols-outlined">egg_alt</span>
+        <span>Nuova Release</span>
+      </div>
+    </button>
+  </div>
+</div>
+
 <controllo-ore-x-release-table-header></controllo-ore-x-release-table-header>
 <div class="-table">
   <div *ngIf="isLoading.value">

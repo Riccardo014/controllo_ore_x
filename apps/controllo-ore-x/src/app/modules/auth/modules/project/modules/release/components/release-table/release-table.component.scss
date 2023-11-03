@@ -1,5 +1,42 @@
 @import 'libs/ui/core';
 
+.-header {
+  height: 70px;
+  border-top: 1px solid map-get($palette-grey, 200);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 30px;
+
+  &__options {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5%;
+
+    &__button {
+      background-color: map-get($palette-primary, 50);
+      color: map-get($palette-primary, 500);
+      padding: 20px;
+      border-radius: 10px;
+
+      &__elements {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 5%;
+
+        span {
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}
+
 .-table {
   overflow-y: auto;
   height: calc($content-height - $subtitle-height - $subtitle-height);
