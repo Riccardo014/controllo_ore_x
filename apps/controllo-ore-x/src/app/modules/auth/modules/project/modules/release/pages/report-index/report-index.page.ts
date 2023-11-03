@@ -112,6 +112,7 @@ export class ReportIndexPage extends ReportPage<
       })
       .subscribe({
         next: () => {
+          this.wasReleaseUpdated.next(true);
           this._getRelease();
         },
         error: (error: any) => {

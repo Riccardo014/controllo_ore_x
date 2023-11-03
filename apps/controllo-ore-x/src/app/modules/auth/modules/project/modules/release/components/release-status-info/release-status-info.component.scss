@@ -1,0 +1,44 @@
+@import 'libs/ui/core';
+
+.-info {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  padding: 40px;
+  gap: 20px;
+
+  &__line {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    &__title {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 5%;
+      color: rgba(0, 0, 0, 0.5);
+      width: 50%;
+    }
+
+    &__status {
+      &--done {
+        background-color: map-get($palette-auxiliaries-green, 500);
+      }
+
+      &--in-progress {
+        background-color: map-get($palette-auxiliaries-blue, 500);
+      }
+
+      &--planned {
+        background-color: map-get($palette-auxiliaries-yellow, 500);
+      }
+    }
+
+    &__progress-bar {
+      width: 50%;
+    }
+  }
+}

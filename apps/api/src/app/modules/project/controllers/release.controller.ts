@@ -50,6 +50,7 @@ export class ReleaseController {
   getOne(@Param('id') id: string): Promise<Release> {
     return this._releaseService.getOne(id, [
       'project',
+      'project.customer',
       'userHours',
       'userHours.hoursTag',
     ]);

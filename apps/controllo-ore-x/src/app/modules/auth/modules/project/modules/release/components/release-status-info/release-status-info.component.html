@@ -1,0 +1,76 @@
+<div *ngIf="release" class="-info">
+  <div class="-info__line">
+    <div class="body-2 -info__line__title">
+      <span class="material-symbols-outlined">beach_access</span>
+      Stato
+    </div>
+
+    <mat-chip
+      *ngIf="release.isCompleted"
+      class="caption -info__line__status--done"
+    >
+      Done
+    </mat-chip>
+    <mat-chip
+      *ngIf="!release.isCompleted && hoursExecuted > 0"
+      class="caption -info__line__status--in-progress"
+    >
+      In progress
+    </mat-chip>
+    <mat-chip
+      *ngIf="!release.isCompleted && hoursExecuted === 0"
+      class="caption -info__line__status--planned"
+    >
+      Planned
+    </mat-chip>
+  </div>
+
+  <div class="-info__line">
+    <div class="body-2 -info__line__title">
+      <span class="material-symbols-outlined">assist_walker</span>
+      Avanzamento
+    </div>
+
+    <mat-progress-bar
+      class="-info__line__progress-bar"
+      mode="determinate"
+      value="{{ (hoursExecuted / release.hoursBudget) * 100 }}"
+    ></mat-progress-bar>
+  </div>
+
+  <div class="-info__line">
+    <div class="body-2 -info__line__title">
+      <span class="material-symbols-outlined">egg</span>
+      Progetto
+    </div>
+
+    <div class="body-2">{{ release.project!.name }}</div>
+  </div>
+
+  <div class="-info__line">
+    <div class="body-2 -info__line__title">
+      <span class="material-symbols-outlined">bakery_dining</span>
+      Cliente
+    </div>
+
+    <div class="body-2">{{ release.project!.customer!.name }}</div>
+  </div>
+
+  <div class="-info__line">
+    <div class="body-2 -info__line__title">
+      <span class="material-symbols-outlined">edit_calendar</span>
+      Creazione
+    </div>
+
+    <div class="body-2">{{ formatDate(release.createdAt!) }}</div>
+  </div>
+
+  <div class="-info__line">
+    <div class="body-2 -info__line__title">
+      <span class="material-symbols-outlined">event</span>
+      Scadenza
+    </div>
+
+    <div class="body-2">{{ formatDate(release.deadline) }}</div>
+  </div>
+</div>
