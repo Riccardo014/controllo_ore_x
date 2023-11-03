@@ -1,43 +1,90 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiResponse, ReleaseReadDto, UserHoursReadDto } from '@api-interfaces';
-import { ReleaseDataService } from '@app/_core/services/release.data-service';
-import { UserHoursDataService } from '@app/_core/services/user-hour.data-service';
-import { convertNumberToHours } from '@app/utils/NumberToHoursConverter';
 import {
-  SubscriptionsLifecycle,
-  completeSubscriptions,
-} from '@app/utils/subscriptions_lifecycle';
-import { Subscription } from 'rxjs';
+  ApiPaginatedResponse,
+  ApiResponse,
+  COX_FILTER,
+  FindBoostedWhereOption,
+  INDEX_CONFIGURATION_KEY,
+  IndexConfigurationReadDto,
+  ReleaseReadDto,
+  UserHoursReadDto,
+} from '@api-interfaces';
+import { ReleaseDataService } from '@app/_core/services/release.data-service';
+import {
+  RT_DIALOG_CLOSE_RESULT,
+  RtDialogService,
+} from '@controllo-ore-x/rt-shared';
+import { BehaviorSubject, Subscription, firstValueFrom } from 'rxjs';
+import { ReleaseDialog } from '../../dialogs/release-dialog/release.dialog';
+import { ReportPage } from '@app/_shared/classes/report-page.class';
+import { IndexConfigurationDataService } from '@app/_core/services/index-configuration.data-service';
+import { TrackerDataService } from '@app/_core/services/tracker.data-service';
+import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
+import { FilterService } from '@app/_shared/components/report-template/services/filter.service';
+import { CalendarDateService } from '@app/_shared/components/index-template/services/calendar-date.service';
+import { TeamDataService } from '@app/_core/services/team.data-service';
+import { HoursTagDataService } from '@app/_core/services/hours-tag.data-service';
 
 @Component({
   selector: 'controllo-ore-x-report-index',
   templateUrl: './report-index.page.html',
   styleUrls: ['./report-index.page.scss'],
 })
-export class ReportIndexPage
-  implements OnInit, OnDestroy, SubscriptionsLifecycle
-{
+export class ReportIndexPage extends ReportPage<
+  UserHoursReadDto,
+  UserHoursReadDto,
+  UserHoursReadDto
+> {
+  titleIcon: string | null = '';
+  title: string = '';
+  pageTitle = '';
+  buttonIcon = '';
+  buttonText = '';
+  subTitle: string = '';
+  subTitleHours: number = 0;
+
+  override isTableTopbarVisible: boolean = false;
+  override isCompletePage: boolean = false;
+  override areDateFiltersActive: boolean = false;
+
+  CONFIGURATION_KEY: INDEX_CONFIGURATION_KEY =
+    INDEX_CONFIGURATION_KEY.RELEASE_HOURS;
+  isItLoading: boolean = false;
+  _isFirstLoadDone: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false,
+  );
+  hasErrors: boolean = false;
+  isEditAvailable: boolean = false;
+
   releaseId!: string;
 
-  release: ReleaseReadDto = {} as ReleaseReadDto;
+  release!: ReleaseReadDto;
 
-  hoursExecuted: number = 0;
-  deadline: string = '';
-
-  subscriptionsList: Subscription[] = [];
-
-  completeSubscriptions: (subscriptionsList: Subscription[]) => void =
-    completeSubscriptions;
+  wasReleaseUpdated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false,
+  );
 
   constructor(
+    protected _configurationService: IndexConfigurationDataService,
+    protected _dataService: TrackerDataService,
+    protected _loadingService: RtLoadingService,
+    protected _filterService: FilterService,
+    protected _calendarDateService: CalendarDateService,
+
+    private _rtDialogService: RtDialogService,
+
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
     private _releaseDataService: ReleaseDataService,
-    private _userHoursDataService: UserHoursDataService,
-  ) {}
 
-  ngOnInit(): void {
+    private _teamDataService: TeamDataService,
+    private _hoursTagDataService: HoursTagDataService,
+  ) {
+    super();
+  }
+
+  override ngOnInit(): void {
     this.releaseId = this._getReleaseId();
 
     if (!this.releaseId) {
@@ -45,33 +92,17 @@ export class ReportIndexPage
     }
 
     this.setSubscriptions();
+    super.ngOnInit();
   }
 
-  ngOnDestroy(): void {
-    this.completeSubscriptions(this.subscriptionsList);
+  override setSubscriptions(): void {
+    this.subscriptionsList.push(this._getRelease());
   }
 
   navigateBack(): void {
     this._router.navigate(['../../'], {
       relativeTo: this._activatedRoute,
     });
-  }
-
-  setSubscriptions(): void {
-    this.subscriptionsList.push(this._getRelease(), this._getHoursExecuted());
-  }
-
-  calculatedHoursOutOfBudget(): string {
-    if (this.hoursExecuted - this.release.hoursBudget <= 0) {
-      return '00:00';
-    }
-    return this.convertNumberToHours(
-      this.hoursExecuted - this.release.hoursBudget,
-    );
-  }
-
-  convertNumberToHours(hoursToConvert: number): string {
-    return convertNumberToHours(hoursToConvert);
   }
 
   toggleCompletion(): void {
@@ -89,6 +120,82 @@ export class ReportIndexPage
       });
   }
 
+  openEditDialog(): void {
+    const dialogConfig = {
+      width: '600px',
+      maxWidth: '600px',
+    };
+    this.subscriptionsList.push(
+      this._rtDialogService
+        .open(ReleaseDialog, {
+          width: dialogConfig.width,
+          maxWidth: dialogConfig.maxWidth,
+          data: this.release,
+        })
+        .subscribe((res) => {
+          if (res.result === RT_DIALOG_CLOSE_RESULT.CONFIRM) {
+            this.wasReleaseUpdated.next(true);
+            this._getRelease();
+          }
+          if (res.result === RT_DIALOG_CLOSE_RESULT.DELETE) {
+            this.navigateBack();
+          }
+        }),
+    );
+  }
+
+  setFilters(): void {
+    this.dataForFilters = [];
+
+    this.subscriptionsList.push(
+      this._teamDataService.getMany({}).subscribe((teams) => {
+        this.insertNewFilter('Membro', 'Membri', COX_FILTER.TEAM, teams.data);
+      }),
+
+      this._hoursTagDataService.getMany({}).subscribe((hoursTags) => {
+        this.insertNewFilter(
+          'Etichetta',
+          'Etichette',
+          COX_FILTER.TAG,
+          hoursTags.data,
+        );
+      }),
+    );
+  }
+
+  override async firstLoad(): Promise<void> {
+    const configuration = this._configurationService.getConfiguration(
+      this.CONFIGURATION_KEY,
+    );
+
+    const configurationResult: ApiResponse<IndexConfigurationReadDto> =
+      await firstValueFrom(configuration);
+    this.configuration = configurationResult.data.configuration;
+    this.indexTableHandler.tableConfiguration = this.configuration;
+    this.isFirstLoadDone.next(true);
+
+    const data = this._dataService.getMany({
+      relations: this.indexTableHandler.tableConfiguration!.relations,
+      where: { releaseId: this.releaseId },
+    });
+
+    const dataResult: ApiPaginatedResponse<UserHoursReadDto> =
+      await firstValueFrom(data);
+    this.indexTableHandler.data = dataResult.data;
+    this.setFilters();
+    this.changeDataForFilters();
+    this.indexTableHandler.status.where = [{ releaseId: this.releaseId }];
+    this.indexTableHandler.statusChange(this.indexTableHandler.status);
+    this.isLoading.next(false);
+  }
+
+  override onFilterEmit(filters: FindBoostedWhereOption[]): void {
+    this.indexTableHandler.status.where = [
+      { ...filters[0], releaseId: this.releaseId },
+    ];
+    this.indexTableHandler.statusChange(this.indexTableHandler.status);
+  }
+
   /**
    * Return the release's id.
    */
@@ -100,34 +207,10 @@ export class ReportIndexPage
     return this._releaseDataService.getOne(this.releaseId).subscribe({
       next: (release: ApiResponse<ReleaseReadDto>) => {
         this.release = release.data;
-        this._formatDeadline(this.release.deadline);
       },
       error: (error: any) => {
         throw new Error(error);
       },
     });
-  }
-
-  private _formatDeadline(deadline: Date): void {
-    this.deadline = new Intl.DateTimeFormat(navigator.language).format(
-      new Date(deadline),
-    );
-  }
-
-  private _getHoursExecuted(): Subscription {
-    return this._userHoursDataService
-      .getMany({
-        where: { releaseId: this.releaseId },
-      })
-      .subscribe({
-        next: (userHours: ApiResponse<UserHoursReadDto[]>) => {
-          userHours.data.forEach((userHour: UserHoursReadDto) => {
-            this.hoursExecuted += Number(userHour.hours);
-          });
-        },
-        error: (error: any) => {
-          throw new Error(error);
-        },
-      });
   }
 }
