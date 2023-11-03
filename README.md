@@ -43,7 +43,6 @@
 ## Features migliorabili
 
 - [ ] Richiesta dei dati all'endpoint "activities" (refactor "apps\api\src\app\modules\user-hours\services\activity.service.ts").
-
 - [ ] Migliorare la visualizzazione degli errori nei dialog.
-
 - [ ] Migliorare la grafica dell'applicativo nel caso in cui sia visualizzato da tablet / mobile.
+- [ ] Migliorare il Filterservice.
