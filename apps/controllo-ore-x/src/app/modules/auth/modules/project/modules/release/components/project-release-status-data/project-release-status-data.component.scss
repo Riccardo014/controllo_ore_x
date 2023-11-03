@@ -1,0 +1,85 @@
+@import 'libs/ui/core';
+
+.-status {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  border-top: 1px solid map-get($palette-grey, 200);
+  border-bottom: 1px solid map-get($palette-grey, 200);
+
+  &__data {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 40px;
+    width: 100%;
+
+    &__title {
+      color: rgba(0, 0, 0, 0.5);
+    }
+
+    &--with-borders {
+      border-right: 1px solid map-get($palette-grey, 200);
+      border-left: 1px solid map-get($palette-grey, 200);
+    }
+
+    &__elements {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+
+      &__progress-bar {
+        max-width: 100px;
+      }
+
+      &--completed {
+        color: map-get($palette-primary, 500);
+      }
+    }
+  }
+}
+
+.-hours-report {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid map-get($palette-grey, 200);
+
+  &__element {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid map-get($palette-grey, 200);
+
+    &--highlighted {
+      background-color: map-get($palette-primary, 500);
+    }
+
+    &__content {
+      display: flex;
+      align-items: start;
+      flex-direction: column;
+
+      &__title {
+        color: rgba(0, 0, 0, 0.5);
+
+        &--var {
+          color: rgba(255, 255, 255, 0.5);
+        }
+      }
+
+      &__value {
+        &--var {
+          color: #fff;
+        }
+
+        &--highlighted {
+          color: map-get($palette-primary, 500);
+        }
+      }
+    }
+  }
+}
