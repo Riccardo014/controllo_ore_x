@@ -25,7 +25,6 @@
 
 - Modulo ferie e permessi:
 
-  - [x] Aggiungere lo stato dei permessi (Da approvare / approvato / Non approvato).
   - [ ] Aggiungere la funzionalità per admin / superadmin di approvare / rifiutare le richieste di ferie e permessi.
 
 - Report template:
