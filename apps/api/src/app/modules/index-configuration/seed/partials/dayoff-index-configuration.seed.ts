@@ -47,6 +47,12 @@ export const DAYOFF_INDEX_CONFIGURATION_SEED: any = {
         sortable: true,
       },
       {
+        title: 'Stato',
+        type: 'STATUS',
+        field: 'status',
+        sortable: true,
+      },
+      {
         title: '',
         field: '',
         type: 'EDITABLE',

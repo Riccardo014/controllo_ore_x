@@ -28,4 +28,7 @@ export class Dayoff extends BaseEntityTemplate {
 
   @Column('decimal', { precision: 6, scale: 2 })
   hours: number;
+
+  @Column()
+  status: string;
 }

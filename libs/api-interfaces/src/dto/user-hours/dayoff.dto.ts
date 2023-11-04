@@ -1,3 +1,4 @@
+import { DAYOFF_STATUS } from '../../enums/dayoff-status.enum';
 import { UserReadDto } from '../user/user.dto';
 import { HoursTagReadDto } from './hours-tag.dto';
 
@@ -11,6 +12,7 @@ export interface DayoffReadDto {
   endDate: Date;
   hours: number;
   notes: string;
+  status: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   deletedAt?: Date | string;
@@ -23,6 +25,7 @@ export interface DayoffCreateDto {
   endDate: Date;
   hours: number;
   notes: string;
+  status: string;
 }
 
 export interface DayoffUpdateDto {
@@ -32,4 +35,5 @@ export interface DayoffUpdateDto {
   endDate?: Date;
   hours?: number;
   notes?: string;
+  status?: string;
 }

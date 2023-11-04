@@ -1,7 +1,7 @@
 import { registerLocaleData } from '@angular/common';
 import localeIt from '@angular/common/locales/it';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ROLE, TableConfigurationColumn } from '@api-interfaces';
+import { DAYOFF_STATUS, ROLE, TableConfigurationColumn } from '@api-interfaces';
 import { rtTableColumnValue } from '../../lib/rt-table-column-value';
 
 @Component({
@@ -18,6 +18,12 @@ export class RtTableTdComponent implements OnInit {
   valueToPrint: any;
 
   roles: ROLE[] = [ROLE.SUPERADMIN, ROLE.ADMIN, ROLE.COLLABORATOR];
+
+  status: DAYOFF_STATUS[] = [
+    DAYOFF_STATUS.APPROVED,
+    DAYOFF_STATUS.PENDING,
+    DAYOFF_STATUS.REJECTED,
+  ];
 
   constructor() {
     registerLocaleData(localeIt);

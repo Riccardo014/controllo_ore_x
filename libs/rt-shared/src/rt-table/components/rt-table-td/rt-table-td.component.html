@@ -47,6 +47,18 @@
       {{ valueToPrint }}
     </mat-chip>
   </ng-container>
+  <ng-container *ngSwitchCase="'STATUS'">
+    <mat-chip
+      class="-chip"
+      [ngClass]="{
+        '-status-chip-approved': valueToPrint == status[0],
+        '-status-chip-pending': valueToPrint == status[1],
+        '-status-chip-rejected': valueToPrint == status[2]
+      }"
+    >
+      {{ valueToPrint }}
+    </mat-chip>
+  </ng-container>
   <ng-container *ngSwitchCase="'EDITABLE'">
     <div class="-editable-container">
       <button
