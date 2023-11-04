@@ -15,7 +15,6 @@
   - [ ] Carosello dei testi nella parte inferiore sinistra.
   - [ ] Login con google.
   - [ ] Recupero password.
-  - [ ] Mostra / nascondi password.
   - [ ] Pagina dei "Terms of service".
   - [ ] Pagina della "Privacy Policy".
 
@@ -43,3 +42,4 @@
 - [ ] Migliorare la visualizzazione degli errori nei dialog.
 - [ ] Migliorare la grafica dell'applicativo nel caso in cui sia visualizzato da tablet / mobile.
 - [ ] Migliorare il Filterservice.
+- [ ] Migliorare la visualizzazione dei componenti (ad esempio mostrare i campi dei dialog dopo che si sono ottenuti tutti i dati dei campi da riempire).
