@@ -26,4 +26,8 @@ export class ReleaseUpdateDtoV implements ReleaseUpdateDto {
   @IsDate()
   deadline: Date;
 
+  @IsOptional()
+  @IsDate()
+  managementDeadline: Date;
+
 }
