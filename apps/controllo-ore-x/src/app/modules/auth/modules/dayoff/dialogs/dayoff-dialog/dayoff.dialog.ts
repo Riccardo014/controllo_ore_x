@@ -1,7 +1,7 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DayoffReadDto, DayoffUpdateDto } from '@api-interfaces';
+import { DAYOFF_STATUS, DayoffReadDto, DayoffUpdateDto } from '@api-interfaces';
 import { AuthService } from '@app/_core/services/auth.service';
 import { DayoffDataService } from '@app/_core/services/dayoff.data-service';
 import { CalendarDateService } from '@app/_shared/components/index-template/services/calendar-date.service';
@@ -43,6 +43,7 @@ export class DayoffDialog implements OnInit, OnDestroy, SubscriptionsLifecycle {
     endTime: new FormControl(null, Validators.required),
     hours: new FormControl(null, Validators.required),
     notes: new FormControl(null, Validators.required),
+    status: new FormControl(DAYOFF_STATUS.PENDING, Validators.required),
   });
 
   date: Date = new Date();
@@ -87,6 +88,11 @@ export class DayoffDialog implements OnInit, OnDestroy, SubscriptionsLifecycle {
           this.dayoffFormGroup.value.endTime,
         ),
       );
+      if (this.dayoff.status === DAYOFF_STATUS.APPROVED) {
+        this.dayoffFormGroup.disable();
+        this.transactionStatus = 'create';
+        this.isAllDaySliderDisabled = true;
+      }
       return;
     }
     this.dayoffFormGroup.patchValue({
@@ -106,6 +112,7 @@ export class DayoffDialog implements OnInit, OnDestroy, SubscriptionsLifecycle {
       endDate: formValues.endDate,
       notes: formValues.notes,
       hours: formValues.hours,
+      status: DAYOFF_STATUS.PENDING,
     };
   }
 
@@ -145,6 +152,11 @@ export class DayoffDialog implements OnInit, OnDestroy, SubscriptionsLifecycle {
 
   onSubmit(): void {
     this.hasErrors = false;
+
+    if (this.dayoff && this.dayoff.status === DAYOFF_STATUS.APPROVED) {
+      this.onCancel();
+      return;
+    }
 
     this._initForm();
 
@@ -284,6 +296,7 @@ export class DayoffDialog implements OnInit, OnDestroy, SubscriptionsLifecycle {
       endTime: this._timeFromDate(value.endDate),
       hours: value.hours,
       notes: value.notes,
+      status: value.status,
     });
   }
 

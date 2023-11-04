@@ -19,4 +19,7 @@ export class DayoffCreateDtoV implements DayoffCreateDto {
 
   @IsNumber()
   hours: number;
+
+  @IsString()
+  status: string;
 }

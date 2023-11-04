@@ -46,6 +46,18 @@ mat-icon.-check {
   background-color: map-get($palette-auxiliaries-green, 500);
 }
 
+.-status-chip-approved {
+  background-color: map-get($palette-auxiliaries-green, 500);
+}
+
+.-status-chip-pending {
+  background-color: map-get($palette-auxiliaries-yellow, 500);
+}
+
+.-status-chip-rejected {
+  background-color: map-get($palette-auxiliaries-red, 500);
+}
+
 .-editable-container {
   margin: auto;
 }

@@ -31,4 +31,8 @@ export class DayoffUpdateDtoV implements DayoffUpdateDto {
   @IsOptional()
   @IsNumber()
   hours?: number;
+
+  @IsOptional()
+  @IsString()
+  status?: string;
 }
