@@ -33,7 +33,6 @@
   - [ ] Aggiungere la funzionalità di export dei dati.
 
 - Modulo progetti:
-  - [ ] Aggiungere un campo "Data di scadenza prevista" per ogni release.
   - [ ] Aggiungere la funzionalità di export dei dati per il progetto.
 
 ## Features migliorabili
