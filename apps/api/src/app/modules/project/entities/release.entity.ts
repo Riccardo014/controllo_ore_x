@@ -28,4 +28,7 @@ export class Release extends BaseEntityTemplate {
 
   @Column({ nullable: true })
   deadline: Date;
+
+  @Column({ nullable: true })
+  managementDeadline: Date;
 }

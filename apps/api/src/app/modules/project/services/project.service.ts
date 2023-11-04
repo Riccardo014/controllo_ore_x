@@ -44,6 +44,7 @@ export class ProjectService extends CrudService<
       hoursBudget: project.hoursBudget,
       billableHoursBudget: project.hoursBudget,
       deadline: project.deadline,
+      managementDeadline: project.deadline,
     };
   }
 }

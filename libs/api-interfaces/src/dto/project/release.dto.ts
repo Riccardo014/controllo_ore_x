@@ -10,6 +10,7 @@ export interface ReleaseReadDto {
   hoursBudget: number;
   billableHoursBudget: number;
   deadline: Date;
+  managementDeadline: Date;
   userHours: UserHoursReadDto[];
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -23,6 +24,7 @@ export interface ReleaseCreateDto {
   hoursBudget: number;
   billableHoursBudget: number;
   deadline: Date;
+  managementDeadline: Date;
 }
 
 export interface ReleaseUpdateDto {
@@ -32,4 +34,5 @@ export interface ReleaseUpdateDto {
   hoursBudget?: number;
   billableHoursBudget?: number;
   deadline?: Date;
+  managementDeadline?: Date;
 }

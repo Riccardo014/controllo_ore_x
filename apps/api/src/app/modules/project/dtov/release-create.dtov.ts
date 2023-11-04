@@ -1,10 +1,17 @@
 import { ReleaseCreateDto } from '@api-interfaces';
-import { IsBoolean, IsDate, IsNumber, IsOptional, IsString, IsUUID } from 'class-validator';
+import {
+  IsBoolean,
+  IsDate,
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 
 export class ReleaseCreateDtoV implements ReleaseCreateDto {
   @IsUUID()
   projectId: string;
-  
+
   @IsString()
   name: string;
 
@@ -23,4 +30,7 @@ export class ReleaseCreateDtoV implements ReleaseCreateDto {
   @IsDate()
   deadline: Date;
 
+  @IsOptional()
+  @IsDate()
+  managementDeadline: Date;
 }

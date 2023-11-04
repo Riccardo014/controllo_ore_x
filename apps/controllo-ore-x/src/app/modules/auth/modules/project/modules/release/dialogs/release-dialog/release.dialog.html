@@ -70,6 +70,25 @@
           </mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
+
+        <mat-form-field class="col" appearance="outline">
+          <mat-label>Data di scadenza gestionale</mat-label>
+          <input
+            matInput
+            [matDatepicker]="managementPicker"
+            placeholder="Data di scadenza"
+            formControlName="managementDeadline"
+          />
+          <mat-error *ngFor="let error of [RT_FORM_ERRORS['REQUIRED']]">
+            <div *ngIf="getFormControlError('managementDeadline',error)">
+              {{ error.message }}
+            </div>
+          </mat-error>
+          <mat-datepicker-toggle matIconSuffix [for]="managementPicker">
+            <mat-icon matDatepickerToggleIcon>calendar_today</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #managementPicker></mat-datepicker>
+        </mat-form-field>
       </div>
     </form>
   </div>

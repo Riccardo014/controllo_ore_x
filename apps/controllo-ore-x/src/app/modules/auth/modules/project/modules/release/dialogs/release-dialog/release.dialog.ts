@@ -34,6 +34,7 @@ export class ReleaseDialog {
     hoursBudget: new FormControl(null, Validators.required),
     billableHoursBudget: new FormControl(null, Validators.required),
     deadline: new FormControl(null, Validators.required),
+    managementDeadline: new FormControl(null, Validators.required),
     isCompleted: new FormControl(null, Validators.required),
   });
 
