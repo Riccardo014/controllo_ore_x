@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { AlertModule } from '@controllo-ore-x/rt-shared';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { AlertModule } from '@controllo-ore-x/rt-shared';
     ReactiveFormsModule,
     MatButtonModule,
     AlertModule,
+    MatIconModule,
   ],
 })
 export class UnauthModule { }
