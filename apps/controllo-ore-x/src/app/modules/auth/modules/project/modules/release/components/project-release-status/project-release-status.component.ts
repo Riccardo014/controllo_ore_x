@@ -4,9 +4,12 @@ import {
   ApiResponse,
   COX_FILTER,
   FindBoostedWhereOption,
+  HoursTagReadDto,
   INDEX_CONFIGURATION_KEY,
   IndexConfigurationReadDto,
+  ReleaseReadDto,
   UserHoursReadDto,
+  UserReadDto,
 } from '@api-interfaces';
 import { HoursTagDataService } from '@app/_core/services/hours-tag.data-service';
 import { IndexConfigurationDataService } from '@app/_core/services/index-configuration.data-service';
@@ -74,7 +77,7 @@ export class ProjectReleaseStatusComponent extends ReportPage<
         .getMany({
           where: { projectId: this.projectId },
         })
-        .subscribe((releases) => {
+        .subscribe((releases: ApiPaginatedResponse<ReleaseReadDto>) => {
           this.insertNewFilter(
             'Release',
             'Release',
@@ -83,18 +86,22 @@ export class ProjectReleaseStatusComponent extends ReportPage<
           );
         }),
 
-      this._teamDataService.getMany({}).subscribe((teams) => {
-        this.insertNewFilter('Membro', 'Membri', COX_FILTER.TEAM, teams.data);
-      }),
+      this._teamDataService
+        .getMany({})
+        .subscribe((teams: ApiPaginatedResponse<UserReadDto>) => {
+          this.insertNewFilter('Membro', 'Membri', COX_FILTER.TEAM, teams.data);
+        }),
 
-      this._hoursTagDataService.getMany({}).subscribe((hoursTags) => {
-        this.insertNewFilter(
-          'Etichetta',
-          'Etichette',
-          COX_FILTER.TAG,
-          hoursTags.data,
-        );
-      }),
+      this._hoursTagDataService
+        .getMany({})
+        .subscribe((hoursTags: ApiPaginatedResponse<HoursTagReadDto>) => {
+          this.insertNewFilter(
+            'Etichetta',
+            'Etichette',
+            COX_FILTER.TAG,
+            hoursTags.data,
+          );
+        }),
     );
   }
 
