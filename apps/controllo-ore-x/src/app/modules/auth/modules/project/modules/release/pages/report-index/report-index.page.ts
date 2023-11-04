@@ -5,10 +5,12 @@ import {
   ApiResponse,
   COX_FILTER,
   FindBoostedWhereOption,
+  HoursTagReadDto,
   INDEX_CONFIGURATION_KEY,
   IndexConfigurationReadDto,
   ReleaseReadDto,
   UserHoursReadDto,
+  UserReadDto,
 } from '@api-interfaces';
 import { ReleaseDataService } from '@app/_core/services/release.data-service';
 import {
@@ -25,6 +27,7 @@ import { FilterService } from '@app/_shared/components/report-template/services/
 import { CalendarDateService } from '@app/_shared/components/index-template/services/calendar-date.service';
 import { TeamDataService } from '@app/_core/services/team.data-service';
 import { HoursTagDataService } from '@app/_core/services/hours-tag.data-service';
+import { HOURS_TAG_SEED } from '../../../../../../../../../../../api/src/app/modules/user-hours/seeds/hours-tag.seed';
 
 @Component({
   selector: 'controllo-ore-x-report-index',
@@ -149,18 +152,32 @@ export class ReportIndexPage extends ReportPage<
     this.dataForFilters = [];
 
     this.subscriptionsList.push(
-      this._teamDataService.getMany({}).subscribe((teams) => {
-        this.insertNewFilter('Membro', 'Membri', COX_FILTER.TEAM, teams.data);
-      }),
+      this._teamDataService
+        .getMany({})
+        .subscribe((teams: ApiPaginatedResponse<UserReadDto>) => {
+          this.insertNewFilter('Membro', 'Membri', COX_FILTER.TEAM, teams.data);
+        }),
 
-      this._hoursTagDataService.getMany({}).subscribe((hoursTags) => {
-        this.insertNewFilter(
-          'Etichetta',
-          'Etichette',
-          COX_FILTER.TAG,
-          hoursTags.data,
-        );
-      }),
+      this._hoursTagDataService
+        .getMany({})
+        .subscribe((hoursTags: ApiPaginatedResponse<HoursTagReadDto>) => {
+          let index = 0;
+          for (const hoursTag of hoursTags.data) {
+            if (hoursTag._id === HOURS_TAG_SEED[0]._id) {
+              break;
+            }
+            index++;
+          }
+          if (index > -1) {
+            hoursTags.data.splice(index, 1);
+          }
+          this.insertNewFilter(
+            'Etichetta',
+            'Etichette',
+            COX_FILTER.TAG,
+            hoursTags.data,
+          );
+        }),
     );
   }
 

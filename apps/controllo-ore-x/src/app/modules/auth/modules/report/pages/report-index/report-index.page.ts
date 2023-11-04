@@ -3,8 +3,14 @@ import {
   ActivityCreateDto,
   ActivityReadDto,
   ActivityUpdateDto,
+  ApiPaginatedResponse,
   COX_FILTER,
+  CustomerReadDto,
+  HoursTagReadDto,
   INDEX_CONFIGURATION_KEY,
+  ProjectReadDto,
+  ReleaseReadDto,
+  UserReadDto,
 } from '@api-interfaces';
 import { CustomerDataService } from '@app/_core/services/customer.data-service';
 import { HoursTagDataService } from '@app/_core/services/hours-tag.data-service';
@@ -68,45 +74,55 @@ export class ReportIndexPage extends ReportPage<
     this.dataForFilters = [];
 
     this.subscriptionsList.push(
-      this._customerDataService.getMany({}).subscribe((customers) => {
-        this.insertNewFilter(
-          'Cliente',
-          'Clienti',
-          COX_FILTER.CUSTOMER,
-          customers.data,
-        );
-      }),
+      this._customerDataService
+        .getMany({})
+        .subscribe((customers: ApiPaginatedResponse<CustomerReadDto>) => {
+          this.insertNewFilter(
+            'Cliente',
+            'Clienti',
+            COX_FILTER.CUSTOMER,
+            customers.data,
+          );
+        }),
 
-      this._projectDataService.getMany({}).subscribe((projects) => {
-        this.insertNewFilter(
-          'Progetto',
-          'Progetti',
-          COX_FILTER.PROJECT,
-          projects.data,
-        );
-      }),
+      this._projectDataService
+        .getMany({})
+        .subscribe((projects: ApiPaginatedResponse<ProjectReadDto>) => {
+          this.insertNewFilter(
+            'Progetto',
+            'Progetti',
+            COX_FILTER.PROJECT,
+            projects.data,
+          );
+        }),
 
-      this._releaseDataService.getMany({}).subscribe((releases) => {
-        this.insertNewFilter(
-          'Release',
-          'Release',
-          COX_FILTER.RELEASE,
-          releases.data,
-        );
-      }),
+      this._releaseDataService
+        .getMany({})
+        .subscribe((releases: ApiPaginatedResponse<ReleaseReadDto>) => {
+          this.insertNewFilter(
+            'Release',
+            'Release',
+            COX_FILTER.RELEASE,
+            releases.data,
+          );
+        }),
 
-      this._teamDataService.getMany({}).subscribe((teams) => {
-        this.insertNewFilter('Membro', 'Membri', COX_FILTER.TEAM, teams.data);
-      }),
+      this._teamDataService
+        .getMany({})
+        .subscribe((teams: ApiPaginatedResponse<UserReadDto>) => {
+          this.insertNewFilter('Membro', 'Membri', COX_FILTER.TEAM, teams.data);
+        }),
 
-      this._hoursTagDataService.getMany({}).subscribe((hoursTags) => {
-        this.insertNewFilter(
-          'Etichetta',
-          'Etichette',
-          COX_FILTER.TAG,
-          hoursTags.data,
-        );
-      }),
+      this._hoursTagDataService
+        .getMany({})
+        .subscribe((hoursTags: ApiPaginatedResponse<HoursTagReadDto>) => {
+          this.insertNewFilter(
+            'Etichetta',
+            'Etichette',
+            COX_FILTER.TAG,
+            hoursTags.data,
+          );
+        }),
     );
   }
 }

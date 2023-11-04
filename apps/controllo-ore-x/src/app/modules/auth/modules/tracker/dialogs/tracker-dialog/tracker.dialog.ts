@@ -27,6 +27,7 @@ import {
   RT_DIALOG_CLOSE_RESULT,
   RtDialogService,
 } from '@controllo-ore-x/rt-shared';
+import { HOURS_TAG_SEED } from 'apps/api/src/app/modules/user-hours/seeds/hours-tag.seed';
 import { AlertService } from 'libs/rt-shared/src/alert/services/alert.service';
 import { RT_FORM_ERRORS, RtFormError } from 'libs/utils';
 import { Subscription } from 'rxjs';
@@ -385,6 +386,9 @@ export class TrackerDialog
     return this._hoursTagDataService.getMany({}).subscribe({
       next: (hoursTags: ApiPaginatedResponse<HoursTagReadDto>) => {
         for (const hoursTag of hoursTags.data) {
+          if (hoursTag._id === HOURS_TAG_SEED[0]._id) {
+            continue;
+          }
           this.hoursTags.push({
             hoursTag: hoursTag,
             checked: false,
