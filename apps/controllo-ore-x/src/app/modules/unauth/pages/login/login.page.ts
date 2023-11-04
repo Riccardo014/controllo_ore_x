@@ -10,6 +10,7 @@ import { AuthService } from '@core/services/auth.service';
 })
 export class LoginPage {
   title: string = 'Accedi';
+  isPasswordVisible: boolean = false;
 
   hasErrors: boolean = false;
   isLoading: boolean = false;
@@ -41,6 +42,10 @@ export class LoginPage {
 
     this.form.enable();
     this.isLoading = false;
+  }
+
+  togglePasswordVisibility(): void {
+    this.isPasswordVisible = !this.isPasswordVisible;
   }
 
   /**
