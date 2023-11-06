@@ -9,7 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.1]
 
+### Features Aggiunte
+
 - +Aggiornata la grafica delle pagine interne del modulo dei progetti.
+- +Aggiunta la possibiltà di mostrare e nascondere la password nel form di login.
+- +Aggiunto lo stato delle ferie e dei permessi (Da approvare / Approvato / Non approvato).
+- +Aggiunto il campo "data di scadenza gestionale" alle release. 
 
 ## [1.0.0]
 
