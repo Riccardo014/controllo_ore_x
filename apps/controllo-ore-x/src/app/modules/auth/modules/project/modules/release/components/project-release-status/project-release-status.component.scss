@@ -4,17 +4,4 @@
   overflow-y: auto;
   height: calc($content-height - $subtitle-height);
   @include scrollbar-primary(map-get($palette-grey, 400), 6px, true);
-
-  &__cards {
-    border-bottom: 1px solid map-get($palette-grey, 200);
-
-    &__card {
-      padding: 40px 20px;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-  }
 }
