@@ -19,6 +19,7 @@ import { TrackerDataService } from '@app/_core/services/tracker.data-service';
 import { ReportPage } from '@app/_shared/classes/report-page.class';
 import { CalendarDateService } from '@app/_shared/components/index-template/services/calendar-date.service';
 import { FilterService } from '@app/_shared/components/report-template/services/filter.service';
+import { HOURS_TAG_SEED } from 'apps/api/src/app/modules/user-hours/seeds/hours-tag.seed';
 import { RtLoadingService } from 'libs/rt-shared/src/rt-loading/services/rt-loading.service';
 import { BehaviorSubject, firstValueFrom } from 'rxjs';
 
@@ -95,6 +96,16 @@ export class ProjectReleaseStatusComponent extends ReportPage<
       this._hoursTagDataService
         .getMany({})
         .subscribe((hoursTags: ApiPaginatedResponse<HoursTagReadDto>) => {
+          let index = 0;
+          for (const hoursTag of hoursTags.data) {
+            if (hoursTag._id === HOURS_TAG_SEED[0]._id) {
+              break;
+            }
+            index++;
+          }
+          if (index > -1) {
+            hoursTags.data.splice(index, 1);
+          }
           this.insertNewFilter(
             'Etichetta',
             'Etichette',
